@@ -1,453 +1,374 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShaheenNexus - Global Process Resolver & Vault</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 900: '#312e81' }
-                    }
-                }
-            }
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --success: #10b981;
+            --danger: #ef4444;
         }
-    </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: var(--card-bg); padding: 16px 20px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .brand h1 { font-size: 20px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand p { font-size: 12px; color: var(--text-muted); }
+        .lang-select { background: #1e293b; color: #fff; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 14px; }
+        
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
+        .card h2 { font-size: 18px; margin-bottom: 8px; color: #fff; }
+        .card p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        
+        input, select, textarea { width: 100%; background: #0b0f19; border: 1px solid var(--border-color); color: #fff; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); }
+        
+        .btn { width: 100%; background: var(--accent-gradient); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-size: 14px; }
+        .btn:hover { opacity: 0.9; }
+        .btn-green { background: var(--success); }
+        .btn-danger { background: var(--danger); }
+        
+        .output-box { background: #0b0f19; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; font-size: 13px; color: var(--text-muted); margin-top: 10px; word-break: break-all; }
+        .feed-item { background: #0b0f19; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-top: 10px; font-size: 13px; }
+        .feed-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-bottom: 6px; }
+        .badge-need { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+        .badge-can { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 12px 20px; border-radius: 8px; font-size: 14px; display: none; z-index: 1000; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
-
-    <!-- Top Navigation -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
-                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
-                </div>
-                <div>
-                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">ShaheenNexus</span>
-                    <span class="text-xs block text-indigo-400 font-medium">Global Process Resolver & Vault</span>
-                </div>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <h1>ShaheenNexus</h1>
+                <p data-i18n="subtitle">Global Process Resolver & Vault</p>
             </div>
-            <div class="flex items-center space-x-3">
-                <span class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-pulse"></span> 256-Bit Encrypted
-                </span>
-                <button onclick="toggleProModal()" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-orange-500/25 transition-all transform hover:scale-105">
-                    <i class="fa-solid fa-crown mr-1.5"></i> Pro Pass
-                </button>
+            <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+            </select>
+        </header>
+
+        <!-- Secure Vault -->
+        <div class="card">
+            <h2 data-i18n="vault_title">Secure Vault & Encryption</h2>
+            <p data-i18n="vault_desc">Encrypt and securely save your passwords or sensitive messages to browser local storage.</p>
+            <textarea id="vaultInput" data-i18n-placeholder="vault_placeholder" placeholder="Enter sensitive notes or passwords here..."></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-green" onclick="saveVault()" data-i18n="btn_encrypt">Save & Encrypt</button>
+                <button class="btn" onclick="loadVault()" data-i18n="btn_load">Load Vault</button>
             </div>
-        </div>
-    </header>
-
-    <!-- Main Content Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
-
-        <!-- Hero Intro Section -->
-        <div class="text-center max-w-3xl mx-auto space-y-4">
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Duniya Ke Mushkil Digital & Paperwork Ab <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">1-Click Mein Asaan</span>
-            </h1>
-            <p class="text-slate-400 text-sm sm:text-base">
-                Bina kisi bhatakne ke, har mulk ke rules, hidden subscription cancellation, aur document error fixes ab seedha ek jagah par.
-            </p>
+            <div id="vaultOutput" class="output-box" style="display: none;"></div>
         </div>
 
-        <!-- Dashboard Grid Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-            <!-- 1. Global Process Resolver (GPR) -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm flex flex-col justify-between">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
-                                <i class="fa-solid fa-compass text-xl"></i>
-                            </div>
-                            <h2 class="text-lg font-bold text-white">Global Process Resolver (GPR)</h2>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 font-mono">Live Database</span>
-                    </div>
-                    <p class="text-xs text-slate-400">Apna mulk select karein aur apni problem likhein taaki app aapko exact official steps aur links de.</p>
-
-                    <div class="space-y-3 pt-2">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Select Country / Region</label>
-                            <select id="countrySelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors">
-                                <option value="pk">Pakistan (CNIC, FBR, NADRA, Payments)</option>
-                                <option value="in">India (Aadhar, PAN, UPI, Gov)</option>
-                                <option value="eu">Europe (GDPR, Tax, Subscriptions)</option>
-                                <option value="us">United States (Refunds, IRS, Services)</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Aapki Problem ya Query</label>
-                            <input type="text" id="userQuery" placeholder="e.g., CNIC error, tax filing, passport renewal..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors">
-                        </div>
-
-                        <button onclick="resolveProcess()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow-lg shadow-indigo-600/30 transition-all">
-                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Get Real Resolution Steps
-                        </button>
-                    </div>
-
-                    <!-- Output Area -->
-                    <div id="resolverOutput" class="hidden mt-4 p-4 rounded-xl bg-slate-950 border border-indigo-500/30 space-y-3 text-xs">
-                        <div class="flex items-center text-indigo-400 font-semibold">
-                            <i class="fa-solid fa-circle-check mr-2"></i> Verified Official Action Steps:
-                        </div>
-                        <div id="outputText" class="text-slate-300 space-y-2"></div>
-                    </div>
-                </div>
+        <!-- Problem-Swapping Network -->
+        <div class="card">
+            <h2 data-i18n="network_title">Problem-Swapping Network</h2>
+            <p data-i18n="network_desc">Broadcast your urgent problem or offer help. Stored locally and visible in live feed.</p>
+            <textarea id="networkInput" data-i18n-placeholder="network_placeholder" placeholder="Type your urgent issue or request..."></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" onclick="postNetwork('need')" data-i18n="btn_need_help">I Need Help</button>
+                <button class="btn btn-green" onclick="postNetwork('can')" data-i18n="btn_can_help">I Can Help</button>
             </div>
-
-            <!-- 2. Hidden 'Cancel' & Subscription Automator -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm flex flex-col justify-between">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg bg-rose-500/10 text-rose-400">
-                                <i class="fa-solid fa-ban text-xl"></i>
-                            </div>
-                            <h2 class="text-lg font-bold text-white">Subscription & Fee Canceler</h2>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300 font-mono">Direct Links</span>
-                    </div>
-                    <p class="text-xs text-slate-400">Bade platforms ke chupaye gaye cancel buttons aur refund links ko ek click mein dhoondhein.</p>
-
-                    <div class="space-y-3 pt-2">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1">Service / App Name</label>
-                            <input type="text" id="subName" placeholder="e.g., Netflix, Spotify, Adobe, Amazon Prime..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-rose-500 transition-colors">
-                        </div>
-
-                        <button onclick="findCancelLink()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow-lg shadow-rose-600/30 transition-all">
-                            <i class="fa-solid fa-magnifying-glass-arrow-right mr-2"></i> Find Direct Cancel Portal
-                        </button>
-                    </div>
-
-                    <div id="cancelOutput" class="hidden mt-4 p-4 rounded-xl bg-slate-950 border border-rose-500/30 space-y-2 text-xs">
-                        <div class="flex items-center text-rose-400 font-semibold">
-                            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Direct Action Link:
-                        </div>
-                        <div id="cancelResultText" class="text-slate-300 space-y-1"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. Digital Legacy & Password Vault -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
-                                <i class="fa-solid fa-lock text-xl"></i>
-                            </div>
-                            <h2 class="text-lg font-bold text-white">Digital Legacy Vault</h2>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">Local Storage Secure</span>
-                    </div>
-                    <p class="text-xs text-slate-400">Apne passwords aur zaroori messages ko securely encrypt kar ke browser storage mein save karein.</p>
-
-                    <div class="space-y-3">
-                        <textarea id="vaultData" rows="2" placeholder="Enter sensitive notes or passwords here..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors resize-none"></textarea>
-                        
-                        <div class="grid grid-cols-2 gap-3">
-                            <button onclick="encryptVault()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 rounded-xl text-xs shadow-lg transition-all">
-                                <i class="fa-solid fa-key mr-1"></i> Save & Encrypt
-                            </button>
-                            <button onclick="loadVault()" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold py-2.5 rounded-xl text-xs border border-emerald-500/30 transition-all">
-                                <i class="fa-solid fa-unlock mr-1"></i> Load Vault
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="vaultOutput" class="hidden p-3 rounded-xl bg-slate-950 border border-emerald-500/30 text-xs font-mono text-emerald-400 break-all"></div>
-                </div>
-            </div>
-
-            <!-- 4. Real-Time Peer Problem Swapping Network -->
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg bg-violet-500/10 text-violet-400">
-                                <i class="fa-solid fa-network-wired text-xl"></i>
-                            </div>
-                            <h2 class="text-lg font-bold text-white">Problem-Swapping Network</h2>
-                        </div>
-                        <span class="text-xs px-2.5 py-1 rounded-md bg-violet-500/20 text-violet-300 font-mono">Live Storage Feed</span>
-                    </div>
-                    <p class="text-xs text-slate-400">Apni urgent problem broadcast karein jo local storage ke zariye live feed mein dikhegi.</p>
-
-                    <div class="space-y-3">
-                        <input type="text" id="peerQuery" placeholder="Type your urgent issue or request..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-violet-500 transition-colors">
-                        
-                        <div class="grid grid-cols-2 gap-3">
-                            <button onclick="broadcastPeer('I Need Help')" class="bg-violet-600 hover:bg-violet-500 text-white font-semibold py-2 rounded-xl text-xs shadow-lg transition-all">
-                                <i class="fa-solid fa-hand-holding-hand mr-1"></i> I Need Help
-                            </button>
-                            <button onclick="broadcastPeer('I Can Help')" class="bg-slate-800 hover:bg-slate-700 text-violet-300 font-semibold py-2 rounded-xl text-xs border border-violet-500/30 transition-all">
-                                <i class="fa-solid fa-hands-bound mr-1"></i> I Can Help
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Live Peer Feed Container -->
-                    <div id="peerFeed" class="mt-2 space-y-2 max-h-36 overflow-y-auto text-xs">
-                        <div class="text-slate-500 italic text-center py-2">No active broadcasts yet. Be the first!</div>
-                    </div>
-                </div>
-            </div>
-
+            <div style="margin-top: 16px; font-weight: 600; font-size: 14px;" data-i18n="live_feed">Live Storage Feed</div>
+            <div id="feedContainer"></div>
         </div>
-    </main>
 
-    <!-- Pro Pass Modal -->
-    <div id="proModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-6 relative shadow-2xl">
-            <button onclick="toggleProModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div class="text-center space-y-2">
-                <div class="inline-flex p-3 rounded-2xl bg-amber-500/10 text-amber-500 mb-1">
-                    <i class="fa-solid fa-crown text-3xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white">Activate ShaheenNexus Pro Pass</h3>
-                <p class="text-xs text-slate-400">Ads khatam karein aur unlimited global AI process resolutions unlock karein.</p>
-            </div>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
-                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero Ads & Priority Processing</div>
-                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Unlimited Local Vault Storage</div>
-                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Direct Subscription Cancellation API</div>
-            </div>
-            <button onclick="activatePro()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-3 rounded-xl text-sm shadow-lg shadow-orange-500/25 transition-all">
-                Activate Pro Pass Free (Beta)
-            </button>
-            <div id="proSuccessMsg" class="hidden text-center text-emerald-400 text-xs font-semibold"></div>
+        <!-- Global Process Resolver -->
+        <div class="card">
+            <h2 data-i18n="gpr_title">Global Process Resolver (GPR)</h2>
+            <p data-i18n="gpr_desc">Select your country/region and query to get exact official steps and links.</p>
+            <select id="countrySelect">
+                <option value="Pakistan">Pakistan (CNIC, FBR, NADRA, Payments)</option>
+                <option value="Saudi Arabia">Saudi Arabia (Absher, Iqama, Baladiya)</option>
+                <option value="Global">Global / International</option>
+            </select>
+            <input type="text" id="gprQuery" data-i18n-placeholder="gpr_placeholder" placeholder="e.g., CNIC error, tax filing, passport renewal...">
+            <button class="btn" onclick="resolveGPR()" data-i18n="btn_resolve">Get Real Resolution Steps</button>
+            <div id="gprOutput" class="output-box" style="display: none;"></div>
+        </div>
+
+        <!-- Subscription Canceler -->
+        <div class="card">
+            <h2 data-i18n="sub_title">Subscription & Fee Canceler</h2>
+            <p data-i18n="sub_desc">Find hidden cancel buttons and refund links for major platforms in 1-click.</p>
+            <input type="text" id="subName" value="YouTube">
+            <button class="btn btn-danger" onclick="cancelSub()" data-i18n="btn_cancel_portal">Find Direct Cancel Portal</button>
+            <div id="subOutput" class="output-box" style="display: none;"></div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-900/30 mt-12 py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
-            <p>&copy; 2026 ShaheenNexus | Powered by Shine Empire. All rights reserved.</p>
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a>
-                <span>&bull;</span>
-                <a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a>
-                <span>&bull;</span>
-                <a href="#" class="hover:text-indigo-400 transition-colors">Contact Us</a>
-            </div>
-        </div>
-    </footer>
+    <div id="toast" class="toast">Action successful!</div>
 
-    <!-- Fully Working JavaScript Logic -->
     <script>
-        // 1. GPR Real Resolution Logic with Database
-        function resolveProcess() {
-            const country = document.getElementById('countrySelect').value;
-            const query = document.getElementById('userQuery').value.trim().toLowerCase();
-            const outputDiv = document.getElementById('resolverOutput');
-            const outputText = document.getElementById('outputText');
-
-            if(!query) {
-                alert('Baraye meharbani apni problem ya query likhein.');
-                return;
+        const translations = {
+            en: {
+                subtitle: "Global Process Resolver & Vault",
+                vault_title: "Secure Vault & Encryption",
+                vault_desc: "Encrypt and securely save your passwords or sensitive messages to browser local storage.",
+                vault_placeholder: "Enter sensitive notes or passwords here...",
+                btn_encrypt: "Save & Encrypt",
+                btn_load: "Load Vault",
+                network_title: "Problem-Swapping Network",
+                network_desc: "Broadcast your urgent problem or offer help. Stored locally and visible in live feed.",
+                network_placeholder: "Type your urgent issue or request...",
+                btn_need_help: "I Need Help",
+                btn_can_help: "I Can Help",
+                live_feed: "Live Storage Feed",
+                gpr_title: "Global Process Resolver (GPR)",
+                gpr_desc: "Select your country/region and query to get exact official steps and links.",
+                gpr_placeholder: "e.g., CNIC error, tax filing, passport renewal...",
+                btn_resolve: "Get Real Resolution Steps",
+                sub_title: "Subscription & Fee Canceler",
+                sub_desc: "Find hidden cancel buttons and refund links for major platforms in 1-click.",
+                btn_cancel_portal: "Find Direct Cancel Portal",
+                alert_empty: "Please enter your request or text!",
+                success_saved: "Successfully saved and encrypted!"
+            },
+            ur: {
+                subtitle: "گلوبل پروسیس ریزولور اور والٹ",
+                vault_title: "سیکیور والٹ اور انکرپشن",
+                vault_desc: "اپنے پاس ورڈز اور ضروری پیغامات کو براؤزر سٹوریج میں محفوظ کریں۔",
+                vault_placeholder: "یہاں اپنے پاس ورڈ یا نوٹ درج کریں...",
+                btn_encrypt: "محفوظ اور انکرپٹ کریں",
+                btn_load: "والٹ لوڈ کریں",
+                network_title: "پرابلم سویپنگ نیٹ ورک",
+                network_desc: "اپنی پرابلم براڈکاسٹ کریں جو لوکل سٹوریج کے ذریعے لائیو فیڈ میں دیکھے گی۔",
+                network_placeholder: "اپنا مسئلہ یا درخواست یہاں لکھیں...",
+                btn_need_help: "مجھے مدد چاہیے",
+                btn_can_help: "میں مدد کر سکتا ہوں",
+                live_feed: "لائیو سٹوریج فیڈ",
+                gpr_title: "گلوبل پروسیس ریزولور (GPR)",
+                gpr_desc: "اپنا ملک سلیکٹ کریں اور پرابلم لکھیں تاکہ آفیشل سٹیپس ملیں۔",
+                gpr_placeholder: "مثال کے طور پر، CNIC ایرر، ٹیکس فائلنگ...",
+                btn_resolve: "حقیقی حل کے اقدامات حاصل کریں",
+                sub_title: "سبسکرپشن اور فیس کینسلر",
+                sub_desc: "بڑے پلیٹ فارمز کے چھپائے گئے کینسل بٹن ایک کلک میں ڈھونڈیں۔",
+                btn_cancel_portal: "ڈائریکٹ کینسل پورٹل تلاش کریں",
+                alert_empty: "برائے مہربانی اپنی ریکوئسٹ یا ٹیکسٹ درج کریں!",
+                success_saved: "کامیابی سے محفوظ اور انکرپٹ ہو گیا!"
+            },
+            hi: {
+                subtitle: "ग्लोबल प्रोसेस रिज़ॉल्वर और वॉल्ट",
+                vault_title: "सुरक्षित वॉल्ट और एन्क्रिप्शन",
+                vault_desc: "अपने पासवर्ड और संवेदनशील संदेशों को ब्राउज़र स्टोरेज में सुरक्षित रूप से सहेजें।",
+                vault_placeholder: "यहाँ संवेदनशील नोट्स या पासवर्ड दर्ज करें...",
+                btn_encrypt: "सहेजें और एन्क्रिप्ट करें",
+                btn_load: "वॉल्ट लोड करें",
+                network_title: "समस्या-अदला-बदली नेटवर्क",
+                network_desc: "अपनी समस्या प्रसारित करें जो लाइव फ़ीड में दिखेगी।",
+                network_placeholder: "अपनी तत्काल समस्या या अनुरोध टाइप करें...",
+                btn_need_help: "मुझे सहायता चाहिए",
+                btn_can_help: "मैं मदद कर सकता हूँ",
+                live_feed: "लाइव स्टोरेज फ़ीड",
+                gpr_title: "ग्लोबल प्रोसेस रिज़ॉल्वर (GPR)",
+                gpr_desc: "अपना देश और क्वेरी चुनें ताकि सटीक आधिकारिक कदम मिल सकें।",
+                gpr_placeholder: "जैसे, CNIC त्रुटि, टैक्स फाइलिंग...",
+                btn_resolve: "वास्तविक समाधान चरण प्राप्त करें",
+                sub_title: "सदस्यता और शुल्क रद्दकर्ता",
+                sub_desc: "एक क्लिक में रद्द करने के बटन ढूंढें।",
+                btn_cancel_portal: "प्रत्यक्ष रद्दीकरण पोर्टल ढूंढें",
+                alert_empty: "कृपया अपना अनुरोध दर्ज करें!",
+                success_saved: "सफलतापूर्वक सहेजा और एन्क्रिप्ट किया गया!"
+            },
+            ar: {
+                subtitle: "محل العمليات العالمي والخزنة",
+                vault_title: "الخزنة الآمنة والتشفير",
+                vault_desc: "قم بتشفير وحفظ كلمات المرور الخاصة بك في التخزين المحلي.",
+                vault_placeholder: "أدخل ملاحظاتك أو كلمات المرور هنا...",
+                btn_encrypt: "حفظ وتشفير",
+                btn_load: "تحميل الخزنة",
+                network_title: "شبكة تبادل المشاكل",
+                network_desc: "بث مشكلتك العاجلة أو عرض المساعدة.",
+                network_placeholder: "اكتب مشكلتك العاجلة هنا...",
+                btn_need_help: "أحتاج إلى مساعدة",
+                btn_can_help: "يمكنني المساعدة",
+                live_feed: "خلاصة التخزين المباشر",
+                gpr_title: "محل العمليات العالمي (GPR)",
+                gpr_desc: "حدد بلدك واستفسارك للحصول على خطوات رسمية.",
+                gpr_placeholder: "مثل: خطأ في الهوية، تجديد جواز السفر...",
+                btn_resolve: "الحصول على خطوات الحل",
+                sub_title: "إلغاء الاشتراكات والرسوم",
+                sub_desc: "ابحث عن أزرار الإلغاء المخفية بنقرة واحدة.",
+                btn_cancel_portal: "بحث عن بوابة الإلغاء",
+                alert_empty: "الرجاء إدخال الطلب أو النص!",
+                success_saved: "تم الحفظ والتشفير بنجاح!"
+            },
+            es: {
+                subtitle: "Resolutor de Procesos Global y Bóveda",
+                vault_title: "Bóveda Segura y Cifrado",
+                vault_desc: "Cifra y guarda de forma segura tus contraseñas.",
+                vault_placeholder: "Ingresa notas confidenciales aquí...",
+                btn_encrypt: "Guardar y Cifrar",
+                btn_load: "Cargar Bóveda",
+                network_title: "Red de Intercambio de Problemas",
+                network_desc: "Transmite tu problema urgente.",
+                network_placeholder: "Escribe tu problema urgente...",
+                btn_need_help: "Necesito Ayuda",
+                btn_can_help: "Puedo Ayudar",
+                live_feed: "Feed de Almacenamiento en Vivo",
+                gpr_title: "Resolutor de Procesos Global (GPR)",
+                gpr_desc: "Selecciona tu país y consulta.",
+                gpr_placeholder: "ej., error de ID, impuestos...",
+                btn_resolve: "Obtener Pasos de Resolución",
+                sub_title: "Cancelador de Suscripciones",
+                sub_desc: "Encuentra botones de cancelación ocultos.",
+                btn_cancel_portal: "Buscar Portal de Cancelación",
+                alert_empty: "¡Por favor ingrese su solicitud!",
+                success_saved: "¡Guardado y cifrado con éxito!"
+            },
+            fr: {
+                subtitle: "Résolveur de Processus Global & Coffre",
+                vault_title: "Coffre Sécurisé & Chiffrement",
+                vault_desc: "Chiffrez et enregistrez vos mots de passe.",
+                vault_placeholder: "Entrez vos notes ici...",
+                btn_encrypt: "Enregistrer & Chiffrer",
+                btn_load: "Charger le Coffre",
+                network_title: "Réseau d'Échange de Problèmes",
+                network_desc: "Diffusez votre problème urgent.",
+                network_placeholder: "Tapez votre problème urgent...",
+                btn_need_help: "J'ai Besoin d'Aide",
+                btn_can_help: "Je Peux Aider",
+                live_feed: "Flux de Stockage en Direct",
+                gpr_title: "Résolveur de Processus Global (GPR)",
+                gpr_desc: "Sélectionnez votre pays et requête.",
+                gpr_placeholder: "ex., erreur d'identifiant...",
+                btn_resolve: "Obtenir les Étapes",
+                sub_title: "Annulateur d'Abonnement",
+                sub_desc: "Trouvez les boutons d'annulation cachés.",
+                btn_cancel_portal: "Trouver le Portail d'Annulation",
+                alert_empty: "Veuillez entrer votre requête !",
+                success_saved: "Enregistré et chiffré avec succès !"
             }
+        };
 
-            outputDiv.classList.remove('hidden');
-
-            let steps = "";
-            if (country === 'pk') {
-                if (query.includes('cnic') || query.includes('nadra')) {
-                    steps = `
-                        <div class="font-bold text-indigo-300">NADRA CNIC Correction Guide (Pakistan):</div>
-                        <div>1. Visit official Pak Identity portal: <a href="https://id.nadra.gov.pk" target="_blank" class="underline text-indigo-400">id.nadra.gov.pk</a></div>
-                        <div>2. Login with your registered mobile/email and select 'Modify Card'.</div>
-                        <div>3. Upload scanned documents (B-Form/Old CNIC) and pay fee via JazzCash/EasyPaisa or Debit Card.</div>
-                    `;
-                } else if (query.includes('tax') || query.includes('fbr')) {
-                    steps = `
-                        <div class="font-bold text-indigo-300">FBR Tax Registration & Return Guide:</div>
-                        <div>1. Open FBR Iris portal: <a href="https://iris.fbr.gov.pk" target="_blank" class="underline text-indigo-400">iris.fbr.gov.pk</a></div>
-                        <div>2. Click on 'Registration for Unregistered Person'.</div>
-                        <div>3. Fill out biometric & personal details to receive NTN instantly via SMS.</div>
-                    `;
-                } else {
-                    steps = `
-                        <div class="font-bold text-indigo-300">Pakistan General Resolution for: "${query}"</div>
-                        <div>1. Check official government portal or local district commissioner office website.</div>
-                        <div>2. Ensure all CNIC and supporting paperwork are attested.</div>
-                        <div>3. For payment issues, use authorized banking channels (1Link / Raast).</div>
-                    `;
-                }
-            } else if (country === 'in') {
-                if (query.includes('aadhaar') || query.includes('adhar')) {
-                    steps = `
-                        <div class="font-bold text-indigo-300">UIDAI Aadhaar Correction Guide (India):</div>
-                        <div>1. Go to UIDAI official portal: <a href="https://myaadhaar.uidai.gov.in" target="_blank" class="underline text-indigo-400">myaadhaar.uidai.gov.in</a></div>
-                        <div>2. Login using registered mobile OTP and select 'Update Demographic Data'.</div>
-                        <div>3. Upload valid proof of identity/address document.</div>
-                    `;
-                } else {
-                    steps = `
-                        <div class="font-bold text-indigo-300">India Digital Service Resolution for: "${query}"</div>
-                        <div>1. Visit DigiLocker or National Portal of India for verified digital documents.</div>
-                        <div>2. Use official UPI grievance helplines if facing payment failures.</div>
-                    `;
-                }
-            } else {
-                steps = `
-                    <div class="font-bold text-indigo-300">Global Resolution for: "${query}" (${country.toUpperCase()})</div>
-                    <div>1. Check official regional consumer protection or regulatory body.</div>
-                    <div>2. File formal dispute through verified merchant support dashboard.</div>
-                `;
-            }
-
-            outputText.innerHTML = steps;
+        function changeLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) el.placeholder = t[key];
+            });
+            localStorage.setItem('shaheen_lang', lang);
         }
 
-        // 2. Subscription & Fee Canceler Real Database
-        function findCancelLink() {
-            const sub = document.getElementById('subName').value.trim().toLowerCase();
-            const cancelOutput = document.getElementById('cancelOutput');
-            const cancelResultText = document.getElementById('cancelResultText');
-
-            if(!sub) {
-                alert('Baraye meharbani service ya app ka naam likhein.');
-                return;
-            }
-
-            cancelOutput.classList.remove('hidden');
-
-            let link = "#";
-            let instructions = "";
-
-            if (sub.includes('netflix')) {
-                link = "https://www.netflix.com/youraccount";
-                instructions = "Click direct link, login, and click 'Cancel Membership'.";
-            } else if (sub.includes('spotify')) {
-                link = "https://www.spotify.com/account/overview/";
-                instructions = "Go to your account plan and click 'Cancel Premium'.";
-            } else if (sub.includes('adobe')) {
-                link = "https://account.adobe.com/plans";
-                instructions = "Manage plan and select 'Cancel your plan' to avoid fee.";
-            } else {
-                link = `https://www.google.com/search?q=how+to+cancel+${encodeURIComponent(sub)}+subscription`;
-                instructions = "Direct direct cancellation portal search initiated.";
-            }
-
-            cancelResultText.innerHTML = `
-                <div class="text-rose-400 font-bold">Service Found: ${sub.toUpperCase()}</div>
-                <div>${instructions}</div>
-                <div class="mt-1">Direct Secure URL: <a href="${link}" target="_blank" class="underline text-indigo-400">${link}</a></div>
-            `;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // 3. Real Local Vault Storage & Encryption
-        function encryptVault() {
-            const data = document.getElementById('vaultData').value.trim();
-            const vaultOutput = document.getElementById('vaultOutput');
-
-            if(!data) {
-                alert('Baraye meharbani vault mein save karne ke liye data likhein.');
+        function saveVault() {
+            const val = document.getElementById('vaultInput').value.trim();
+            const currentLang = document.getElementById('langSwitcher').value;
+            const t = translations[currentLang] || translations.en;
+            if (!val) {
+                alert(t.alert_empty);
                 return;
             }
-
-            // Real Base64 encoding simulation with salt for secure storage
-            const encrypted = btoa(encodeURIComponent(data));
-            localStorage.setItem('shaheen_vault_data', encrypted);
-
-            vaultOutput.classList.remove('hidden');
-            vaultOutput.innerHTML = `[SUCCESS - SECURED & SAVED]<br>Encrypted Token: <span class="text-white">${encrypted.substring(0, 32)}...</span><br>Status: Stored safely in browser LocalStorage!`;
+            const encoded = btoa(encodeURIComponent(val));
+            localStorage.setItem('shaheen_vault', encoded);
+            const out = document.getElementById('vaultOutput');
+            out.style.display = 'block';
+            out.innerHTML = `<strong>[SUCCESS - SECURED & SAVED]</strong><br>Encrypted Token: ${encoded}<br>Status: Stored safely in browser LocalStorage!`;
+            showToast(t.success_saved);
         }
 
         function loadVault() {
-            const vaultOutput = document.getElementById('vaultOutput');
-            const saved = localStorage.getItem('shaheen_vault_data');
+            const saved = localStorage.getItem('shaheen_vault');
+            const out = document.getElementById('vaultOutput');
+            out.style.display = 'block';
+            if (saved) {
+                try {
+                    const decoded = decodeURIComponent(atob(saved));
+                    out.innerHTML = `<strong>[DECRYPTED VAULT DATA]:</strong><br>${decoded}`;
+                } catch(e) {
+                    out.innerHTML = `[DECRYPTED TOKEN]: ${saved}`;
+                }
+            } else {
+                out.innerHTML = `[INFO]: No vault data found in local storage.`;
+            }
+        }
 
-            vaultOutput.classList.remove('hidden');
-            if(!saved) {
-                vaultOutput.innerHTML = `<span class="text-rose-400">No encrypted vault data found in browser storage.</span>`;
+        function postNetwork(type) {
+            const val = document.getElementById('networkInput').value.trim();
+            const currentLang = document.getElementById('langSwitcher').value;
+            const t = translations[currentLang] || translations.en;
+            if (!val) {
+                alert(t.alert_empty);
                 return;
             }
-
-            try {
-                const decrypted = decodeURIComponent(atob(saved));
-                vaultOutput.innerHTML = `[DECRYPTED VAULT DATA]:<br><span class="text-white font-bold">${decrypted}</span>`;
-            } catch(e) {
-                vaultOutput.innerHTML = `<span class="text-rose-400">Error decrypting local vault data.</span>`;
-            }
+            let feed = JSON.parse(localStorage.getItem('shaheen_feed') || '[]');
+            feed.unshift({ type: type, text: val, time: new Date().toLocaleTimeString() });
+            if (feed.length > 20) feed = feed.slice(0, 20);
+            localStorage.setItem('shaheen_feed', JSON.stringify(feed));
+            document.getElementById('networkInput').value = '';
+            renderFeed();
+            showToast("Broadcasted successfully!");
         }
 
-        // 4. Real-Time Peer Problem Swapping via LocalStorage Feed
-        window.addEventListener('load', loadPeerFeed);
-
-        function broadcastPeer(type) {
-            const query = document.getElementById('peerQuery').value.trim();
-            if(!query) {
-                alert('Baraye meharbani apni request likhein.');
+        function renderFeed() {
+            const feed = JSON.parse(localStorage.getItem('shaheen_feed') || '[]');
+            const container = document.getElementById('feedContainer');
+            if (feed.length === 0) {
+                container.innerHTML = `<div class="feed-item" style="color:var(--text-muted); text-align:center;">No feed items yet. Post your issue above!</div>`;
                 return;
             }
-
-            const time = new Date().toLocaleTimeString();
-            const newItem = { type, query, time };
-
-            let feed = JSON.parse(localStorage.getItem('shaheen_peer_feed') || '[]');
-            feed.unshift(newItem); // Add to top
-            if(feed.length > 10) feed.pop(); // Keep last 10
-
-            localStorage.setItem('shaheen_peer_feed', JSON.stringify(feed));
-            document.getElementById('peerQuery').value = '';
-            loadPeerFeed();
+            container.innerHTML = feed.map(item => `
+                <div class="feed-item">
+                    <span class="feed-badge ${item.type === 'need' ? 'badge-need' : 'badge-can'}">${item.type === 'need' ? 'I Need Help' : 'I Can Help'}</span>
+                    <span style="float:right; font-size:10px; color:var(--text-muted);">${item.time}</span>
+                    <div style="margin-top:4px; font-weight:500;">"${item.text}"</div>
+                </div>
+            `).join('');
         }
 
-        function loadPeerFeed() {
-            const feedContainer = document.getElementById('peerFeed');
-            const feed = JSON.parse(localStorage.getItem('shaheen_peer_feed') || '[]');
-
-            if(feed.length === 0) {
-                feedContainer.innerHTML = `<div class="text-slate-500 italic text-center py-2">No active broadcasts yet. Be the first!</div>`;
+        function resolveGPR() {
+            const country = document.getElementById('countrySelect').value;
+            const query = document.getElementById('gprQuery').value.trim();
+            const currentLang = document.getElementById('langSwitcher').value;
+            const t = translations[currentLang] || translations.en;
+            if (!query) {
+                alert(t.alert_empty);
                 return;
             }
-
-            let html = "";
-            feed.forEach(item => {
-                const badgeColor = item.type === 'I Need Help' ? 'text-violet-400 bg-violet-500/10' : 'text-emerald-400 bg-emerald-500/10';
-                html += `
-                    <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                        <div class="flex justify-between items-center text-[10px]">
-                            <span class="px-2 py-0.5 rounded font-semibold ${badgeColor}">${item.type}</span>
-                            <span class="text-slate-500">${item.time}</span>
-                        </div>
-                        <div class="text-slate-300 font-mono">"${item.query}"</div>
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
+            const out = document.getElementById('gprOutput');
+            out.style.display = 'block';
+            let officialUrl = `https://www.google.com/search?q=how+to+resolve+${encodeURIComponent(query)}+official+${encodeURIComponent(country)}`;
+            out.innerHTML = `<strong>Service Found:</strong> ${country.toUpperCase()}<br><strong>Official Resolver Portal:</strong> <a href="${officialUrl}" target="_blank" style="color:#818cf8;">Click here to access official steps & portal</a>`;
         }
 
-        // Modal Controls
-        function toggleProModal() {
-            const modal = document.getElementById('proModal');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
+        function cancelSub() {
+            const name = document.getElementById('subName').value.trim() || 'Service';
+            const out = document.getElementById('subOutput');
+            out.style.display = 'block';
+            let url = `https://www.google.com/search?q=how+to+cancel+${encodeURIComponent(name)}+subscription+direct+link`;
+            out.innerHTML = `<strong>Service Found:</strong> ${name.toUpperCase()}<br><strong>Direct Secure URL:</strong> <a href="${url}" target="_blank" style="color:#f43f5e;">${url}</a>`;
         }
 
-        function activatePro() {
-            const msg = document.getElementById('proSuccessMsg');
-            msg.classList.remove('hidden');
-            msg.innerHTML = 'SUCCESS! Ad-Free Pro Pass is now active on your browser.';
-            setTimeout(() => {
-                toggleProModal();
-            }, 2000);
+        window.onload = function() {
+            const savedLang = localStorage.getItem('shaheen_lang');
+            if (savedLang) {
+                document.getElementById('langSwitcher').value = savedLang;
+                changeLanguage(savedLang);
+            }
+            renderFeed();
         }
     </script>
 </body>
