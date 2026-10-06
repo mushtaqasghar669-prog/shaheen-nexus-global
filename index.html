@@ -1,55 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Sovereign Workspace</title>
+    <title>ShaheenNexus - Ultimate Sovereign Vault</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg-color: #090d16;
+            --card-bg: #131b2e;
             --accent-primary: #10b981;
             --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             --text-color: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #334155;
+            --border-color: #1e293b;
+            --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 20px; }
+        .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 18px; }
         
         /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .logo-title h1 { font-size: 1.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 16px; border-radius: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .logo-title h1 { font-size: 1.3rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
         .logo-title p { font-size: 0.75rem; color: var(--text-muted); }
-        select { background: #0f172a; color: #fff; border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 6px; }
 
         /* Card */
-        .card { background: var(--card-bg); border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; }
-        .card h3 { font-size: 1rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+        .card { background: var(--card-bg); border-radius: 14px; padding: 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .card h3 { font-size: 1.05rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; font-weight: 600; }
         p.desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 
-        /* Inputs & Buttons */
-        input, textarea, select.input-field { width: 100%; background: #0f172a; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.9rem; }
-        textarea { resize: vertical; min-height: 80px; }
+        /* Inputs & Controls */
+        input, textarea, select { width: 100%; background: #0b111e; border: 1px solid var(--border-color); color: #fff; padding: 11px; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border 0.2s; }
+        input:focus, textarea:focus, select:focus { border-color: #38bdf8; }
+        textarea { resize: vertical; min-height: 90px; }
+        
         .btn-group { display: flex; gap: 10px; }
-        button { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: opacity 0.2s; }
-        button:hover { opacity: 0.9; }
+        button { flex: 1; padding: 11px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-primary { background: var(--accent-primary); color: #fff; }
-        .btn-secondary { background: #334155; color: #fff; }
+        .btn-secondary { background: #1e293b; color: #fff; border: 1px solid var(--border-color); }
         .btn-gradient { background: var(--accent-gradient); color: #fff; }
+        .btn-danger { background: var(--danger); color: #fff; }
 
-        /* Tables & Workspace */
-        .workspace-tabs { display: flex; gap: 5px; background: #0f172a; padding: 4px; border-radius: 8px; }
-        .tab-btn { background: transparent; color: var(--text-muted); padding: 6px; border-radius: 6px; }
-        .tab-btn.active { background: var(--card-bg); color: #fff; }
-        table.custom-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-        table.custom-table th, table.custom-table td { border: 1px solid var(--border-color); padding: 6px; text-align: center; font-size: 0.85rem; }
-        table.custom-table input { border: none; background: transparent; color: #fff; text-align: center; width: 100%; }
+        /* Dynamic Custom Fields Builder */
+        .field-row { display: flex; gap: 8px; align-items: center; background: #0b111e; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .field-row input { background: transparent; border: none; padding: 4px; }
+        
+        /* Table Builder */
+        .table-container { overflow-x: auto; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); }
+        table.custom-table { width: 100%; border-collapse: collapse; background: #0b111e; }
+        table.custom-table th, table.custom-table td { border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 0.85rem; }
+        table.custom-table th { background: #162035; color: #38bdf8; }
+        table.custom-table input { background: transparent; border: none; color: #fff; text-align: center; width: 100%; padding: 2px; }
 
-        /* Output / Feed */
-        .output-box { background: #0f172a; padding: 10px; border-radius: 8px; border: 1px dashed var(--border-color); font-size: 0.85rem; word-break: break-all; color: #34d399; }
-        .feed-item { background: #0f172a; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-primary); font-size: 0.85rem; margin-top: 6px; }
+        /* Output Box */
+        .output-box { background: #0b111e; padding: 12px; border-radius: 8px; border: 1px dashed var(--accent-primary); font-size: 0.85rem; word-break: break-all; color: #34d399; display: none; }
     </style>
 </head>
 <body>
@@ -59,138 +64,123 @@
     <div class="header">
         <div class="logo-title">
             <h1>ShaheenNexus</h1>
-            <p>100% Local-First Sovereign Workspace</p>
+            <p>100% Custom Sovereign Vault & Database</p>
         </div>
-        <select id="langSelect">
-            <option value="en">English</option>
-            <option value="ur">Urdu / Roman</option>
+        <div style="font-size: 0.75rem; background: #1e293b; padding: 6px 10px; border-radius: 6px; color: var(--accent-primary);">Secure Local</div>
+    </div>
+
+    <!-- Mode Selector -->
+    <div class="card">
+        <h3>🛠️ Select Creation Mode</h3>
+        <p class="desc">Choose how you want to structure and save your custom data.</p>
+        <select id="appMode" onchange="switchAppMode()">
+            <option value="fields">Fully Customizable Fields (Key-Value / Forms)</option>
+            <option value="table">Dynamic Spreadsheet / Table Builder</option>
+            <option value="note">Advanced Rich Note Editor</option>
         </select>
     </div>
 
-    <!-- Security & Passcode Lock -->
-    <div class="card">
-        <h3>🔒 Vault Security & Biometric/PIN Lock</h3>
-        <p class="desc">Set a local device PIN or Password to protect your private encrypted vault data.</p>
-        <input type="password" id="vaultPasscode" placeholder="Enter 4-digit PIN or Device Password">
-        <button class="btn-secondary" onclick="savePasscode()">Set / Update Passcode</button>
+    <!-- Mode 1: Custom Fields Builder -->
+    <div class="card" id="modeFieldsSection">
+        <h3>📝 Custom Data Fields</h3>
+        <p class="desc">Add as many custom attributes/fields as you need for your data.</p>
+        <div id="dynamicFieldsContainer" style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="field-row">
+                <input type="text" placeholder="Field Name (e.g., Title)" class="f-key" value="Title">
+                <input type="text" placeholder="Field Value" class="f-val" value="My Project">
+                <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
+            </div>
+        </div>
+        <button class="btn-secondary" onclick="addCustomField()">+ Add New Field</button>
     </div>
 
-    <!-- Zero-Trust Local Vault (Notes & Tables + Token) -->
+    <!-- Mode 2: Dynamic Table Builder -->
+    <div class="card" id="modeTableSection" style="display: none;">
+        <h3>📊 Dynamic Table Creator</h3>
+        <input type="text" id="customTableName" placeholder="Table Title (e.g. Expenses / Inventory)" style="margin-bottom: 8px;">
+        <div class="btn-group" style="margin-bottom: 8px;">
+            <button class="btn-secondary" onclick="addTableRow()">+ Add Row</button>
+            <button class="btn-secondary" onclick="addTableCol()">+ Add Column</button>
+        </div>
+        <div class="table-container">
+            <table class="custom-table" id="userTable">
+                <thead>
+                    <tr id="tableHeaderRow">
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td><input type="text" value="Data 1"></td>
+                        <td><input type="text" value="Data 2"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Mode 3: Note Editor -->
+    <div class="card" id="modeNoteSection" style="display: none;">
+        <h3>📄 Custom Note / Markdown Editor</h3>
+        <input type="text" id="noteTitle" placeholder="Note Title" style="margin-bottom: 8px;">
+        <textarea id="noteContent" placeholder="Write your complete data, code, or notes here..."></textarea>
+    </div>
+
+    <!-- Token & Security Engine -->
     <div class="card">
-        <h3>🛡️ Zero-Trust Local Vault & Token Engine</h3>
-        <p class="desc">Create custom Notes or Dynamic Tables. Enter your custom token or let the system auto-generate one.</p>
+        <h3>🔐 Token & Sovereign Vault Encryption</h3>
+        <p class="desc">Enter your custom token or leave it blank to auto-generate a secure encryption token.</p>
+        <input type="text" id="userTokenInput" placeholder="Custom Token (e.g. MY-SECRET-KEY-123) or Auto">
         
-        <div class="workspace-tabs">
-            <button class="tab-btn active" id="tabNoteBtn" onclick="switchTab('note')">Notes Editor</button>
-            <button class="tab-btn" id="tabTableBtn" onclick="switchTab('table')">Table Builder</button>
+        <div class="btn-group" style="margin-top: 6px;">
+            <button class="btn-primary" onclick="saveDataToVault()">Save & Encrypt</button>
+            <button class="btn-gradient" onclick="loadDataFromVault()">Load Data by Token</button>
         </div>
-
-        <!-- Note Workspace -->
-        <div id="noteWorkspace">
-            <textarea id="vaultNoteContent" placeholder="Write your secret notes or customized data here..."></textarea>
-        </div>
-
-        <!-- Table Workspace -->
-        <div id="tableWorkspace" style="display: none;">
-            <input type="text" id="tableNameInput" placeholder="Table Title (e.g. Project Tracker)" style="margin-bottom: 8px;">
-            <div class="btn-group" style="margin-bottom: 8px;">
-                <button class="btn-secondary" onclick="addTableRow()">Add Row</button>
-                <button class="btn-secondary" onclick="addTableColumn()">Add Column</button>
-            </div>
-            <div style="overflow-x: auto;">
-                <table class="custom-table" id="dynamicTable">
-                    <thead>
-                        <tr id="tableHeaderRow">
-                            <th>Col 1</th>
-                            <th>Col 2</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr>
-                            <td><input type="text" value="Data 1"></td>
-                            <td><input type="text" value="Data 2"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Token Input & Actions -->
-        <div style="margin-top: 10px;">
-            <label style="font-size: 0.75rem; color: var(--text-muted);">Encryption Token (Leave blank for Auto-Generation):</label>
-            <input type="text" id="vaultToken" placeholder="Custom Token or Auto-Generated Token" style="margin-top: 4px;">
-        </div>
-
-        <div class="btn-group" style="margin-top: 8px;">
-            <button class="btn-primary" onclick="saveVaultData()">Save & Encrypt</button>
-            <button class="btn-gradient" onclick="loadVaultData()">Load Vault</button>
-        </div>
-        <div id="vaultOutput" class="output-box" style="display: none;"></div>
+        <div id="vaultResult" class="output-box"></div>
     </div>
 
-    <!-- Peer Problem-Swapping Network -->
+    <!-- Export / Import Backup -->
     <div class="card">
-        <h3>🌐 Peer Problem-Swapping Network</h3>
-        <p class="desc">Broadcast urgent real-world problems locally or share expertise securely.</p>
-        <textarea id="peerInput" placeholder="Type your urgent issue or request..."></textarea>
+        <h3>⚙️ Local Backup & Portability</h3>
         <div class="btn-group">
-            <button class="btn-gradient" onclick="broadcastHelp()">I Need Help</button>
-            <button class="btn-primary" onclick="offerHelp()">I Can Help</button>
-        </div>
-    </div>
-
-    <!-- Live Local Storage Feed -->
-    <div class="card">
-        <h3>📊 Live Local Storage Feed</h3>
-        <div id="liveFeedContainer">
-            <div class="feed-item">
-                <small style="color: var(--accent-primary);">System Ready • 6:19 PM</small>
-                <p>"ShaheenNexus Vault Initialized Successfully."</p>
-            </div>
+            <button class="btn-secondary" onclick="exportJSON()">Export JSON Backup</button>
+            <button class="btn-secondary" onclick="importJSONPrompt()">Import JSON Backup</button>
         </div>
     </div>
 </div>
 
 <script>
-// Tab Switching
-function switchTab(type) {
-    if(type === 'note') {
-        document.getElementById('noteWorkspace').style.display = 'block';
-        document.getElementById('tableWorkspace').style.display = 'none';
-        document.getElementById('tabNoteBtn').classList.add('active');
-        document.getElementById('tabTableBtn').classList.remove('active');
-    } else {
-        document.getElementById('noteWorkspace').style.display = 'none';
-        document.getElementById('tableWorkspace').style.display = 'block';
-        document.getElementById('tabTableBtn').classList.add('active');
-        document.getElementById('tabNoteBtn').classList.remove('active');
-    }
+function switchAppMode() {
+    let mode = document.getElementById('appMode').value;
+    document.getElementById('modeFieldsSection').style.display = mode === 'fields' ? 'flex' : 'none';
+    document.getElementById('modeTableSection').style.display = mode === 'table' ? 'flex' : 'none';
+    document.getElementById('modeNoteSection').style.display = mode === 'note' ? 'flex' : 'none';
 }
 
-// Passcode handling
-function savePasscode() {
-    let pin = document.getElementById('vaultPasscode').value;
-    if(pin) {
-        localStorage.setItem('shaheen_pin', pin);
-        alert('Vault Passcode Saved Successfully!');
-        document.getElementById('vaultPasscode').value = '';
-    } else {
-        alert('Please enter a valid passcode.');
-    }
+function addCustomField() {
+    let container = document.getElementById('dynamicFieldsContainer');
+    let div = document.createElement('div');
+    div.className = 'field-row';
+    div.innerHTML = `
+        <input type="text" placeholder="Field Name" class="f-key">
+        <input type="text" placeholder="Field Value" class="f-val">
+        <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
+    `;
+    container.appendChild(div);
 }
 
-// Dynamic Table Functions
 function addTableRow() {
     let tbody = document.getElementById('tableBody');
-    let headerCount = document.getElementById('tableHeaderRow').cells.length;
-    let newRow = tbody.insertRow();
-    for(let i=0; i<headerCount; i++) {
-        let cell = newRow.insertCell();
+    let colCount = document.getElementById('tableHeaderRow').cells.length;
+    let row = tbody.insertRow();
+    for(let i=0; i<colCount; i++) {
+        let cell = row.insertCell();
         cell.innerHTML = '<input type="text" value="Value">';
     }
 }
 
-function addTableColumn() {
+function addTableCol() {
     let headerRow = document.getElementById('tableHeaderRow');
     let th = document.createElement('th');
     th.innerText = 'Col ' + (headerRow.cells.length + 1);
@@ -203,139 +193,147 @@ function addTableColumn() {
     }
 }
 
-// Auto Token Generator
-function generateToken() {
-    return 'SHAHEN-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+function generateSecureToken() {
+    return 'SHN-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
 }
 
-// Save & Encrypt Vault Data
-function saveVaultData() {
-    let userTokenInput = document.getElementById('vaultToken').value.trim();
-    let finalToken = userTokenInput !== "" ? userTokenInput : generateToken();
-    document.getElementById('vaultToken').value = finalToken;
+function saveDataToVault() {
+    let customToken = document.getElementById('userTokenInput').value.trim();
+    let finalToken = customToken !== "" ? customToken : generateSecureToken();
+    document.getElementById('userTokenInput').value = finalToken;
 
-    let activeTab = document.getElementById('noteWorkspace').style.display !== 'none' ? 'note' : 'table';
-    let dataPayload = {};
+    let mode = document.getElementById('appMode').value;
+    let payload = { mode: mode, timestamp: new Date().toLocaleString() };
 
-    if(activeTab === 'note') {
-        dataPayload = {
-            type: 'note',
-            content: document.getElementById('vaultNoteContent').value,
-            timestamp: new Date().toLocaleTimeString()
-        };
-    } else {
-        let tableName = document.getElementById('tableNameInput').value || 'Untitled Table';
+    if(mode === 'fields') {
+        let fields = {};
+        document.querySelectorAll('.field-row').forEach(row => {
+            let key = row.querySelector('.f-key').value.trim();
+            let val = row.querySelector('.f-val').value.trim();
+            if(key) fields[key] = val;
+        });
+        payload.data = fields;
+    } else if(mode === 'table') {
+        payload.tableName = document.getElementById('customTableName').value || 'Untitled Table';
         let headers = [];
-        let headerRow = document.getElementById('tableHeaderRow');
-        for(let th of headerRow.cells) headers.push(th.innerText);
+        document.querySelectorAll('#tableHeaderRow th').th = document.querySelectorAll('#tableHeaderRow th').forEach(th => headers.push(th.innerText));
+        // fixed headers extraction
+        let thElements = document.getElementById('tableHeaderRow').cells;
+        headers = [];
+        for(let th of thElements) headers.push(th.innerText);
 
         let rows = [];
-        let tbody = document.getElementById('tableBody');
-        for(let row of tbody.rows) {
+        for(let r of document.getElementById('tableBody').rows) {
             let rowData = [];
-            for(let cell of row.cells) {
-                rowData.push(cell.querySelector('input').value);
-            }
+            for(let c of r.cells) rowData.push(c.querySelector('input').value);
             rows.push(rowData);
         }
-        dataPayload = {
-            type: 'table',
-            tableName: tableName,
-            headers: headers,
-            rows: rows,
-            timestamp: new Date().toLocaleTimeString()
+        payload.data = { headers, rows };
+    } else if(mode === 'note') {
+        payload.data = {
+            title: document.getElementById('noteTitle').value,
+            content: document.getElementById('noteContent').value
         };
     }
 
-    localStorage.setItem(finalToken, JSON.stringify(dataPayload));
+    localStorage.setItem(finalToken, JSON.stringify(payload));
     
-    let output = document.getElementById('vaultOutput');
-    output.style.display = 'block';
-    output.innerHTML = `<b>Data Saved & Encrypted Successfully!</b><br>Token Used: <code>${finalToken}</code><br><small>Save this token to retrieve your data anytime.</small>`;
-    
-    addFeedItem(`Saved new ${dataPayload.type} data with token [${finalToken}]`);
+    let resBox = document.getElementById('vaultResult');
+    resBox.style.display = 'block';
+    resBox.innerHTML = `<b>Data Successfully Saved & Encrypted!</b><br>Token: <code>${finalToken}</code><br><small>Save this token to load your customized data anywhere, anytime.</small>`;
 }
 
-// Load Vault Data using Token
-function loadVaultData() {
-    let token = document.getElementById('vaultToken').value.trim();
+function loadDataFromVault() {
+    let token = document.getElementById('userTokenInput').value.trim();
+    let resBox = document.getElementById('vaultResult');
+    resBox.style.display = 'block';
+
     if(!token) {
-        alert('Please enter a valid token to load data.');
+        resBox.innerHTML = `<span style="color:var(--danger)">Please enter a valid token to load data.</span>`;
         return;
     }
 
-    let rawData = localStorage.getItem(token);
-    let output = document.getElementById('vaultOutput');
-    output.style.display = 'block';
+    let raw = localStorage.getItem(token);
+    if(!raw) {
+        resBox.innerHTML = `<span style="color:var(--danger)">No data found for token: <code>${token}</code></span>`;
+        return;
+    }
 
-    if(rawData) {
-        let parsed = JSON.parse(rawData);
-        if(parsed.type === 'note') {
-            switchTab('note');
-            document.getElementById('vaultNoteContent').value = parsed.content;
-            output.innerHTML = `<b>Note Loaded Successfully!</b> (Saved at: ${parsed.timestamp})`;
-        } else if(parsed.type === 'table') {
-            switchTab('table');
-            document.getElementById('tableNameInput').value = parsed.tableName;
-            
-            // Rebuild headers
-            let headerRow = document.getElementById('tableHeaderRow');
-            headerRow.innerHTML = '';
-            parsed.headers.forEach(h => {
-                let th = document.createElement('th');
-                th.innerText = h;
-                headerRow.appendChild(th);
-            });
+    let parsed = JSON.parse(raw);
+    document.getElementById('appMode').value = parsed.mode;
+    switchAppMode();
 
-            // Rebuild rows
-            let tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-            parsed.rows.forEach(r => {
-                let row = tbody.insertRow();
-                r.forEach(val => {
-                    let cell = row.insertCell();
-                    cell.innerHTML = `<input type="text" value="${val}">`;
-                });
-            });
-            output.innerHTML = `<b>Table [${parsed.tableName}] Loaded Successfully!</b>`;
+    if(parsed.mode === 'fields') {
+        let container = document.getElementById('dynamicFieldsContainer');
+        container.innerHTML = '';
+        for(let [k, v] of Object.entries(parsed.data)) {
+            let div = document.createElement('div');
+            div.className = 'field-row';
+            div.innerHTML = `
+                <input type="text" value="${k}" class="f-key">
+                <input type="text" value="${v}" class="f-val">
+                <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(div);
         }
-        addFeedItem(`Loaded data using token [${token}]`);
-    } else {
-        output.innerHTML = `<span style="color: #f87171;">No data found for token: <code>${token}</code></span>`;
+        resBox.innerHTML = `<b>Fields Loaded Successfully!</b> (Token: ${token})`;
+    } else if(parsed.mode === 'table') {
+        document.getElementById('customTableName').value = parsed.tableName;
+        let headerRow = document.getElementById('tableHeaderRow');
+        headerRow.innerHTML = '';
+        parsed.data.headers.forEach(h => {
+            let th = document.createElement('th');
+            th.innerText = h;
+            headerRow.appendChild(th);
+        });
+
+        let tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        parsed.data.rows.forEach(r => {
+            let row = tbody.insertRow();
+            r.forEach(val => {
+                let cell = row.insertCell();
+                cell.innerHTML = `<input type="text" value="${val}">`;
+            });
+        });
+        resBox.innerHTML = `<b>Table [${parsed.tableName}] Loaded Successfully!</b>`;
+    } else if(parsed.mode === 'note') {
+        document.getElementById('noteTitle').value = parsed.data.title;
+        document.getElementById('noteContent').value = parsed.data.content;
+        resBox.innerHTML = `<b>Note Loaded Successfully!</b>`;
     }
 }
 
-// Peer Broadcast
-function broadcastHelp() {
-    let text = document.getElementById('peerInput').value.trim();
-    if(text) {
-        addFeedItem(`[I Need Help]: "${text}"`);
-        document.getElementById('peerInput').value = '';
-        alert('Broadcast sent to local peer network!');
-    } else {
-        alert('Please enter your issue or request.');
+function exportJSON() {
+    let allData = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        if(key.startsWith('SHN-') || key.length > 5) {
+            allData[key] = localStorage.getItem(key);
+        }
     }
+    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
+    let downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "shaheennexus_vault_backup.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
 }
 
-function offerHelp() {
-    let text = document.getElementById('peerInput').value.trim();
-    if(text) {
-        addFeedItem(`[I Can Help]: "${text}"`);
-        document.getElementById('peerInput').value = '';
-        alert('Offer broadcasted successfully!');
-    } else {
-        alert('Please enter what assistance you can provide.');
+function importJSONPrompt() {
+    let jsonStr = prompt("Paste your exported JSON backup string here:");
+    if(jsonStr) {
+        try {
+            let parsedObj = JSON.parse(jsonStr);
+            for(let [k, v] of Object.entries(parsedObj)) {
+                localStorage.setItem(k, v);
+            }
+            alert('Backup imported successfully!');
+        } catch(e) {
+            alert('Invalid JSON format!');
+        }
     }
-}
-
-// Feed Utility
-function addFeedItem(text) {
-    let container = document.getElementById('liveFeedContainer');
-    let time = new Date().toLocaleTimeString();
-    let div = document.createElement('div');
-    div.className = 'feed-item';
-    div.innerHTML = `<small style="color: var(--accent-primary);">${time}</small><p>${text}</p>`;
-    container.prepend(div);
 }
 </script>
 
