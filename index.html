@@ -1,84 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <meta
-    name="description"
-    content="Shaheen Nexus — an AI-powered universal operations workspace for turning scattered information into completed actions."
-  />
+  <title>Shine Nexus Global — Smart Work & Information Hub</title>
 
-  <meta
-    name="keywords"
-    content="AI productivity, workflow automation, document intelligence, business operations, task management, Shaheen Nexus"
-  />
+  <meta name="description"
+        content="Shine Nexus Global helps you capture information, organize documents, track actions and connect your productivity tools in one place.">
 
-  <meta name="theme-color" content="#07111f" />
+  <meta name="robots" content="index,follow">
 
-  <meta
-    property="og:title"
-    content="Shaheen Nexus — Turn scattered information into completed work"
-  />
+  <meta name="theme-color" content="#07111f">
 
-  <meta
-    property="og:description"
-    content="A powerful operations workspace for documents, actions, reminders and connected workflows."
-  />
+  <!--
+    Replace this with your real production URL.
+    Example:
+    <link rel="canonical" href="https://yourdomain.com/">
+  -->
 
-  <meta property="og:type" content="website" />
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <title>Shaheen Nexus — Universal Operations Workspace</title>
-
-  <!-- =========================================================
-       GOOGLE ADSENSE — AUTO ADS
-       ========================================================= -->
-
-  <script
-    async
-    custom-element="amp-auto-ads"
-    src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
-  </script>
-
-  <!-- AdSense account verification / ads script -->
-  <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
-    crossorigin="anonymous">
-  </script>
-
-  <!-- =========================================================
-       GOOGLE IDENTITY SERVICES
-       Replace YOUR_GOOGLE_CLIENT_ID with your real Web Client ID.
-       Do NOT put a client secret in this file.
-       ========================================================= -->
-
-  <script
-    src="https://accounts.google.com/gsi/client"
-    async
-    defer>
-  </script>
+  <!-- Google AdSense Auto Ads
+       Your publisher ID is used here.
+       AdSense approval/serving is controlled by Google.
+  -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
+          crossorigin="anonymous"></script>
 
   <style>
     :root {
-      --bg: #07111f;
-      --bg2: #0b1728;
-      --card: rgba(15, 29, 49, 0.82);
-      --card2: rgba(19, 38, 63, 0.75);
-      --text: #f7fbff;
-      --muted: #9db0c8;
-      --border: rgba(255,255,255,.09);
-      --blue: #1677ff;
-      --cyan: #00d9ff;
-      --green: #22c55e;
-      --yellow: #fbbf24;
-      --red: #ef4444;
-      --shadow: 0 20px 60px rgba(0,0,0,.28);
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef3fa;
+      --text: #101828;
+      --muted: #667085;
+      --primary: #155eef;
+      --primary-2: #00b8d9;
+      --border: #e4e7ec;
+      --danger: #d92d20;
+      --success: #039855;
+      --warning: #dc6803;
+      --shadow: 0 15px 45px rgba(16, 24, 40, .08);
       --radius: 22px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #060b13;
+      --surface: #0d1624;
+      --surface-2: #111e30;
+      --text: #f5f7fa;
+      --muted: #98a2b3;
+      --primary: #5b8cff;
+      --primary-2: #22d3ee;
+      --border: #1e2d40;
+      --shadow: 0 18px 50px rgba(0,0,0,.30);
     }
 
     * {
@@ -94,21 +74,16 @@
     body {
       font-family:
         Inter,
-        ui-sans-serif,
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
 
-      background:
-        radial-gradient(circle at 15% 0%, rgba(0,119,255,.18), transparent 35%),
-        radial-gradient(circle at 90% 10%, rgba(0,217,255,.10), transparent 30%),
-        var(--bg);
-
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 92px;
+      padding-bottom: 90px;
     }
 
     button,
@@ -127,426 +102,220 @@
       text-decoration: none;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
     .app {
       width: min(1180px, 100%);
       margin: auto;
       padding: 18px;
     }
 
-    /* =========================================================
-       TOP BAR
-       ========================================================= */
+    /* HEADER */
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      padding: 14px 0 18px;
-
-      background: linear-gradient(
-        to bottom,
-        rgba(7,17,31,.98),
-        rgba(7,17,31,.75),
-        transparent
-      );
-
-      backdrop-filter: blur(14px);
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
 
     .brand-logo {
-      width: 44px;
-      height: 44px;
-
-      border-radius: 14px;
-
+      width: 45px;
+      height: 45px;
+      border-radius: 15px;
       display: grid;
       place-items: center;
-
-      background:
-        linear-gradient(135deg, #006fff, #00d9ff);
-
       color: white;
-      font-size: 22px;
       font-weight: 900;
-
-      box-shadow:
-        0 0 30px rgba(0,190,255,.28);
+      font-size: 20px;
+      background:
+        linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 10px 30px rgba(21,94,239,.25);
     }
 
-    .brand-name {
-      font-weight: 900;
+    .brand h1 {
       font-size: 17px;
+      line-height: 1.1;
     }
 
-    .brand-sub {
+    .brand span {
+      display: block;
       color: var(--muted);
       font-size: 11px;
-      margin-top: 2px;
+      margin-top: 3px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
     }
 
     .icon-btn {
       width: 42px;
       height: 42px;
-
-      border: 1px solid var(--border);
       border-radius: 14px;
-
-      background: rgba(255,255,255,.05);
-      color: white;
-
-      display: grid;
-      place-items: center;
-
-      font-size: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
     }
 
-    /* =========================================================
-       HERO
-       ========================================================= */
+    /* HERO */
 
     .hero {
-      padding: 34px 0 20px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-
-      padding: 7px 11px;
-      border-radius: 999px;
-
-      background: rgba(22,119,255,.12);
-      border: 1px solid rgba(22,119,255,.25);
-
-      color: #8bc3ff;
-      font-size: 12px;
-      font-weight: 700;
-
-      margin-bottom: 14px;
-    }
-
-    .hero h1 {
-      font-size: clamp(34px, 8vw, 70px);
-      line-height: .98;
-      letter-spacing: -2.5px;
-      max-width: 820px;
-    }
-
-    .gradient-text {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 28px;
+      margin-bottom: 18px;
       background:
-        linear-gradient(90deg, #fff, #68b8ff, #00e5ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+        radial-gradient(circle at 85% 10%, rgba(0,184,217,.28), transparent 35%),
+        radial-gradient(circle at 5% 100%, rgba(21,94,239,.22), transparent 40%),
+        var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h2 {
+      font-size: clamp(27px, 5vw, 44px);
+      max-width: 750px;
+      letter-spacing: -.04em;
     }
 
     .hero p {
-      max-width: 680px;
-      margin-top: 18px;
       color: var(--muted);
-      line-height: 1.7;
-      font-size: 15px;
+      margin-top: 10px;
+      max-width: 700px;
+      line-height: 1.6;
     }
 
     .hero-actions {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    .primary-btn,
-    .secondary-btn {
+    .btn {
       border: 0;
       border-radius: 14px;
-      padding: 13px 17px;
-      font-weight: 800;
+      padding: 12px 17px;
+      font-weight: 750;
+      transition: .2s ease;
     }
 
-    .primary-btn {
-      color: white;
-      background:
-        linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow: 0 10px 30px rgba(0,119,255,.22);
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
-    .secondary-btn {
+    .btn-primary {
       color: white;
-      background: rgba(255,255,255,.06);
+      background: linear-gradient(135deg, var(--primary), #304ffe);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: var(--surface-2);
       border: 1px solid var(--border);
     }
 
-    /* =========================================================
-       DASHBOARD
-       ========================================================= */
+    .btn-danger {
+      color: white;
+      background: var(--danger);
+    }
+
+    /* ADS */
+
+    .ad-box {
+      margin: 18px 0;
+      min-height: 90px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      text-align: center;
+    }
+
+    .ad-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    /* GRID */
 
     .section {
-      display: none;
-      animation: fade .22s ease;
+      margin: 25px 0;
     }
 
-    .section.active {
-      display: block;
-    }
-
-    @keyframes fade {
-      from {
-        opacity: 0;
-        transform: translateY(7px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .section-title {
+    .section-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-
-      margin: 22px 0 13px;
+      margin-bottom: 13px;
     }
 
-    .section-title h2 {
+    .section-head h3 {
       font-size: 20px;
     }
 
-    .section-title span {
+    .section-head p {
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
     }
 
-    .attention {
-      border: 1px solid rgba(0,217,255,.16);
-      background:
-        linear-gradient(
-          135deg,
-          rgba(0,119,255,.12),
-          rgba(0,217,255,.05)
-        );
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
 
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 18px;
       box-shadow: var(--shadow);
     }
 
-    .attention-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .attention-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-
-      display: grid;
-      place-items: center;
-
-      background: rgba(0,217,255,.12);
-    }
-
-    .attention-header small {
-      display: block;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .attention-list {
-      display: grid;
-      gap: 9px;
-    }
-
-    .attention-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-
-      padding: 12px;
-      border-radius: 14px;
-
-      background: rgba(0,0,0,.16);
-      border: 1px solid rgba(255,255,255,.05);
-    }
-
-    .attention-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .priority {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--cyan);
-    }
-
-    .priority.red {
-      background: var(--red);
-    }
-
-    .priority.yellow {
-      background: var(--yellow);
-    }
-
-    .priority.green {
-      background: var(--green);
-    }
-
-    .attention-item small {
-      display: block;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .stat {
-      padding: 16px;
-      border-radius: 18px;
-
-      background: var(--card);
-      border: 1px solid var(--border);
-    }
-
-    .stat-value {
-      font-size: 25px;
-      font-weight: 900;
+    .stat-number {
+      font-size: 30px;
+      font-weight: 850;
     }
 
     .stat-label {
       color: var(--muted);
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    /* =========================================================
-       ACTION GRID
-       ========================================================= */
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .quick {
-      text-align: left;
-      padding: 16px;
-
-      border: 1px solid var(--border);
-      border-radius: 18px;
-
-      background: var(--card);
-      color: white;
-
-      transition: .2s;
-    }
-
-    .quick:hover {
-      transform: translateY(-3px);
-      border-color: rgba(0,217,255,.3);
-    }
-
-    .quick-icon {
-      font-size: 23px;
-      margin-bottom: 10px;
-    }
-
-    .quick strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    .quick span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    /* =========================================================
-       CARDS
-       ========================================================= */
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: 0 12px 35px rgba(0,0,0,.12);
-    }
-
-    .card-icon {
-      font-size: 26px;
-      margin-bottom: 12px;
-    }
-
-    .card h3 {
-      font-size: 16px;
-    }
-
-    .card p {
-      color: var(--muted);
-      line-height: 1.6;
       font-size: 12px;
-      margin-top: 7px;
+      margin-top: 3px;
     }
 
-    /* =========================================================
-       INPUT
-       ========================================================= */
+    /* CAPTURE */
 
-    .input-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
+    .capture {
+      display: grid;
+      gap: 12px;
     }
 
     textarea,
     input,
     select {
       width: 100%;
-
       border: 1px solid var(--border);
-      border-radius: 14px;
-
-      background: rgba(0,0,0,.18);
-      color: white;
-
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 15px;
+      padding: 13px 14px;
       outline: none;
-
-      padding: 13px;
     }
 
     textarea {
@@ -557,398 +326,385 @@
     textarea:focus,
     input:focus,
     select:focus {
-      border-color: rgba(0,217,255,.5);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(21,94,239,.12);
     }
 
-    .input-row {
+    .capture-row {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 9px;
-      margin-top: 10px;
-    }
-
-    /* =========================================================
-       DOCUMENTS
-       ========================================================= */
-
-    .dropzone {
-      border: 1.5px dashed rgba(0,217,255,.35);
-      border-radius: 20px;
-      padding: 28px;
-      text-align: center;
-      background: rgba(0,217,255,.035);
-    }
-
-    .dropzone-icon {
-      font-size: 36px;
-    }
-
-    .dropzone p {
-      color: var(--muted);
-      margin: 8px 0 15px;
-      font-size: 13px;
-    }
-
-    .document-list {
-      display: grid;
-      gap: 9px;
-      margin-top: 12px;
-    }
-
-    .document {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
+    }
 
-      padding: 13px;
+    /* ATTENTION */
 
-      background: var(--card);
+    .attention-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .attention-item {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 17px;
+      background: var(--surface);
     }
 
-    .document-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .doc-icon {
+    .attention-icon {
       width: 38px;
       height: 38px;
-      border-radius: 11px;
+      border-radius: 12px;
       display: grid;
       place-items: center;
-      background: rgba(22,119,255,.12);
+      background: var(--surface-2);
+      flex-shrink: 0;
     }
 
-    .document small {
-      display: block;
+    .attention-item h4 {
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .attention-item p {
       color: var(--muted);
-      margin-top: 3px;
+      font-size: 12px;
+      line-height: 1.5;
     }
 
-    /* =========================================================
-       CONNECTIONS
-       ========================================================= */
+    /* WORKFLOWS */
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .workflow {
+      text-align: left;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .workflow-icon {
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .workflow h4 {
+      margin-bottom: 5px;
+    }
+
+    .workflow p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* CONNECTIONS */
+
+    .connections {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
 
     .connection {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-
-      padding: 15px;
-
-      background: var(--card);
+      padding: 18px;
       border: 1px solid var(--border);
-      border-radius: 18px;
-
-      margin-bottom: 10px;
-    }
-
-    .connection-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      border-radius: 20px;
+      background: var(--surface);
     }
 
     .connection-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-
-      display: grid;
-      place-items: center;
-
-      background: rgba(255,255,255,.06);
-
-      font-size: 21px;
+      font-size: 28px;
     }
 
-    .connection small {
+    .connection h4 {
+      margin: 10px 0 5px;
+    }
+
+    .connection p {
       color: var(--muted);
+      font-size: 12px;
+      min-height: 38px;
+      line-height: 1.5;
+    }
+
+    .status {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 6px 9px;
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* LIST */
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 14px;
+      background: var(--surface);
+    }
+
+    .list-main {
+      min-width: 0;
+    }
+
+    .list-main strong {
       display: block;
+      font-size: 14px;
+    }
+
+    .list-main small {
+      display: block;
+      color: var(--muted);
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      font-size: 10px;
+      border-radius: 20px;
+      padding: 6px 9px;
+      background: var(--surface-2);
+    }
+
+    /* SEARCH */
+
+    .search-box {
+      margin-bottom: 12px;
+    }
+
+    /* PROFILE */
+
+    .profile {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+    }
+
+    .profile-info h3 {
+      font-size: 19px;
+    }
+
+    .profile-info p {
+      color: var(--muted);
+      font-size: 12px;
       margin-top: 3px;
     }
 
-    /* =========================================================
-       SEARCH
-       ========================================================= */
+    /* PAGES */
 
-    .search-box {
-      margin: 10px 0 15px;
-      position: relative;
+    .page {
+      display: none;
     }
 
-    .search-box input {
-      padding-left: 42px;
+    .page.active {
+      display: block;
     }
 
-    .search-symbol {
-      position: absolute;
-      left: 14px;
-      top: 12px;
-    }
-
-    /* =========================================================
-       BOTTOM NAV
-       ========================================================= */
+    /* BOTTOM NAV */
 
     .bottom-nav {
       position: fixed;
-      left: 50%;
+      z-index: 100;
       bottom: 12px;
+      left: 50%;
       transform: translateX(-50%);
-
-      width: min(680px, calc(100% - 20px));
-
+      width: min(650px, calc(100% - 24px));
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-
-      padding: 8px;
-
-      border-radius: 23px;
-
-      background: rgba(8,18,32,.91);
-      border: 1px solid rgba(255,255,255,.10);
-
-      backdrop-filter: blur(22px);
-
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-
-      z-index: 100;
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
     }
 
     .nav-btn {
       border: 0;
-      background: transparent;
-      color: #7890aa;
-
-      padding: 9px 4px;
-
       border-radius: 16px;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-
+      padding: 9px 4px;
+      background: transparent;
+      color: var(--muted);
       font-size: 10px;
       font-weight: 700;
     }
 
-    .nav-btn .nav-icon {
-      font-size: 20px;
+    .nav-btn span {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 2px;
     }
 
     .nav-btn.active {
-      color: white;
-      background: linear-gradient(
-        135deg,
-        rgba(22,119,255,.25),
-        rgba(0,217,255,.10)
-      );
+      background: var(--surface-2);
+      color: var(--primary);
     }
 
-    /* =========================================================
-       MODAL
-       ========================================================= */
+    /* MODAL */
 
     .modal {
       position: fixed;
       inset: 0;
-      z-index: 200;
-
+      z-index: 300;
+      background: rgba(0,0,0,.55);
       display: none;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
-
-      background: rgba(0,0,0,.65);
-      backdrop-filter: blur(8px);
+      padding: 18px;
     }
 
-    .modal.show {
+    .modal.open {
       display: flex;
     }
 
-    .modal-box {
+    .modal-card {
       width: min(600px, 100%);
       max-height: 90vh;
       overflow: auto;
-
-      background: #0b1728;
-
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 28px 28px 0 0;
-
+      border-radius: 25px;
       padding: 22px;
     }
 
-    .modal-header {
+    .modal-head {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      justify-content: space-between;
+      margin-bottom: 15px;
     }
 
     .close {
       border: 0;
-      background: rgba(255,255,255,.07);
-      color: white;
-
+      background: var(--surface-2);
+      color: var(--text);
       width: 38px;
       height: 38px;
       border-radius: 12px;
     }
 
-    /* =========================================================
-       TOAST
-       ========================================================= */
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      top: 18px;
-      transform: translate(-50%, -130px);
-
-      background: #10243c;
-      border: 1px solid rgba(0,217,255,.2);
-
-      padding: 12px 16px;
-      border-radius: 14px;
-
-      z-index: 500;
-
-      box-shadow: var(--shadow);
-
-      transition: .25s;
-
-      font-size: 13px;
-    }
-
-    .toast.show {
-      transform: translate(-50%, 0);
-    }
-
-    /* =========================================================
-       CONSENT
-       ========================================================= */
-
-    .consent {
-      position: fixed;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-
-      z-index: 300;
-
-      max-width: 720px;
-      margin: auto;
-
-      background: #0d1d31;
-      border: 1px solid rgba(255,255,255,.12);
-
-      border-radius: 20px;
-
-      padding: 17px;
-
-      box-shadow: 0 25px 80px rgba(0,0,0,.45);
-    }
-
-    .consent h3 {
-      font-size: 15px;
-    }
-
-    .consent p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-      margin: 7px 0 13px;
-    }
-
-    .consent-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    /* =========================================================
-       FOOTER
-       ========================================================= */
+    /* FOOTER */
 
     footer {
-      text-align: center;
-      padding: 45px 10px 120px;
+      margin-top: 40px;
+      padding: 25px 0;
+      border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 12px;
     }
 
-    footer .footer-links {
+    .footer-links {
       display: flex;
-      justify-content: center;
-      gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      gap: 14px;
+      margin-top: 12px;
     }
 
-    footer button {
-      background: none;
-      border: 0;
-      color: #a9d9ff;
-      cursor: pointer;
+    .footer-links a {
+      text-decoration: underline;
     }
 
-    /* =========================================================
-       MOBILE
-       ========================================================= */
+    /* TOAST */
 
-    @media (max-width: 800px) {
-      .stats {
+    #toast {
+      position: fixed;
+      z-index: 500;
+      left: 50%;
+      bottom: 92px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: white;
+      background: #101828;
+      transition: .25s ease;
+      font-size: 13px;
+      max-width: calc(100% - 30px);
+      text-align: center;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .quick-grid {
+      .connections {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .cards {
+      .workflow-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 560px) {
       .app {
         padding: 13px;
       }
 
       .hero {
-        padding-top: 25px;
+        padding: 21px;
+        border-radius: 23px;
       }
 
-      .hero h1 {
-        font-size: 42px;
+      .capture-row {
+        grid-template-columns: 1fr;
       }
 
-      .stats {
+      .connections {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .grid {
         gap: 8px;
       }
 
-      .stat {
-        padding: 13px;
-      }
-
-      .stat-value {
-        font-size: 21px;
-      }
-
-      .quick {
-        padding: 13px;
-      }
-
-      .brand-sub {
-        display: none;
+      .card {
+        padding: 14px;
+        border-radius: 17px;
       }
     }
   </style>
@@ -956,2231 +712,2432 @@
 
 <body>
 
-  <!-- AMP AUTO ADS -->
-  <amp-auto-ads
-    type="adsense"
-    data-ad-client="ca-pub-2057536839831582">
-  </amp-auto-ads>
+<div class="app">
 
-  <div class="app">
+  <!-- TOPBAR -->
+  <header class="topbar">
 
-    <!-- =======================================================
-         TOP BAR
-         ======================================================= -->
+    <div class="brand">
 
-    <header class="topbar">
-
-      <div class="brand">
-
-        <div class="brand-logo">
-          S
-        </div>
-
-        <div>
-          <div class="brand-name">
-            Shaheen Nexus
-          </div>
-
-          <div class="brand-sub">
-            Universal Operations Workspace
-          </div>
-        </div>
-
-      </div>
-
-      <button
-        class="icon-btn"
-        id="themeButton"
-        aria-label="Toggle theme">
-        ☼
-      </button>
-
-    </header>
-
-
-    <!-- =======================================================
-         HOME
-         ======================================================= -->
-
-    <main>
-
-      <section
-        id="home"
-        class="section active">
-
-        <div class="hero">
-
-          <div class="hero-badge">
-            ⚡ AI-powered operations layer
-          </div>
-
-          <h1>
-            Turn
-            <span class="gradient-text">
-              scattered information
-            </span>
-            into completed work.
-          </h1>
-
-          <p>
-            Shaheen Nexus brings documents, actions, reminders,
-            workflows and connected services into one powerful
-            workspace.
-          </p>
-
-          <div class="hero-actions">
-
-            <button
-              class="primary-btn"
-              onclick="openActionInput()">
-              + Create Action
-            </button>
-
-            <button
-              class="secondary-btn"
-              onclick="navigate('documents')">
-              Upload Document
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- WHAT NEEDS MY ATTENTION -->
-
-        <div class="section-title">
-          <h2>What needs my attention?</h2>
-          <span id="attentionCount">4 items</span>
-        </div>
-
-        <div class="attention">
-
-          <div class="attention-header">
-
-            <div class="attention-icon">
-              ⚡
-            </div>
-
-            <div>
-              <strong>Priority intelligence</strong>
-              <small>
-                Your most important items in one place.
-              </small>
-            </div>
-
-          </div>
-
-          <div
-            class="attention-list"
-            id="attentionList">
-
-            <div class="attention-item">
-
-              <div class="attention-left">
-
-                <span class="priority red"></span>
-
-                <div>
-                  <strong>Payment reminder</strong>
-                  <small>Due soon</small>
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="completeItem(this)">
-                ✓
-              </button>
-
-            </div>
-
-
-            <div class="attention-item">
-
-              <div class="attention-left">
-
-                <span class="priority yellow"></span>
-
-                <div>
-                  <strong>Document review</strong>
-                  <small>Needs your attention</small>
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="completeItem(this)">
-                ✓
-              </button>
-
-            </div>
-
-
-            <div class="attention-item">
-
-              <div class="attention-left">
-
-                <span class="priority green"></span>
-
-                <div>
-                  <strong>Customer follow-up</strong>
-                  <small>Waiting for response</small>
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="completeItem(this)">
-                ✓
-              </button>
-
-            </div>
-
-
-            <div class="attention-item">
-
-              <div class="attention-left">
-
-                <span class="priority yellow"></span>
-
-                <div>
-                  <strong>Invoice received</strong>
-                  <small>Ready for processing</small>
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="completeItem(this)">
-                ✓
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- STATS -->
-
-        <div class="stats">
-
-          <div class="stat">
-            <div
-              class="stat-value"
-              id="actionStat">
-              0
-            </div>
-
-            <div class="stat-label">
-              Active actions
-            </div>
-          </div>
-
-          <div class="stat">
-            <div
-              class="stat-value"
-              id="documentStat">
-              0
-            </div>
-
-            <div class="stat-label">
-              Documents
-            </div>
-          </div>
-
-          <div class="stat">
-            <div
-              class="stat-value"
-              id="reminderStat">
-              0
-            </div>
-
-            <div class="stat-label">
-              Reminders
-            </div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-value">
-              0
-            </div>
-
-            <div class="stat-label">
-              Connected apps
-            </div>
-          </div>
-
-        </div>
-
-
-        <!-- QUICK ACTIONS -->
-
-        <div class="section-title">
-          <h2>Quick actions</h2>
-        </div>
-
-        <div class="quick-grid">
-
-          <button
-            class="quick"
-            onclick="openActionInput()">
-
-            <div class="quick-icon">⚡</div>
-
-            <strong>Create Action</strong>
-
-            <span>
-              Turn an idea into a task.
-            </span>
-
-          </button>
-
-
-          <button
-            class="quick"
-            onclick="navigate('documents')">
-
-            <div class="quick-icon">📄</div>
-
-            <strong>Analyze Document</strong>
-
-            <span>
-              Extract useful information.
-            </span>
-
-          </button>
-
-
-          <button
-            class="quick"
-            onclick="openReminder()">
-
-            <div class="quick-icon">🔔</div>
-
-            <strong>Add Reminder</strong>
-
-            <span>
-              Never forget important work.
-            </span>
-
-          </button>
-
-
-          <button
-            class="quick"
-            onclick="navigate('connections')">
-
-            <div class="quick-icon">🔗</div>
-
-            <strong>Connect Service</strong>
-
-            <span>
-              Connect your workflow.
-            </span>
-
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           ACTIONS
-           ===================================================== -->
-
-      <section
-        id="actions"
-        class="section">
-
-        <div class="section-title">
-
-          <div>
-            <h2>Actions</h2>
-            <span>
-              Convert information into work.
-            </span>
-          </div>
-
-          <button
-            class="primary-btn"
-            onclick="openActionInput()">
-            + Add
-          </button>
-
-        </div>
-
-
-        <div class="input-card">
-
-          <textarea
-            id="actionInput"
-            placeholder="Example: Remind me to review the electricity bill tomorrow..."></textarea>
-
-          <div class="input-row">
-
-            <select id="prioritySelect">
-
-              <option value="normal">
-                Normal priority
-              </option>
-
-              <option value="high">
-                High priority
-              </option>
-
-              <option value="urgent">
-                Urgent
-              </option>
-
-            </select>
-
-            <button
-              class="primary-btn"
-              onclick="createAction()">
-              Create
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div class="search-box">
-
-          <span class="search-symbol">
-            🔎
-          </span>
-
-          <input
-            id="actionSearch"
-            placeholder="Search actions..."
-            oninput="filterActions()" />
-
-        </div>
-
-
-        <div
-          id="actionList"
-          class="document-list">
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           DOCUMENTS
-           ===================================================== -->
-
-      <section
-        id="documents"
-        class="section">
-
-        <div class="section-title">
-
-          <div>
-            <h2>Document Intelligence</h2>
-
-            <span>
-              Store and prepare documents for intelligent processing.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="dropzone">
-
-          <div class="dropzone-icon">
-            📄
-          </div>
-
-          <strong>
-            Add a document
-          </strong>
-
-          <p>
-            PDF, image, text and other supported files.
-          </p>
-
-          <input
-            type="file"
-            id="documentFile"
-            hidden
-            multiple
-            accept=".pdf,image/*,.txt,.csv,.doc,.docx" />
-
-          <button
-            class="primary-btn"
-            onclick="document.getElementById('documentFile').click()">
-            Choose files
-          </button>
-
-        </div>
-
-
-        <div
-          id="documentList"
-          class="document-list">
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           CONNECTIONS
-           ===================================================== -->
-
-      <section
-        id="connections"
-        class="section">
-
-        <div class="section-title">
-
-          <div>
-            <h2>Connections</h2>
-
-            <span>
-              Connect services only with explicit permission.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-left">
-
-            <div class="connection-icon">
-              G
-            </div>
-
-            <div>
-
-              <strong>Google Account</strong>
-
-              <small>
-                Sign in securely with Google.
-              </small>
-
-            </div>
-
-          </div>
-
-          <button
-            class="secondary-btn"
-            onclick="googleLogin()">
-            Sign in
-          </button>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-left">
-
-            <div class="connection-icon">
-              ✉
-            </div>
-
-            <div>
-
-              <strong>Gmail</strong>
-
-              <small>
-                Future OAuth integration.
-              </small>
-
-            </div>
-
-          </div>
-
-          <button
-            class="secondary-btn"
-            onclick="connectComingSoon('Gmail')">
-            Connect
-          </button>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-left">
-
-            <div class="connection-icon">
-              📅
-            </div>
-
-            <div>
-
-              <strong>Google Calendar</strong>
-
-              <small>
-                Future workflow integration.
-              </small>
-
-            </div>
-
-          </div>
-
-          <button
-            class="secondary-btn"
-            onclick="connectComingSoon('Google Calendar')">
-            Connect
-          </button>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-left">
-
-            <div class="connection-icon">
-              📁
-            </div>
-
-            <div>
-
-              <strong>Google Drive</strong>
-
-              <small>
-                Future document integration.
-              </small>
-
-            </div>
-
-          </div>
-
-          <button
-            class="secondary-btn"
-            onclick="connectComingSoon('Google Drive')">
-            Connect
-          </button>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-left">
-
-            <div class="connection-icon">
-              📊
-            </div>
-
-            <div>
-
-              <strong>Google Sheets</strong>
-
-              <small>
-                Future structured-data integration.
-              </small>
-
-            </div>
-
-          </div>
-
-          <button
-            class="secondary-btn"
-            onclick="connectComingSoon('Google Sheets')">
-            Connect
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           WORKSPACE
-           ===================================================== -->
-
-      <section
-        id="workspace"
-        class="section">
-
-        <div class="section-title">
-
-          <div>
-            <h2>Workspace</h2>
-
-            <span>
-              Your connected information layer.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="cards">
-
-          <div class="card">
-
-            <div class="card-icon">
-              🧠
-            </div>
-
-            <h3>
-              Intelligence Layer
-            </h3>
-
-            <p>
-              Understand incoming information and turn it
-              into structured actions.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🔄
-            </div>
-
-            <h3>
-              Workflow Engine
-            </h3>
-
-            <p>
-              Connect steps together so repetitive handoffs
-              can eventually be automated.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🛡️
-            </div>
-
-            <h3>
-              Trust Layer
-            </h3>
-
-            <p>
-              Permission-based architecture designed to keep
-              connected services under user control.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              📈
-            </div>
-
-            <h3>
-              Reports
-            </h3>
-
-            <p>
-              Build structured summaries from real user data.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🔐
-            </div>
-
-            <h3>
-              Security
-            </h3>
-
-            <p>
-              Secure-by-design architecture with server-side
-              secrets and least-privilege access.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🌍
-            </div>
-
-            <h3>
-              Global Ready
-            </h3>
-
-            <p>
-              Mobile-first interface designed for international
-              users and future localization.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           PROFILE
-           ===================================================== -->
-
-      <section
-        id="profile"
-        class="section">
-
-        <div class="section-title">
-
-          <div>
-            <h2>Profile</h2>
-
-            <span>
-              Account and privacy controls.
-            </span>
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            👤
-          </div>
-
-          <h3 id="profileName">
-            Guest User
-          </h3>
-
-          <p id="profileEmail">
-            No Google account connected.
-          </p>
-
-          <br />
-
-          <button
-            class="primary-btn"
-            onclick="googleLogin()">
-            Continue with Google
-          </button>
-
-        </div>
-
-
-        <div class="section-title">
-          <h2>Privacy & Security</h2>
-        </div>
-
-
-        <div class="cards">
-
-          <div class="card">
-
-            <div class="card-icon">
-              🔒
-            </div>
-
-            <h3>
-              Data Control
-            </h3>
-
-            <p>
-              Users should be able to understand what data
-              the application stores and why.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🧾
-            </div>
-
-            <h3>
-              Transparency
-            </h3>
-
-            <p>
-              No fake users, fake statistics or fake activity
-              should be presented as real.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">
-              🚫
-            </div>
-
-            <h3>
-              Permission Control
-            </h3>
-
-            <p>
-              External integrations should require explicit
-              user authorization.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <!-- =======================================================
-         FOOTER
-         ======================================================= -->
-
-    <footer>
-
-      <div class="footer-links">
-
-        <button onclick="showLegal('about')">
-          About
-        </button>
-
-        <button onclick="showLegal('privacy')">
-          Privacy Policy
-        </button>
-
-        <button onclick="showLegal('terms')">
-          Terms
-        </button>
-
-        <button onclick="showLegal('security')">
-          Security
-        </button>
-
-        <button onclick="showLegal('contact')">
-          Contact
-        </button>
-
+      <div class="brand-logo">
+        SN
       </div>
 
       <div>
-        © <span id="year"></span> Shaheen Nexus.
-        Built for useful work.
+        <h1>Shine Nexus</h1>
+        <span>Global Work & Information Hub</span>
       </div>
 
-    </footer>
+    </div>
 
-  </div>
-
-
-  <!-- =========================================================
-       BOTTOM NAVIGATION
-       ========================================================= -->
-
-  <nav class="bottom-nav">
-
-    <button
-      class="nav-btn active"
-      data-target="home"
-      onclick="navigate('home')">
-
-      <span class="nav-icon">⌂</span>
-      Home
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-target="actions"
-      onclick="navigate('actions')">
-
-      <span class="nav-icon">⚡</span>
-      Actions
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-target="documents"
-      onclick="navigate('documents')">
-
-      <span class="nav-icon">📄</span>
-      Documents
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-target="connections"
-      onclick="navigate('connections')">
-
-      <span class="nav-icon">🔗</span>
-      Connect
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-target="profile"
-      onclick="navigate('profile')">
-
-      <span class="nav-icon">👤</span>
-      Profile
-
-    </button>
-
-  </nav>
-
-
-  <!-- =========================================================
-       ACTION MODAL
-       ========================================================= -->
-
-  <div
-    class="modal"
-    id="actionModal">
-
-    <div class="modal-box">
-
-      <div class="modal-header">
-
-        <h2>
-          Create an action
-        </h2>
-
-        <button
-          class="close"
-          onclick="closeModal('actionModal')">
-          ×
-        </button>
-
-      </div>
-
-      <textarea
-        id="modalActionInput"
-        placeholder="What do you need to get done?"></textarea>
-
-      <br />
-      <br />
+    <div class="top-actions">
 
       <button
-        class="primary-btn"
-        onclick="createActionFromModal()">
-        Create Action
+        class="icon-btn"
+        id="themeBtn"
+        aria-label="Toggle theme">
+        ◐
+      </button>
+
+      <button
+        class="icon-btn"
+        onclick="openSecurity()"
+        aria-label="Security">
+        🔐
       </button>
 
     </div>
 
-  </div>
+  </header>
 
 
-  <!-- =========================================================
-       REMINDER MODAL
-       ========================================================= -->
+  <!-- HOME -->
+  <main id="homePage" class="page active">
 
-  <div
-    class="modal"
-    id="reminderModal">
+    <section class="hero">
 
-    <div class="modal-box">
+      <h2>
+        Turn scattered information into useful action.
+      </h2>
 
-      <div class="modal-header">
+      <p>
+        Capture notes, documents, links and important information.
+        Shine Nexus helps you organize what matters and identify
+        what needs your attention.
+      </p>
 
-        <h2>
-          Add Reminder
-        </h2>
+      <div class="hero-actions">
 
         <button
-          class="close"
-          onclick="closeModal('reminderModal')">
-          ×
+          class="btn btn-primary"
+          onclick="goTo('capture')">
+          + Capture something
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          onclick="goTo('connections')">
+          Connect Google
         </button>
 
       </div>
 
-      <input
-        id="reminderText"
-        placeholder="Reminder title..." />
+    </section>
 
-      <br />
-      <br />
 
-      <input
-        id="reminderDate"
-        type="datetime-local" />
+    <!-- ADSENSE AREA -->
+    <div class="ad-box">
 
-      <br />
-      <br />
+      <div class="ad-label">
+        ADVERTISEMENT
+      </div>
 
-      <button
-        class="primary-btn"
-        onclick="saveReminder()">
-        Save Reminder
-      </button>
+      <!--
+        Google Auto Ads may place ads automatically.
+
+        Do not create fake clickable advertisements.
+        Do not label ads as normal app controls.
+      -->
 
     </div>
 
-  </div>
+
+    <!-- REAL STATS -->
+    <section class="section">
+
+      <div class="section-head">
+        <div>
+          <h3>Your workspace</h3>
+          <p>Only locally stored real data is counted.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+          <div class="stat-number" id="taskCount">0</div>
+          <div class="stat-label">Open actions</div>
+        </div>
+
+        <div class="card">
+          <div class="stat-number" id="documentCount">0</div>
+          <div class="stat-label">Saved documents</div>
+        </div>
+
+        <div class="card">
+          <div class="stat-number" id="noteCount">0</div>
+          <div class="stat-label">Captured items</div>
+        </div>
+
+        <div class="card">
+          <div class="stat-number" id="completedCount">0</div>
+          <div class="stat-label">Completed actions</div>
+        </div>
+
+      </div>
+
+    </section>
 
 
-  <!-- =========================================================
-       LEGAL MODAL
-       ========================================================= -->
+    <!-- ATTENTION -->
+    <section class="section">
 
-  <div
-    class="modal"
-    id="legalModal">
+      <div class="section-head">
 
-    <div class="modal-box">
-
-      <div class="modal-header">
-
-        <h2 id="legalTitle">
-          Information
-        </h2>
-
-        <button
-          class="close"
-          onclick="closeModal('legalModal')">
-          ×
-        </button>
+        <div>
+          <h3>What needs your attention?</h3>
+          <p>Generated from your actual workspace.</p>
+        </div>
 
       </div>
 
       <div
-        id="legalContent"
-        style="color:#9db0c8;line-height:1.8;font-size:14px;">
+        id="attentionList"
+        class="attention-list">
+      </div>
+
+    </section>
+
+
+    <!-- WORKFLOW TEMPLATES -->
+    <section class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Quick workflows</h3>
+          <p>Start with a useful structure.</p>
+        </div>
+
+      </div>
+
+      <div class="workflow-grid">
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('invoice')">
+
+          <div class="workflow-icon">🧾</div>
+
+          <h4>Invoice tracker</h4>
+
+          <p>
+            Capture invoice information and identify
+            payment-related actions.
+          </p>
+
+        </button>
+
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('expiry')">
+
+          <div class="workflow-icon">📅</div>
+
+          <h4>Expiry tracker</h4>
+
+          <p>
+            Keep important document expiry information
+            organized.
+          </p>
+
+        </button>
+
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('followup')">
+
+          <div class="workflow-icon">↩️</div>
+
+          <h4>Follow-up tracker</h4>
+
+          <p>
+            Turn conversations and notes into follow-up
+            actions.
+          </p>
+
+        </button>
+
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('research')">
+
+          <div class="workflow-icon">🔎</div>
+
+          <h4>Research inbox</h4>
+
+          <p>
+            Save links and notes for later review.
+          </p>
+
+        </button>
+
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('meeting')">
+
+          <div class="workflow-icon">📝</div>
+
+          <h4>Meeting actions</h4>
+
+          <p>
+            Convert meeting notes into trackable actions.
+          </p>
+
+        </button>
+
+
+        <button
+          class="workflow"
+          onclick="useWorkflow('general')">
+
+          <div class="workflow-icon">⚡</div>
+
+          <h4>General capture</h4>
+
+          <p>
+            Quickly store anything important.
+          </p>
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ACTIONS -->
+  <section id="actionsPage" class="page">
+
+    <div class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Actions</h3>
+          <p>Tasks created from your workspace.</p>
+        </div>
+
+      </div>
+
+      <input
+        id="actionSearch"
+        class="search-box"
+        placeholder="Search actions..."
+        oninput="renderActions()">
+
+      <div
+        id="actionsList"
+        class="list">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CAPTURE -->
+  <section id="capturePage" class="page">
+
+    <div class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Smart Capture</h3>
+          <p>
+            Paste text, a link or important information.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="card capture">
+
+        <input
+          id="captureTitle"
+          placeholder="Title (optional)">
+
+
+        <textarea
+          id="captureText"
+          placeholder="Paste a note, invoice text, reminder, URL or anything important..."></textarea>
+
+
+        <div class="capture-row">
+
+          <select id="captureType">
+
+            <option value="note">
+              Note
+            </option>
+
+            <option value="invoice">
+              Invoice
+            </option>
+
+            <option value="document">
+              Document
+            </option>
+
+            <option value="link">
+              Link
+            </option>
+
+            <option value="meeting">
+              Meeting
+            </option>
+
+          </select>
+
+
+          <input
+            id="captureDate"
+            type="date">
+
+        </div>
+
+
+        <button
+          class="btn btn-primary"
+          onclick="captureItem()">
+
+          Analyze & Save
+
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          onclick="requestNotificationPermission()">
+
+          Enable browser reminders
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Document upload</h3>
+          <p>
+            Files stay local in this prototype.
+            Cloud document processing requires backend storage.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <input
+          type="file"
+          id="fileInput"
+          accept=".pdf,.txt,.csv,.doc,.docx,.jpg,.jpeg,.png,.webp">
+
+        <br><br>
+
+        <button
+          class="btn btn-secondary"
+          onclick="saveDocument()">
+
+          Save document reference
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DOCUMENTS -->
+  <section id="documentsPage" class="page">
+
+    <div class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Documents</h3>
+          <p>Your saved document references.</p>
+        </div>
+
+      </div>
+
+      <input
+        id="documentSearch"
+        class="search-box"
+        placeholder="Search documents..."
+        oninput="renderDocuments()">
+
+      <div
+        id="documentsList"
+        class="list">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONNECTIONS -->
+  <section id="connectionsPage" class="page">
+
+    <div class="section">
+
+      <div class="section-head">
+
+        <div>
+          <h3>Google Connections</h3>
+
+          <p>
+            Connect services when you are ready.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="connections">
+
+        <div class="connection">
+
+          <div class="connection-icon">✉️</div>
+
+          <h4>Gmail</h4>
+
+          <p>
+            Future workflow: identify messages
+            that require action.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            onclick="connectGoogleService('Gmail')">
+
+            Connect
+
+          </button>
+
+          <div class="status">
+            Backend OAuth required
+          </div>
+
+        </div>
+
+
+        <div class="connection">
+
+          <div class="connection-icon">📁</div>
+
+          <h4>Drive</h4>
+
+          <p>
+            Organize and reference documents
+            from Google Drive.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            onclick="connectGoogleService('Drive')">
+
+            Connect
+
+          </button>
+
+          <div class="status">
+            Backend OAuth required
+          </div>
+
+        </div>
+
+
+        <div class="connection">
+
+          <div class="connection-icon">📆</div>
+
+          <h4>Calendar</h4>
+
+          <p>
+            Turn deadlines and actions into
+            calendar events.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            onclick="connectGoogleService('Calendar')">
+
+            Connect
+
+          </button>
+
+          <div class="status">
+            Backend OAuth required
+          </div>
+
+        </div>
+
+
+        <div class="connection">
+
+          <div class="connection-icon">📊</div>
+
+          <h4>Sheets</h4>
+
+          <p>
+            Export structured workspace data
+            into Google Sheets.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            onclick="connectGoogleService('Sheets')">
+
+            Connect
+
+          </button>
+
+          <div class="status">
+            Backend OAuth required
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="card">
+
+        <h3>Google Account</h3>
+
+        <p
+          id="googleStatus"
+          style="color:var(--muted);margin:8px 0 15px">
+
+          Not signed in.
+
+        </p>
+
+        <!--
+          IMPORTANT:
+          Replace YOUR_GOOGLE_CLIENT_ID below with your
+          actual Web OAuth Client ID.
+        -->
+
+        <div
+          id="g_id_onload"
+          data-client_id="1075489418521-o3k08gmk0i859afvar4qomf61h41ceed.apps.googleusercontent.com"
+          data-callback="handleGoogleCredential"
+          data-auto_prompt="false">
+        </div>
+
+        <div
+          class="g_id_signin"
+          data-type="standard"
+          data-size="large"
+          data-theme="outline"
+          data-text="continue_with"
+          data-shape="rectangular">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PROFILE -->
+  <section id="profilePage" class="page">
+
+    <div class="section">
+
+      <div class="card">
+
+        <div class="profile">
+
+          <img
+            id="profileAvatar"
+            class="avatar"
+            src=""
+            alt="Profile picture">
+
+          <div class="profile-info">
+
+            <h3 id="profileName">
+              Local Workspace
+            </h3>
+
+            <p id="profileEmail">
+              Sign in with Google to connect your account.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="card">
+
+        <h3>Privacy & Security</h3>
+
+        <p style="color:var(--muted);margin:9px 0 16px;line-height:1.6">
+
+          Your prototype workspace uses browser encryption
+          for locally stored application data. Cloud synchronization
+          requires a properly secured backend.
+
+        </p>
+
+        <button
+          class="btn btn-secondary"
+          onclick="openSecurity()">
+
+          Security Center
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="card">
+
+        <h3>Data controls</h3>
+
+        <br>
+
+        <button
+          class="btn btn-secondary"
+          onclick="exportData()">
+
+          Export workspace
+
+        </button>
+
+        <br><br>
+
+        <input
+          type="file"
+          id="importInput"
+          accept=".json">
+
+        <br><br>
+
+        <button
+          class="btn btn-secondary"
+          onclick="importData()">
+
+          Import workspace
+
+        </button>
+
+        <br><br>
+
+        <button
+          class="btn btn-danger"
+          onclick="deleteAllData()">
+
+          Delete local data
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LEGAL / INFORMATION -->
+  <section class="section">
+
+    <div class="card">
+
+      <h3>About Shine Nexus</h3>
+
+      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
+
+        Shine Nexus Global is designed as a productivity and
+        information-management platform. It aims to help people
+        capture useful information, organize documents, identify
+        actions and connect productivity services.
+
+      </p>
+
+      <br>
+
+      <h3>Privacy</h3>
+
+      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
+
+        This prototype stores workspace information locally in
+        the browser. Google-connected features require explicit
+        authorization. A production deployment should provide
+        a complete privacy policy describing data collection,
+        retention, processing, third-party services and deletion.
+
+      </p>
+
+      <br>
+
+      <h3>Security</h3>
+
+      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
+
+        Shine Nexus does not claim end-to-end encryption or
+        enterprise-grade security from this static prototype.
+        Production cloud synchronization should use secure
+        server-side token handling, HTTPS, access controls,
+        encryption at rest and appropriate security monitoring.
+
+      </p>
+
+      <br>
+
+      <h3>Terms</h3>
+
+      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
+
+        The service should not be used as a substitute for
+        professional legal, financial, medical or security advice.
+        Users remain responsible for reviewing automated
+        suggestions before taking important actions.
+
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+
+    <strong>Shine Nexus Global</strong>
+
+    <div class="footer-links">
+
+      <a href="#about">About</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#terms">Terms</a>
+      <a href="#security">Security</a>
+      <a href="#contact">Contact</a>
+
+    </div>
+
+    <p style="margin-top:14px">
+      © <span id="year"></span> Shine Nexus Global.
+      Built for useful, transparent productivity.
+    </p>
+
+  </footer>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<nav
+  class="bottom-nav"
+  aria-label="Main navigation">
+
+  <button
+    class="nav-btn active"
+    data-page="home"
+    onclick="goTo('home')">
+
+    <span>⌂</span>
+    Home
+
+  </button>
+
+  <button
+    class="nav-btn"
+    data-page="actions"
+    onclick="goTo('actions')">
+
+    <span>✓</span>
+    Actions
+
+  </button>
+
+  <button
+    class="nav-btn"
+    data-page="capture"
+    onclick="goTo('capture')">
+
+    <span>＋</span>
+    Capture
+
+  </button>
+
+  <button
+    class="nav-btn"
+    data-page="documents"
+    onclick="goTo('documents')">
+
+    <span>▣</span>
+    Docs
+
+  </button>
+
+  <button
+    class="nav-btn"
+    data-page="profile"
+    onclick="goTo('profile')">
+
+    <span>●</span>
+    Profile
+
+  </button>
+
+</nav>
+
+
+<!-- SECURITY MODAL -->
+
+<div
+  id="securityModal"
+  class="modal"
+  role="dialog"
+  aria-modal="true">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h3>Security Center</h3>
+
+      <button
+        class="close"
+        onclick="closeSecurity()">
+        ×
+      </button>
+
+    </div>
+
+    <p style="color:var(--muted);line-height:1.7">
+
+      Shine Nexus uses the browser Web Crypto API to encrypt
+      its local workspace using AES-GCM.
+
+      This protects locally stored application data against
+      casual inspection of the stored ciphertext.
+
+    </p>
+
+    <br>
+
+    <div class="list">
+
+      <div class="list-item">
+        <div class="list-main">
+          <strong>Local encryption</strong>
+          <small>AES-GCM / browser Web Crypto</small>
+        </div>
+        <span class="badge">Enabled</span>
+      </div>
+
+      <div class="list-item">
+        <div class="list-main">
+          <strong>HTTPS</strong>
+          <small>Required for production deployment</small>
+        </div>
+        <span class="badge">Required</span>
+      </div>
+
+      <div class="list-item">
+        <div class="list-main">
+          <strong>Google OAuth tokens</strong>
+          <small>Should be handled by backend</small>
+        </div>
+        <span class="badge">Backend</span>
+      </div>
+
+      <div class="list-item">
+        <div class="list-main">
+          <strong>AI provider</strong>
+          <small>No Gemini dependency in this build</small>
+        </div>
+        <span class="badge">Provider-neutral</span>
       </div>
 
     </div>
 
   </div>
 
-
-  <!-- =========================================================
-       CONSENT
-       ========================================================= -->
-
-  <div
-    class="consent"
-    id="consentBox">
-
-    <h3>
-      Privacy & advertising choices
-    </h3>
-
-    <p>
-      Shaheen Nexus may use essential storage for application
-      functionality and, where applicable, advertising technologies.
-      You can choose your preference. See our Privacy Policy for details.
-    </p>
-
-    <div class="consent-actions">
-
-      <button
-        class="primary-btn"
-        onclick="setConsent('accepted')">
-        Accept
-      </button>
-
-      <button
-        class="secondary-btn"
-        onclick="setConsent('essential')">
-        Essential only
-      </button>
-
-      <button
-        class="secondary-btn"
-        onclick="showLegal('privacy')">
-        Privacy Policy
-      </button>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- =========================================================
-       TOAST
-       ========================================================= -->
-
-  <div
-    class="toast"
-    id="toast">
-  </div>
+<div id="toast"></div>
 
 
-  <!-- =========================================================
-       JAVASCRIPT
-       ========================================================= -->
+<script type="module">
 
-  <script>
+/* =========================================================
+   FIREBASE
+   ========================================================= */
 
-    /*
-     * ============================================================
-     * SHAHEEN NEXUS
-     * Frontend MVP
-     *
-     * IMPORTANT:
-     * Real AI, Google OAuth, Gmail/Drive/Calendar and secure
-     * server-side integrations require a backend.
-     * ============================================================
-     */
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-
-    const STORAGE_KEYS = {
-      actions: "shaheen_nexus_actions",
-      documents: "shaheen_nexus_documents",
-      reminders: "shaheen_nexus_reminders",
-      consent: "shaheen_nexus_consent",
-      theme: "shaheen_nexus_theme",
-      user: "shaheen_nexus_user"
-    };
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
-    let actions =
-      JSON.parse(
-        localStorage.getItem(STORAGE_KEYS.actions) || "[]"
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
+
+  authDomain:
+    "shaheen-nexus.firebaseapp.com",
+
+  projectId:
+    "shaheen-nexus",
+
+  storageBucket:
+    "shaheen-nexus.firebasestorage.app",
+
+  messagingSenderId:
+    "1075489418521",
+
+  appId:
+    "1:1075489418521:web:1b166eb484971a387d6988",
+
+  measurementId:
+    "G-VV2CBVV3HQ"
+
+};
+
+
+const firebaseApp =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(firebaseApp);
+
+
+/* =========================================================
+   GOOGLE AUTH
+   ========================================================= */
+
+const provider =
+  new GoogleAuthProvider();
+
+provider.setCustomParameters({
+  prompt: "select_account"
+});
+
+
+window.googleLogin = async function() {
+
+  try {
+
+    const result =
+      await signInWithPopup(auth, provider);
+
+    const user =
+      result.user;
+
+    updateProfileUI(user);
+
+    toast("Google sign-in successful.");
+
+  } catch(error) {
+
+    console.error(error);
+
+    toast(
+      "Google sign-in could not be completed."
+    );
+
+  }
+
+};
+
+
+onAuthStateChanged(auth, user => {
+
+  if(user) {
+
+    updateProfileUI(user);
+
+  }
+
+});
+
+
+function updateProfileUI(user) {
+
+  document
+    .getElementById("profileName")
+    .textContent =
+      user.displayName || "Google User";
+
+  document
+    .getElementById("profileEmail")
+    .textContent =
+      user.email || "";
+
+  const avatar =
+    document.getElementById("profileAvatar");
+
+  avatar.src =
+    user.photoURL ||
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23e9eef5'/%3E%3C/svg%3E";
+
+}
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let state = {
+
+  items: [],
+
+  tasks: [],
+
+  documents: [],
+
+  theme: "light"
+
+};
+
+
+const STORAGE_KEY =
+  "shine_nexus_encrypted_v1";
+
+
+/* =========================================================
+   CRYPTO
+   ========================================================= */
+
+async function deriveKey(passphrase, salt) {
+
+  const encoder =
+    new TextEncoder();
+
+  const material =
+    await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(passphrase),
+      "PBKDF2",
+      false,
+      ["deriveKey"]
+    );
+
+  return crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt,
+      iterations: 150000,
+      hash: "SHA-256"
+    },
+    material,
+    {
+      name: "AES-GCM",
+      length: 256
+    },
+    false,
+    ["encrypt", "decrypt"]
+  );
+
+}
+
+
+async function encryptState(data) {
+
+  /*
+    This prototype uses a browser-local key derived from
+    a generated passphrase stored locally.
+
+    Production multi-device encryption requires a proper
+    user-controlled key strategy and backend architecture.
+  */
+
+  const passphrase =
+    getLocalPassphrase();
+
+  const salt =
+    crypto.getRandomValues(
+      new Uint8Array(16)
+    );
+
+  const iv =
+    crypto.getRandomValues(
+      new Uint8Array(12)
+    );
+
+  const key =
+    await deriveKey(
+      passphrase,
+      salt
+    );
+
+  const encoded =
+    new TextEncoder().encode(
+      JSON.stringify(data)
+    );
+
+  const cipher =
+    await crypto.subtle.encrypt(
+      {
+        name: "AES-GCM",
+        iv
+      },
+      key,
+      encoded
+    );
+
+  return {
+
+    salt: arrayToBase64(salt),
+    iv: arrayToBase64(iv),
+    data: arrayToBase64(
+      new Uint8Array(cipher)
+    )
+
+  };
+
+}
+
+
+async function decryptState(payload) {
+
+  try {
+
+    const passphrase =
+      getLocalPassphrase();
+
+    const salt =
+      base64ToArray(payload.salt);
+
+    const iv =
+      base64ToArray(payload.iv);
+
+    const encrypted =
+      base64ToArray(payload.data);
+
+    const key =
+      await deriveKey(
+        passphrase,
+        salt
       );
 
-    let documents =
-      JSON.parse(
-        localStorage.getItem(STORAGE_KEYS.documents) || "[]"
-      );
-
-    let reminders =
-      JSON.parse(
-        localStorage.getItem(STORAGE_KEYS.reminders) || "[]"
-      );
-
-
-    /* ==========================================================
-       UTILITIES
-       ========================================================== */
-
-    function saveState() {
-
-      localStorage.setItem(
-        STORAGE_KEYS.actions,
-        JSON.stringify(actions)
-      );
-
-      localStorage.setItem(
-        STORAGE_KEYS.documents,
-        JSON.stringify(documents)
-      );
-
-      localStorage.setItem(
-        STORAGE_KEYS.reminders,
-        JSON.stringify(reminders)
-      );
-
-      updateStats();
-    }
-
-
-    function escapeHTML(value) {
-
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-    }
-
-
-    function showToast(message) {
-
-      const toast =
-        document.getElementById("toast");
-
-      toast.textContent = message;
-
-      toast.classList.add("show");
-
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2400);
-
-    }
-
-
-    /* ==========================================================
-       NAVIGATION
-       ========================================================== */
-
-    function navigate(target) {
-
-      document
-        .querySelectorAll(".section")
-        .forEach(section => {
-          section.classList.remove("active");
-        });
-
-      const selected =
-        document.getElementById(target);
-
-      if (selected) {
-        selected.classList.add("active");
-      }
-
-      document
-        .querySelectorAll(".nav-btn")
-        .forEach(button => {
-          button.classList.toggle(
-            "active",
-            button.dataset.target === target
-          );
-        });
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-      if (target === "actions") {
-        renderActions();
-      }
-
-      if (target === "documents") {
-        renderDocuments();
-      }
-
-    }
-
-
-    /* ==========================================================
-       ACTIONS
-       ========================================================== */
-
-    function openActionInput() {
-
-      document
-        .getElementById("actionModal")
-        .classList.add("show");
-
-      setTimeout(() => {
-        document
-          .getElementById("modalActionInput")
-          .focus();
-      }, 100);
-
-    }
-
-
-    function createAction() {
-
-      const input =
-        document.getElementById("actionInput");
-
-      const priority =
-        document.getElementById("prioritySelect").value;
-
-      const text =
-        input.value.trim();
-
-      if (!text) {
-
-        showToast("Write an action first.");
-
-        return;
-      }
-
-      actions.unshift({
-
-        id: Date.now(),
-
-        text,
-
-        priority,
-
-        createdAt:
-          new Date().toISOString(),
-
-        completed: false
-
-      });
-
-      input.value = "";
-
-      saveState();
-
-      renderActions();
-
-      showToast("Action created.");
-
-    }
-
-
-    function createActionFromModal() {
-
-      const input =
-        document.getElementById("modalActionInput");
-
-      const text =
-        input.value.trim();
-
-      if (!text) {
-
-        showToast("Write something first.");
-
-        return;
-      }
-
-      actions.unshift({
-
-        id: Date.now(),
-
-        text,
-
-        priority: "normal",
-
-        createdAt:
-          new Date().toISOString(),
-
-        completed: false
-
-      });
-
-      input.value = "";
-
-      saveState();
-
-      closeModal("actionModal");
-
-      renderActions();
-
-      showToast("Action created successfully.");
-
-      navigate("actions");
-
-    }
-
-
-    function renderActions() {
-
-      const container =
-        document.getElementById("actionList");
-
-      if (!container) return;
-
-      if (!actions.length) {
-
-        container.innerHTML = `
-          <div class="card">
-            <div class="card-icon">⚡</div>
-            <h3>No actions yet</h3>
-            <p>
-              Create your first action and it will appear here.
-            </p>
-          </div>
-        `;
-
-        return;
-      }
-
-
-      container.innerHTML =
-        actions.map(action => {
-
-          const priorityClass =
-            action.priority === "urgent"
-              ? "red"
-              : action.priority === "high"
-              ? "yellow"
-              : "green";
-
-          return `
-
-            <div
-              class="document"
-              data-action="${escapeHTML(action.text.toLowerCase())}">
-
-              <div class="document-info">
-
-                <div class="doc-icon">
-                  <span class="priority ${priorityClass}"></span>
-                </div>
-
-                <div>
-
-                  <strong>
-                    ${escapeHTML(action.text)}
-                  </strong>
-
-                  <small>
-                    ${escapeHTML(action.priority)} priority
-                  </small>
-
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="completeAction(${action.id})">
-                ✓
-              </button>
-
-            </div>
-
-          `;
-
-        }).join("");
-
-    }
-
-
-    function completeAction(id) {
-
-      actions =
-        actions.filter(
-          action => action.id !== id
-        );
-
-      saveState();
-
-      renderActions();
-
-      showToast("Action completed.");
-
-    }
-
-
-    function completeItem(button) {
-
-      const item =
-        button.closest(".attention-item");
-
-      if (!item) return;
-
-      item.remove();
-
-      showToast("Item marked as complete.");
-
-      updateAttentionCount();
-
-    }
-
-
-    function filterActions() {
-
-      const query =
-        document
-          .getElementById("actionSearch")
-          .value
-          .toLowerCase();
-
-      document
-        .querySelectorAll("#actionList .document")
-        .forEach(item => {
-
-          const text =
-            item.dataset.action || "";
-
-          item.style.display =
-            text.includes(query)
-              ? "flex"
-              : "none";
-
-        });
-
-    }
-
-
-    /* ==========================================================
-       DOCUMENTS
-       ========================================================== */
-
-    document
-      .getElementById("documentFile")
-      .addEventListener("change", function () {
-
-        const files =
-          Array.from(this.files || []);
-
-        files.forEach(file => {
-
-          documents.unshift({
-
-            id: Date.now() + Math.random(),
-
-            name: file.name,
-
-            size: file.size,
-
-            type: file.type,
-
-            createdAt:
-              new Date().toISOString()
-
-          });
-
-        });
-
-        saveState();
-
-        renderDocuments();
-
-        showToast(
-          `${files.length} document(s) added.`
-        );
-
-        this.value = "";
-
-      });
-
-
-    function renderDocuments() {
-
-      const container =
-        document.getElementById("documentList");
-
-      if (!documents.length) {
-
-        container.innerHTML = `
-          <div class="card">
-            <div class="card-icon">📂</div>
-            <h3>Your document vault is empty</h3>
-            <p>
-              Upload a document to start building your
-              personal information workspace.
-            </p>
-          </div>
-        `;
-
-        return;
-      }
-
-
-      container.innerHTML =
-        documents.map(doc => {
-
-          return `
-
-            <div class="document">
-
-              <div class="document-info">
-
-                <div class="doc-icon">
-                  📄
-                </div>
-
-                <div>
-
-                  <strong>
-                    ${escapeHTML(doc.name)}
-                  </strong>
-
-                  <small>
-                    ${formatBytes(doc.size)}
-                  </small>
-
-                </div>
-
-              </div>
-
-              <button
-                class="icon-btn"
-                onclick="analyzeDocument('${escapeHTML(doc.name)}')">
-                🧠
-              </button>
-
-            </div>
-
-          `;
-
-        }).join("");
-
-    }
-
-
-    function analyzeDocument(name) {
-
-      showToast(
-        `Document queued for analysis: ${name}`
-      );
-
-    }
-
-
-    function formatBytes(bytes) {
-
-      if (!bytes) return "0 B";
-
-      const units =
-        ["B", "KB", "MB", "GB"];
-
-      const i =
-        Math.floor(
-          Math.log(bytes) /
-          Math.log(1024)
-        );
-
-      return (
-        (bytes / Math.pow(1024, i))
-          .toFixed(1) +
-        " " +
-        units[i]
-      );
-
-    }
-
-
-    /* ==========================================================
-       REMINDERS
-       ========================================================== */
-
-    function openReminder() {
-
-      document
-        .getElementById("reminderModal")
-        .classList.add("show");
-
-    }
-
-
-    function saveReminder() {
-
-      const text =
-        document
-          .getElementById("reminderText")
-          .value.trim();
-
-      const date =
-        document
-          .getElementById("reminderDate")
-          .value;
-
-      if (!text || !date) {
-
-        showToast(
-          "Add reminder title and date."
-        );
-
-        return;
-      }
-
-
-      reminders.unshift({
-
-        id: Date.now(),
-
-        text,
-
-        date,
-
-        completed: false
-
-      });
-
-
-      document
-        .getElementById("reminderText")
-        .value = "";
-
-      document
-        .getElementById("reminderDate")
-        .value = "";
-
-      saveState();
-
-      closeModal("reminderModal");
-
-      showToast("Reminder saved.");
-
-    }
-
-
-    /* ==========================================================
-       GOOGLE LOGIN
-       ========================================================== */
-
-    function googleLogin() {
-
-      /*
-       * Real Google Identity Services requires:
-       *
-       * 1. Google Cloud project
-       * 2. OAuth Web Client ID
-       * 3. Authorized JavaScript origins
-       * 4. Authorized redirect URIs where applicable
-       * 5. Backend token/session validation
-       *
-       * Never put a Google client SECRET here.
-       */
-
-      const clientId =
-        "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
-
-
-      if (
-        clientId.startsWith(
-          "YOUR_GOOGLE_CLIENT_ID"
-        )
-      ) {
-
-        showToast(
-          "Google OAuth needs your real Web Client ID."
-        );
-
-        navigate("profile");
-
-        return;
-      }
-
-
-      if (
-        !window.google ||
-        !google.accounts
-      ) {
-
-        showToast(
-          "Google Identity Services is not ready."
-        );
-
-        return;
-      }
-
-
-      google.accounts.id.initialize({
-
-        client_id: clientId,
-
-        callback: handleGoogleCredential
-
-      });
-
-
-      google.accounts.id.prompt();
-
-    }
-
-
-    function handleGoogleCredential(response) {
-
-      /*
-       * IMPORTANT:
-       * Production backend MUST verify the credential.
-       *
-       * Do not trust decoded JWT data from the browser alone.
-       */
-
-      showToast(
-        "Google credential received. Backend verification required."
-      );
-
-    }
-
-
-    /* ==========================================================
-       CONNECTIONS
-       ========================================================== */
-
-    function connectComingSoon(service) {
-
-      showToast(
-        `${service} integration will require secure OAuth backend setup.`
-      );
-
-    }
-
-
-    /* ==========================================================
-       MODALS
-       ========================================================== */
-
-    function closeModal(id) {
-
-      document
-        .getElementById(id)
-        .classList.remove("show");
-
-    }
-
-
-    document
-      .querySelectorAll(".modal")
-      .forEach(modal => {
-
-        modal.addEventListener(
-          "click",
-          event => {
-
-            if (
-              event.target === modal
-            ) {
-
-              modal.classList.remove("show");
-
-            }
-
-          }
-        );
-
-      });
-
-
-    /* ==========================================================
-       LEGAL CONTENT
-       ========================================================== */
-
-    function showLegal(type) {
-
-      const title =
-        document.getElementById("legalTitle");
-
-      const content =
-        document.getElementById("legalContent");
-
-
-      const pages = {
-
-        about: {
-
-          title: "About Shaheen Nexus",
-
-          content: `
-            <p>
-              Shaheen Nexus is designed as a universal
-              operations workspace that helps users turn
-              scattered information into organized actions.
-            </p>
-
-            <br>
-
-            <p>
-              The platform is being developed around
-              documents, workflows, reminders, connected
-              services and user-controlled automation.
-            </p>
-          `
-
+    const plain =
+      await crypto.subtle.decrypt(
+        {
+          name: "AES-GCM",
+          iv
         },
-
-
-        privacy: {
-
-          title: "Privacy Policy",
-
-          content: `
-            <p>
-              Shaheen Nexus is designed around data
-              minimization and transparency.
-            </p>
-
-            <br>
-
-            <p>
-              Information should only be collected when
-              required for a clearly stated purpose.
-            </p>
-
-            <br>
-
-            <p>
-              Third-party services such as Google may process
-              information according to their own policies
-              when a user explicitly connects those services.
-            </p>
-
-            <br>
-
-            <p>
-              Advertising technologies may be used where
-              legally and technically appropriate. Users
-              should receive applicable privacy and consent
-              choices.
-            </p>
-
-            <br>
-
-            <p>
-              This page is an MVP placeholder and must be
-              replaced with the final legally reviewed policy
-              before production launch.
-            </p>
-          `
-
-        },
-
-
-        terms: {
-
-          title: "Terms of Service",
-
-          content: `
-            <p>
-              Shaheen Nexus is provided as a software service
-              intended to help users organize information
-              and workflows.
-            </p>
-
-            <br>
-
-            <p>
-              Users are responsible for information they
-              upload and for permissions they grant to
-              connected third-party services.
-            </p>
-
-            <br>
-
-            <p>
-              Final production terms must be reviewed and
-              customized before public launch.
-            </p>
-          `
-
-        },
-
-
-        security: {
-
-          title: "Security",
-
-          content: `
-            <p>
-              Security is a core design principle of
-              Shaheen Nexus.
-            </p>
-
-            <br>
-
-            <p>
-              Production architecture should use HTTPS/TLS,
-              secure sessions, server-side secrets, OAuth
-              token protection, authorization checks,
-              input validation, rate limiting and least
-              privilege access.
-            </p>
-
-            <br>
-
-            <p>
-              Sensitive credentials must never be committed
-              to GitHub.
-            </p>
-          `
-
-        },
-
-
-        contact: {
-
-          title: "Contact",
-
-          content: `
-            <p>
-              For support, privacy requests or business
-              inquiries, add the official Shaheen Nexus
-              support email before production launch.
-            </p>
-
-            <br>
-
-            <p>
-              Do not publish a personal email address if a
-              dedicated support address is not ready.
-            </p>
-          `
-
-        }
-
-      };
-
-
-      title.textContent =
-        pages[type].title;
-
-      content.innerHTML =
-        pages[type].content;
-
-      document
-        .getElementById("legalModal")
-        .classList.add("show");
-
-    }
-
-
-    /* ==========================================================
-       CONSENT
-       ========================================================== */
-
-    function setConsent(value) {
-
-      localStorage.setItem(
-        STORAGE_KEYS.consent,
-        value
+        key,
+        encrypted
       );
 
-      document
-        .getElementById("consentBox")
-        .style.display = "none";
+    return JSON.parse(
+      new TextDecoder().decode(plain)
+    );
 
-      showToast(
-        value === "accepted"
-          ? "Privacy preference saved."
-          : "Essential-only preference saved."
+  } catch {
+
+    return null;
+
+  }
+
+}
+
+
+function getLocalPassphrase() {
+
+  let pass =
+    localStorage.getItem(
+      "shine_nexus_local_key"
+    );
+
+  if(!pass) {
+
+    const bytes =
+      crypto.getRandomValues(
+        new Uint8Array(32)
       );
 
-    }
+    pass =
+      arrayToBase64(bytes);
+
+    localStorage.setItem(
+      "shine_nexus_local_key",
+      pass
+    );
+
+  }
+
+  return pass;
+
+}
 
 
-    function loadConsent() {
+function arrayToBase64(bytes) {
 
-      const value =
-        localStorage.getItem(
-          STORAGE_KEYS.consent
-        );
+  let binary = "";
 
-      if (value) {
+  bytes.forEach(
+    byte => binary +=
+      String.fromCharCode(byte)
+  );
 
-        document
-          .getElementById("consentBox")
-          .style.display = "none";
+  return btoa(binary);
 
-      }
-
-    }
+}
 
 
-    /* ==========================================================
-       THEME
-       ========================================================== */
+function base64ToArray(base64) {
 
+  const binary =
+    atob(base64);
+
+  const bytes =
+    new Uint8Array(
+      binary.length
+    );
+
+  for(let i = 0; i < binary.length; i++) {
+
+    bytes[i] =
+      binary.charCodeAt(i);
+
+  }
+
+  return bytes;
+
+}
+
+
+/* =========================================================
+   SAVE / LOAD
+   ========================================================= */
+
+async function saveState() {
+
+  const encrypted =
+    await encryptState(state);
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(encrypted)
+  );
+
+}
+
+
+async function loadState() {
+
+  const raw =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
+  if(!raw) return;
+
+  const parsed =
+    JSON.parse(raw);
+
+  const decrypted =
+    await decryptState(parsed);
+
+  if(decrypted) {
+
+    state =
+      decrypted;
+
+  }
+
+}
+
+
+/* =========================================================
+   CAPTURE ENGINE
+   ========================================================= */
+
+function analyzeText(text, type) {
+
+  const actions = [];
+
+  const lower =
+    text.toLowerCase();
+
+
+  if(
+    lower.includes("due") ||
+    lower.includes("payment") ||
+    lower.includes("pay")
+  ) {
+
+    actions.push({
+      title: "Review payment-related information",
+      reason: "Payment/due wording detected."
+    });
+
+  }
+
+
+  if(
+    lower.includes("expire") ||
+    lower.includes("expiry") ||
+    lower.includes("renew")
+  ) {
+
+    actions.push({
+      title: "Review expiry or renewal date",
+      reason: "Expiry/renewal wording detected."
+    });
+
+  }
+
+
+  if(
+    lower.includes("follow up") ||
+    lower.includes("follow-up") ||
+    lower.includes("reply")
+  ) {
+
+    actions.push({
+      title: "Follow up",
+      reason: "Follow-up wording detected."
+    });
+
+  }
+
+
+  if(
+    lower.includes("meeting") ||
+    lower.includes("call")
+  ) {
+
+    actions.push({
+      title: "Review meeting/call action",
+      reason: "Meeting/call wording detected."
+    });
+
+  }
+
+
+  const amount =
+    text.match(
+      /(?:rs\.?|pkr|\$|€|£)\s?\d+(?:[,.]\d{1,2})?/i
+    );
+
+  if(amount) {
+
+    actions.push({
+      title: `Review amount ${amount[0]}`,
+      reason: "Currency amount detected."
+    });
+
+  }
+
+
+  if(type === "invoice" &&
+     actions.length === 0) {
+
+    actions.push({
+      title: "Review invoice",
+      reason: "Invoice captured."
+    });
+
+  }
+
+
+  if(type === "document" &&
+     actions.length === 0) {
+
+    actions.push({
+      title: "Review saved document",
+      reason: "Document captured."
+    });
+
+  }
+
+
+  return actions;
+
+}
+
+
+/* =========================================================
+   CAPTURE
+   ========================================================= */
+
+window.captureItem =
+async function() {
+
+  const title =
     document
-      .getElementById("themeButton")
-      .addEventListener(
-        "click",
-        () => {
+      .getElementById("captureTitle")
+      .value.trim();
 
-          /*
-           * The first production release is intentionally
-           * dark-first. This button can later switch between
-           * complete light/dark design systems.
-           */
+  const text =
+    document
+      .getElementById("captureText")
+      .value.trim();
 
-          showToast(
-            "Advanced theme system coming next."
-          );
+  const type =
+    document
+      .getElementById("captureType")
+      .value;
 
-        }
+  const date =
+    document
+      .getElementById("captureDate")
+      .value;
+
+
+  if(!text) {
+
+    toast("Add some information first.");
+
+    return;
+
+  }
+
+
+  const item = {
+
+    id: crypto.randomUUID(),
+
+    title:
+      title ||
+      text.slice(0, 55),
+
+    text,
+
+    type,
+
+    date,
+
+    createdAt:
+      new Date().toISOString()
+
+  };
+
+
+  state.items.unshift(item);
+
+
+  const detected =
+    analyzeText(text, type);
+
+
+  detected.forEach(action => {
+
+    state.tasks.unshift({
+
+      id: crypto.randomUUID(),
+
+      title: action.title,
+
+      reason: action.reason,
+
+      sourceId: item.id,
+
+      completed: false,
+
+      createdAt:
+        new Date().toISOString()
+
+    });
+
+  });
+
+
+  await saveState();
+
+  document
+    .getElementById("captureTitle")
+    .value = "";
+
+  document
+    .getElementById("captureText")
+    .value = "";
+
+  document
+    .getElementById("captureDate")
+    .value = "";
+
+
+  renderAll();
+
+  toast(
+    detected.length
+      ? `${detected.length} action(s) detected.`
+      : "Information saved."
+  );
+
+
+  goTo("home");
+
+};
+
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
+window.saveDocument =
+async function() {
+
+  const input =
+    document.getElementById("fileInput");
+
+  if(!input.files.length) {
+
+    toast("Choose a file first.");
+
+    return;
+
+  }
+
+
+  const file =
+    input.files[0];
+
+
+  state.documents.unshift({
+
+    id: crypto.randomUUID(),
+
+    name: file.name,
+
+    type: file.type || "unknown",
+
+    size: file.size,
+
+    createdAt:
+      new Date().toISOString()
+
+  });
+
+
+  await saveState();
+
+  input.value = "";
+
+  renderAll();
+
+  toast(
+    "Document reference saved locally."
+  );
+
+};
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function renderStats() {
+
+  const open =
+    state.tasks.filter(
+      task => !task.completed
+    ).length;
+
+  const completed =
+    state.tasks.filter(
+      task => task.completed
+    ).length;
+
+
+  document
+    .getElementById("taskCount")
+    .textContent =
+      open;
+
+  document
+    .getElementById("documentCount")
+    .textContent =
+      state.documents.length;
+
+  document
+    .getElementById("noteCount")
+    .textContent =
+      state.items.length;
+
+  document
+    .getElementById("completedCount")
+    .textContent =
+      completed;
+
+}
+
+
+function renderAttention() {
+
+  const box =
+    document.getElementById(
+      "attentionList"
+    );
+
+  const open =
+    state.tasks.filter(
+      task => !task.completed
+    ).slice(0, 8);
+
+
+  if(!open.length) {
+
+    box.innerHTML = `
+
+      <div class="attention-item">
+
+        <div class="attention-icon">
+          ✓
+        </div>
+
+        <div>
+
+          <h4>No pending actions</h4>
+
+          <p>
+            Your workspace currently has
+            no open actions.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    open.map(task => `
+
+      <div class="attention-item">
+
+        <div class="attention-icon">
+          ⚡
+        </div>
+
+        <div style="flex:1">
+
+          <h4>
+            ${escapeHTML(task.title)}
+          </h4>
+
+          <p>
+            ${escapeHTML(task.reason)}
+          </p>
+
+          <br>
+
+          <button
+            class="btn btn-secondary"
+            onclick="completeTask('${task.id}')">
+
+            Mark complete
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+window.renderActions =
+function() {
+
+  const box =
+    document.getElementById(
+      "actionsList"
+    );
+
+  const search =
+    (
+      document
+        .getElementById("actionSearch")
+        ?.value || ""
+    ).toLowerCase();
+
+
+  const tasks =
+    state.tasks.filter(task =>
+      `${task.title} ${task.reason}`
+      .toLowerCase()
+      .includes(search)
+    );
+
+
+  if(!tasks.length) {
+
+    box.innerHTML = `
+
+      <div class="card">
+
+        <h3>No actions found</h3>
+
+        <p style="color:var(--muted);margin-top:7px">
+          Capture information to create real actions.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    tasks.map(task => `
+
+      <div class="list-item">
+
+        <div class="list-main">
+
+          <strong>
+            ${escapeHTML(task.title)}
+          </strong>
+
+          <small>
+            ${escapeHTML(task.reason)}
+          </small>
+
+        </div>
+
+        <button
+          class="btn btn-secondary"
+          onclick="completeTask('${task.id}')">
+
+          ${task.completed
+            ? "Completed"
+            : "Complete"}
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+};
+
+
+window.renderDocuments =
+function() {
+
+  const box =
+    document.getElementById(
+      "documentsList"
+    );
+
+  const search =
+    (
+      document
+        .getElementById("documentSearch")
+        ?.value || ""
+    ).toLowerCase();
+
+
+  const docs =
+    state.documents.filter(doc =>
+      doc.name.toLowerCase()
+      .includes(search)
+    );
+
+
+  if(!docs.length) {
+
+    box.innerHTML = `
+
+      <div class="card">
+
+        <h3>No documents yet</h3>
+
+        <p style="color:var(--muted);margin-top:7px">
+          Your document references will appear here.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    docs.map(doc => `
+
+      <div class="list-item">
+
+        <div class="list-main">
+
+          <strong>
+            ${escapeHTML(doc.name)}
+          </strong>
+
+          <small>
+            ${escapeHTML(doc.type)}
+            ·
+            ${formatBytes(doc.size)}
+          </small>
+
+        </div>
+
+        <span class="badge">
+          Local
+        </span>
+
+      </div>
+
+    `).join("");
+
+};
+
+
+window.completeTask =
+async function(id) {
+
+  const task =
+    state.tasks.find(
+      t => t.id === id
+    );
+
+  if(!task) return;
+
+  task.completed =
+    !task.completed;
+
+  await saveState();
+
+  renderAll();
+
+  toast(
+    task.completed
+      ? "Action completed."
+      : "Action reopened."
+  );
+
+};
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+window.goTo =
+function(page) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(el =>
+      el.classList.remove("active")
+    );
+
+
+  const target =
+    document.getElementById(
+      page + "Page"
+    );
+
+  if(target)
+    target.classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
       );
 
-
-    /* ==========================================================
-       STATS
-       ========================================================== */
-
-    function updateStats() {
-
-      document
-        .getElementById("actionStat")
-        .textContent =
-        actions.length;
-
-      document
-        .getElementById("documentStat")
-        .textContent =
-        documents.length;
-
-      document
-        .getElementById("reminderStat")
-        .textContent =
-        reminders.length;
-
-      updateAttentionCount();
-
-    }
+    });
 
 
-    function updateAttentionCount() {
-
-      const list =
-        document.querySelectorAll(
-          "#attentionList .attention-item"
-        );
-
-      const counter =
-        document.getElementById(
-          "attentionCount"
-        );
-
-      if (counter) {
-
-        counter.textContent =
-          `${list.length} items`;
-
-      }
-
-    }
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
 
-    /* ==========================================================
-       INITIALIZE
-       ========================================================== */
-
-    document
-      .getElementById("year")
-      .textContent =
-      new Date().getFullYear();
-
-
-    loadConsent();
-
-    updateStats();
-
+  if(page === "actions")
     renderActions();
 
+  if(page === "documents")
     renderDocuments();
 
+};
 
-    /* ==========================================================
-       KEYBOARD SHORTCUT
-       ========================================================== */
 
-    document.addEventListener(
-      "keydown",
-      event => {
+/* =========================================================
+   WORKFLOWS
+   ========================================================= */
 
-        if (
-          (event.ctrlKey || event.metaKey) &&
-          event.key.toLowerCase() === "k"
-        ) {
+window.useWorkflow =
+function(type) {
 
-          event.preventDefault();
+  const typeMap = {
 
-          openActionInput();
+    invoice: "invoice",
 
-        }
+    expiry: "document",
 
+    followup: "note",
+
+    research: "link",
+
+    meeting: "meeting",
+
+    general: "note"
+
+  };
+
+
+  goTo("capture");
+
+
+  document
+    .getElementById("captureType")
+    .value =
+      typeMap[type] || "note";
+
+
+  const examples = {
+
+    invoice:
+      "Invoice received. Payment due. Amount PKR 5000.",
+
+    expiry:
+      "Important document. Check expiry and renewal date.",
+
+    followup:
+      "Follow up with the person and reply.",
+
+    research:
+      "Research link: https://example.com",
+
+    meeting:
+      "Meeting scheduled. Review call actions.",
+
+    general:
+      ""
+
+  };
+
+
+  document
+    .getElementById("captureText")
+    .value =
+      examples[type] || "";
+
+};
+
+
+/* =========================================================
+   GOOGLE SERVICE PLACEHOLDERS
+   ========================================================= */
+
+window.connectGoogleService =
+function(service) {
+
+  toast(
+    `${service}: API enabled. Secure backend OAuth connection is the next step.`
+  );
+
+};
+
+
+/* =========================================================
+   GOOGLE IDENTITY SERVICES CALLBACK
+   ========================================================= */
+
+window.handleGoogleCredential =
+function(response) {
+
+  /*
+    This callback receives a Google credential.
+
+    Do NOT treat a browser-decoded JWT as your trusted
+    production authentication authority.
+
+    Production architecture:
+      Google credential
+        ↓
+      Secure backend
+        ↓
+      Verify token
+        ↓
+      Create authenticated session
+  */
+
+  if(response?.credential) {
+
+    document
+      .getElementById("googleStatus")
+      .textContent =
+        "Google credential received. Backend verification required for production.";
+
+    toast(
+      "Google authorization response received."
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+document
+  .getElementById("themeBtn")
+  .addEventListener(
+    "click",
+    async () => {
+
+      state.theme =
+        state.theme === "dark"
+          ? "light"
+          : "dark";
+
+      applyTheme();
+
+      await saveState();
+
+    }
+  );
+
+
+function applyTheme() {
+
+  document.documentElement
+    .setAttribute(
+      "data-theme",
+      state.theme
+    );
+
+}
+
+
+/* =========================================================
+   SECURITY MODAL
+   ========================================================= */
+
+window.openSecurity =
+function() {
+
+  document
+    .getElementById("securityModal")
+    .classList.add("open");
+
+};
+
+
+window.closeSecurity =
+function() {
+
+  document
+    .getElementById("securityModal")
+    .classList.remove("open");
+
+};
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+window.requestNotificationPermission =
+async function() {
+
+  if(!("Notification" in window)) {
+
+    toast(
+      "Browser notifications are not supported here."
+    );
+
+    return;
+
+  }
+
+
+  const permission =
+    await Notification.requestPermission();
+
+
+  toast(
+    permission === "granted"
+      ? "Browser reminders enabled."
+      : "Notification permission was not granted."
+  );
+
+};
+
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+
+window.exportData =
+function() {
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          state,
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          "application/json"
       }
     );
 
-  </script>
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    "shine-nexus-workspace.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+};
+
+
+/* =========================================================
+   IMPORT
+   ========================================================= */
+
+window.importData =
+function() {
+
+  const input =
+    document.getElementById(
+      "importInput"
+    );
+
+
+  if(!input.files.length) {
+
+    toast("Choose a JSON file first.");
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    async event => {
+
+      try {
+
+        const imported =
+          JSON.parse(
+            event.target.result
+          );
+
+
+        if(
+          !imported ||
+          !Array.isArray(imported.items)
+        ) {
+
+          throw new Error();
+
+        }
+
+
+        state =
+          imported;
+
+        await saveState();
+
+        renderAll();
+
+        toast(
+          "Workspace imported."
+        );
+
+      } catch {
+
+        toast(
+          "Invalid Shine Nexus workspace file."
+        );
+
+      }
+
+    };
+
+
+  reader.readAsText(
+    input.files[0]
+  );
+
+};
+
+
+/* =========================================================
+   DELETE DATA
+   ========================================================= */
+
+window.deleteAllData =
+async function() {
+
+  const ok =
+    confirm(
+      "Delete all locally stored Shine Nexus workspace data?"
+    );
+
+
+  if(!ok) return;
+
+
+  state = {
+
+    items: [],
+
+    tasks: [],
+
+    documents: [],
+
+    theme: state.theme
+
+  };
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  await saveState();
+
+  renderAll();
+
+  toast(
+    "Local workspace deleted."
+  );
+
+};
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function formatBytes(bytes) {
+
+  if(bytes === 0)
+    return "0 B";
+
+  const units =
+    ["B","KB","MB","GB"];
+
+  const i =
+    Math.floor(
+      Math.log(bytes) /
+      Math.log(1024)
+    );
+
+  return (
+    bytes /
+    Math.pow(1024,i)
+  ).toFixed(1)
+  + " "
+  + units[i];
+
+}
+
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function toast(message) {
+
+  const el =
+    document.getElementById(
+      "toast"
+    );
+
+  el.textContent =
+    message;
+
+  el.classList.add("show");
+
+  setTimeout(
+    () => el.classList.remove("show"),
+    2800
+  );
+
+}
+
+
+function renderAll() {
+
+  renderStats();
+
+  renderAttention();
+
+  renderActions();
+
+  renderDocuments();
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+(async function init() {
+
+  document
+    .getElementById("year")
+    .textContent =
+      new Date().getFullYear();
+
+
+  await loadState();
+
+  applyTheme();
+
+  renderAll();
+
+})();
+
+</script>
 
 </body>
 </html>
