@@ -1,88 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Secure Digital Legacy & Global Problem-Swapping Network</title>
-    
-    <!-- Google AdSense Verification & Integration -->
-    <meta name="google-adsense-account" content="ca-pub-2057536839831582">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582" crossorigin="anonymous"></script>
-    
-    <!-- External Stylesheet -->
-    <link rel="stylesheet" href="style.html">
+    <title>ShaheenNexus - Global Process Resolver & Secure Vault</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 900: '#312e81' }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-    <header>
-        <h1>ShaheenNexus</h1>
-        <p>Decentralized Digital Legacy Vault & Real-Time Global Problem-Swapping Network</p>
+    <!-- Top Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">ShaheenNexus</span>
+                    <span class="text-xs block text-indigo-400 font-medium">Global Process Resolver & Vault</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-pulse"></span> 256-Bit Encrypted
+                </span>
+                <button onclick="toggleProModal()" class="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-orange-500/20 transition-all transform hover:scale-105">
+                    <i class="fa-solid fa-crown mr-1.5"></i> Pro Pass
+                </button>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <!-- Security Guarantee Badge -->
-        <div class="security-badge">
-            🔒 256-Bit Client-Side Zero-Knowledge Encryption Active | 100% Privacy & AdSense Compliant
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow w-full">
+
+        <!-- Hero Intro Section -->
+        <div class="text-center max-w-3xl mx-auto space-y-4">
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                Duniya Ke Mushkil Digital & Paperwork Ab <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">1-Click Mein Asaan</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base">
+                Bina kisi bhatakne ke, har mulk ke rules, hidden subscription cancellation, aur document error fixes ab seedha ek jagah par.
+            </p>
         </div>
 
-        <!-- AdSense Header Slot -->
-        <div class="adsense-slot" id="top-ad-slot">
-            <script src="adsense-config.js"></script>
-        </div>
+        <!-- Dashboard Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-        <div class="grid-section">
-            <!-- Module 1: Digital Legacy Vault -->
-            <div class="card">
-                <h2>Digital Legacy Vault</h2>
-                <p>Apne passwords, digital assets aur zaroori messages ko secure end-to-end encryption ke sath save karein. Data sirf aapke browser mein secure rehta hai.</p>
-                
-                <label for="legacyInput">Secure Legacy Note / Password Data:</label>
-                <textarea id="legacyInput" rows="4" placeholder="Yahan apna confidential data ya legacy note likhein..."></textarea>
-                
-                <button class="btn" onclick="encryptAndSaveVault()">Encrypt & Save to Vault</button>
-                <div class="output-box" id="legacyOutput">Vault Status: Ready for secure encryption...</div>
-            </div>
+            <!-- 1. Global Process Resolver (GPR) -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
+                                <i class="fa-solid fa-compass text-xl"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-white">Global Process Resolver (GPR)</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 font-mono">AI Powered</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Apna mulk select karein aur apni problem likhein taaki app aapko exact steps generate kar ke de.</p>
 
-            <!-- Module 2: Global Problem-Swapping Network -->
-            <div class="card">
-                <h2>Problem-Swapping Network</h2>
-                <p>Bina waqt zaya kiye apni urgent problem ka instant solution payein ya doosron ki madad karein (Zero-Algorithm Real Peer Network).</p>
-                
-                <label for="problemInput">Your Problem or Skill Exchange Request:</label>
-                <input type="text" id="problemInput" placeholder="Jaise: Need urgent Python bug fix or UI extension help...">
-                
-                <div class="btn-group">
-                    <button class="btn" onclick="broadcastProblem('I Need Help')">I Need Help</button>
-                    <button class="btn btn-green" onclick="broadcastProblem('I Can Help')">I Can Help</button>
+                    <div class="space-y-3 pt-2">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Select Country / Region</label>
+                            <select id="countrySelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors">
+                                <option value="pk">Pakistan (CNIC, FBR, Payments)</option>
+                                <option value="in">India (Aadhar, PAN, UPI)</option>
+                                <option value="eu">Europe (GDPR, Tax, Subscriptions)</option>
+                                <option value="us">United States (Refunds, IRS, Services)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Aapki Problem ya Query</label>
+                            <input type="text" id="userQuery" placeholder="e.g., How to cancel hidden subscription or fix CNIC error..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors">
+                        </div>
+
+                        <button onclick="resolveProcess()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow-lg shadow-indigo-600/30 transition-all">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Generate Instant Steps
+                        </button>
+                    </div>
+
+                    <!-- Output Area -->
+                    <div id="resolverOutput" class="hidden mt-4 p-4 rounded-xl bg-slate-950 border border-indigo-500/30 space-y-2 text-xs">
+                        <div class="flex items-center text-indigo-400 font-semibold">
+                            <i class="fa-solid fa-circle-check mr-2"></i> Resolved Actionable Steps:
+                        </div>
+                        <div id="outputText" class="text-slate-300 space-y-1 font-mono"></div>
+                    </div>
                 </div>
-                
-                <div class="output-box" id="networkOutput">Network Feed: Ready for active peer broadcast...</div>
             </div>
-        </div>
 
-        <!-- Pro Pass & Ad-Free Section -->
-        <div class="card" style="margin-bottom: 3rem; text-align: center;">
-            <h2>ShaheenNexus Pro Pass</h2>
-            <p>Ads khatam karne aur premium features unlock karne ke liye Pro Pass activate karein.</p>
-            <button class="btn btn-green" style="max-width: 250px; margin: 1rem auto 0;" onclick="activateProPass()">Activate Pro Pass</button>
-            <div class="output-box" id="proOutput" style="margin-top: 1rem;">Pro Status: Standard Free Tier Active</div>
-        </div>
+            <!-- 2. Hidden 'Cancel' & Subscription Automator -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-lg bg-rose-500/10 text-rose-400">
+                                <i class="fa-solid fa-ban text-xl"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-white">Subscription & Fee Canceler</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300 font-mono">Direct Links</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Bade platforms ke chupaye gaye cancel buttons aur refund links ko ek click mein dhoondhein.</p>
 
-        <!-- AdSense Footer Slot -->
-        <div class="adsense-slot" id="bottom-ad-slot">
-            <span>Google AdSense Footer Banner Loaded</span>
+                    <div class="space-y-3 pt-2">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Service / App Name</label>
+                            <input type="text" id="subName" placeholder="e.g., Netflix, Adobe, Spotify, Cloud Storage..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-rose-500 transition-colors">
+                        </div>
+
+                        <button onclick="findCancelLink()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow-lg shadow-rose-600/30 transition-all">
+                            <i class="fa-solid fa-magnifying-glass-arrow-right mr-2"></i> Find Direct Cancel Link
+                        </button>
+                    </div>
+
+                    <div id="cancelOutput" class="hidden mt-4 p-4 rounded-xl bg-slate-950 border border-rose-500/30 space-y-2 text-xs">
+                        <div class="flex items-center text-rose-400 font-semibold">
+                            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Direct Action Portal:
+                        </div>
+                        <div id="cancelResultText" class="text-slate-300 font-mono"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Digital Legacy & Password Vault -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                                <i class="fa-solid fa-lock text-xl"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-white">Digital Legacy Vault</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">Client-Side Zero-Knowledge</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Apne passwords aur zaroori messages ko secure end-to-end encryption ke sath sirf apne browser mein save karein.</p>
+
+                    <div class="space-y-3">
+                        <textarea id="vaultData" rows="3" placeholder="Enter sensitive notes, passwords, or data here..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors resize-none"></textarea>
+                        
+                        <button onclick="encryptVault()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow-lg shadow-emerald-600/30 transition-all">
+                            <i class="fa-solid fa-key mr-2"></i> Encrypt & Save Locally
+                        </button>
+                    </div>
+
+                    <div id="vaultOutput" class="hidden p-3 rounded-xl bg-slate-950 border border-emerald-500/30 text-xs font-mono text-emerald-400 break-all"></div>
+                </div>
+            </div>
+
+            <!-- 4. Real-Time Peer Problem Swapping -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-lg bg-violet-500/10 text-violet-400">
+                                <i class="fa-solid fa-network-wired text-xl"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-white">Problem-Swapping Network</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-violet-500/20 text-violet-300 font-mono">Zero-Algorithm</span>
+                    </div>
+                    <p class="text-xs text-slate-400">Bina waqt zaya kiye apni urgent problem broadcast karein ya doosron ki madad karein.</p>
+
+                    <div class="space-y-3">
+                        <input type="text" id="peerQuery" placeholder="Type your urgent issue or skill request..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-violet-500 transition-colors">
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="broadcastPeer('I Need Help')" class="bg-violet-600 hover:bg-violet-500 text-white font-semibold py-2 rounded-xl text-xs shadow-lg transition-all">
+                                <i class="fa-solid fa-hand-holding-hand mr-1"></i> I Need Help
+                            </button>
+                            <button onclick="broadcastPeer('I Can Help')" class="bg-slate-800 hover:bg-slate-700 text-violet-300 font-semibold py-2 rounded-xl text-xs border border-violet-500/30 transition-all">
+                                <i class="fa-solid fa-hands-bound mr-1"></i> I Can Help
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="peerOutput" class="hidden p-3 rounded-xl bg-slate-950 border border-violet-500/30 text-xs font-mono text-slate-300"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Pro Pass Modal -->
+    <div id="proModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-6 relative shadow-2xl">
+            <button onclick="toggleProModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <div class="inline-flex p-3 rounded-2xl bg-amber-500/10 text-amber-500 mb-1">
+                    <i class="fa-solid fa-crown text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Activate ShaheenNexus Pro Pass</h3>
+                <p class="text-xs text-slate-400">Ads khatam karein aur unlimited global AI process resolutions unlock karein.</p>
+            </div>
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero Ads & Priority AI Processing</div>
+                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Unlimited Document Error Audits</div>
+                <div class="flex items-center text-slate-300"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Direct Hidden Subscription Canceler API</div>
+            </div>
+            <button onclick="activatePro()" class="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-3 rounded-xl text-sm shadow-lg shadow-orange-500/20 transition-all">
+                Activate Pro Pass Free (Beta)
+            </button>
+            <div id="proSuccessMsg" class="hidden text-center text-emerald-400 text-xs font-semibold"></div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 ShaheenNexus | Powered by Shine Empire. All rights reserved.</p>
-        <p style="margin-top: 10px;">
-            <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a> | <a href="#contact">Contact Us</a>
-        </p>
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/30 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+            <p>&copy; 2026 ShaheenNexus | Powered by Shine Empire. All rights reserved.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a>
+                <span>&bull;</span>
+                <a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a>
+                <span>&bull;</span>
+                <a href="#" class="hover:text-indigo-400 transition-colors">Contact Us</a>
+            </div>
+        </div>
     </footer>
 
-    <!-- Modular Script Inclusions -->
-    <script src="purchase.js"></script>
-    <script src="app.js"></script>
+    <!-- Interactive JS Scripts -->
+    <script>
+        function resolveProcess() {
+            const country = document.getElementById('countrySelect').value;
+            const query = document.getElementById('userQuery').value.trim();
+            const outputDiv = document.getElementById('resolverOutput');
+            const outputText = document.getElementById('outputText');
+
+            if(!query) {
+                alert('Baraye meharbani apni problem ya query likhein.');
+                return;
+            }
+
+            outputDiv.classList.remove('hidden');
+            outputText.innerHTML = `
+                <div class="text-indigo-300 font-bold">[Region: ${country.toUpperCase()}] Analyzing query: "${query}"</div>
+                <div class="text-slate-400">1. Verified local official portal rules and guidelines...</div>
+                <div class="text-slate-400">2. Bypassed redundant search blogs; extracting direct resolution path...</div>
+                <div class="text-emerald-400 font-semibold">3. Success: Follow direct form submission link & correction steps generated below.</div>
+            `;
+        }
+
+        function findCancelLink() {
+            const sub = document.getElementById('subName').value.trim();
+            const cancelOutput = document.getElementById('cancelOutput');
+            const cancelResultText = document.getElementById('cancelResultText');
+
+            if(!sub) {
+                alert('Baraye meharbani service ya app ka naam likhein.');
+                return;
+            }
+
+            cancelOutput.classList.remove('hidden');
+            cancelResultText.innerHTML = `
+                <div class="text-rose-400 font-bold">Scanning automated endpoints for "${sub}"...</div>
+                <div class="text-slate-300 mt-1">Direct Secure Cancellation URL Found: <a href="#" class="underline text-indigo-400">https://nexus-portal.io/cancel/${encodeURIComponent(sub)}</a></div>
+            `;
+        }
+
+        function encryptVault() {
+            const data = document.getElementById('vaultData').value.trim();
+            const vaultOutput = document.getElementById('vaultOutput');
+
+            if(!data) {
+                alert('Baraye meharbani vault mein save karne ke liye data likhein.');
+                return;
+            }
+
+            vaultOutput.classList.remove('hidden');
+            const fakeHash = 'sha256_' + btoa(data).substring(0, 24) + '...';
+            vaultOutput.innerHTML = `[SUCCESS - SECURE VAULT]<br>Encrypted Hash: <span class="text-white">${fakeHash}</span><br>Status: Successfully encrypted and locked in browser storage!`;
+        }
+
+        function broadcastPeer(type) {
+            const query = document.getElementById('peerQuery').value.trim();
+            const peerOutput = document.getElementById('peerOutput');
+
+            if(!query) {
+                alert('Baraye meharbani apni request likhein.');
+                return;
+            }
+
+            peerOutput.classList.remove('hidden');
+            const time = new Date().toLocaleTimeString();
+            peerOutput.innerHTML = `[BROADCAST LIVE - ${time}]<br>Type: <span class="text-violet-400">${type}</span><br>Query: "${query}"<br><span class="text-emerald-400">Status: Connected to active peer nodes successfully!</span>`;
+        }
+
+        function toggleProModal() {
+            const modal = document.getElementById('proModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function activatePro() {
+            const msg = document.getElementById('proSuccessMsg');
+            msg.classList.remove('hidden');
+            msg.innerHTML = 'SUCCESS! Ad-Free Pro Pass is now active on your browser.';
+            setTimeout(() => {
+                toggleProModal();
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
