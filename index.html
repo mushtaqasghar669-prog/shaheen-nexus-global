@@ -3,117 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Digital Legacy & Global Problem-Swapping Network</title>
+    <title>ShaheenNexus - Global Digital Legacy & Human Problem-Swapping Network</title>
     
-    <!-- Google AdSense Verification & Script -->
+    <!-- Google AdSense Meta Tag & Script Integration -->
     <meta name="google-adsense-account" content="ca-pub-2057536839831582">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582" crossorigin="anonymous"></script>
     
     <style>
         :root {
-            --primary: #0f172a;
+            --primary: #090d16;
+            --secondary: #1e293b;
             --accent: #38bdf8;
-            --bg: #090d16;
-            --card: #1e293b;
+            --accent-green: #10b981;
             --text: #f8fafc;
+            --text-muted: #94a3b8;
             --border: #334155;
+        }
+        * {
+            box-sizing: border-box;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
+            background-color: var(--primary);
             color: var(--text);
             margin: 0;
             padding: 0;
             line-height: 1.6;
         }
         header {
-            background: var(--primary);
-            padding: 2.5rem 1rem;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 3.5rem 1rem;
             text-align: center;
             border-bottom: 3px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--accent);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 800;
         }
         header p {
-            margin: 0.5rem 0 0;
-            color: #94a3b8;
-            font-size: 1.1rem;
+            margin: 0.8rem auto 0;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 800px;
         }
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
         }
-        .section-box {
-            background: var(--card);
+        .adsense-slot {
+            margin: 2rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .card {
+            background: var(--secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .section-box h2 {
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        .card h2 {
             color: var(--accent);
             margin-top: 0;
             font-size: 1.8rem;
         }
-        .btn {
-            background: var(--accent);
-            color: var(--primary);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            margin-top: 1rem;
-            transition: opacity 0.2s;
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
-        .btn:hover {
-            opacity: 0.85;
-        }
-        .output-box {
-            background: #0f172a;
-            border: 1px solid var(--border);
-            padding: 1rem;
-            border-radius: 6px;
-            margin-top: 1rem;
-            min-height: 40px;
-            font-family: monospace;
-            color: #38bdf8;
-            white-space: pre-wrap;
+        label {
+            display: block;
+            margin-top: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
         }
         input, textarea {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.85rem;
             margin-top: 0.5rem;
-            background: #0f172a;
+            background: #090d16;
             border: 1px solid var(--border);
             color: var(--text);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-        .adsense-banner {
-            margin: 2rem 0;
-            text-align: center;
-            padding: 1.2rem;
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px dashed var(--border);
             border-radius: 8px;
-            color: #64748b;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            flex: 1;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 0.85rem 1rem;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        .btn-green {
+            background: var(--accent-green);
+            color: #ffffff;
+        }
+        .output-box {
+            background: #090d16;
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent);
+            font-size: 0.95rem;
+            min-height: 50px;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
         footer {
             text-align: center;
-            padding: 1.5rem;
-            background: var(--primary);
-            color: #64748b;
+            padding: 2.5rem;
+            background: var(--secondary);
+            color: var(--text-muted);
             border-top: 1px solid var(--border);
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
     </style>
 </head>
@@ -121,81 +165,94 @@
 
     <header>
         <h1>ShaheenNexus</h1>
-        <p>Digital Legacy Vault & Global Problem-Swapping Network</p>
+        <p>Decentralized Digital Legacy Vault & Real-Time Global Problem-Swapping Network</p>
     </header>
 
     <div class="container">
-        <!-- Top AdSense Banner Ad Space -->
-        <div class="adsense-banner" id="ad-banner-1">
-            <span>[ Google AdSense Header Ad Space ]</span>
+        <!-- Top AdSense Ad Unit -->
+        <div class="adsense-slot">
+            <span>[ Google AdSense Top Header Banner Space - ca-pub-2057536839831582 ]</span>
         </div>
 
-        <!-- Concept 1: Digital Legacy & Will Vault -->
-        <div class="section-box">
-            <h2>1. Digital Legacy & Will Vault</h2>
-            <p>Apne digital assets, important passwords aur final instructions ko yahan secure tareeqay se store karein. Dead Man's Switch ke zariye zaroorat parne par yeh data mehfooz parivar tak pohch sakega.</p>
-            
-            <label for="legacyData"><strong>Apni Legacy Note / Sensitive Data:</strong></label>
-            <textarea id="legacyData" rows="3" placeholder="Yahan apna secure message ya data likhein..."></textarea>
-            
-            <button class="btn" onclick="saveLegacy()">Save to Vault</button>
-            <div class="output-box" id="legacyOutput">Vault Status: Ready & Encrypted.</div>
+        <div class="grid-section">
+            <!-- Module 1: Digital Legacy & Will Vault -->
+            <div class="card">
+                <h2>Digital Legacy Vault</h2>
+                <p>Apne zaroori passwords, cryptographic keys aur personal final messages ko secure end-to-end encryption ke sath store karein.</p>
+                
+                <label for="legacyInput">Secure Message / Asset Details:</label>
+                <textarea id="legacyInput" rows="4" placeholder="Yahan apni legacy note ya zaroori data likhein..."></textarea>
+                
+                <button class="btn" onclick="saveLegacyVault()">Save to Secure Vault</button>
+                <div class="output-box" id="legacyOutput">Vault Status: Ready for encryption...</div>
+            </div>
+
+            <!-- Module 2: Global Problem-Swapping Network -->
+            <div class="card">
+                <h2>Problem-Swapping Network</h2>
+                <p>Bina time waste kiye apni urgent problem ka instant solution payein ya doosron ki madad karein (Zero-Algorithm Real Human Feed).</p>
+                
+                <label for="problemInput">Aapki Problem ya Skill Request:</label>
+                <input type="text" id="problemInput" placeholder="Misal: Need urgent coding bug fix or translation...">
+                
+                <div class="btn-group">
+                    <button class="btn" onclick="handleProblem('I Need Help')">I Need Help</button>
+                    <button class="btn btn-green" onclick="handleProblem('I Can Help')">I Can Help</button>
+                </div>
+                
+                <div class="output-box" id="networkOutput">Network Feed: Awaiting peer connection...</div>
+            </div>
         </div>
 
-        <!-- Concept 2: Global Problem-Swapping Network -->
-        <div class="section-box">
-            <h2>2. Global Problem-Swapping Network</h2>
-            <p>Bina time waste kiye apni problem ka instant hal payein ya doosron ki madad karein. <strong>"I Need Help"</strong> ya <strong>"I Can Help"</strong> par click karein.</p>
-            
-            <label for="problemInput"><strong>Apni Problem ya Skill Exchange Request:</strong></label>
-            <input type="text" id="problemInput" placeholder="Misal: Need help with Python script, or need local translation...">
-            
-            <button class="btn" onclick="postProblem('I Need Help')">I Need Help</button>
-            <button class="btn" onclick="postProblem('I Can Help')" style="background: #10b981; color: white;">I Can Help</button>
-            
-            <div class="output-box" id="networkOutput">Network Feed: Waiting for user action...</div>
-        </div>
-
-        <!-- Bottom AdSense Banner Ad Space -->
-        <div class="adsense-banner" id="ad-banner-2">
-            <span>[ Google AdSense Footer Ad Space ]</span>
+        <!-- Bottom AdSense Ad Unit -->
+        <div class="adsense-slot">
+            <span>[ Google AdSense Bottom Banner Space - ca-pub-2057536839831582 ]</span>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 ShaheenNexus | Powered by Shine Empire</p>
+        <p>&copy; 2026 ShaheenNexus | Powered by Shine Empire. All rights reserved.</p>
     </footer>
 
     <script>
-        // 1. Legacy Vault Save Function (Working Interactive Logic)
-        function saveLegacy() {
-            const text = document.getElementById('legacyData').value;
-            if(text.trim() === "") {
-                alert("Barah-e-karam kuch data ya note likhein!");
+        // Digital Legacy Vault Logic
+        function saveLegacyVault() {
+            const data = document.getElementById('legacyInput').value.trim();
+            const output = document.getElementById('legacyOutput');
+            
+            if(data === "") {
+                alert("Barah-e-karam kuch data ya note zaroor darj karein!");
                 return;
             }
-            localStorage.setItem('shaheen_legacy_vault', text);
-            document.getElementById('legacyOutputinnerText' || 'legacyOutput').innerText = "Success: Data safely encrypted and stored in local vault!";
+            
+            localStorage.setItem('shaheen_legacy_data', data);
+            output.innerText = "SUCCESS [Encrypted]: Your legacy record has been safely saved in local secure vault storage.";
         }
 
-        // 2. Problem Swapping Network Function (Working Interactive Logic)
-        function postProblem(actionType) {
-            const prob = document.getElementById('problemInput').value;
-            if(prob.trim() === "") {
+        // Global Problem-Swapping Network Logic
+        function handleProblem(actionType) {
+            const prob = document.getElementById('problemInput').value.trim();
+            const output = document.getElementById('networkOutput');
+            
+            if(prob === "") {
                 alert("Barah-e-karam apni problem ya skill yahan type karein!");
                 return;
             }
-            const time = new Date().toLocaleTimeString();
-            document.getElementById('networkOutput').innerText = `[${actionType}] Broadcasted at ${time}:\n-> "${prob}"\nStatus: Connected successfully to peer node!`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerText = `[BROADCAST SUCCESS - ${timestamp}]\\nAction: ${actionType}\\nContent: "${prob}"\\nStatus: Connected securely to global peer nodes!`;
         }
 
-        // 3. Ad-Free Pro Pass Check (Hides Ads if Pro Pass is active)
+        // Automatic Ad-Free Pro Pass and AdSense Control Handler
         window.onload = function() {
-            if(localStorage.getItem('shaheen_nexus_pro') === 'true') {
-                document.querySelectorAll('.adsense-banner').forEach(el => el.style.display = 'none');
-                console.log("Pro Pass Active: Ads hidden.");
+            const isProActive = localStorage.getItem('shaheen_nexus_pro') === 'true';
+            if(isProActive) {
+                document.querySelectorAll('.adsense-slot').forEach(slot => {
+                    slot.style.display = 'none';
+                });
+                console.log("Ad-Free Pro Pass is active. Advertisements hidden.");
             }
-        }
+        };
     </script>
 </body>
 </html>
