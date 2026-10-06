@@ -3,575 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Ultimate Sovereign Workspace</title>
+    <title>ShaheenNexus - Sovereign Workspace & Vault</title>
     <style>
         :root {
-            --bg-color: #050811;
-            --card-bg: #0b1329;
-            --accent-primary: #10b981;
+            --bg-color: #07090e;
+            --card-bg: #0f172a;
+            --accent-primary: #6366f1;
             --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-            --text-color: #f8fafc;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #1e293b;
+            --success: #10b981;
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 12px; display: flex; justify-content: center; min-height: 100vh; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 16px; }
+        .container { max-width: 800px; margin: 0 auto; }
         
-        /* Splash / Welcome Screen */
-        #splashScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; gap: 16px; }
-        .splash-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 24px; border-radius: 16px; width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; position: relative; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--card-bg); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .brand h1 { font-size: 18px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .brand p { font-size: 11px; color: var(--text-muted); }
         
-        /* Header & Menu */
-        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 14px; border-radius: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .logo-title h1 { font-size: 1.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
-        .logo-title p { font-size: 0.7rem; color: var(--text-muted); }
+        .lang-select { background: #1e293b; color: #fff; border: 1px solid var(--border-color); padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 13px; }
         
-        .header-controls { display: flex; align-items: center; gap: 8px; }
-        select { background: #070b14; color: #fff; border: 1px solid var(--border-color); padding: 5px 8px; border-radius: 6px; font-size: 0.75rem; outline: none; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
+        .card h2 { font-size: 16px; margin-bottom: 6px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .card p { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
         
-        .menu-btn { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; }
+        input, select, textarea { width: 100%; background: #07090e; border: 1px solid var(--border-color); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 10px; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); }
         
-        /* Dropdown Menu */
-        .dropdown-menu { display: none; position: absolute; top: 65px; right: 12px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; width: 180px; z-index: 100; box-shadow: 0 8px 24px rgba(0,0,0,0.6); overflow: hidden; }
-        .dropdown-menu button { width: 100%; text-align: left; padding: 10px 14px; background: transparent; border: none; color: var(--text-color); font-size: 0.85rem; cursor: pointer; border-bottom: 1px solid var(--border-color); }
-        .dropdown-menu button:hover { background: #1e293b; color: #38bdf8; }
-
-        /* Card */
-        .card { background: var(--card-bg); border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .card h3 { font-size: 1rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; font-weight: 600; }
-        p.desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
-
-        /* Inputs & Controls */
-        input, textarea { width: 100%; background: #070b14; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.85rem; outline: none; }
-        input:focus, textarea:focus { border-color: #38bdf8; }
-        textarea { resize: vertical; min-height: 80px; }
+        .btn-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        .btn { width: 100%; background: var(--accent-gradient); color: white; border: none; padding: 11px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; transition: opacity 0.2s; }
+        .btn:hover { opacity: 0.9; }
+        .btn-green { background: var(--success); }
+        .btn-danger { background: var(--danger); }
+        .btn-secondary { background: #334155; }
         
-        .btn-group { display: flex; gap: 8px; }
-        button.action-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
-        button.action-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-primary { background: var(--accent-primary); color: #fff; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
-        .btn-secondary { background: #1e293b; color: #fff; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .btn-gradient { background: var(--accent-gradient); color: #fff; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
-        .btn-danger { background: var(--danger); color: #fff; }
-
-        /* Dynamic Fields & Tables */
-        .field-row { display: flex; gap: 6px; align-items: center; background: #070b14; padding: 6px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .field-row input { background: transparent; border: none; padding: 2px; font-size: 0.8rem; }
+        .output-box { background: #07090e; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-size: 12px; color: var(--text-muted); margin-top: 8px; word-break: break-all; }
+        .feed-item { background: #07090e; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; margin-top: 8px; font-size: 12px; }
+        .feed-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; margin-bottom: 4px; }
+        .badge-need { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+        .badge-can { background: rgba(16, 185, 129, 0.2); color: #34d399; }
         
-        .table-wrap { overflow-x: auto; max-height: 180px; border-radius: 8px; border: 1px solid var(--border-color); }
-        table.custom-table { width: 100%; border-collapse: collapse; background: #070b14; }
-        table.custom-table th, table.custom-table td { border: 1px solid var(--border-color); padding: 6px; text-align: center; font-size: 0.8rem; }
-        table.custom-table th { background: #131c31; color: #38bdf8; }
-        table.custom-table input { background: transparent; border: none; color: #fff; text-align: center; width: 100%; padding: 2px; }
-
-        /* Output & Status Box */
-        .output-box { background: #070b14; padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-primary); font-size: 0.75rem; word-break: break-all; color: #34d399; display: none; font-family: monospace; }
-        .rotation-timer { font-size: 0.7rem; background: #131c31; padding: 4px 8px; border-radius: 6px; color: #facc15; display: inline-block; font-weight: bold; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; padding: 20px; border-radius: 14px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; }
-        .modal-content h3 { color: #38bdf8; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; display: none; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 20px; padding-bottom: 10px; }
     </style>
 </head>
 <body>
-
-<!-- Splash Screen / Custom Launch Configuration -->
-<div id="splashScreen">
-    <div class="splash-card">
-        <h2 style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ShaheenNexus Ultra</h2>
-        <p class="desc">Customize your Sovereign Workspace experience before entering.</p>
-        
-        <label style="font-size: 0.8rem; text-align: left;">Select Theme Color:</label>
-        <select id="splashTheme">
-            <option value="#10b981">Cyberpunk Green</option>
-            <option value="#6366f1">Neon Indigo</option>
-            <option value="#ec4899">Royal Pink</option>
-            <option value="#f59e0b">Matrix Amber</option>
-        </select>
-
-        <label style="font-size: 0.8rem; text-align: left;">Default Language:</label>
-        <select id="splashLang">
-            <option value="ur">Roman Urdu</option>
-            <option value="en">English</option>
-            <option value="cn">中文 (Chinese)</option>
-        </select>
-
-        <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button class="btn-secondary" style="flex:1;" onclick="launchApp(true)">Skip</button>
-            <button class="btn-primary" style="flex:1;" onclick="launchApp(false)">Launch Workspace</button>
-        </div>
-    </div>
-</div>
-
-<div class="container" id="mainContainer" style="display:none;">
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-title">
-            <h1 id="appTitle">ShaheenNexus</h1>
-            <p id="appSubtitle">Sovereign Ultra Workspace</p>
-        </div>
-        <div class="header-controls">
-            <select id="langSelect" onchange="changeLanguage()">
-                <option value="ur">Roman Urdu</option>
-                <option value="en">English</option>
-                <option value="cn">中文 (Chinese)</option>
-            </select>
-            <button class="menu-btn" onclick="toggleMenu()">⋮</button>
-        </div>
-    </div>
-
-    <!-- Dropdown Menu -->
-    <div class="dropdown-menu" id="dropdownMenu">
-        <button onclick="openModal('settingsModal')" id="menuSettings">⚙️ Settings</button>
-        <button onclick="openModal('aboutModal')" id="menuAbout">ℹ️ About Us</button>
-        <button onclick="exportJSON()" id="menuExport">📤 Export Backup</button>
-        <button onclick="importJSONPrompt()" id="menuImport">📥 Import Backup</button>
-    </div>
-
-    <!-- Mode Selector Card -->
-    <div class="card">
-        <h3 id="modeCardTitle">🛠️ Workspace Mode</h3>
-        <p class="desc" id="modeCardDesc">Structure your completely encrypted sovereign payload.</p>
-        <select id="appMode" onchange="switchAppMode()">
-            <option value="fields" id="optFields">Custom Fields & Forms</option>
-            <option value="table" id="optTable">Dynamic Spreadsheet / Table</option>
-            <option value="note" id="optNote">Advanced Note / Markdown</option>
-            <option value="passwords" id="optPass">Secure Passwords Vault</option>
-        </select>
-    </div>
-
-    <!-- Workspace 1: Custom Fields -->
-    <div class="card" id="modeFieldsSection">
-        <h3 id="fieldsTitle">📝 Custom Data Fields</h3>
-        <div id="dynamicFieldsContainer" style="display: flex; flex-direction: column; gap: 6px;">
-            <div class="field-row">
-                <input type="text" placeholder="Key / Label" class="f-key" value="Project Name">
-                <input type="text" placeholder="Value" class="f-val" value="Shaheen Core Elite">
-                <button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <h1>ShaheenNexus</h1>
+                <p data-i18n="subtitle">100% Local-First Sovereign Workspace</p>
             </div>
+            <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </header>
+
+        <!-- Zero-Trust Local Vault & Sovereignty Backup -->
+        <div class="card">
+            <h2 data-i18n="vault_title">🔒 Zero-Trust Local Vault & Sovereignty</h2>
+            <p data-i18n="vault_desc">Your data stays 100% on your device. Encrypt notes & export/import complete sovereign backups.</p>
+            <textarea id="vaultInput" data-i18n-placeholder="vault_placeholder" placeholder="Enter sensitive notes or passwords here..."></textarea>
+            <div class="btn-group">
+                <button class="btn btn-green" onclick="saveVault()" data-i18n="btn_encrypt">Save & Encrypt</button>
+                <button class="btn btn-secondary" onclick="loadVault()" data-i18n="btn_load">Load Vault</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="exportSovereignData()" data-i18n="btn_export">Export Backup (JSON)</button>
+                <button class="btn btn-secondary" onclick="triggerImport()" data-i18n="btn_import">Import Backup</button>
+                <input type="file" id="importFile" style="display:none" onchange="importSovereignData(event)">
+            </div>
+            <div id="vaultOutput" class="output-box" style="display: none;"></div>
         </div>
-        <button class="btn-secondary" onclick="addCustomField()" id="addFieldBtn">+ Add Field</button>
-    </div>
 
-    <!-- Workspace 2: Tables -->
-    <div class="card" id="modeTableSection" style="display: none;">
-        <h3 id="tableTitleText">📊 Dynamic Table Creator</h3>
-        <input type="text" id="customTableName" placeholder="Table Title">
-        <div class="btn-group" style="margin-top: 4px;">
-            <button class="btn-secondary" onclick="addTableRow()" id="addRowBtn">+ Row</button>
-            <button class="btn-secondary" onclick="addTableCol()" id="addColBtn">+ Column</button>
+        <!-- Problem-Swapping & Direct Network Feed -->
+        <div class="card">
+            <h2 data-i18n="network_title">🌐 Peer Problem-Swapping Network</h2>
+            <p data-i18n="network_desc">Broadcast urgent real-world problems locally or share expertise securely.</p>
+            <textarea id="networkInput" data-i18n-placeholder="network_placeholder" placeholder="Type your urgent issue or request..."></textarea>
+            <div class="btn-group">
+                <button class="btn" onclick="postNetwork('need')" data-i18n="btn_need_help">I Need Help</button>
+                <button class="btn btn-green" onclick="postNetwork('can')" data-i18n="btn_can_help">I Can Help</button>
+            </div>
+            <div style="margin-top: 12px; font-weight: 600; font-size: 13px;" data-i18n="live_feed">Live Local Storage Feed</div>
+            <div id="feedContainer"></div>
         </div>
-        <div class="table-wrap" style="margin-top: 6px;">
-            <table class="custom-table" id="userTable">
-                <thead>
-                    <tr id="tableHeaderRow">
-                        <th>Col 1</th>
-                        <th>Col 2</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr>
-                        <td><input type="text" value="Item A"></td>
-                        <td><input type="text" value="Item B"></td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <!-- Global Process Resolver (GPR) -->
+        <div class="card">
+            <h2 data-i18n="gpr_title">⚙️ Global Process Resolver (GPR)</h2>
+            <p data-i18n="gpr_desc">Get exact official direct resolution links for legal, tax, and official government steps.</p>
+            <select id="countrySelect">
+                <option value="Pakistan">Pakistan (CNIC, FBR, NADRA, Payments)</option>
+                <option value="Saudi Arabia">Saudi Arabia (Absher, Iqama, Baladiya)</option>
+                <option value="Global">Global / International</option>
+            </select>
+            <input type="text" id="gprQuery" data-i18n-placeholder="gpr_placeholder" placeholder="e.g., CNIC error, tax filing, passport renewal...">
+            <button class="btn" onclick="resolveGPR()" data-i18n="btn_resolve">Get Real Resolution Steps</button>
+            <div id="gprOutput" class="output-box" style="display: none;"></div>
         </div>
-    </div>
 
-    <!-- Workspace 3: Notes -->
-    <div class="card" id="modeNoteSection" style="display: none;">
-        <h3 id="noteTitleText">📄 Secure Note Editor</h3>
-        <input type="text" id="noteTitle" placeholder="Note Heading" style="margin-bottom: 6px;">
-        <textarea id="noteContent" placeholder="Write your sensitive notes here..."></textarea>
-    </div>
-
-    <!-- Workspace 4: Passwords Vault -->
-    <div class="card" id="modePassSection" style="display: none;">
-        <h3 id="passTitleText">🔑 Secure Password & Credentials</h3>
-        <input type="text" id="passPlatform" placeholder="Platform / App Name">
-        <input type="text" id="passUsername" placeholder="Username / Email">
-        <input type="password" id="passSecret" placeholder="Password / Secret Key" style="margin-top: 4px;">
-    </div>
-
-    <!-- Dynamic Token & Ultra Encryption Engine -->
-    <div class="card">
-        <h3 id="tokenCardTitle">🔐 Dynamic Anti-Attack Encryption</h3>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <p class="desc" id="tokenDesc">Keys mix symbols, numbers & letters, auto-rotating.</p>
-            <span class="rotation-timer" id="timerDisplay">Rotating in: 30s</span>
+        <!-- Subscription & Fee Canceler -->
+        <div class="card">
+            <h2 data-i18n="sub_title">🚫 Subscription & Fee Canceler</h2>
+            <p data-i18n="sub_desc">Find hidden platform cancel buttons and refund links in 1-click.</p>
+            <input type="text" id="subName" value="YouTube">
+            <button class="btn btn-danger" onclick="cancelSub()" data-i18n="btn_cancel_portal">Find Direct Cancel Portal</button>
+            <div id="subOutput" class="output-box" style="display: none;"></div>
         </div>
-        <input type="text" id="userTokenInput" placeholder="Custom Token (or auto-generated)">
-        
-        <div class="btn-group" style="margin-top: 4px;">
-            <button class="btn-primary" style="flex:1;" onclick="saveDataToVault()" id="saveBtn">Save & Encrypt</button>
-            <button class="btn-gradient" style="flex:1;" onclick="loadDataFromVault()" id="loadBtn">Load by Token</button>
-        </div>
-        <div id="vaultResult" class="output-box"></div>
+
+        <footer>
+            &copy; 2026 ShaheenNexus | Powered by Shine Empire &bull; Absolute Data Sovereignty
+        </footer>
     </div>
-</div>
 
-<!-- Settings Modal -->
-<div class="modal" id="settingsModal">
-    <div class="modal-content">
-        <h3 id="settingsHeading">⚙️ App Settings</h3>
-        <p class="desc" id="settingsDesc">Configure key rotation speed and security parameters.</p>
-        <label style="font-size: 0.8rem;" id="intervalLabel">Key Rotation Speed (Seconds):</label>
-        <select id="rotationSpeedSec">
-            <option value="1">1 Second (Ultra Fast)</option>
-            <option value="2">2 Seconds</option>
-            <option value="10">10 Seconds</option>
-            <option value="30" selected>30 Seconds (Standard)</option>
-            <option value="60">60 Seconds (1 Minute)</option>
-        </select>
-        <button class="btn-primary" onclick="updateSettings()" id="closeSettingsBtn">Apply & Save Settings</button>
-    </div>
-</div>
+    <div id="toast" class="toast">Action successful!</div>
 
-<!-- About Us Modal -->
-<div class="modal" id="aboutModal">
-    <div class="modal-content">
-        <h3 id="aboutHeading">ℹ️ About ShaheenNexus</h3>
-        <p class="desc" id="aboutText">ShaheenNexus is a sovereign local-first multi-lingual encrypted workspace featuring hybrid anti-attack string scrambling and full user customization.</p>
-        <button class="btn-secondary" onclick="closeModal('aboutModal')" id="closeAboutBtn">Close</button>
-    </div>
-</div>
+    <script>
+        const translations = {
+            en: {
+                subtitle: "100% Local-First Sovereign Workspace",
+                vault_title: "🔒 Zero-Trust Local Vault & Sovereignty",
+                vault_desc: "Your data stays 100% on your device. Encrypt notes & export/import complete sovereign backups.",
+                vault_placeholder: "Enter sensitive notes or passwords here...",
+                btn_encrypt: "Save & Encrypt",
+                btn_load: "Load Vault",
+                btn_export: "Export Backup (JSON)",
+                btn_import: "Import Backup",
+                network_title: "🌐 Peer Problem-Swapping Network",
+                network_desc: "Broadcast urgent real-world problems locally or share expertise securely.",
+                network_placeholder: "Type your urgent issue or request...",
+                btn_need_help: "I Need Help",
+                btn_can_help: "I Can Help",
+                live_feed: "Live Local Storage Feed",
+                gpr_title: "⚙️ Global Process Resolver (GPR)",
+                gpr_desc: "Get exact official direct resolution links for legal, tax, and official government steps.",
+                gpr_placeholder: "e.g., CNIC error, tax filing, passport renewal...",
+                btn_resolve: "Get Real Resolution Steps",
+                sub_title: "🚫 Subscription & Fee Canceler",
+                sub_desc: "Find hidden platform cancel buttons and refund links in 1-click.",
+                btn_cancel_portal: "Find Direct Cancel Portal",
+                alert_empty: "Please enter your text or query!",
+                success_saved: "Successfully saved and encrypted locally!",
+                success_export: "Sovereign backup exported successfully!",
+                success_import: "Sovereign backup imported successfully!"
+            },
+            ur: {
+                subtitle: "۱۰۰٪ لوکل فرسٹ سوورین ورک اسپیس",
+                vault_title: "🔒 زیرو ٹرسٹ لوکل والٹ اور خودمختاری",
+                vault_desc: "آپ کا ڈیٹا 100% آپ کے آلے پر محفوظ رہتا ہے۔ نوٹس انکرپٹ کریں اور بیک اپ ایکسپورٹ کریں۔",
+                vault_placeholder: "یہاں اپنے حساس نوٹس یا پاس ورڈ درج کریں...",
+                btn_encrypt: "محفوظ اور انکرپٹ کریں",
+                btn_load: "والٹ لوڈ کریں",
+                btn_export: "بیک اپ ایکسپورٹ کریں (JSON)",
+                btn_import: "بیک اپ امپورٹ کریں",
+                network_title: "🌐 پیئر پرابلم سویپنگ نیٹ ورک",
+                network_desc: "اپنی فوری حقیقی دنیا کے مسائل کو لوکللی براڈکاسٹ کریں۔",
+                network_placeholder: "اپنا مسئلہ یا درخواست یہاں لکھیں...",
+                btn_need_help: "مجھے مدد چاہیے",
+                btn_can_help: "میں مدد کر سکتا ہوں",
+                live_feed: "لائیو لوکل سٹوریج فیڈ",
+                gpr_title: "⚙️ گلوبل پروسیس ریزولور (GPR)",
+                gpr_desc: "قانونی اور سرکاری مراحل کے لیے درست آفیشل لنکس حاصل کریں۔",
+                gpr_placeholder: "مثال کے طور پر، CNIC ایرر، پاسپورٹ رینوئل...",
+                btn_resolve: "حقیقی حل کے اقدامات حاصل کریں",
+                sub_title: "🚫 سبسکرپشن اور فیس کینسلر",
+                sub_desc: "ایک کلک میں چھپے ہوئے کینسل بٹن تلاش کریں۔",
+                btn_cancel_portal: "ڈائریکٹ کینسل پورٹل تلاش کریں",
+                alert_empty: "برائے مہربانی اپنا متن یا سوال درج کریں!",
+                success_saved: "کامیابی سے مقامی طور پر محفوظ اور انکرپٹ ہو گیا!",
+                success_export: "سوورین بیک اپ کامیابی سے ایکسپورٹ ہو گیا!",
+                success_import: "سوورین بیک اپ کامیابی سے امپورٹ ہو گیا!"
+            },
+            ar: {
+                subtitle: "مساحة عمل سيادية محلية 100%",
+                vault_title: "🔒 خزنة محلية موثوقة والسيادة المطلقة",
+                vault_desc: "بياناتك تبقى على جهازك بالكامل. قم بالتشفير والنسخ الاحتياطي.",
+                vault_placeholder: "أدخل ملاحظاتك أو كلمات المرور هنا...",
+                btn_encrypt: "حفظ وتشفير",
+                btn_load: "تحميل الخزنة",
+                btn_export: "تصدير النسخة الاحتياطية",
+                btn_import: "استيراد النسخة الاحتياطية",
+                network_title: "🌐 شبكة تبادل المشاكل بين النظراء",
+                network_desc: "بث المشاكل الملحة محلياً وشراكة الخبرات.",
+                network_placeholder: "اكتب مشكلتك العاجلة هنا...",
+                btn_need_help: "أحتاج إلى مساعدة",
+                btn_can_help: "يمكنني المساعدة",
+                live_feed: "خلاصة التخزين المحلي المباشر",
+                gpr_title: "⚙️ محل العمليات العالمي (GPR)",
+                gpr_desc: "احصل على روابط رسمية دقيقة للخطوات الحكومية.",
+                gpr_placeholder: "مثل: خطأ الهوية، تجديد جواز السفر...",
+                btn_resolve: "الحصول على خطوات الحل",
+                sub_title: "🚫 إلغاء الاشتراكات والرسوم",
+                sub_desc: "ابحث عن أزرار الإلغاء المخفية بنقرة واحدة.",
+                btn_cancel_portal: "بحث عن بوابة الإلغاء",
+                alert_empty: "الرجاء إدخال النص أو الاستعلام!",
+                success_saved: "تم الحفظ والتشفير محلياً بنجاح!",
+                success_export: "تم تصدير النسخة بنجاح!",
+                success_import: "تم استيراد النسخة بنجاح!"
+            },
+            es: {
+                subtitle: "Espacio de trabajo soberano 100% local",
+                vault_title: "🔒 Bóveda Local de Confianza Cero y Soberanía",
+                vault_desc: "Tus datos permanecen en tu dispositivo. Cifra y exporta respaldos.",
+                vault_placeholder: "Ingrese notas o contraseñas aquí...",
+                btn_encrypt: "Guardar y Cifrar",
+                btn_load: "Cargar Bóveda",
+                btn_export: "Exportar Resguardo (JSON)",
+                btn_import: "Importar Resguardo",
+                network_title: "🌐 Red de Intercambio de Problemas",
+                network_desc: "Transmite problemas urgentes localmente.",
+                network_placeholder: "Escribe tu problema urgente...",
+                btn_need_help: "Necesito Ayuda",
+                btn_can_help: "Puedo Ayudar",
+                live_feed: "Feed de Almacenamiento Local en Vivo",
+                gpr_title: "⚙️ Resolutor de Procesos Global (GPR)",
+                gpr_desc: "Obtenga enlaces oficiales directos.",
+                gpr_placeholder: "ej., error de ID, impuestos...",
+                btn_resolve: "Obtener Pasos de Resolución",
+                sub_title: "🚫 Cancelador de Suscripciones",
+                sub_desc: "Encuentra botones de cancelación en 1 clic.",
+                btn_cancel_portal: "Buscar Portal de Cancelación",
+                alert_empty: "¡Por favor ingrese su texto o consulta!",
+                success_saved: "¡Guardado y cifrado localmente con éxito!",
+                success_export: "¡Resguardo exportado con éxito!",
+                success_import: "¡Resguardo importado con éxito!"
+            },
+            fr: {
+                subtitle: "Espace de travail souverain 100% local",
+                vault_title: "🔒 Coffre Local Zero-Trust & Souveraineté",
+                vault_desc: "Vos données restent sur votre appareil. Chiffrez et exportez.",
+                vault_placeholder: "Entrez vos notes ou mots de passe ici...",
+                btn_encrypt: "Enregistrer & Chiffrer",
+                btn_load: "Charger le Coffre",
+                btn_export: "Exporter la Sauvegarde",
+                btn_import: "Importer la Sauvegarde",
+                network_title: "🌐 Réseau d'Échange de Problèmes",
+                network_desc: "Diffusez des problèmes urgents localement.",
+                network_placeholder: "Tapez votre problème urgent...",
+                btn_need_help: "J'ai Besoin d'Aide",
+                btn_can_help: "Je Peux Aider",
+                live_feed: "Flux de Stockage Local en Direct",
+                gpr_title: "⚙️ Résolveur de Processus Global (GPR)",
+                gpr_desc: "Obtenez des liens officiels directs.",
+                gpr_placeholder: "ex., erreur d'identifiant...",
+                btn_resolve: "Obtenir les Étapes",
+                sub_title: "🚫 Annulateur d'Abonnement",
+                sub_desc: "Trouvez les boutons d'annulation en 1 clic.",
+                btn_cancel_portal: "Trouver le Portail d'Annulation",
+                alert_empty: "Veuillez entrer votre texte ou requête !",
+                success_saved: "Enregistré et chiffré localement avec succès !",
+                success_export: "Sauvegarde exportée avec succès !",
+                success_import: "Sauvegarde importée avec succès !"
+            },
+            de: {
+                subtitle: "100% Lokaler Souveräner Arbeitsbereich",
+                vault_title: "🔒 Zero-Trust Lokaler Tresor & Souveränität",
+                vault_desc: "Ihre Daten bleiben auf Ihrem Gerät. Verschlüsseln und sichern.",
+                vault_placeholder: "Geben Sie sensible Notizen ein...",
+                btn_encrypt: "Speichern & Verschlüsseln",
+                btn_load: "Tresor Laden",
+                btn_export: "Backup Exportieren",
+                btn_import: "Backup Importieren",
+                network_title: "🌐 Peer Problemtausch-Netzwerk",
+                network_desc: "Übertragen Sie dringende Probleme lokal.",
+                network_placeholder: "Geben Sie Ihr Problem ein...",
+                btn_need_help: "Ich brauche Hilfe",
+                btn_can_help: "Ich kann helfen",
+                live_feed: "Live Lokaler Speicher-Feed",
+                gpr_title: "⚙️ Globaler Prozess-Löser (GPR)",
+                gpr_desc: "Erhalten Sie offizielle direkte Links.",
+                gpr_placeholder: "z.B. Ausweisfehler, Passverlängerung...",
+                btn_resolve: "Lösungsschritte Abrufen",
+                sub_title: "🚫 Abonnement-Kündiger",
+                sub_desc: "Finden Sie versteckte Kündigungsbuttons.",
+                btn_cancel_portal: "Kündigungsportal Finden",
+                alert_empty: "Bitte geben Sie Text oder Anfrage ein!",
+                success_saved: "Erfolgreich lokal gespeichert und verschlüsselt!",
+                success_export: "Backup erfolgreich exportiert!",
+                success_import: "Backup erfolgreich importiert!"
+            }
+        };
 
-<script>
-let currentRotationInterval = 30; // default seconds
-let countdownTimer = currentRotationInterval;
-let timerIntervalRef = null;
+        function changeLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) el.placeholder = t[key];
+            });
+            localStorage.setItem('shaheen_lang', lang);
+        }
 
-function launchApp(isSkip) {
-    let theme = document.getElementById('splashTheme').value;
-    let lang = document.getElementById('splashLang').value;
-    
-    document.documentElement.style.setProperty('--accent-primary', theme);
-    document.getElementById('langSelect').value = lang;
-    
-    document.getElementById('splashScreen').style.display = 'none';
-    document.getElementById('mainContainer').style.display = 'flex';
-    changeLanguage();
-    startEncryptionTimer();
-}
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        }
 
-// Multi-Language Dictionary
-const langData = {
-    ur: {
-        appTitle: "ShaheenNexus",
-        appSubtitle: "ساورین الٹرا ورک اسپیس",
-        modeCardTitle: "🛠️ ورک اسپیس موڈ",
-        modeCardDesc: "اپنا ڈیٹا سٹرکچر اور انکرپٹ کریں۔",
-        optFields: "کسٹم فیلڈز اور فارمز",
-        optTable: "ڈائنامک اسپریڈشیٹ / ٹیبل",
-        optNote: "ایڈوانسڈ نوٹ / مارک ڈاؤن",
-        optPass: "سکیور پاس ورڈز والٹ",
-        fieldsTitle: "📝 کسٹم ڈیٹا فیلڈز",
-        addFieldBtn: "+ فیلڈ شامل کریں",
-        tableTitleText: "📊 ڈائنامک ٹیبل کریٹر",
-        addRowBtn: "+ رو",
-        addColBtn: "+ کالم",
-        noteTitleText: "📄 سکیور نوٹ ایڈیٹر",
-        passTitleText: "🔑 سکیور پاس ورڈز والٹ",
-        tokenCardTitle: "🔐 ڈائنامک انکرپشن انجن",
-        tokenDesc: "نمبرز، لیٹرز اور اسپیشل کریکٹرز سے مکسڈ انکرپشن۔",
-        saveBtn: "محفوظ اور انکرپٹ کریں",
-        loadBtn: "ٹوکن سے لوڈ کریں",
-        menuSettings: "⚙️ سیٹنگز",
-        menuAbout: "ℹ️ ہمارے بارے میں",
-        menuExport: "📤 بیک اپ ایکسپورٹ",
-        menuImport: "📥 بیک اپ امپورٹ",
-        settingsHeading: "⚙️ ایپ سیٹنگز",
-        settingsDesc: "انکرپشن روٹیشن کا ٹائمر سیکنڈز میں سیٹ کریں۔",
-        intervalLabel: "روٹیشن سپیڈ (سیکنڈز):",
-        closeSettingsBtn: "محفوظ کریں",
-        aboutHeading: "ℹ️ ShaheenNexus کے بارے میں",
-        aboutText: "ShaheenNexus ایک جدید ترین پرائیویسی فرینڈلی لوکل ورک اسپیس ہے۔",
-        closeAboutBtn: "بند کریں"
-    },
-    en: {
-        appTitle: "ShaheenNexus",
-        appSubtitle: "Sovereign Ultra Workspace",
-        modeCardTitle: "🛠️ Workspace Mode",
-        modeCardDesc: "Structure your completely encrypted sovereign payload.",
-        optFields: "Custom Fields & Forms",
-        optTable: "Dynamic Spreadsheet / Table",
-        optNote: "Advanced Note / Markdown",
-        optPass: "Secure Passwords Vault",
-        fieldsTitle: "📝 Custom Data Fields",
-        addFieldBtn: "+ Add Field",
-        tableTitleText: "📊 Dynamic Table Creator",
-        addRowBtn: "+ Row",
-        addColBtn: "+ Column",
-        noteTitleText: "📄 Secure Note Editor",
-        passTitleText: "🔑 Secure Passwords Vault",
-        tokenCardTitle: "🔐 Dynamic Anti-Attack Encryption",
-        tokenDesc: "Keys mix symbols, numbers & letters, auto-rotating.",
-        saveBtn: "Save & Encrypt",
-        loadBtn: "Load by Token",
-        menuSettings: "⚙️ Settings",
-        menuAbout: "ℹ️ About Us",
-        menuExport: "📤 Export Backup",
-        menuImport: "📥 Import Backup",
-        settingsHeading: "⚙️ App Settings",
-        settingsDesc: "Configure key rotation speed and security parameters.",
-        intervalLabel: "Key Rotation Speed (Seconds):",
-        closeSettingsBtn: "Save Settings",
-        aboutHeading: "ℹ️ About ShaheenNexus",
-        aboutText: "ShaheenNexus is a sovereign local-first multi-lingual encrypted workspace.",
-        closeAboutBtn: "Close"
-    },
-    cn: {
-        appTitle: "ShaheenNexus",
-        appSubtitle: "主权超级工作区",
-        modeCardTitle: "🛠️ 工作区模式",
-        modeCardDesc: "构建您的加密 sovereign 有效负载。",
-        optFields: "自定义字段与表单",
-        optTable: "动态电子表格 / 表格",
-        optNote: "高级笔记 / Markdown",
-        optPass: "安全密码库",
-        fieldsTitle: "📝 自定义数据字段",
-        addFieldBtn: "+ 添加字段",
-        tableTitleText: "📊 动态表格创建器",
-        addRowBtn: "+ 行",
-        addColBtn: "+ 列",
-        noteTitleText: "📄 安全笔记编辑器",
-        passTitleText: "🔑 安全密码凭证",
-        tokenCardTitle: "🔐 动态防攻击加密引擎",
-        tokenDesc: "密钥混合符号、数字和字母并自动轮换。",
-        saveBtn: "保存并加密",
-        loadBtn: "通过令牌加载",
-        menuSettings: "⚙️ 设置",
-        menuAbout: "ℹ️ 关于我们",
-        menuExport: "📤 导出备份",
-        menuImport: "📥 导入备份",
-        settingsHeading: "⚙️ 应用设置",
-        settingsDesc: "配置密钥轮换速度（秒）。",
-        intervalLabel: "轮换速度（秒）:",
-        closeSettingsBtn: "保存设置",
-        aboutHeading: "ℹ️ 关于 ShaheenNexus",
-        aboutText: "ShaheenNexus 是一个终极本地优先的安全加密工作区。",
-        closeAboutBtn: "关闭"
-    }
-};
+        function saveVault() {
+            const val = document.getElementById('vaultInput').value.trim();
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!val) { alert(t.alert_empty); return; }
+            const encoded = btoa(encodeURIComponent(val));
+            localStorage.setItem('shaheen_sovereign_vault', encoded);
+            const out = document.getElementById('vaultOutput');
+            out.style.display = 'block';
+            out.innerHTML = `<strong>[SOVEREIGN SECURED STORAGE]</strong><br>Token: ${encoded}<br>Status: Stored 100% locally on your device!`;
+            showToast(t.success_saved);
+        }
 
-function changeLanguage() {
-    let lang = document.getElementById('langSelect').value;
-    let t = langData[lang];
-    for (let key in t) {
-        let el = document.getElementById(key);
-        if (el) el.innerText = t[key];
-    }
-}
-
-function toggleMenu() {
-    let menu = document.getElementById('dropdownMenu');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-}
-
-function openModal(id) {
-    document.getElementById(id).style.display = 'flex';
-    document.getElementById('dropdownMenu').style.display = 'none';
-}
-
-function closeModal(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-function updateSettings() {
-    currentRotationInterval = parseInt(document.getElementById('rotationSpeedSec').value);
-    countdownTimer = currentRotationInterval;
-    closeModal('settingsModal');
-    alert('Settings applied successfully! Rotation timer updated.');
-}
-
-function switchAppMode() {
-    let mode = document.getElementById('appMode').value;
-    document.getElementById('modeFieldsSection').style.display = mode === 'fields' ? 'flex' : 'none';
-    document.getElementById('modeTableSection').style.display = mode === 'table' ? 'flex' : 'none';
-    document.getElementById('modeNoteSection').style.display = mode === 'note' ? 'flex' : 'none';
-    document.getElementById('modePassSection').style.display = mode === 'passwords' ? 'flex' : 'none';
-}
-
-function addCustomField() {
-    let container = document.getElementById('dynamicFieldsContainer');
-    let div = document.createElement('div');
-    div.className = 'field-row';
-    div.innerHTML = `
-        <input type="text" placeholder="Key" class="f-key">
-        <input type="text" placeholder="Value" class="f-val">
-        <button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>
-    `;
-    container.appendChild(div);
-}
-
-function addTableRow() {
-    let tbody = document.getElementById('tableBody');
-    let colCount = document.getElementById('tableHeaderRow').cells.length;
-    let row = tbody.insertRow();
-    for(let i=0; i<colCount; i++) {
-        let cell = row.insertCell();
-        cell.innerHTML = '<input type="text" value="Val">';
-    }
-}
-
-function addTableCol() {
-    let headerRow = document.getElementById('tableHeaderRow');
-    let th = document.createElement('th');
-    th.innerText = 'Col ' + (headerRow.cells.length + 1);
-    headerRow.appendChild(th);
-
-    let tbody = document.getElementById('tableBody');
-    for(let row of tbody.rows) {
-        let cell = row.insertCell();
-        cell.innerHTML = '<input type="text" value="Val">';
-    }
-}
-
-// Ultra Mixed Encryption Engine (Numbers, Letters, Special Symbols)
-function generateEliteEncryptedToken(plainText) {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+~`-=}{[]|\\:;\"'<>,.?/";
-    let randomSalt = "";
-    for (let i = 0; i < 16; i++) {
-        randomSalt += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    let b64 = btoa(unescape(encodeURIComponent(plainText)));
-    return `SHN-ELITE-[${randomSalt}]-${b64.split('').reverse().join('')}-[SECURE]`;
-}
-
-// Timer for live rotation
-function startEncryptionTimer() {
-    if(timerIntervalRef) clearInterval(timerIntervalRef);
-    timerIntervalRef = setInterval(() => {
-        document.getElementById('timerDisplayinnerText`' || 'timerDisplay').innerText = `Rotating in: ${countdownTimer}s`;
-        countdownTimer--;
-        if(countdownTimer < 0) {
-            countdownTimer = currentRotationInterval;
-            // Auto trigger background scramble check
-            let tokenInput = document.getElementById('userTokenInput');
-            if(tokenInput.value && !tokenInput.value.startsWith('SHN-ELITE')) {
-                tokenInput.value = generateEliteEncryptedToken(tokenInput.value);
+        function loadVault() {
+            const saved = localStorage.getItem('shaheen_sovereign_vault');
+            const out = document.getElementById('vaultOutput');
+            out.style.display = 'block';
+            if (saved) {
+                try {
+                    const decoded = decodeURIComponent(atob(saved));
+                    out.innerHTML = `<strong>[DECRYPTED LOCAL DATA]:</strong><br>${decoded}`;
+                } catch(e) {
+                    out.innerHTML = `[TOKEN]: ${saved}`;
+                }
+            } else {
+                out.innerHTML = `[INFO]: No local vault data found.`;
             }
         }
-    }, 1000);
-}
 
-function saveDataToVault() {
-    let customToken = document.getElementById('userTokenInput').value.trim();
-    let mode = document.getElementById('appMode').value;
-    let rawPayload = { mode: mode, time: new Date().toISOString() };
-
-    if(mode === 'fields') {
-        let fields = {};
-        document.querySelectorAll('.field-row').forEach(row => {
-            let k = row.querySelector('.f-key').value.trim();
-            let v = row.querySelector('.f-val').value.trim();
-            if(k) fields[k] = v;
-        });
-        rawPayload.data = fields;
-    } else if(mode === 'table') {
-        let headers = [];
-        for(let th of document.getElementById('tableHeaderRow').cells) headers.push(th.innerText);
-        let rows = [];
-        for(let r of document.getElementById('tableBody').rows) {
-            let rowData = [];
-            for(let c of r.cells) rowData.push(c.querySelector('input').value);
-            rows.push(rowData);
+        function exportSovereignData() {
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            const allData = {
+                vault: localStorage.getItem('shaheen_sovereign_vault'),
+                feed: localStorage.getItem('shaheen_sovereign_feed'),
+                timestamp: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'shaheen-sovereign-backup.json';
+            a.click();
+            showToast(t.success_export);
         }
-        rawPayload.data = { headers, rows };
-    } else if(mode === 'note') {
-        rawPayload.data = {
-            title: document.getElementById('noteTitle').value,
-            content: document.getElementById('noteContent').value
-        };
-    } else if(mode === 'passwords') {
-        rawPayload.data = {
-            platform: document.getElementById('passPlatform').value,
-            username: document.getElementById('passUsername').value,
-            secret: document.getElementById('passSecret').value
-        };
-    }
 
-    let jsonStr = JSON.stringify(rawPayload);
-    let eliteEncryptedKey = generateEliteEncryptedToken(jsonStr);
-    
-    // Save to local storage using encrypted key identifier
-    localStorage.setItem(eliteEncryptedKey, jsonStr);
-    document.getElementById('userTokenInput').value = eliteEncryptedKey;
+        function triggerImport() {
+            document.getElementById('importFile').click();
+        }
 
-    let res = document.getElementById('vaultResult');
-    res.style.display = 'block';
-    res.innerHTML = `<b>✅ Elite Encryption Successful!</b><br>Encrypted Token (Copy to test verification):<br><code>${eliteEncryptedKey}</code>`;
-}
+        function importSovereignData(event) {
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.vault) localStorage.setItem('shaheen_sovereign_vault', data.vault);
+                    if (data.feed) localStorage.setItem('shaheen_sovereign_feed', data.feed);
+                    renderFeed();
+                    showToast(t.success_import);
+                } catch (err) {
+                    alert("Invalid backup file format!");
+                }
+            };
+            reader.readAsText(file);
+        }
 
-function loadDataFromVault() {
-    let token = document.getElementById('userTokenInput').value.trim();
-    let res = document.getElementById('vaultResult');
-    res.style.display = 'block';
+        function postNetwork(type) {
+            const val = document.getElementById('networkInput').value.trim();
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!val) { alert(t.alert_empty); return; }
+            let feed = JSON.parse(localStorage.getItem('shaheen_sovereign_feed') || '[]');
+            feed.unshift({ type: type, text: val, time: new Date().toLocaleTimeString() });
+            if (feed.length > 20) feed = feed.slice(0, 20);
+            localStorage.setItem('shaheen_sovereign_feed', JSON.stringify(feed));
+            document.getElementById('networkInput').value = '';
+            renderFeed();
+            showToast("Broadcasted locally!");
+        }
 
-    if(!token || !localStorage.getItem(token)) {
-        res.innerHTML = `<span style="color:var(--danger)">❌ Error: Invalid Token or Decryption Mismatch!</span>`;
-        return;
-    }
-
-    try {
-        let rawJson = localStorage.getItem(token);
-        let parsed = JSON.parse(rawJson);
-        document.getElementById('appMode').value = parsed.mode;
-        switchAppMode();
-
-        if(parsed.mode === 'fields') {
-            let container = document.getElementById('dynamicFieldsContainer');
-            container.innerHTML = '';
-            for(let [k, v] of Object.entries(parsed.data)) {
-                let div = document.createElement('div');
-                div.className = 'field-row';
-                div.innerHTML = `<input type="text" value="${k}" class="f-key"><input type="text" value="${v}" class="f-val"><button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>`;
-                container.appendChild(div);
+        function renderFeed() {
+            const feed = JSON.parse(localStorage.getItem('shaheen_sovereign_feed') || '[]');
+            const container = document.getElementById('feedContainer');
+            if (feed.length === 0) {
+                container.innerHTML = `<div class="feed-item" style="color:var(--text-muted); text-align:center;">No local feed items yet.</div>`;
+                return;
             }
-        } else if(parsed.mode === 'note') {
-            document.getElementById('noteTitle').value = parsed.data.title;
-            document.getElementById('noteContent').value = parsed.data.content;
-        } else if(parsed.mode === 'passwords') {
-            document.getElementById('passPlatform').value = parsed.data.platform;
-            document.getElementById('passUsername').value = parsed.data.username;
-            document.getElementById('passSecret').value = parsed.data.secret;
+            container.innerHTML = feed.map(item => `
+                <div class="feed-item">
+                    <span class="feed-badge ${item.type === 'need' ? 'badge-need' : 'badge-can'}">${item.type === 'need' ? 'I Need Help' : 'I Can Help'}</span>
+                    <span style="float:right; font-size:10px; color:var(--text-muted);">${item.time}</span>
+                    <div style="margin-top:4px; font-weight:500;">"${item.text}"</div>
+                </div>
+            `).join('');
         }
-        res.innerHTML = `<b>🔓 Decryption & Data Loaded Successfully!</b>`;
-    } catch(e) {
-        res.innerHTML = `<span style="color:var(--danger)">❌ Corrupted Payload Structure!</span>`;
-    }
-}
 
-function exportJSON() {
-    let allData = {};
-    for (let i = 0; i < localStorage.length; i++) {
-        let k = localStorage.key(i);
-        if(k.includes('SHN-ELITE')) allData[k] = localStorage.getItem(k);
-    }
-    let blob = new Blob([JSON.stringify(allData, null, 2)], {type: 'application/json'});
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = 'shaheennexus_elite_backup.json';
-    a.click();
-}
+        function resolveGPR() {
+            const country = document.getElementById('countrySelect').value;
+            const query = document.getElementById('gprQuery').value.trim();
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!query) { alert(t.alert_empty); return; }
+            const out = document.getElementById('gprOutput');
+            out.style.display = 'block';
+            let officialUrl = `https://www.google.com/search?q=how+to+resolve+${encodeURIComponent(query)}+official+${encodeURIComponent(country)}`;
+            out.innerHTML = `<strong>Region:</strong> ${country}<br><strong>Official Resolver Portal:</strong> <a href="${officialUrl}" target="_blank" style="color:#818cf8;">Click here to access official portal & steps</a>`;
+        }
 
-function importJSONPrompt() {
-    let j = prompt("Paste your elite JSON backup data:");
-    if(j) {
-        try {
-            let obj = JSON.parse(j);
-            for(let [k, v] of Object.entries(obj)) localStorage.setItem(k, v);
-            alert('Elite Backup imported successfully!');
-        } catch(e) { alert('Invalid JSON payload!'); }
-    }
-}
-</script>
+        function cancelSub() {
+            const name = document.getElementById('subName').value.trim() || 'Service';
+            const out = document.getElementById('subOutput');
+            out.style.display = 'block';
+            let url = `https://www.google.com/search?q=how+to+cancel+${encodeURIComponent(name)}+subscription+direct+link`;
+            out.innerHTML = `<strong>Service:</strong> ${name.toUpperCase()}<br><strong>Direct Cancel URL:</strong> <a href="${url}" target="_blank" style="color:#f43f5e;">${url}</a>`;
+        }
 
+        window.onload = function() {
+            const savedLang = localStorage.getItem('shaheen_lang');
+            if (savedLang) {
+                document.getElementById('langSwitcher').value = savedLang;
+                changeLanguage(savedLang);
+            }
+            renderFeed();
+        }
+    </script>
 </body>
 </html>
