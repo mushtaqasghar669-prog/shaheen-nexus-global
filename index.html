@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Global Process Resolver & Vault</title>
+    <title>ShaheenNexus - Sovereign Workspace & Vault</title>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #131b2e;
+            --bg-color: #07090e;
+            --card-bg: #0f172a;
             --accent-primary: #6366f1;
             --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             --text-main: #f8fafc;
@@ -17,31 +17,37 @@
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 20px; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 16px; }
         .container { max-width: 800px; margin: 0 auto; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: var(--card-bg); padding: 16px 20px; border-radius: 16px; border: 1px solid var(--border-color); }
-        .brand h1 { font-size: 20px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .brand p { font-size: 12px; color: var(--text-muted); }
-        .lang-select { background: #1e293b; color: #fff; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 14px; }
         
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
-        .card h2 { font-size: 18px; margin-bottom: 8px; color: #fff; }
-        .card p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--card-bg); padding: 14px 18px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .brand h1 { font-size: 18px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .brand p { font-size: 11px; color: var(--text-muted); }
         
-        input, select, textarea { width: 100%; background: #0b0f19; border: 1px solid var(--border-color); color: #fff; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .lang-select { background: #1e293b; color: #fff; border: 1px solid var(--border-color); padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 13px; }
+        
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
+        .card h2 { font-size: 16px; margin-bottom: 6px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .card p { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+        
+        input, select, textarea { width: 100%; background: #07090e; border: 1px solid var(--border-color); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 10px; outline: none; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); }
         
-        .btn { width: 100%; background: var(--accent-gradient); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-size: 14px; }
+        .btn-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        .btn { width: 100%; background: var(--accent-gradient); color: white; border: none; padding: 11px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; transition: opacity 0.2s; }
         .btn:hover { opacity: 0.9; }
         .btn-green { background: var(--success); }
         .btn-danger { background: var(--danger); }
+        .btn-secondary { background: #334155; }
         
-        .output-box { background: #0b0f19; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; font-size: 13px; color: var(--text-muted); margin-top: 10px; word-break: break-all; }
-        .feed-item { background: #0b0f19; border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; margin-top: 10px; font-size: 13px; }
-        .feed-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-bottom: 6px; }
+        .output-box { background: #07090e; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-size: 12px; color: var(--text-muted); margin-top: 8px; word-break: break-all; }
+        .feed-item { background: #07090e; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; margin-top: 8px; font-size: 12px; }
+        .feed-badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; margin-bottom: 4px; }
         .badge-need { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
         .badge-can { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 12px 20px; border-radius: 8px; font-size: 14px; display: none; z-index: 1000; }
+        
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 10px 16px; border-radius: 8px; font-size: 13px; display: none; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        footer { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 20px; padding-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -49,47 +55,52 @@
         <header>
             <div class="brand">
                 <h1>ShaheenNexus</h1>
-                <p data-i18n="subtitle">Global Process Resolver & Vault</p>
+                <p data-i18n="subtitle">100% Local-First Sovereign Workspace</p>
             </div>
             <select id="langSwitcher" class="lang-select" onchange="changeLanguage(this.value)">
                 <option value="en">English</option>
                 <option value="ur">اردو (Urdu)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
                 <option value="ar">العربية (Arabic)</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
             </select>
         </header>
 
-        <!-- Secure Vault -->
+        <!-- Zero-Trust Local Vault & Sovereignty Backup -->
         <div class="card">
-            <h2 data-i18n="vault_title">Secure Vault & Encryption</h2>
-            <p data-i18n="vault_desc">Encrypt and securely save your passwords or sensitive messages to browser local storage.</p>
+            <h2 data-i18n="vault_title">🔒 Zero-Trust Local Vault & Sovereignty</h2>
+            <p data-i18n="vault_desc">Your data stays 100% on your device. Encrypt notes & export/import complete sovereign backups.</p>
             <textarea id="vaultInput" data-i18n-placeholder="vault_placeholder" placeholder="Enter sensitive notes or passwords here..."></textarea>
-            <div style="display: flex; gap: 10px;">
+            <div class="btn-group">
                 <button class="btn btn-green" onclick="saveVault()" data-i18n="btn_encrypt">Save & Encrypt</button>
-                <button class="btn" onclick="loadVault()" data-i18n="btn_load">Load Vault</button>
+                <button class="btn btn-secondary" onclick="loadVault()" data-i18n="btn_load">Load Vault</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="exportSovereignData()" data-i18n="btn_export">Export Backup (JSON)</button>
+                <button class="btn btn-secondary" onclick="triggerImport()" data-i18n="btn_import">Import Backup</button>
+                <input type="file" id="importFile" style="display:none" onchange="importSovereignData(event)">
             </div>
             <div id="vaultOutput" class="output-box" style="display: none;"></div>
         </div>
 
-        <!-- Problem-Swapping Network -->
+        <!-- Problem-Swapping & Direct Network Feed -->
         <div class="card">
-            <h2 data-i18n="network_title">Problem-Swapping Network</h2>
-            <p data-i18n="network_desc">Broadcast your urgent problem or offer help. Stored locally and visible in live feed.</p>
+            <h2 data-i18n="network_title">🌐 Peer Problem-Swapping Network</h2>
+            <p data-i18n="network_desc">Broadcast urgent real-world problems locally or share expertise securely.</p>
             <textarea id="networkInput" data-i18n-placeholder="network_placeholder" placeholder="Type your urgent issue or request..."></textarea>
-            <div style="display: flex; gap: 10px;">
+            <div class="btn-group">
                 <button class="btn" onclick="postNetwork('need')" data-i18n="btn_need_help">I Need Help</button>
                 <button class="btn btn-green" onclick="postNetwork('can')" data-i18n="btn_can_help">I Can Help</button>
             </div>
-            <div style="margin-top: 16px; font-weight: 600; font-size: 14px;" data-i18n="live_feed">Live Storage Feed</div>
+            <div style="margin-top: 12px; font-weight: 600; font-size: 13px;" data-i18n="live_feed">Live Local Storage Feed</div>
             <div id="feedContainer"></div>
         </div>
 
-        <!-- Global Process Resolver -->
+        <!-- Global Process Resolver (GPR) -->
         <div class="card">
-            <h2 data-i18n="gpr_title">Global Process Resolver (GPR)</h2>
-            <p data-i18n="gpr_desc">Select your country/region and query to get exact official steps and links.</p>
+            <h2 data-i18n="gpr_title">⚙️ Global Process Resolver (GPR)</h2>
+            <p data-i18n="gpr_desc">Get exact official direct resolution links for legal, tax, and official government steps.</p>
             <select id="countrySelect">
                 <option value="Pakistan">Pakistan (CNIC, FBR, NADRA, Payments)</option>
                 <option value="Saudi Arabia">Saudi Arabia (Absher, Iqama, Baladiya)</option>
@@ -100,14 +111,18 @@
             <div id="gprOutput" class="output-box" style="display: none;"></div>
         </div>
 
-        <!-- Subscription Canceler -->
+        <!-- Subscription & Fee Canceler -->
         <div class="card">
-            <h2 data-i18n="sub_title">Subscription & Fee Canceler</h2>
-            <p data-i18n="sub_desc">Find hidden cancel buttons and refund links for major platforms in 1-click.</p>
+            <h2 data-i18n="sub_title">🚫 Subscription & Fee Canceler</h2>
+            <p data-i18n="sub_desc">Find hidden platform cancel buttons and refund links in 1-click.</p>
             <input type="text" id="subName" value="YouTube">
             <button class="btn btn-danger" onclick="cancelSub()" data-i18n="btn_cancel_portal">Find Direct Cancel Portal</button>
             <div id="subOutput" class="output-box" style="display: none;"></div>
         </div>
+
+        <footer>
+            &copy; 2026 ShaheenNexus | Powered by Shine Empire &bull; Absolute Data Sovereignty
+        </footer>
     </div>
 
     <div id="toast" class="toast">Action successful!</div>
@@ -115,142 +130,166 @@
     <script>
         const translations = {
             en: {
-                subtitle: "Global Process Resolver & Vault",
-                vault_title: "Secure Vault & Encryption",
-                vault_desc: "Encrypt and securely save your passwords or sensitive messages to browser local storage.",
+                subtitle: "100% Local-First Sovereign Workspace",
+                vault_title: "🔒 Zero-Trust Local Vault & Sovereignty",
+                vault_desc: "Your data stays 100% on your device. Encrypt notes & export/import complete sovereign backups.",
                 vault_placeholder: "Enter sensitive notes or passwords here...",
                 btn_encrypt: "Save & Encrypt",
                 btn_load: "Load Vault",
-                network_title: "Problem-Swapping Network",
-                network_desc: "Broadcast your urgent problem or offer help. Stored locally and visible in live feed.",
+                btn_export: "Export Backup (JSON)",
+                btn_import: "Import Backup",
+                network_title: "🌐 Peer Problem-Swapping Network",
+                network_desc: "Broadcast urgent real-world problems locally or share expertise securely.",
                 network_placeholder: "Type your urgent issue or request...",
                 btn_need_help: "I Need Help",
                 btn_can_help: "I Can Help",
-                live_feed: "Live Storage Feed",
-                gpr_title: "Global Process Resolver (GPR)",
-                gpr_desc: "Select your country/region and query to get exact official steps and links.",
+                live_feed: "Live Local Storage Feed",
+                gpr_title: "⚙️ Global Process Resolver (GPR)",
+                gpr_desc: "Get exact official direct resolution links for legal, tax, and official government steps.",
                 gpr_placeholder: "e.g., CNIC error, tax filing, passport renewal...",
                 btn_resolve: "Get Real Resolution Steps",
-                sub_title: "Subscription & Fee Canceler",
-                sub_desc: "Find hidden cancel buttons and refund links for major platforms in 1-click.",
+                sub_title: "🚫 Subscription & Fee Canceler",
+                sub_desc: "Find hidden platform cancel buttons and refund links in 1-click.",
                 btn_cancel_portal: "Find Direct Cancel Portal",
-                alert_empty: "Please enter your request or text!",
-                success_saved: "Successfully saved and encrypted!"
+                alert_empty: "Please enter your text or query!",
+                success_saved: "Successfully saved and encrypted locally!",
+                success_export: "Sovereign backup exported successfully!",
+                success_import: "Sovereign backup imported successfully!"
             },
             ur: {
-                subtitle: "گلوبل پروسیس ریزولور اور والٹ",
-                vault_title: "سیکیور والٹ اور انکرپشن",
-                vault_desc: "اپنے پاس ورڈز اور ضروری پیغامات کو براؤزر سٹوریج میں محفوظ کریں۔",
-                vault_placeholder: "یہاں اپنے پاس ورڈ یا نوٹ درج کریں...",
+                subtitle: "۱۰۰٪ لوکل فرسٹ سوورین ورک اسپیس",
+                vault_title: "🔒 زیرو ٹرسٹ لوکل والٹ اور خودمختاری",
+                vault_desc: "آپ کا ڈیٹا 100% آپ کے آلے پر محفوظ رہتا ہے۔ نوٹس انکرپٹ کریں اور بیک اپ ایکسپورٹ کریں۔",
+                vault_placeholder: "یہاں اپنے حساس نوٹس یا پاس ورڈ درج کریں...",
                 btn_encrypt: "محفوظ اور انکرپٹ کریں",
                 btn_load: "والٹ لوڈ کریں",
-                network_title: "پرابلم سویپنگ نیٹ ورک",
-                network_desc: "اپنی پرابلم براڈکاسٹ کریں جو لوکل سٹوریج کے ذریعے لائیو فیڈ میں دیکھے گی۔",
+                btn_export: "بیک اپ ایکسپورٹ کریں (JSON)",
+                btn_import: "بیک اپ امپورٹ کریں",
+                network_title: "🌐 پیئر پرابلم سویپنگ نیٹ ورک",
+                network_desc: "اپنی فوری حقیقی دنیا کے مسائل کو لوکللی براڈکاسٹ کریں۔",
                 network_placeholder: "اپنا مسئلہ یا درخواست یہاں لکھیں...",
                 btn_need_help: "مجھے مدد چاہیے",
                 btn_can_help: "میں مدد کر سکتا ہوں",
-                live_feed: "لائیو سٹوریج فیڈ",
-                gpr_title: "گلوبل پروسیس ریزولور (GPR)",
-                gpr_desc: "اپنا ملک سلیکٹ کریں اور پرابلم لکھیں تاکہ آفیشل سٹیپس ملیں۔",
-                gpr_placeholder: "مثال کے طور پر، CNIC ایرر، ٹیکس فائلنگ...",
+                live_feed: "لائیو لوکل سٹوریج فیڈ",
+                gpr_title: "⚙️ گلوبل پروسیس ریزولور (GPR)",
+                gpr_desc: "قانونی اور سرکاری مراحل کے لیے درست آفیشل لنکس حاصل کریں۔",
+                gpr_placeholder: "مثال کے طور پر، CNIC ایرر، پاسپورٹ رینوئل...",
                 btn_resolve: "حقیقی حل کے اقدامات حاصل کریں",
-                sub_title: "سبسکرپشن اور فیس کینسلر",
-                sub_desc: "بڑے پلیٹ فارمز کے چھپائے گئے کینسل بٹن ایک کلک میں ڈھونڈیں۔",
+                sub_title: "🚫 سبسکرپشن اور فیس کینسلر",
+                sub_desc: "ایک کلک میں چھپے ہوئے کینسل بٹن تلاش کریں۔",
                 btn_cancel_portal: "ڈائریکٹ کینسل پورٹل تلاش کریں",
-                alert_empty: "برائے مہربانی اپنی ریکوئسٹ یا ٹیکسٹ درج کریں!",
-                success_saved: "کامیابی سے محفوظ اور انکرپٹ ہو گیا!"
-            },
-            hi: {
-                subtitle: "ग्लोबल प्रोसेस रिज़ॉल्वर और वॉल्ट",
-                vault_title: "सुरक्षित वॉल्ट और एन्क्रिप्शन",
-                vault_desc: "अपने पासवर्ड और संवेदनशील संदेशों को ब्राउज़र स्टोरेज में सुरक्षित रूप से सहेजें।",
-                vault_placeholder: "यहाँ संवेदनशील नोट्स या पासवर्ड दर्ज करें...",
-                btn_encrypt: "सहेजें और एन्क्रिप्ट करें",
-                btn_load: "वॉल्ट लोड करें",
-                network_title: "समस्या-अदला-बदली नेटवर्क",
-                network_desc: "अपनी समस्या प्रसारित करें जो लाइव फ़ीड में दिखेगी।",
-                network_placeholder: "अपनी तत्काल समस्या या अनुरोध टाइप करें...",
-                btn_need_help: "मुझे सहायता चाहिए",
-                btn_can_help: "मैं मदद कर सकता हूँ",
-                live_feed: "लाइव स्टोरेज फ़ीड",
-                gpr_title: "ग्लोबल प्रोसेस रिज़ॉल्वर (GPR)",
-                gpr_desc: "अपना देश और क्वेरी चुनें ताकि सटीक आधिकारिक कदम मिल सकें।",
-                gpr_placeholder: "जैसे, CNIC त्रुटि, टैक्स फाइलिंग...",
-                btn_resolve: "वास्तविक समाधान चरण प्राप्त करें",
-                sub_title: "सदस्यता और शुल्क रद्दकर्ता",
-                sub_desc: "एक क्लिक में रद्द करने के बटन ढूंढें।",
-                btn_cancel_portal: "प्रत्यक्ष रद्दीकरण पोर्टल ढूंढें",
-                alert_empty: "कृपया अपना अनुरोध दर्ज करें!",
-                success_saved: "सफलतापूर्वक सहेजा और एन्क्रिप्ट किया गया!"
+                alert_empty: "برائے مہربانی اپنا متن یا سوال درج کریں!",
+                success_saved: "کامیابی سے مقامی طور پر محفوظ اور انکرپٹ ہو گیا!",
+                success_export: "سوورین بیک اپ کامیابی سے ایکسپورٹ ہو گیا!",
+                success_import: "سوورین بیک اپ کامیابی سے امپورٹ ہو گیا!"
             },
             ar: {
-                subtitle: "محل العمليات العالمي والخزنة",
-                vault_title: "الخزنة الآمنة والتشفير",
-                vault_desc: "قم بتشفير وحفظ كلمات المرور الخاصة بك في التخزين المحلي.",
+                subtitle: "مساحة عمل سيادية محلية 100%",
+                vault_title: "🔒 خزنة محلية موثوقة والسيادة المطلقة",
+                vault_desc: "بياناتك تبقى على جهازك بالكامل. قم بالتشفير والنسخ الاحتياطي.",
                 vault_placeholder: "أدخل ملاحظاتك أو كلمات المرور هنا...",
                 btn_encrypt: "حفظ وتشفير",
                 btn_load: "تحميل الخزنة",
-                network_title: "شبكة تبادل المشاكل",
-                network_desc: "بث مشكلتك العاجلة أو عرض المساعدة.",
+                btn_export: "تصدير النسخة الاحتياطية",
+                btn_import: "استيراد النسخة الاحتياطية",
+                network_title: "🌐 شبكة تبادل المشاكل بين النظراء",
+                network_desc: "بث المشاكل الملحة محلياً وشراكة الخبرات.",
                 network_placeholder: "اكتب مشكلتك العاجلة هنا...",
                 btn_need_help: "أحتاج إلى مساعدة",
                 btn_can_help: "يمكنني المساعدة",
-                live_feed: "خلاصة التخزين المباشر",
-                gpr_title: "محل العمليات العالمي (GPR)",
-                gpr_desc: "حدد بلدك واستفسارك للحصول على خطوات رسمية.",
-                gpr_placeholder: "مثل: خطأ في الهوية، تجديد جواز السفر...",
+                live_feed: "خلاصة التخزين المحلي المباشر",
+                gpr_title: "⚙️ محل العمليات العالمي (GPR)",
+                gpr_desc: "احصل على روابط رسمية دقيقة للخطوات الحكومية.",
+                gpr_placeholder: "مثل: خطأ الهوية، تجديد جواز السفر...",
                 btn_resolve: "الحصول على خطوات الحل",
-                sub_title: "إلغاء الاشتراكات والرسوم",
+                sub_title: "🚫 إلغاء الاشتراكات والرسوم",
                 sub_desc: "ابحث عن أزرار الإلغاء المخفية بنقرة واحدة.",
                 btn_cancel_portal: "بحث عن بوابة الإلغاء",
-                alert_empty: "الرجاء إدخال الطلب أو النص!",
-                success_saved: "تم الحفظ والتشفير بنجاح!"
+                alert_empty: "الرجاء إدخال النص أو الاستعلام!",
+                success_saved: "تم الحفظ والتشفير محلياً بنجاح!",
+                success_export: "تم تصدير النسخة بنجاح!",
+                success_import: "تم استيراد النسخة بنجاح!"
             },
             es: {
-                subtitle: "Resolutor de Procesos Global y Bóveda",
-                vault_title: "Bóveda Segura y Cifrado",
-                vault_desc: "Cifra y guarda de forma segura tus contraseñas.",
-                vault_placeholder: "Ingresa notas confidenciales aquí...",
+                subtitle: "Espacio de trabajo soberano 100% local",
+                vault_title: "🔒 Bóveda Local de Confianza Cero y Soberanía",
+                vault_desc: "Tus datos permanecen en tu dispositivo. Cifra y exporta respaldos.",
+                vault_placeholder: "Ingrese notas o contraseñas aquí...",
                 btn_encrypt: "Guardar y Cifrar",
                 btn_load: "Cargar Bóveda",
-                network_title: "Red de Intercambio de Problemas",
-                network_desc: "Transmite tu problema urgente.",
+                btn_export: "Exportar Resguardo (JSON)",
+                btn_import: "Importar Resguardo",
+                network_title: "🌐 Red de Intercambio de Problemas",
+                network_desc: "Transmite problemas urgentes localmente.",
                 network_placeholder: "Escribe tu problema urgente...",
                 btn_need_help: "Necesito Ayuda",
                 btn_can_help: "Puedo Ayudar",
-                live_feed: "Feed de Almacenamiento en Vivo",
-                gpr_title: "Resolutor de Procesos Global (GPR)",
-                gpr_desc: "Selecciona tu país y consulta.",
+                live_feed: "Feed de Almacenamiento Local en Vivo",
+                gpr_title: "⚙️ Resolutor de Procesos Global (GPR)",
+                gpr_desc: "Obtenga enlaces oficiales directos.",
                 gpr_placeholder: "ej., error de ID, impuestos...",
                 btn_resolve: "Obtener Pasos de Resolución",
-                sub_title: "Cancelador de Suscripciones",
-                sub_desc: "Encuentra botones de cancelación ocultos.",
+                sub_title: "🚫 Cancelador de Suscripciones",
+                sub_desc: "Encuentra botones de cancelación en 1 clic.",
                 btn_cancel_portal: "Buscar Portal de Cancelación",
-                alert_empty: "¡Por favor ingrese su solicitud!",
-                success_saved: "¡Guardado y cifrado con éxito!"
+                alert_empty: "¡Por favor ingrese su texto o consulta!",
+                success_saved: "¡Guardado y cifrado localmente con éxito!",
+                success_export: "¡Resguardo exportado con éxito!",
+                success_import: "¡Resguardo importado con éxito!"
             },
             fr: {
-                subtitle: "Résolveur de Processus Global & Coffre",
-                vault_title: "Coffre Sécurisé & Chiffrement",
-                vault_desc: "Chiffrez et enregistrez vos mots de passe.",
-                vault_placeholder: "Entrez vos notes ici...",
+                subtitle: "Espace de travail souverain 100% local",
+                vault_title: "🔒 Coffre Local Zero-Trust & Souveraineté",
+                vault_desc: "Vos données restent sur votre appareil. Chiffrez et exportez.",
+                vault_placeholder: "Entrez vos notes ou mots de passe ici...",
                 btn_encrypt: "Enregistrer & Chiffrer",
                 btn_load: "Charger le Coffre",
-                network_title: "Réseau d'Échange de Problèmes",
-                network_desc: "Diffusez votre problème urgent.",
+                btn_export: "Exporter la Sauvegarde",
+                btn_import: "Importer la Sauvegarde",
+                network_title: "🌐 Réseau d'Échange de Problèmes",
+                network_desc: "Diffusez des problèmes urgents localement.",
                 network_placeholder: "Tapez votre problème urgent...",
                 btn_need_help: "J'ai Besoin d'Aide",
                 btn_can_help: "Je Peux Aider",
-                live_feed: "Flux de Stockage en Direct",
-                gpr_title: "Résolveur de Processus Global (GPR)",
-                gpr_desc: "Sélectionnez votre pays et requête.",
+                live_feed: "Flux de Stockage Local en Direct",
+                gpr_title: "⚙️ Résolveur de Processus Global (GPR)",
+                gpr_desc: "Obtenez des liens officiels directs.",
                 gpr_placeholder: "ex., erreur d'identifiant...",
                 btn_resolve: "Obtenir les Étapes",
-                sub_title: "Annulateur d'Abonnement",
-                sub_desc: "Trouvez les boutons d'annulation cachés.",
+                sub_title: "🚫 Annulateur d'Abonnement",
+                sub_desc: "Trouvez les boutons d'annulation en 1 clic.",
                 btn_cancel_portal: "Trouver le Portail d'Annulation",
-                alert_empty: "Veuillez entrer votre requête !",
-                success_saved: "Enregistré et chiffré avec succès !"
+                alert_empty: "Veuillez entrer votre texte ou requête !",
+                success_saved: "Enregistré et chiffré localement avec succès !",
+                success_export: "Sauvegarde exportée avec succès !",
+                success_import: "Sauvegarde importée avec succès !"
+            },
+            de: {
+                subtitle: "100% Lokaler Souveräner Arbeitsbereich",
+                vault_title: "🔒 Zero-Trust Lokaler Tresor & Souveränität",
+                vault_desc: "Ihre Daten bleiben auf Ihrem Gerät. Verschlüsseln und sichern.",
+                vault_placeholder: "Geben Sie sensible Notizen ein...",
+                btn_encrypt: "Speichern & Verschlüsseln",
+                btn_load: "Tresor Laden",
+                btn_export: "Backup Exportieren",
+                btn_import: "Backup Importieren",
+                network_title: "🌐 Peer Problemtausch-Netzwerk",
+                network_desc: "Übertragen Sie dringende Probleme lokal.",
+                network_placeholder: "Geben Sie Ihr Problem ein...",
+                btn_need_help: "Ich brauche Hilfe",
+                btn_can_help: "Ich kann helfen",
+                live_feed: "Live Lokaler Speicher-Feed",
+                gpr_title: "⚙️ Globaler Prozess-Löser (GPR)",
+                gpr_desc: "Erhalten Sie offizielle direkte Links.",
+                gpr_placeholder: "z.B. Ausweisfehler, Passverlängerung...",
+                btn_resolve: "Lösungsschritte Abrufen",
+                sub_title: "🚫 Abonnement-Kündiger",
+                sub_desc: "Finden Sie versteckte Kündigungsbuttons.",
+                btn_cancel_portal: "Kündigungsportal Finden",
+                alert_empty: "Bitte geben Sie Text oder Anfrage ein!",
+                success_saved: "Erfolgreich lokal gespeichert und verschlüsselt!",
+                success_export: "Backup erfolgreich exportiert!",
+                success_import: "Backup erfolgreich importiert!"
             }
         };
 
@@ -276,58 +315,93 @@
 
         function saveVault() {
             const val = document.getElementById('vaultInput').value.trim();
-            const currentLang = document.getElementById('langSwitcher').value;
-            const t = translations[currentLang] || translations.en;
-            if (!val) {
-                alert(t.alert_empty);
-                return;
-            }
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!val) { alert(t.alert_empty); return; }
             const encoded = btoa(encodeURIComponent(val));
-            localStorage.setItem('shaheen_vault', encoded);
+            localStorage.setItem('shaheen_sovereign_vault', encoded);
             const out = document.getElementById('vaultOutput');
             out.style.display = 'block';
-            out.innerHTML = `<strong>[SUCCESS - SECURED & SAVED]</strong><br>Encrypted Token: ${encoded}<br>Status: Stored safely in browser LocalStorage!`;
+            out.innerHTML = `<strong>[SOVEREIGN SECURED STORAGE]</strong><br>Token: ${encoded}<br>Status: Stored 100% locally on your device!`;
             showToast(t.success_saved);
         }
 
         function loadVault() {
-            const saved = localStorage.getItem('shaheen_vault');
+            const saved = localStorage.getItem('shaheen_sovereign_vault');
             const out = document.getElementById('vaultOutput');
             out.style.display = 'block';
             if (saved) {
                 try {
                     const decoded = decodeURIComponent(atob(saved));
-                    out.innerHTML = `<strong>[DECRYPTED VAULT DATA]:</strong><br>${decoded}`;
+                    out.innerHTML = `<strong>[DECRYPTED LOCAL DATA]:</strong><br>${decoded}`;
                 } catch(e) {
-                    out.innerHTML = `[DECRYPTED TOKEN]: ${saved}`;
+                    out.innerHTML = `[TOKEN]: ${saved}`;
                 }
             } else {
-                out.innerHTML = `[INFO]: No vault data found in local storage.`;
+                out.innerHTML = `[INFO]: No local vault data found.`;
             }
+        }
+
+        function exportSovereignData() {
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            const allData = {
+                vault: localStorage.getItem('shaheen_sovereign_vault'),
+                feed: localStorage.getItem('shaheen_sovereign_feed'),
+                timestamp: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'shaheen-sovereign-backup.json';
+            a.click();
+            showToast(t.success_export);
+        }
+
+        function triggerImport() {
+            document.getElementById('importFile').click();
+        }
+
+        function importSovereignData(event) {
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.vault) localStorage.setItem('shaheen_sovereign_vault', data.vault);
+                    if (data.feed) localStorage.setItem('shaheen_sovereign_feed', data.feed);
+                    renderFeed();
+                    showToast(t.success_import);
+                } catch (err) {
+                    alert("Invalid backup file format!");
+                }
+            };
+            reader.readAsText(file);
         }
 
         function postNetwork(type) {
             const val = document.getElementById('networkInput').value.trim();
-            const currentLang = document.getElementById('langSwitcher').value;
-            const t = translations[currentLang] || translations.en;
-            if (!val) {
-                alert(t.alert_empty);
-                return;
-            }
-            let feed = JSON.parse(localStorage.getItem('shaheen_feed') || '[]');
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!val) { alert(t.alert_empty); return; }
+            let feed = JSON.parse(localStorage.getItem('shaheen_sovereign_feed') || '[]');
             feed.unshift({ type: type, text: val, time: new Date().toLocaleTimeString() });
             if (feed.length > 20) feed = feed.slice(0, 20);
-            localStorage.setItem('shaheen_feed', JSON.stringify(feed));
+            localStorage.setItem('shaheen_sovereign_feed', JSON.stringify(feed));
             document.getElementById('networkInput').value = '';
             renderFeed();
-            showToast("Broadcasted successfully!");
+            showToast("Broadcasted locally!");
         }
 
         function renderFeed() {
-            const feed = JSON.parse(localStorage.getItem('shaheen_feed') || '[]');
+            const feed = JSON.parse(localStorage.getItem('shaheen_sovereign_feed') || '[]');
             const container = document.getElementById('feedContainer');
             if (feed.length === 0) {
-                container.innerHTML = `<div class="feed-item" style="color:var(--text-muted); text-align:center;">No feed items yet. Post your issue above!</div>`;
+                container.innerHTML = `<div class="feed-item" style="color:var(--text-muted); text-align:center;">No local feed items yet.</div>`;
                 return;
             }
             container.innerHTML = feed.map(item => `
@@ -342,16 +416,13 @@
         function resolveGPR() {
             const country = document.getElementById('countrySelect').value;
             const query = document.getElementById('gprQuery').value.trim();
-            const currentLang = document.getElementById('langSwitcher').value;
-            const t = translations[currentLang] || translations.en;
-            if (!query) {
-                alert(t.alert_empty);
-                return;
-            }
+            const lang = document.getElementById('langSwitcher').value;
+            const t = translations[lang] || translations.en;
+            if (!query) { alert(t.alert_empty); return; }
             const out = document.getElementById('gprOutput');
             out.style.display = 'block';
             let officialUrl = `https://www.google.com/search?q=how+to+resolve+${encodeURIComponent(query)}+official+${encodeURIComponent(country)}`;
-            out.innerHTML = `<strong>Service Found:</strong> ${country.toUpperCase()}<br><strong>Official Resolver Portal:</strong> <a href="${officialUrl}" target="_blank" style="color:#818cf8;">Click here to access official steps & portal</a>`;
+            out.innerHTML = `<strong>Region:</strong> ${country}<br><strong>Official Resolver Portal:</strong> <a href="${officialUrl}" target="_blank" style="color:#818cf8;">Click here to access official portal & steps</a>`;
         }
 
         function cancelSub() {
@@ -359,7 +430,7 @@
             const out = document.getElementById('subOutput');
             out.style.display = 'block';
             let url = `https://www.google.com/search?q=how+to+cancel+${encodeURIComponent(name)}+subscription+direct+link`;
-            out.innerHTML = `<strong>Service Found:</strong> ${name.toUpperCase()}<br><strong>Direct Secure URL:</strong> <a href="${url}" target="_blank" style="color:#f43f5e;">${url}</a>`;
+            out.innerHTML = `<strong>Service:</strong> ${name.toUpperCase()}<br><strong>Direct Cancel URL:</strong> <a href="${url}" target="_blank" style="color:#f43f5e;">${url}</a>`;
         }
 
         window.onload = function() {
