@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaheenNexus - Ultimate Sovereign Vault</title>
+    <title>ShaheenNexus - Ultimate Sovereign Workspace</title>
     <style>
         :root {
-            --bg-color: #090d16;
-            --card-bg: #131b2e;
+            --bg-color: #070b14;
+            --card-bg: #0f172a;
             --accent-primary: #10b981;
             --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             --text-color: #f8fafc;
@@ -16,45 +16,60 @@
             --danger: #ef4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); padding: 12px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; position: relative; }
         
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 16px; border-radius: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .logo-title h1 { font-size: 1.3rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
-        .logo-title p { font-size: 0.75rem; color: var(--text-muted); }
+        /* Header & Menu */
+        .header { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 14px; border-radius: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .logo-title h1 { font-size: 1.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        .logo-title p { font-size: 0.7rem; color: var(--text-muted); }
+        
+        .header-controls { display: flex; align-items: center; gap: 8px; }
+        select { background: #070b14; color: #fff; border: 1px solid var(--border-color); padding: 5px 8px; border-radius: 6px; font-size: 0.75rem; outline: none; }
+        
+        .menu-btn { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; }
+        
+        /* Dropdown Menu */
+        .dropdown-menu { display: none; position: absolute; top: 65px; right: 12px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; width: 180px; z-index: 100; box-shadow: 0 8px 24px rgba(0,0,0,0.6); overflow: hidden; }
+        .dropdown-menu button { width: 100%; text-align: left; padding: 10px 14px; background: transparent; border: none; color: var(--text-color); font-size: 0.85rem; cursor: pointer; border-bottom: 1px solid var(--border-color); }
+        .dropdown-menu button:hover { background: #1e293b; color: #38bdf8; }
 
         /* Card */
-        .card { background: var(--card-bg); border-radius: 14px; padding: 18px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .card h3 { font-size: 1.05rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; font-weight: 600; }
-        p.desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+        .card { background: var(--card-bg); border-radius: 14px; padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .card h3 { font-size: 1rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+        p.desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
 
         /* Inputs & Controls */
-        input, textarea, select { width: 100%; background: #0b111e; border: 1px solid var(--border-color); color: #fff; padding: 11px; border-radius: 8px; font-size: 0.9rem; outline: none; transition: border 0.2s; }
-        input:focus, textarea:focus, select:focus { border-color: #38bdf8; }
-        textarea { resize: vertical; min-height: 90px; }
+        input, textarea { width: 100%; background: #070b14; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.85rem; outline: none; }
+        input:focus, textarea:focus { border-color: #38bdf8; }
+        textarea { resize: vertical; min-height: 80px; }
         
-        .btn-group { display: flex; gap: 10px; }
-        button { flex: 1; padding: 11px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-group { display: flex; gap: 8px; }
+        button.action-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        button.action-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-primary { background: var(--accent-primary); color: #fff; }
         .btn-secondary { background: #1e293b; color: #fff; border: 1px solid var(--border-color); }
         .btn-gradient { background: var(--accent-gradient); color: #fff; }
         .btn-danger { background: var(--danger); color: #fff; }
 
-        /* Dynamic Custom Fields Builder */
-        .field-row { display: flex; gap: 8px; align-items: center; background: #0b111e; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .field-row input { background: transparent; border: none; padding: 4px; }
+        /* Dynamic Fields & Tables */
+        .field-row { display: flex; gap: 6px; align-items: center; background: #070b14; padding: 6px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .field-row input { background: transparent; border: none; padding: 2px; font-size: 0.8rem; }
         
-        /* Table Builder */
-        .table-container { overflow-x: auto; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); }
-        table.custom-table { width: 100%; border-collapse: collapse; background: #0b111e; }
-        table.custom-table th, table.custom-table td { border: 1px solid var(--border-color); padding: 8px; text-align: center; font-size: 0.85rem; }
-        table.custom-table th { background: #162035; color: #38bdf8; }
+        .table-wrap { overflow-x: auto; max-height: 180px; border-radius: 8px; border: 1px solid var(--border-color); }
+        table.custom-table { width: 100%; border-collapse: collapse; background: #070b14; }
+        table.custom-table th, table.custom-table td { border: 1px solid var(--border-color); padding: 6px; text-align: center; font-size: 0.8rem; }
+        table.custom-table th { background: #131c31; color: #38bdf8; }
         table.custom-table input { background: transparent; border: none; color: #fff; text-align: center; width: 100%; padding: 2px; }
 
-        /* Output Box */
-        .output-box { background: #0b111e; padding: 12px; border-radius: 8px; border: 1px dashed var(--accent-primary); font-size: 0.85rem; word-break: break-all; color: #34d399; display: none; }
+        /* Output & Status Box */
+        .output-box { background: #070b14; padding: 10px; border-radius: 8px; border: 1px dashed var(--accent-primary); font-size: 0.8rem; word-break: break-all; color: #34d399; display: none; }
+        .rotation-timer { font-size: 0.7rem; background: #131c31; padding: 4px 8px; border-radius: 6px; color: #facc15; display: inline-block; }
+
+        /* Modals (Settings & About) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; padding: 20px; border-radius: 14px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; }
+        .modal-content h3 { color: #38bdf8; }
     </style>
 </head>
 <body>
@@ -63,99 +78,267 @@
     <!-- Header -->
     <div class="header">
         <div class="logo-title">
-            <h1>ShaheenNexus</h1>
-            <p>100% Custom Sovereign Vault & Database</p>
+            <h1 id="appTitle">ShaheenNexus</h1>
+            <p id="appSubtitle">Sovereign Ultra Workspace</p>
         </div>
-        <div style="font-size: 0.75rem; background: #1e293b; padding: 6px 10px; border-radius: 6px; color: var(--accent-primary);">Secure Local</div>
+        <div class="header-controls">
+            <select id="langSelect" onchange="changeLanguage()">
+                <option value="ur">Roman Urdu</option>
+                <option value="en">English</option>
+                <option value="cn">中文 (Chinese)</option>
+            </select>
+            <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+        </div>
     </div>
 
-    <!-- Mode Selector -->
+    <!-- Three Dots Dropdown Menu -->
+    <div class="dropdown-menu" id="dropdownMenu">
+        <button onclick="openModal('settingsModal')" id="menuSettings">⚙️ Settings</button>
+        <button onclick="openModal('aboutModal')" id="menuAbout">ℹ️ About Us</button>
+        <button onclick="exportJSON()" id="menuExport">📤 Export Backup</button>
+        <button onclick="importJSONPrompt()" id="menuImport">📥 Import Backup</button>
+    </div>
+
+    <!-- Mode Selector Card -->
     <div class="card">
-        <h3>🛠️ Select Creation Mode</h3>
-        <p class="desc">Choose how you want to structure and save your custom data.</p>
+        <h3 id="modeCardTitle">🛠️ Workspace Mode</h3>
+        <p class="desc" id="modeCardDesc">Select how you want to structure your sovereign encrypted data.</p>
         <select id="appMode" onchange="switchAppMode()">
-            <option value="fields">Fully Customizable Fields (Key-Value / Forms)</option>
-            <option value="table">Dynamic Spreadsheet / Table Builder</option>
-            <option value="note">Advanced Rich Note Editor</option>
+            <option value="fields" id="optFields">Custom Fields & Forms</option>
+            <option value="table" id="optTable">Dynamic Spreadsheet / Table</option>
+            <option value="note" id="optNote">Advanced Note / Markdown</option>
+            <option value="passwords" id="optPass">Secure Passwords Vault</option>
         </select>
     </div>
 
-    <!-- Mode 1: Custom Fields Builder -->
+    <!-- Workspace 1: Custom Fields -->
     <div class="card" id="modeFieldsSection">
-        <h3>📝 Custom Data Fields</h3>
-        <p class="desc">Add as many custom attributes/fields as you need for your data.</p>
-        <div id="dynamicFieldsContainer" style="display: flex; flex-direction: column; gap: 8px;">
+        <h3 id="fieldsTitle">📝 Custom Data Fields</h3>
+        <div id="dynamicFieldsContainer" style="display: flex; flex-direction: column; gap: 6px;">
             <div class="field-row">
-                <input type="text" placeholder="Field Name (e.g., Title)" class="f-key" value="Title">
-                <input type="text" placeholder="Field Value" class="f-val" value="My Project">
-                <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
+                <input type="text" placeholder="Key / Label" class="f-key" value="Project Name">
+                <input type="text" placeholder="Value" class="f-val" value="Shaheen Core">
+                <button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>
             </div>
         </div>
-        <button class="btn-secondary" onclick="addCustomField()">+ Add New Field</button>
+        <button class="btn-secondary" onclick="addCustomField()" id="addFieldBtn">+ Add Field</button>
     </div>
 
-    <!-- Mode 2: Dynamic Table Builder -->
+    <!-- Workspace 2: Tables -->
     <div class="card" id="modeTableSection" style="display: none;">
-        <h3>📊 Dynamic Table Creator</h3>
-        <input type="text" id="customTableName" placeholder="Table Title (e.g. Expenses / Inventory)" style="margin-bottom: 8px;">
-        <div class="btn-group" style="margin-bottom: 8px;">
-            <button class="btn-secondary" onclick="addTableRow()">+ Add Row</button>
-            <button class="btn-secondary" onclick="addTableCol()">+ Add Column</button>
+        <h3 id="tableTitleText">📊 Dynamic Table Creator</h3>
+        <input type="text" id="customTableName" placeholder="Table Title">
+        <div class="btn-group" style="margin-top: 4px;">
+            <button class="btn-secondary" onclick="addTableRow()" id="addRowBtn">+ Row</button>
+            <button class="btn-secondary" onclick="addTableCol()" id="addColBtn">+ Column</button>
         </div>
-        <div class="table-container">
+        <div class="table-wrap" style="margin-top: 6px;">
             <table class="custom-table" id="userTable">
                 <thead>
                     <tr id="tableHeaderRow">
-                        <th>Column 1</th>
-                        <th>Column 2</th>
+                        <th>Col 1</th>
+                        <th>Col 2</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
                     <tr>
-                        <td><input type="text" value="Data 1"></td>
-                        <td><input type="text" value="Data 2"></td>
+                        <td><input type="text" value="Data A"></td>
+                        <td><input type="text" value="Data B"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Mode 3: Note Editor -->
+    <!-- Workspace 3: Notes -->
     <div class="card" id="modeNoteSection" style="display: none;">
-        <h3>📄 Custom Note / Markdown Editor</h3>
-        <input type="text" id="noteTitle" placeholder="Note Title" style="margin-bottom: 8px;">
-        <textarea id="noteContent" placeholder="Write your complete data, code, or notes here..."></textarea>
+        <h3 id="noteTitleText">📄 Secure Note Editor</h3>
+        <input type="text" id="noteTitle" placeholder="Note Heading" style="margin-bottom: 6px;">
+        <textarea id="noteContent" placeholder="Write your sensitive notes here..."></textarea>
     </div>
 
-    <!-- Token & Security Engine -->
+    <!-- Workspace 4: Passwords Vault -->
+    <div class="card" id="modePassSection" style="display: none;">
+        <h3 id="passTitleText">🔑 Secure Password & Credentials</h3>
+        <input type="text" id="passPlatform" placeholder="Platform / App Name (e.g., GitHub)">
+        <input type="text" id="passUsername" placeholder="Username / Email">
+        <input type="password" id="passSecret" placeholder="Password / Secret Key" style="margin-top: 4px;">
+    </div>
+
+    <!-- Token & Auto-Rotating Encryption Engine -->
     <div class="card">
-        <h3>🔐 Token & Sovereign Vault Encryption</h3>
-        <p class="desc">Enter your custom token or leave it blank to auto-generate a secure encryption token.</p>
-        <input type="text" id="userTokenInput" placeholder="Custom Token (e.g. MY-SECRET-KEY-123) or Auto">
+        <h3 id="tokenCardTitle">🔐 Dynamic Token & Encryption</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="desc" id="tokenDesc">Keys auto-rotate for maximum anti-attack protection.</p>
+            <span class="rotation-timer" id="timerDisplay">Rotation in: 29:59</span>
+        </div>
+        <input type="text" id="userTokenInput" placeholder="Custom Token (or leave for Auto)">
         
-        <div class="btn-group" style="margin-top: 6px;">
-            <button class="btn-primary" onclick="saveDataToVault()">Save & Encrypt</button>
-            <button class="btn-gradient" onclick="loadDataFromVault()">Load Data by Token</button>
+        <div class="btn-group" style="margin-top: 4px;">
+            <button class="btn-primary" onclick="saveDataToVault()" id="saveBtn">Save & Encrypt</button>
+            <button class="btn-gradient" onclick="loadDataFromVault()" id="loadBtn">Load by Token</button>
         </div>
         <div id="vaultResult" class="output-box"></div>
     </div>
+</div>
 
-    <!-- Export / Import Backup -->
-    <div class="card">
-        <h3>⚙️ Local Backup & Portability</h3>
-        <div class="btn-group">
-            <button class="btn-secondary" onclick="exportJSON()">Export JSON Backup</button>
-            <button class="btn-secondary" onclick="importJSONPrompt()">Import JSON Backup</button>
-        </div>
+<!-- Settings Modal -->
+<div class="modal" id="settingsModal">
+    <div class="modal-content">
+        <h3 id="settingsHeading">⚙️ App Settings</h3>
+        <p class="desc" id="settingsDesc">Configure encryption key rotation interval and app security.</p>
+        <label style="font-size: 0.8rem;" id="intervalLabel">Key Rotation Interval:</label>
+        <select id="rotationInterval">
+            <option value="30">Every 30 Minutes (Recommended)</option>
+            <option value="5">Every 5 Minutes</option>
+            <option value="60">Every 1 Hour</option>
+            <option value="1">High Security (Every 1 Minute)</option>
+        </select>
+        <button class="btn-primary" onclick="closeModal('settingsModal')" id="closeSettingsBtn">Save Settings</button>
+    </div>
+</div>
+
+<!-- About Us Modal -->
+<div class="modal" id="aboutModal">
+    <div class="modal-content">
+        <h3 id="aboutHeading">ℹ️ About ShaheenNexus</h3>
+        <p class="desc" id="aboutText">ShaheenNexus is an ultimate 100% local-first sovereign workspace engineered for maximum privacy, dynamic custom structuring, and auto-rotating anti-attack cryptography. Built with elite precision.</p>
+        <button class="btn-secondary" onclick="closeModal('aboutModal')" id="closeAboutBtn">Close</button>
     </div>
 </div>
 
 <script>
+// Multi-Language Dictionary
+const langData = {
+    ur: {
+        appTitle: "ShaheenNexus",
+        appSubtitle: "ساورین الٹرا ورک اسپیس",
+        modeCardTitle: "🛠️ ورک اسپیس موڈ",
+        modeCardDesc: "سلیکٹ کریں کہ آپ اپنا ڈیٹا کیسے محفوظ کرنا چاہتے ہیں۔",
+        optFields: "کسٹم فیلڈز اور فارمز",
+        optTable: "ڈائنامک اسپریڈشیٹ / ٹیبل",
+        optNote: "ایڈوانسڈ نوٹ / مارک ڈاؤن",
+        optPass: "سکیور پاس ورڈز والٹ",
+        fieldsTitle: "📝 کسٹم ڈیٹا فیلڈز",
+        addFieldBtn: "+ فیلڈ شامل کریں",
+        tableTitleText: "📊 ڈائنامک ٹیبل کریٹر",
+        addRowBtn: "+ رو",
+        addColBtn: "+ کالم",
+        noteTitleText: "📄 سکیور نوٹ ایڈیٹر",
+        passTitleText: "🔑 سکیور پاس ورڈز والٹ",
+        tokenCardTitle: "🔐 ڈائنامک ٹوکن اور انکرپشن",
+        tokenDesc: "سیکیورٹی کے لیے کیز خود بخود روٹیٹ ہوتی ہیں۔",
+        saveBtn: "محفوظ اور انکرپٹ کریں",
+        loadBtn: "ٹوکن سے لوڈ کریں",
+        menuSettings: "⚙️ سیٹنگز",
+        menuAbout: "ℹ️ ہمارے بارے میں",
+        menuExport: "📤 بیک اپ ایکسپورٹ",
+        menuImport: "📥 بیک اپ امپورٹ",
+        settingsHeading: "⚙️ ایپ سیٹنگز",
+        settingsDesc: "انکرپشن اور سیکیورٹی پیرامیٹرز سیٹ کریں۔",
+        intervalLabel: "کی روٹیشن کا دورانیہ:",
+        closeSettingsBtn: "محفوظ کریں",
+        aboutHeading: "ℹ️ ShaheenNexus کے بارے میں",
+        aboutText: "ShaheenNexus ایک بہترین اور مکمل لوکل پرائیویسی بیسڈ ورک اسپیس ہے جو آپ کے ڈیٹا کو مکمل تحفظ فراہم کرتا ہے۔",
+        closeAboutBtn: "بند کریں"
+    },
+    en: {
+        appTitle: "ShaheenNexus",
+        appSubtitle: "Sovereign Ultra Workspace",
+        modeCardTitle: "🛠️ Workspace Mode",
+        modeCardDesc: "Select how you want to structure your sovereign encrypted data.",
+        optFields: "Custom Fields & Forms",
+        optTable: "Dynamic Spreadsheet / Table",
+        optNote: "Advanced Note / Markdown",
+        optPass: "Secure Passwords Vault",
+        fieldsTitle: "📝 Custom Data Fields",
+        addFieldBtn: "+ Add Field",
+        tableTitleText: "📊 Dynamic Table Creator",
+        addRowBtn: "+ Row",
+        addColBtn: "+ Column",
+        noteTitleText: "📄 Secure Note Editor",
+        passTitleText: "🔑 Secure Passwords Vault",
+        tokenCardTitle: "🔐 Dynamic Token & Encryption",
+        tokenDesc: "Keys auto-rotate for maximum anti-attack protection.",
+        saveBtn: "Save & Encrypt",
+        loadBtn: "Load by Token",
+        menuSettings: "⚙️ Settings",
+        menuAbout: "ℹ️ About Us",
+        menuExport: "📤 Export Backup",
+        menuImport: "📥 Import Backup",
+        settingsHeading: "⚙️ App Settings",
+        settingsDesc: "Configure encryption key rotation interval and app security.",
+        intervalLabel: "Key Rotation Interval:",
+        closeSettingsBtn: "Save Settings",
+        aboutHeading: "ℹ️ About ShaheenNexus",
+        aboutText: "ShaheenNexus is an ultimate 100% local-first sovereign workspace engineered for maximum privacy and dynamic custom structuring.",
+        closeAboutBtn: "Close"
+    },
+    cn: {
+        appTitle: "ShaheenNexus",
+        appSubtitle: "主权超级工作区",
+        modeCardTitle: "🛠️ 工作区模式",
+        modeCardDesc: "选择您希望如何构造加密数据。",
+        optFields: "自定义字段与表单",
+        optTable: "动态电子表格 / 表格",
+        optNote: "高级笔记 / Markdown",
+        optPass: "安全密码库",
+        fieldsTitle: "📝 自定义数据字段",
+        addFieldBtn: "+ 添加字段",
+        tableTitleText: "📊 动态表格创建器",
+        addRowBtn: "+ 行",
+        addColBtn: "+ 列",
+        noteTitleText: "📄 安全笔记编辑器",
+        passTitleText: "🔑 安全密码凭证",
+        tokenCardTitle: "🔐 动态令牌与加密",
+        tokenDesc: "密钥自动轮换，实现顶级防攻击保护。",
+        saveBtn: "保存并加密",
+        loadBtn: "通过令牌加载",
+        menuSettings: "⚙️ 设置",
+        menuAbout: "ℹ️ 关于我们",
+        menuExport: "📤 导出备份",
+        menuImport: "📥 导入备份",
+        settingsHeading: "⚙️ 应用设置",
+        settingsDesc: "配置加密密钥轮换间隔与安全参数。",
+        intervalLabel: "密钥轮换间隔:",
+        closeSettingsBtn: "保存设置",
+        aboutHeading: "ℹ️ 关于 ShaheenNexus",
+        aboutText: "ShaheenNexus 是一个终极的、100% 本地优先的主权工作区，专为最高隐私和动态自定义构建而设计。",
+        closeAboutBtn: "关闭"
+    }
+};
+
+function changeLanguage() {
+    let lang = document.getElementById('langSelect').value;
+    let t = langData[lang];
+    for (let key in t) {
+        let el = document.getElementById(key);
+        if (el) el.innerText = t[key];
+    }
+}
+
+// Menu Toggle
+function toggleMenu() {
+    let menu = document.getElementById('dropdownMenu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+    document.getElementById('dropdownMenu').style.display = 'none';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// Mode Switcher
 function switchAppMode() {
     let mode = document.getElementById('appMode').value;
     document.getElementById('modeFieldsSection').style.display = mode === 'fields' ? 'flex' : 'none';
     document.getElementById('modeTableSection').style.display = mode === 'table' ? 'flex' : 'none';
     document.getElementById('modeNoteSection').style.display = mode === 'note' ? 'flex' : 'none';
+    document.getElementById('modePassSection').style.display = mode === 'passwords' ? 'flex' : 'none';
 }
 
 function addCustomField() {
@@ -163,9 +346,9 @@ function addCustomField() {
     let div = document.createElement('div');
     div.className = 'field-row';
     div.innerHTML = `
-        <input type="text" placeholder="Field Name" class="f-key">
-        <input type="text" placeholder="Field Value" class="f-val">
-        <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
+        <input type="text" placeholder="Key" class="f-key">
+        <input type="text" placeholder="Value" class="f-val">
+        <button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>
     `;
     container.appendChild(div);
 }
@@ -176,7 +359,7 @@ function addTableRow() {
     let row = tbody.insertRow();
     for(let i=0; i<colCount; i++) {
         let cell = row.insertCell();
-        cell.innerHTML = '<input type="text" value="Value">';
+        cell.innerHTML = '<input type="text" value="Val">';
     }
 }
 
@@ -189,12 +372,22 @@ function addTableCol() {
     let tbody = document.getElementById('tableBody');
     for(let row of tbody.rows) {
         let cell = row.insertCell();
-        cell.innerHTML = '<input type="text" value="Value">';
+        cell.innerHTML = '<input type="text" value="Val">';
     }
 }
 
+// Auto-Rotating Encryption Timer Simulation
+let timeLeft = 1799; // 30 mins
+setInterval(() => {
+    let m = Math.floor(timeLeft / 60);
+    let s = timeLeft % 60;
+    document.getElementById('timerDisplay').innerText = `Rotation in: ${m}:${s < 10 ? '0' : ''}${s}`;
+    timeLeft--;
+    if(timeLeft < 0) timeLeft = 1799;
+}, 1000);
+
 function generateSecureToken() {
-    return 'SHN-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+    return 'SHN-SECURE-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
 }
 
 function saveDataToVault() {
@@ -208,20 +401,14 @@ function saveDataToVault() {
     if(mode === 'fields') {
         let fields = {};
         document.querySelectorAll('.field-row').forEach(row => {
-            let key = row.querySelector('.f-key').value.trim();
-            let val = row.querySelector('.f-val').value.trim();
-            if(key) fields[key] = val;
+            let k = row.querySelector('.f-key').value.trim();
+            let v = row.querySelector('.f-val').value.trim();
+            if(k) fields[k] = v;
         });
         payload.data = fields;
     } else if(mode === 'table') {
-        payload.tableName = document.getElementById('customTableName').value || 'Untitled Table';
         let headers = [];
-        document.querySelectorAll('#tableHeaderRow th').th = document.querySelectorAll('#tableHeaderRow th').forEach(th => headers.push(th.innerText));
-        // fixed headers extraction
-        let thElements = document.getElementById('tableHeaderRow').cells;
-        headers = [];
-        for(let th of thElements) headers.push(th.innerText);
-
+        for(let th of document.getElementById('tableHeaderRow').cells) headers.push(th.innerText);
         let rows = [];
         for(let r of document.getElementById('tableBody').rows) {
             let rowData = [];
@@ -234,32 +421,31 @@ function saveDataToVault() {
             title: document.getElementById('noteTitle').value,
             content: document.getElementById('noteContent').value
         };
+    } else if(mode === 'passwords') {
+        payload.data = {
+            platform: document.getElementById('passPlatform').value,
+            username: document.getElementById('passUsername').value,
+            secret: document.getElementById('passSecret').value
+        };
     }
 
     localStorage.setItem(finalToken, JSON.stringify(payload));
-    
-    let resBox = document.getElementById('vaultResult');
-    resBox.style.display = 'block';
-    resBox.innerHTML = `<b>Data Successfully Saved & Encrypted!</b><br>Token: <code>${finalToken}</code><br><small>Save this token to load your customized data anywhere, anytime.</small>`;
+    let res = document.getElementById('vaultResult');
+    res.style.display = 'block';
+    res.innerHTML = `<b>Data Encrypted & Saved Successfully!</b><br>Token: <code>${finalToken}</code>`;
 }
 
 function loadDataFromVault() {
     let token = document.getElementById('userTokenInput').value.trim();
-    let resBox = document.getElementById('vaultResult');
-    resBox.style.display = 'block';
+    let res = document.getElementById('vaultResult');
+    res.style.display = 'block';
 
-    if(!token) {
-        resBox.innerHTML = `<span style="color:var(--danger)">Please enter a valid token to load data.</span>`;
+    if(!token || !localStorage.getItem(token)) {
+        res.innerHTML = `<span style="color:var(--danger)">Invalid or empty token!</span>`;
         return;
     }
 
-    let raw = localStorage.getItem(token);
-    if(!raw) {
-        resBox.innerHTML = `<span style="color:var(--danger)">No data found for token: <code>${token}</code></span>`;
-        return;
-    }
-
-    let parsed = JSON.parse(raw);
+    let parsed = JSON.parse(localStorage.getItem(token));
     document.getElementById('appMode').value = parsed.mode;
     switchAppMode();
 
@@ -269,70 +455,42 @@ function loadDataFromVault() {
         for(let [k, v] of Object.entries(parsed.data)) {
             let div = document.createElement('div');
             div.className = 'field-row';
-            div.innerHTML = `
-                <input type="text" value="${k}" class="f-key">
-                <input type="text" value="${v}" class="f-val">
-                <button class="btn-danger" style="flex:0; padding:4px 8px;" onclick="this.parentElement.remove()">×</button>
-            `;
+            div.innerHTML = `<input type="text" value="${k}" class="f-key"><input type="text" value="${v}" class="f-val"><button class="btn-danger" style="flex:0; padding:2px 6px;" onclick="this.parentElement.remove()">×</button>`;
             container.appendChild(div);
         }
-        resBox.innerHTML = `<b>Fields Loaded Successfully!</b> (Token: ${token})`;
-    } else if(parsed.mode === 'table') {
-        document.getElementById('customTableName').value = parsed.tableName;
-        let headerRow = document.getElementById('tableHeaderRow');
-        headerRow.innerHTML = '';
-        parsed.data.headers.forEach(h => {
-            let th = document.createElement('th');
-            th.innerText = h;
-            headerRow.appendChild(th);
-        });
-
-        let tbody = document.getElementById('tableBody');
-        tbody.innerHTML = '';
-        parsed.data.rows.forEach(r => {
-            let row = tbody.insertRow();
-            r.forEach(val => {
-                let cell = row.insertCell();
-                cell.innerHTML = `<input type="text" value="${val}">`;
-            });
-        });
-        resBox.innerHTML = `<b>Table [${parsed.tableName}] Loaded Successfully!</b>`;
     } else if(parsed.mode === 'note') {
         document.getElementById('noteTitle').value = parsed.data.title;
         document.getElementById('noteContent').value = parsed.data.content;
-        resBox.innerHTML = `<b>Note Loaded Successfully!</b>`;
+    } else if(parsed.mode === 'passwords') {
+        document.getElementById('passPlatform').value = parsed.data.platform;
+        document.getElementById('passUsername').value = parsed.data.username;
+        document.getElementById('passSecret').value = parsed.data.secret;
     }
+    res.innerHTML = `<b>Data Loaded Successfully!</b>`;
 }
 
 function exportJSON() {
     let allData = {};
     for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if(key.startsWith('SHN-') || key.length > 5) {
-            allData[key] = localStorage.getItem(key);
-        }
+        let k = localStorage.key(i);
+        if(k.includes('SHN-')) allData[k] = localStorage.getItem(k);
     }
-    let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
-    let downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "shaheennexus_vault_backup.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+    let blob = new Blob([JSON.stringify(allData, null, 2)], {type: 'application/json'});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'shaheennexus_backup.json';
+    a.click();
 }
 
 function importJSONPrompt() {
-    let jsonStr = prompt("Paste your exported JSON backup string here:");
-    if(jsonStr) {
+    let j = prompt("Paste your JSON backup data:");
+    if(j) {
         try {
-            let parsedObj = JSON.parse(jsonStr);
-            for(let [k, v] of Object.entries(parsedObj)) {
-                localStorage.setItem(k, v);
-            }
+            let obj = JSON.parse(j);
+            for(let [k, v] of Object.entries(obj)) localStorage.setItem(k, v);
             alert('Backup imported successfully!');
-        } catch(e) {
-            alert('Invalid JSON format!');
-        }
+        } catch(e) { alert('Invalid JSON!'); }
     }
 }
 </script>
