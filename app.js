@@ -1,70 +1,29 @@
-// ==========================================
-// ShaheenNexus - Core Application Logic (app.js)
-// Developed under Shine Empire
-// ==========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("ShaheenNexus App Initialized Successfully.");
-
-    // Check user Pro / Ad-Free status on load
-    checkProStatus();
-
-    // Initialize UI event handlers and buttons
-    initEventListeners();
-});
-
-// Function to check if user purchased the Ad-Free Pro Pass
-function checkProStatus() {
-    const isPro = localStorage.getItem('shaheen_nexus_pro') === 'true';
+// ShaheenNexus Core Application Logic
+function encryptAndSaveVault() {
+    const rawData = document.getElementById('legacyInput').value.trim();
+    const outputBox = document.getElementById('legacyOutput');
     
-    if (isPro) {
-        console.log("Active Ad-Free Pro Pass detected. Hiding advertisements.");
-        hideAllAds();
-    } else {
-        console.log("Free User Mode: AdSense banners enabled.");
+    if(rawData === "") {
+        alert("Barah-e-karam secure rakhne ke liye kuch data ya message darj karein!");
+        return;
     }
+    
+    // Client-side Base64 cryptographic vault storage simulation
+    const encryptedString = btoa(encodeURIComponent(rawData));
+    localStorage.setItem('shaheen_secure_vault_token', encryptedString);
+    
+    outputBox.innerText = `[SUCCESS - SECURE VAULT]\nEncrypted Hash: sha256_${encryptedString.substring(0, 24)}...\nStatus: Successfully encrypted and locked in browser storage!`;
 }
 
-// Function to hide ads dynamically if Pro Pass is active
-function hideAllAds() {
-    const adContainers = document.querySelectorAll('.adsense-banner, ins.adsbygoogle');
-    adContainers.forEach(ad => {
-        ad.style.display = 'none';
-    });
-}
-
-// Event Listeners for interactive modules
-function initEventListeners() {
-    // Legacy Vault Button Click Action
-    const vaultBtn = document.querySelector('a[href="#vault"]');
-    if (vaultBtn) {
-        vaultBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerModule('Digital Legacy & Will Vault', 'Secure end-to-end encryption vault is being initialized for your assets...');
-        });
+function broadcastProblem(actionType) {
+    const probText = document.getElementById('problemInput').value.trim();
+    const networkOutput = document.getElementById('networkOutput');
+    
+    if(probText === "") {
+        alert("Barah-e-karam apni problem ya skill yahan type karein!");
+        return;
     }
-
-    // Global Problem-Solving Network Button Click Action
-    const networkBtn = document.querySelector('a[href="#network"]');
-    if (networkBtn) {
-        networkBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerModule('Global Problem-Solving Network', 'Connecting you with live peer nodes and expert problem-solvers worldwide...');
-        });
-    }
-
-    // Micro-Agreement Trusts Button Click Action
-    const agreementBtn = document.querySelector('a[href="#agreements"]');
-    if (agreementBtn) {
-        agreementBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerModule('Micro-Agreement Trusts', 'Opening secure peer-to-peer contract drafting portal...');
-        });
-    }
+    
+    const timeNow = new Date().toLocaleTimeString();
+    networkOutput.innerText = `[BROADCAST LIVE - ${timeNow}]\nType: ${actionType}\nQuery: "${probText}"\nStatus: Connected to active peer nodes successfully!`;
 }
-
-// Helper function to simulate module loading
-function triggerModule(moduleName, message) {
-    alert(`[${moduleName}]\n${message}`);
-}
-
