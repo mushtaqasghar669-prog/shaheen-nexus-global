@@ -1,64 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Shine Nexus Global — One Workspace for Your Digital Life</title>
 
-  <title>Shine Nexus Global — Smart Work & Information Hub</title>
+  <meta
+    name="description"
+    content="Shine Nexus Global helps you capture information, organize tasks, manage documents, research ideas and keep important work in one simple workspace."
+  />
 
-  <meta name="description"
-        content="Shine Nexus Global helps you capture information, organize documents, track actions and connect your productivity tools in one place.">
+  <meta
+    name="keywords"
+    content="productivity, tasks, notes, documents, research, digital workspace, organization, productivity tools"
+  />
 
-  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#07111f" />
 
-  <meta name="theme-color" content="#07111f">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
-  <!--
-    Replace this with your real production URL.
-    Example:
-    <link rel="canonical" href="https://yourdomain.com/">
-  -->
-
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- Google AdSense Auto Ads
-       Your publisher ID is used here.
-       AdSense approval/serving is controlled by Google.
+  <!-- Google AdSense
+       Keep monetized ads on public content pages.
+       Do NOT put ads inside private email/workspace screens.
   -->
   <script async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
-          crossorigin="anonymous"></script>
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
+    crossorigin="anonymous"></script>
 
   <style>
     :root {
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-2: #eef3fa;
-      --text: #101828;
-      --muted: #667085;
-      --primary: #155eef;
-      --primary-2: #00b8d9;
-      --border: #e4e7ec;
-      --danger: #d92d20;
-      --success: #039855;
-      --warning: #dc6803;
-      --shadow: 0 15px 45px rgba(16, 24, 40, .08);
-      --radius: 22px;
-    }
+      --bg: #07111f;
+      --bg2: #0b1728;
+      --card: rgba(17, 31, 52, 0.82);
+      --card2: #101f34;
+      --text: #f4f8ff;
+      --muted: #9db0c9;
+      --line: rgba(255,255,255,.09);
 
-    [data-theme="dark"] {
-      --bg: #060b13;
-      --surface: #0d1624;
-      --surface-2: #111e30;
-      --text: #f5f7fa;
-      --muted: #98a2b3;
-      --primary: #5b8cff;
-      --primary-2: #22d3ee;
-      --border: #1e2d40;
-      --shadow: 0 18px 50px rgba(0,0,0,.30);
+      --blue: #246bff;
+      --cyan: #16d9ff;
+      --green: #26d07c;
+      --yellow: #ffd166;
+      --red: #ff637d;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.28);
+      --radius: 22px;
     }
 
     * {
@@ -72,6 +61,12 @@
     }
 
     body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(36,107,255,.18), transparent 35%),
+        radial-gradient(circle at 90% 10%, rgba(22,217,255,.12), transparent 30%),
+        var(--bg);
+      color: var(--text);
       font-family:
         Inter,
         system-ui,
@@ -79,11 +74,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 90px;
     }
 
     button,
@@ -94,6 +84,7 @@
     }
 
     button {
+      border: 0;
       cursor: pointer;
     }
 
@@ -106,348 +97,506 @@
       display: none !important;
     }
 
-    .app {
-      width: min(1180px, 100%);
-      margin: auto;
-      padding: 18px;
+    /* ---------------- LANDING ---------------- */
+
+    #landing {
+      min-height: 100vh;
     }
 
-    /* HEADER */
-
-    .topbar {
+    .landing-nav {
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 20px;
+      padding: 0 6%;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7,17,31,.78);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 11px;
+      font-weight: 800;
+      letter-spacing: -.4px;
     }
 
     .brand-logo {
-      width: 45px;
-      height: 45px;
-      border-radius: 15px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
       display: grid;
       place-items: center;
-      color: white;
-      font-weight: 900;
-      font-size: 20px;
       background:
-        linear-gradient(135deg, var(--primary), var(--primary-2));
-      box-shadow: 0 10px 30px rgba(21,94,239,.25);
+        linear-gradient(135deg, var(--blue), var(--cyan));
+      box-shadow:
+        0 8px 30px rgba(22,217,255,.18);
+      font-size: 19px;
     }
 
-    .brand h1 {
-      font-size: 17px;
-      line-height: 1.1;
-    }
-
-    .brand span {
+    .brand small {
       display: block;
       color: var(--muted);
-      font-size: 11px;
-      margin-top: 3px;
+      font-weight: 500;
+      margin-top: 2px;
     }
 
-    .top-actions {
+    .landing-nav-links {
       display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .landing-nav-links a:hover {
+      color: white;
+    }
+
+    .hero {
+      max-width: 1150px;
+      margin: auto;
+      padding: 80px 20px 60px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid rgba(22,217,255,.25);
+      background: rgba(22,217,255,.06);
+      border-radius: 999px;
+      color: #b9f7ff;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: .98;
+      letter-spacing: -4px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #73eaff, #6c8cff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 25px auto 30px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: white;
+      padding: 15px 23px;
+      border-radius: 14px;
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(36,107,255,.25);
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,.06);
+      color: white;
+      border: 1px solid var(--line);
+      padding: 15px 23px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .google-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      min-width: 245px;
+      background: white;
+      color: #111827;
+      padding: 15px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+    }
+
+    .google-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #4285f4 0 25%,
+        #34a853 25% 50%,
+        #fbbc05 50% 75%,
+        #ea4335 75%
+      );
+    }
+
+    .feature-grid {
+      max-width: 1100px;
+      margin: 20px auto 80px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature-card {
+      padding: 25px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 9px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ---------------- PUBLIC CONTENT ---------------- */
+
+    .public-section {
+      max-width: 1000px;
+      margin: 0 auto 70px;
+      padding: 0 20px;
+    }
+
+    .public-section h2 {
+      font-size: 34px;
+      margin-bottom: 14px;
+    }
+
+    .public-section > p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .guide {
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+    }
+
+    .guide h3 {
+      margin-bottom: 8px;
+    }
+
+    .guide p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .ad-container {
+      max-width: 900px;
+      margin: 25px auto 45px;
+      min-height: 90px;
+      padding: 10px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .public-footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 20px 50px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 15px;
+    }
+
+    /* ---------------- APP ---------------- */
+
+    #app {
+      min-height: 100vh;
+      padding-bottom: 92px;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7,17,31,.86);
+      backdrop-filter: blur(20px);
+    }
+
+    .header-row {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .user-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--card2);
+    }
+
+    .user-mini strong {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+
+    .user-mini span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .icon-btn {
       width: 42px;
       height: 42px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
+      border-radius: 13px;
+      background: rgba(255,255,255,.06);
+      color: white;
+      border: 1px solid var(--line);
     }
 
-    /* HERO */
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      border-radius: 30px;
-      padding: 28px;
-      margin-bottom: 18px;
-      background:
-        radial-gradient(circle at 85% 10%, rgba(0,184,217,.28), transparent 35%),
-        radial-gradient(circle at 5% 100%, rgba(21,94,239,.22), transparent 40%),
-        var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+    .app-main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 22px 16px;
     }
 
-    .hero h2 {
-      font-size: clamp(27px, 5vw, 44px);
-      max-width: 750px;
-      letter-spacing: -.04em;
+    .page {
+      display: none;
     }
 
-    .hero p {
-      color: var(--muted);
-      margin-top: 10px;
-      max-width: 700px;
-      line-height: 1.6;
+    .page.active {
+      display: block;
+      animation: fade .22s ease;
     }
 
-    .hero-actions {
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .search-box {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 10px;
-      margin-top: 20px;
+      padding: 14px 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      margin-bottom: 22px;
     }
 
-    .btn {
+    .search-box input {
+      flex: 1;
+      background: none;
       border: 0;
-      border-radius: 14px;
-      padding: 12px 17px;
-      font-weight: 750;
-      transition: .2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
+      outline: 0;
       color: white;
-      background: linear-gradient(135deg, var(--primary), #304ffe);
+      font-size: 15px;
     }
 
-    .btn-secondary {
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+    .search-box input::placeholder {
+      color: #71839b;
     }
 
-    .btn-danger {
-      color: white;
-      background: var(--danger);
+    .welcome {
+      margin-bottom: 25px;
     }
 
-    /* ADS */
-
-    .ad-box {
-      margin: 18px 0;
-      min-height: 90px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--surface);
-      text-align: center;
+    .welcome h1 {
+      font-size: clamp(27px, 5vw, 42px);
+      letter-spacing: -1.5px;
     }
 
-    .ad-label {
-      font-size: 10px;
+    .welcome p {
       color: var(--muted);
-      letter-spacing: .08em;
-      margin-bottom: 8px;
+      margin-top: 6px;
     }
 
-    /* GRID */
-
-    .section {
-      margin: 25px 0;
+    .attention {
+      padding: 20px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg,
+        rgba(36,107,255,.16),
+        rgba(22,217,255,.05));
+      border: 1px solid rgba(22,217,255,.16);
+      margin-bottom: 20px;
     }
 
-    .section-head {
+    .attention-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 13px;
+      gap: 10px;
+      margin-bottom: 15px;
     }
 
-    .section-head h3 {
-      font-size: 20px;
-    }
-
-    .section-head p {
-      color: var(--muted);
+    .attention-count {
+      color: #9defff;
       font-size: 13px;
     }
 
-    .grid {
+    .attention-list {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+    }
+
+    .attention-item {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .attention-item small {
+      color: var(--muted);
+    }
+
+    .complete-btn {
+      padding: 8px 11px;
+      border-radius: 9px;
+      background: rgba(38,208,124,.12);
+      color: #8ff0bb;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 26px 0 12px;
+    }
+
+    .section-title h2 {
+      font-size: 19px;
+    }
+
+    .section-title button {
+      color: #79e9ff;
+      background: none;
+      font-size: 13px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
       gap: 12px;
     }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
+    .quick-card {
+      padding: 18px 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: white;
+      text-align: left;
     }
 
-    .stat-number {
-      font-size: 30px;
-      font-weight: 850;
+    .quick-card .q-icon {
+      font-size: 24px;
+      margin-bottom: 11px;
     }
 
-    .stat-label {
+    .quick-card strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .quick-card span {
+      display: block;
       color: var(--muted);
       font-size: 12px;
       margin-top: 3px;
     }
 
-    /* CAPTURE */
-
-    .capture {
+    .stats-grid {
       display: grid;
+      grid-template-columns: repeat(4,1fr);
       gap: 12px;
     }
 
-    textarea,
-    input,
-    select {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--surface-2);
-      color: var(--text);
-      border-radius: 15px;
-      padding: 13px 14px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    textarea:focus,
-    input:focus,
-    select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(21,94,239,.12);
-    }
-
-    .capture-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    /* ATTENTION */
-
-    .attention-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .attention-item {
-      display: flex;
-      gap: 13px;
-      align-items: flex-start;
-      padding: 15px;
-      border: 1px solid var(--border);
+    .stat {
+      padding: 18px;
       border-radius: 17px;
-      background: var(--surface);
+      background: var(--card);
+      border: 1px solid var(--line);
     }
 
-    .attention-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: var(--surface-2);
-      flex-shrink: 0;
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      margin-bottom: 4px;
     }
 
-    .attention-item h4 {
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    .attention-item p {
+    .stat span {
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.5;
     }
-
-    /* WORKFLOWS */
-
-    .workflow-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .workflow {
-      text-align: left;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .workflow-icon {
-      font-size: 27px;
-      margin-bottom: 12px;
-    }
-
-    .workflow h4 {
-      margin-bottom: 5px;
-    }
-
-    .workflow p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    /* CONNECTIONS */
-
-    .connections {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .connection {
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-    }
-
-    .connection-icon {
-      font-size: 28px;
-    }
-
-    .connection h4 {
-      margin: 10px 0 5px;
-    }
-
-    .connection p {
-      color: var(--muted);
-      font-size: 12px;
-      min-height: 38px;
-      line-height: 1.5;
-    }
-
-    .status {
-      display: inline-flex;
-      margin-top: 12px;
-      padding: 6px 9px;
-      border-radius: 20px;
-      background: var(--surface-2);
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    /* LIST */
 
     .list {
       display: grid;
@@ -455,14 +604,14 @@
     }
 
     .list-item {
+      padding: 17px;
+      border-radius: 17px;
+      background: var(--card);
+      border: 1px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 14px;
-      background: var(--surface);
+      gap: 14px;
     }
 
     .list-main {
@@ -471,192 +620,228 @@
 
     .list-main strong {
       display: block;
-      font-size: 14px;
+      margin-bottom: 5px;
     }
 
-    .list-main small {
-      display: block;
+    .list-main p {
       color: var(--muted);
-      margin-top: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .badge {
-      flex-shrink: 0;
-      font-size: 10px;
-      border-radius: 20px;
+    .pill {
       padding: 6px 9px;
-      background: var(--surface-2);
+      border-radius: 999px;
+      background: rgba(36,107,255,.13);
+      color: #8db1ff;
+      font-size: 11px;
+      white-space: nowrap;
     }
 
-    /* SEARCH */
+    /* ---------------- CAPTURE ---------------- */
 
-    .search-box {
+    .capture-hero {
+      padding: 24px;
+      border-radius: 25px;
+      background:
+        linear-gradient(135deg,
+        rgba(36,107,255,.2),
+        rgba(22,217,255,.07));
+      border: 1px solid rgba(22,217,255,.16);
+      margin-bottom: 18px;
+    }
+
+    .capture-hero h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .capture-hero p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .capture-input {
+      width: 100%;
+      min-height: 190px;
+      resize: vertical;
+      background: var(--card);
+      color: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 17px;
+      outline: none;
       margin-bottom: 12px;
     }
 
-    /* PROFILE */
-
-    .profile {
+    .capture-actions {
       display: flex;
-      gap: 15px;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      padding: 11px 14px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.07);
+      color: white;
+      border: 1px solid var(--line);
+    }
+
+    /* ---------------- WORK ---------------- */
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 14px;
+    }
+
+    .work-card {
+      min-height: 150px;
+      padding: 20px;
+      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    .work-card .icon {
+      font-size: 27px;
+      margin-bottom: 14px;
+    }
+
+    .work-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .work-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ---------------- PROFILE ---------------- */
+
+    .profile-card {
+      padding: 25px;
+      border-radius: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      margin-bottom: 14px;
+    }
+
+    .profile-big {
+      display: flex;
       align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
-    .avatar {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--surface-2);
-      border: 2px solid var(--border);
+    .profile-big .avatar {
+      width: 68px;
+      height: 68px;
     }
 
-    .profile-info h3 {
-      font-size: 19px;
+    .profile-big h2 {
+      font-size: 20px;
     }
 
-    .profile-info p {
+    .profile-big p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+      word-break: break-word;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .setting-row:last-child {
+      border-bottom: 0;
+    }
+
+    .setting-row strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .setting-row span {
       color: var(--muted);
       font-size: 12px;
-      margin-top: 3px;
     }
 
-    /* PAGES */
-
-    .page {
-      display: none;
+    .danger {
+      background: rgba(255,99,125,.1);
+      color: #ff8da0;
+      border: 1px solid rgba(255,99,125,.15);
+      padding: 11px 14px;
+      border-radius: 11px;
     }
 
-    .page.active {
-      display: block;
-    }
-
-    /* BOTTOM NAV */
+    /* ---------------- BOTTOM NAV ---------------- */
 
     .bottom-nav {
       position: fixed;
-      z-index: 100;
-      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(650px, calc(100% - 24px));
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
-      padding: 7px;
-      border: 1px solid var(--border);
+      bottom: 12px;
+      z-index: 100;
+      width: min(700px, calc(100% - 18px));
+      padding: 8px;
+      border: 1px solid var(--line);
+      background: rgba(9,20,35,.92);
+      backdrop-filter: blur(22px);
       border-radius: 22px;
-      background: color-mix(in srgb, var(--surface) 92%, transparent);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      box-shadow: var(--shadow);
     }
 
     .nav-btn {
-      border: 0;
-      border-radius: 16px;
       padding: 9px 4px;
+      border-radius: 15px;
       background: transparent;
-      color: var(--muted);
+      color: #7e92ad;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
       font-size: 10px;
-      font-weight: 700;
     }
 
-    .nav-btn span {
-      display: block;
+    .nav-btn .nav-icon {
       font-size: 19px;
-      margin-bottom: 2px;
     }
 
     .nav-btn.active {
-      background: var(--surface-2);
-      color: var(--primary);
+      background: rgba(36,107,255,.15);
+      color: white;
     }
 
-    /* MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 300;
-      background: rgba(0,0,0,.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
-
-    .modal.open {
-      display: flex;
-    }
-
-    .modal-card {
-      width: min(600px, 100%);
-      max-height: 90vh;
-      overflow: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 25px;
-      padding: 22px;
-    }
-
-    .modal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-
-    .close {
-      border: 0;
-      background: var(--surface-2);
-      color: var(--text);
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      margin-top: 40px;
-      padding: 25px 0;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .footer-links a {
-      text-decoration: underline;
-    }
-
-    /* TOAST */
+    /* ---------------- TOAST ---------------- */
 
     #toast {
       position: fixed;
-      z-index: 500;
       left: 50%;
-      bottom: 92px;
-      transform: translateX(-50%) translateY(20px);
+      bottom: 95px;
+      transform: translateX(-50%) translateY(15px);
+      background: #12243b;
+      border: 1px solid var(--line);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
       opacity: 0;
       pointer-events: none;
-      padding: 12px 16px;
-      border-radius: 14px;
-      color: white;
-      background: #101828;
-      transition: .25s ease;
-      font-size: 13px;
+      transition: .25s;
+      z-index: 300;
       max-width: calc(100% - 30px);
       text-align: center;
+      font-size: 13px;
     }
 
     #toast.show {
@@ -664,47 +849,54 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* MOBILE */
+    /* ---------------- RESPONSIVE ---------------- */
 
-    @media (max-width: 850px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 800px) {
+      .landing-nav-links {
+        display: none;
       }
 
-      .connections {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .workflow-grid {
+      .feature-grid,
+      .guide-grid {
         grid-template-columns: 1fr;
       }
-    }
 
-    @media (max-width: 560px) {
-      .app {
-        padding: 13px;
+      .quick-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
       }
 
       .hero {
-        padding: 21px;
-        border-radius: 23px;
+        padding-top: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        letter-spacing: -2px;
       }
 
-      .capture-row {
-        grid-template-columns: 1fr;
+      .hero p {
+        font-size: 16px;
       }
 
-      .connections {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .grid {
+      .quick-grid {
         gap: 8px;
       }
 
-      .card {
-        padding: 14px;
-        border-radius: 17px;
+      .quick-card {
+        padding: 14px 12px;
+      }
+
+      .stats-grid {
+        gap: 8px;
       }
     }
   </style>
@@ -712,38 +904,255 @@
 
 <body>
 
-<div class="app">
+<!-- =========================================================
+     PUBLIC LANDING
+========================================================= -->
 
-  <!-- TOPBAR -->
-  <header class="topbar">
+<section id="landing">
 
+  <nav class="landing-nav">
     <div class="brand">
-
-      <div class="brand-logo">
-        SN
-      </div>
-
+      <div class="brand-logo">S</div>
       <div>
-        <h1>Shine Nexus</h1>
-        <span>Global Work & Information Hub</span>
+        Shine Nexus
+        <small>Global Workspace</small>
       </div>
+    </div>
+
+    <div class="landing-nav-links">
+      <a href="#features">Features</a>
+      <a href="#guides">Guides</a>
+      <a href="#about">About</a>
+    </div>
+
+    <button class="secondary-btn" onclick="showLogin()">
+      Sign in
+    </button>
+  </nav>
+
+  <div class="hero">
+
+    <div class="hero-badge">
+      ✦ One workspace for your digital life
+    </div>
+
+    <h1>
+      Turn scattered information into
+      <span class="gradient-text">organized action.</span>
+    </h1>
+
+    <p>
+      Capture notes, links, documents, ideas and tasks.
+      Find what matters. Understand what needs attention.
+      Keep your important work in one calm workspace.
+    </p>
+
+    <div class="hero-actions">
+
+      <button class="google-btn" onclick="googleLogin()">
+        <span class="google-icon"></span>
+        Continue with Google
+      </button>
+
+      <button class="secondary-btn"
+              onclick="document.getElementById('features').scrollIntoView()">
+        Explore features
+      </button>
 
     </div>
 
-    <div class="top-actions">
+  </div>
 
-      <button
-        class="icon-btn"
-        id="themeBtn"
-        aria-label="Toggle theme">
+  <div id="features" class="feature-grid">
+
+    <article class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Capture Anything</h3>
+      <p>
+        Save a thought, task, link, document or important information
+        before it gets lost.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Know What Matters</h3>
+      <p>
+        Turn scattered information into clear actions and priorities.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🔎</div>
+      <h3>Find Faster</h3>
+      <p>
+        Search across your workspace instead of opening many different apps.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Research Workspace</h3>
+      <p>
+        Organize research topics, references, notes and next actions.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Privacy First</h3>
+      <p>
+        Keep private workspace information separate from public content.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Built for Everyone</h3>
+      <p>
+        Designed around universal problems: information overload,
+        forgotten tasks and scattered digital work.
+      </p>
+    </article>
+
+  </div>
+
+  <!-- PUBLIC CONTENT = possible AdSense area -->
+
+  <section id="guides" class="public-section">
+
+    <h2>Useful Digital Life Guides</h2>
+
+    <p>
+      Shine Nexus is designed around practical problems people face every day:
+      managing information, organizing work, researching topics and keeping
+      important tasks visible.
+    </p>
+
+    <div class="guide-grid">
+
+      <article class="guide">
+        <h3>Organize Your Digital Life</h3>
+        <p>
+          Start with three categories: things to do, things to remember,
+          and things to research.
+        </p>
+      </article>
+
+      <article class="guide">
+        <h3>Build Better Research Habits</h3>
+        <p>
+          Capture the source, summarize the useful point and write the
+          next action instead of collecting endless tabs.
+        </p>
+      </article>
+
+      <article class="guide">
+        <h3>Reduce Information Overload</h3>
+        <p>
+          Keep important information searchable and turn actionable items
+          into clear tasks.
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- AdSense public-content slot -->
+
+  <div class="ad-container">
+
+    <!--
+      Google may automatically fill this area according to your
+      AdSense configuration.
+
+      Never encourage users to click ads.
+      Never place ads so they look like navigation buttons.
+    -->
+
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-2057536839831582"
+      data-ad-slot=""
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+
+    <script>
+      /*
+        Auto Ads can manage placement.
+        If you use a manual ad unit, replace data-ad-slot
+        with the real ad-unit slot ID from AdSense.
+      */
+
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.log("AdSense waiting for configuration.");
+      }
+    </script>
+
+  </div>
+
+  <section id="about" class="public-section">
+
+    <h2>About Shine Nexus Global</h2>
+
+    <p>
+      Shine Nexus Global is a productivity workspace focused on one simple
+      idea: important information should lead to useful action.
+      The platform combines capture, organization, search, tasks and research
+      into one understandable experience.
+    </p>
+
+  </section>
+
+  <footer class="public-footer">
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#guides">Guides</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Contact</a>
+      <a href="#">Security</a>
+    </div>
+
+    © 2026 Shine Nexus Global. Built for useful digital work.
+
+  </footer>
+
+</section>
+
+
+<!-- =========================================================
+     PRIVATE APP
+========================================================= -->
+
+<section id="app" class="hidden">
+
+  <header class="app-header">
+
+    <div class="header-row">
+
+      <div class="user-mini">
+
+        <img id="userAvatar"
+             class="avatar"
+             src=""
+             alt="Profile">
+
+        <div>
+          <strong id="userName">User</strong>
+          <span id="userEmail">Loading...</span>
+        </div>
+
+      </div>
+
+      <button class="icon-btn"
+              onclick="toggleTheme()"
+              title="Toggle theme">
         ◐
-      </button>
-
-      <button
-        class="icon-btn"
-        onclick="openSecurity()"
-        aria-label="Security">
-        🔐
       </button>
 
     </div>
@@ -751,219 +1160,475 @@
   </header>
 
 
-  <!-- HOME -->
-  <main id="homePage" class="page active">
+  <main class="app-main">
 
-    <section class="hero">
+    <!-- HOME -->
 
-      <h2>
-        Turn scattered information into useful action.
-      </h2>
+    <section id="page-home" class="page active">
 
-      <p>
-        Capture notes, documents, links and important information.
-        Shine Nexus helps you organize what matters and identify
-        what needs your attention.
-      </p>
+      <div class="search-box">
 
-      <div class="hero-actions">
+        <span>⌕</span>
 
-        <button
-          class="btn btn-primary"
-          onclick="goTo('capture')">
-          + Capture something
+        <input
+          id="globalSearch"
+          type="search"
+          placeholder="Search tasks, notes, links, documents..."
+          oninput="globalSearch()"
+        />
+
+      </div>
+
+      <div class="welcome">
+
+        <h1 id="greeting">
+          Good day 👋
+        </h1>
+
+        <p>
+          Your important work, in one place.
+        </p>
+
+      </div>
+
+
+      <div class="attention">
+
+        <div class="attention-top">
+
+          <div>
+            <strong>Needs your attention</strong>
+            <div class="attention-count"
+                 id="attentionCount">
+              0 open items
+            </div>
+          </div>
+
+          <span>🎯</span>
+
+        </div>
+
+        <div id="attentionList"
+             class="attention-list">
+        </div>
+
+      </div>
+
+
+      <div class="section-title">
+        <h2>Quick actions</h2>
+      </div>
+
+      <div class="quick-grid">
+
+        <button class="quick-card"
+                onclick="openPage('capture')">
+
+          <div class="q-icon">✍️</div>
+          <strong>New note</strong>
+          <span>Capture an idea</span>
+
         </button>
 
-        <button
-          class="btn btn-secondary"
-          onclick="goTo('connections')">
-          Connect Google
+        <button class="quick-card"
+                onclick="captureTemplate('task')">
+
+          <div class="q-icon">✅</div>
+          <strong>New task</strong>
+          <span>Add something to do</span>
+
         </button>
+
+        <button class="quick-card"
+                onclick="captureTemplate('link')">
+
+          <div class="q-icon">🔗</div>
+          <strong>Save link</strong>
+          <span>Keep a useful URL</span>
+
+        </button>
+
+        <button class="quick-card"
+                onclick="openPage('work')">
+
+          <div class="q-icon">🧠</div>
+          <strong>Research</strong>
+          <span>Start a topic</span>
+
+        </button>
+
+      </div>
+
+
+      <div class="section-title">
+        <h2>Workspace overview</h2>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat">
+          <strong id="statTasks">0</strong>
+          <span>Open tasks</span>
+        </div>
+
+        <div class="stat">
+          <strong id="statNotes">0</strong>
+          <span>Notes</span>
+        </div>
+
+        <div class="stat">
+          <strong id="statLinks">0</strong>
+          <span>Saved links</span>
+        </div>
+
+        <div class="stat">
+          <strong id="statDocs">0</strong>
+          <span>Documents</span>
+        </div>
+
+      </div>
+
+
+      <div class="section-title">
+        <h2>Recent activity</h2>
+        <button onclick="openPage('inbox')">
+          View all
+        </button>
+      </div>
+
+      <div id="recentList"
+           class="list">
+      </div>
+
+    </section>
+
+
+    <!-- INBOX -->
+
+    <section id="page-inbox" class="page">
+
+      <div class="welcome">
+        <h1>Inbox</h1>
+        <p>
+          Everything you recently captured or saved.
+        </p>
+      </div>
+
+      <div id="inboxList"
+           class="list">
+      </div>
+
+    </section>
+
+
+    <!-- CAPTURE -->
+
+    <section id="page-capture" class="page">
+
+      <div class="capture-hero">
+
+        <h1>Capture</h1>
+
+        <p>
+          Don't organize first. Capture first.
+          Shine Nexus will help you turn the information into something useful.
+        </p>
+
+      </div>
+
+      <textarea
+        id="captureInput"
+        class="capture-input"
+        placeholder="Write a note, paste a link, describe a task, or paste important information..."></textarea>
+
+      <div class="capture-actions">
+
+        <button class="primary-btn"
+                onclick="saveCapture('note')">
+          Save note
+        </button>
+
+        <button class="small-btn"
+                onclick="saveCapture('task')">
+          Save as task
+        </button>
+
+        <button class="small-btn"
+                onclick="saveCapture('link')">
+          Save as link
+        </button>
+
+        <button class="small-btn"
+                onclick="smartCapture()">
+          ✦ Smart organize
+        </button>
+
+      </div>
+
+      <div class="section-title">
+        <h2>Capture ideas</h2>
+      </div>
+
+      <div class="list">
+
+        <div class="list-item">
+          <div class="list-main">
+            <strong>Important deadline</strong>
+            <p>Paste the deadline and describe what needs to happen.</p>
+          </div>
+          <span class="pill">Task</span>
+        </div>
+
+        <div class="list-item">
+          <div class="list-main">
+            <strong>Research topic</strong>
+            <p>Capture a question and turn it into a research workspace.</p>
+          </div>
+          <span class="pill">Research</span>
+        </div>
+
+        <div class="list-item">
+          <div class="list-main">
+            <strong>Useful website</strong>
+            <p>Save a URL so you don't have to search for it again.</p>
+          </div>
+          <span class="pill">Link</span>
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- ADSENSE AREA -->
-    <div class="ad-box">
+    <!-- WORK -->
 
-      <div class="ad-label">
-        ADVERTISEMENT
+    <section id="page-work" class="page">
+
+      <div class="welcome">
+
+        <h1>Work</h1>
+
+        <p>
+          Choose what you want to accomplish.
+        </p>
+
       </div>
 
-      <!--
-        Google Auto Ads may place ads automatically.
+      <div class="work-grid">
 
-        Do not create fake clickable advertisements.
-        Do not label ads as normal app controls.
-      -->
+        <button class="work-card"
+                onclick="captureTemplate('task')">
 
-    </div>
+          <div class="icon">✅</div>
+          <h3>Tasks</h3>
+          <p>
+            Keep actions visible and complete them one by one.
+          </p>
+
+        </button>
 
 
-    <!-- REAL STATS -->
-    <section class="section">
+        <button class="work-card"
+                onclick="captureTemplate('research')">
 
-      <div class="section-head">
-        <div>
-          <h3>Your workspace</h3>
-          <p>Only locally stored real data is counted.</p>
-        </div>
+          <div class="icon">🔬</div>
+          <h3>Research</h3>
+          <p>
+            Turn questions into structured research topics.
+          </p>
+
+        </button>
+
+
+        <button class="work-card"
+                onclick="captureTemplate('document')">
+
+          <div class="icon">📄</div>
+          <h3>Documents</h3>
+          <p>
+            Keep important document information organized.
+          </p>
+
+        </button>
+
+
+        <button class="work-card"
+                onclick="captureTemplate('meeting')">
+
+          <div class="icon">📅</div>
+          <h3>Meetings</h3>
+          <p>
+            Capture meeting notes and follow-up actions.
+          </p>
+
+        </button>
+
+
+        <button class="work-card"
+                onclick="captureTemplate('idea')">
+
+          <div class="icon">💡</div>
+          <h3>Ideas</h3>
+          <p>
+            Save ideas before they disappear.
+          </p>
+
+        </button>
+
+
+        <button class="work-card"
+                onclick="captureTemplate('project')">
+
+          <div class="icon">🚀</div>
+          <h3>Projects</h3>
+          <p>
+            Turn multiple tasks into one organized goal.
+          </p>
+
+        </button>
+
       </div>
 
-      <div class="grid">
 
-        <div class="card">
-          <div class="stat-number" id="taskCount">0</div>
-          <div class="stat-label">Open actions</div>
-        </div>
+      <div class="section-title">
+        <h2>Your tasks</h2>
+      </div>
 
-        <div class="card">
-          <div class="stat-number" id="documentCount">0</div>
-          <div class="stat-label">Saved documents</div>
-        </div>
-
-        <div class="card">
-          <div class="stat-number" id="noteCount">0</div>
-          <div class="stat-label">Captured items</div>
-        </div>
-
-        <div class="card">
-          <div class="stat-number" id="completedCount">0</div>
-          <div class="stat-label">Completed actions</div>
-        </div>
-
+      <div id="taskList"
+           class="list">
       </div>
 
     </section>
 
 
-    <!-- ATTENTION -->
-    <section class="section">
+    <!-- PROFILE -->
 
-      <div class="section-head">
+    <section id="page-profile" class="page">
 
-        <div>
-          <h3>What needs your attention?</h3>
-          <p>Generated from your actual workspace.</p>
+      <div class="profile-card">
+
+        <div class="profile-big">
+
+          <img id="profileAvatar"
+               class="avatar"
+               src=""
+               alt="Profile">
+
+          <div>
+            <h2 id="profileName">User</h2>
+            <p id="profileEmail">Email</p>
+          </div>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Google account</strong>
+            <span>Your Firebase authentication account.</span>
+          </div>
+
+          <span class="pill">Connected</span>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Gmail</strong>
+            <span>Secure backend OAuth connection will be added.</span>
+          </div>
+
+          <span class="pill">Available later</span>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Google Drive</strong>
+            <span>Secure document integration.</span>
+          </div>
+
+          <span class="pill">Available later</span>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Google Calendar</strong>
+            <span>Secure calendar integration.</span>
+          </div>
+
+          <span class="pill">Available later</span>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Google Sheets</strong>
+            <span>Structured data integration.</span>
+          </div>
+
+          <span class="pill">Available later</span>
+
         </div>
 
       </div>
 
-      <div
-        id="attentionList"
-        class="attention-list">
-      </div>
 
-    </section>
+      <div class="profile-card">
 
+        <div class="setting-row">
 
-    <!-- WORKFLOW TEMPLATES -->
-    <section class="section">
+          <div>
+            <strong>Export workspace</strong>
+            <span>Download your current local data.</span>
+          </div>
 
-      <div class="section-head">
+          <button class="small-btn"
+                  onclick="exportData()">
+            Export
+          </button>
 
-        <div>
-          <h3>Quick workflows</h3>
-          <p>Start with a useful structure.</p>
         </div>
 
-      </div>
 
-      <div class="workflow-grid">
+        <div class="setting-row">
 
-        <button
-          class="workflow"
-          onclick="useWorkflow('invoice')">
+          <div>
+            <strong>Sign out</strong>
+            <span>Leave your Shine Nexus workspace.</span>
+          </div>
 
-          <div class="workflow-icon">🧾</div>
+          <button class="small-btn"
+                  onclick="logout()">
+            Sign out
+          </button>
 
-          <h4>Invoice tracker</h4>
-
-          <p>
-            Capture invoice information and identify
-            payment-related actions.
-          </p>
-
-        </button>
+        </div>
 
 
-        <button
-          class="workflow"
-          onclick="useWorkflow('expiry')">
+        <div class="setting-row">
 
-          <div class="workflow-icon">📅</div>
+          <div>
+            <strong>Delete local workspace</strong>
+            <span>This removes locally stored app data.</span>
+          </div>
 
-          <h4>Expiry tracker</h4>
+          <button class="danger"
+                  onclick="deleteLocalData()">
+            Delete
+          </button>
 
-          <p>
-            Keep important document expiry information
-            organized.
-          </p>
-
-        </button>
-
-
-        <button
-          class="workflow"
-          onclick="useWorkflow('followup')">
-
-          <div class="workflow-icon">↩️</div>
-
-          <h4>Follow-up tracker</h4>
-
-          <p>
-            Turn conversations and notes into follow-up
-            actions.
-          </p>
-
-        </button>
-
-
-        <button
-          class="workflow"
-          onclick="useWorkflow('research')">
-
-          <div class="workflow-icon">🔎</div>
-
-          <h4>Research inbox</h4>
-
-          <p>
-            Save links and notes for later review.
-          </p>
-
-        </button>
-
-
-        <button
-          class="workflow"
-          onclick="useWorkflow('meeting')">
-
-          <div class="workflow-icon">📝</div>
-
-          <h4>Meeting actions</h4>
-
-          <p>
-            Convert meeting notes into trackable actions.
-          </p>
-
-        </button>
-
-
-        <button
-          class="workflow"
-          onclick="useWorkflow('general')">
-
-          <div class="workflow-icon">⚡</div>
-
-          <h4>General capture</h4>
-
-          <p>
-            Quickly store anything important.
-          </p>
-
-        </button>
+        </div>
 
       </div>
 
@@ -972,1436 +1637,571 @@
   </main>
 
 
-  <!-- ACTIONS -->
-  <section id="actionsPage" class="page">
+  <!-- PRIVATE APP NAV -->
 
-    <div class="section">
+  <nav class="bottom-nav">
 
-      <div class="section-head">
+    <button class="nav-btn active"
+            data-page="home"
+            onclick="openPage('home')">
 
-        <div>
-          <h3>Actions</h3>
-          <p>Tasks created from your workspace.</p>
-        </div>
+      <span class="nav-icon">⌂</span>
+      <span>Home</span>
 
-      </div>
+    </button>
 
-      <input
-        id="actionSearch"
-        class="search-box"
-        placeholder="Search actions..."
-        oninput="renderActions()">
+    <button class="nav-btn"
+            data-page="inbox"
+            onclick="openPage('inbox')">
 
-      <div
-        id="actionsList"
-        class="list">
-      </div>
+      <span class="nav-icon">▣</span>
+      <span>Inbox</span>
 
-    </div>
+    </button>
 
-  </section>
+    <button class="nav-btn"
+            data-page="capture"
+            onclick="openPage('capture')">
 
+      <span class="nav-icon">＋</span>
+      <span>Capture</span>
 
-  <!-- CAPTURE -->
-  <section id="capturePage" class="page">
+    </button>
 
-    <div class="section">
+    <button class="nav-btn"
+            data-page="work"
+            onclick="openPage('work')">
 
-      <div class="section-head">
+      <span class="nav-icon">◈</span>
+      <span>Work</span>
 
-        <div>
-          <h3>Smart Capture</h3>
-          <p>
-            Paste text, a link or important information.
-          </p>
-        </div>
+    </button>
 
-      </div>
+    <button class="nav-btn"
+            data-page="profile"
+            onclick="openPage('profile')">
 
+      <span class="nav-icon">◯</span>
+      <span>Profile</span>
 
-      <div class="card capture">
+    </button>
 
-        <input
-          id="captureTitle"
-          placeholder="Title (optional)">
+  </nav>
 
-
-        <textarea
-          id="captureText"
-          placeholder="Paste a note, invoice text, reminder, URL or anything important..."></textarea>
-
-
-        <div class="capture-row">
-
-          <select id="captureType">
-
-            <option value="note">
-              Note
-            </option>
-
-            <option value="invoice">
-              Invoice
-            </option>
-
-            <option value="document">
-              Document
-            </option>
-
-            <option value="link">
-              Link
-            </option>
-
-            <option value="meeting">
-              Meeting
-            </option>
-
-          </select>
-
-
-          <input
-            id="captureDate"
-            type="date">
-
-        </div>
-
-
-        <button
-          class="btn btn-primary"
-          onclick="captureItem()">
-
-          Analyze & Save
-
-        </button>
-
-        <button
-          class="btn btn-secondary"
-          onclick="requestNotificationPermission()">
-
-          Enable browser reminders
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="section">
-
-      <div class="section-head">
-
-        <div>
-          <h3>Document upload</h3>
-          <p>
-            Files stay local in this prototype.
-            Cloud document processing requires backend storage.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <input
-          type="file"
-          id="fileInput"
-          accept=".pdf,.txt,.csv,.doc,.docx,.jpg,.jpeg,.png,.webp">
-
-        <br><br>
-
-        <button
-          class="btn btn-secondary"
-          onclick="saveDocument()">
-
-          Save document reference
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- DOCUMENTS -->
-  <section id="documentsPage" class="page">
-
-    <div class="section">
-
-      <div class="section-head">
-
-        <div>
-          <h3>Documents</h3>
-          <p>Your saved document references.</p>
-        </div>
-
-      </div>
-
-      <input
-        id="documentSearch"
-        class="search-box"
-        placeholder="Search documents..."
-        oninput="renderDocuments()">
-
-      <div
-        id="documentsList"
-        class="list">
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- CONNECTIONS -->
-  <section id="connectionsPage" class="page">
-
-    <div class="section">
-
-      <div class="section-head">
-
-        <div>
-          <h3>Google Connections</h3>
-
-          <p>
-            Connect services when you are ready.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="connections">
-
-        <div class="connection">
-
-          <div class="connection-icon">✉️</div>
-
-          <h4>Gmail</h4>
-
-          <p>
-            Future workflow: identify messages
-            that require action.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            onclick="connectGoogleService('Gmail')">
-
-            Connect
-
-          </button>
-
-          <div class="status">
-            Backend OAuth required
-          </div>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-icon">📁</div>
-
-          <h4>Drive</h4>
-
-          <p>
-            Organize and reference documents
-            from Google Drive.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            onclick="connectGoogleService('Drive')">
-
-            Connect
-
-          </button>
-
-          <div class="status">
-            Backend OAuth required
-          </div>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-icon">📆</div>
-
-          <h4>Calendar</h4>
-
-          <p>
-            Turn deadlines and actions into
-            calendar events.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            onclick="connectGoogleService('Calendar')">
-
-            Connect
-
-          </button>
-
-          <div class="status">
-            Backend OAuth required
-          </div>
-
-        </div>
-
-
-        <div class="connection">
-
-          <div class="connection-icon">📊</div>
-
-          <h4>Sheets</h4>
-
-          <p>
-            Export structured workspace data
-            into Google Sheets.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            onclick="connectGoogleService('Sheets')">
-
-            Connect
-
-          </button>
-
-          <div class="status">
-            Backend OAuth required
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="section">
-
-      <div class="card">
-
-        <h3>Google Account</h3>
-
-        <p
-          id="googleStatus"
-          style="color:var(--muted);margin:8px 0 15px">
-
-          Not signed in.
-
-        </p>
-
-        <!--
-          IMPORTANT:
-          Replace YOUR_GOOGLE_CLIENT_ID below with your
-          actual Web OAuth Client ID.
-        -->
-
-        <div
-          id="g_id_onload"
-          data-client_id="1075489418521-o3k08gmk0i859afvar4qomf61h41ceed.apps.googleusercontent.com"
-          data-callback="handleGoogleCredential"
-          data-auto_prompt="false">
-        </div>
-
-        <div
-          class="g_id_signin"
-          data-type="standard"
-          data-size="large"
-          data-theme="outline"
-          data-text="continue_with"
-          data-shape="rectangular">
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROFILE -->
-  <section id="profilePage" class="page">
-
-    <div class="section">
-
-      <div class="card">
-
-        <div class="profile">
-
-          <img
-            id="profileAvatar"
-            class="avatar"
-            src=""
-            alt="Profile picture">
-
-          <div class="profile-info">
-
-            <h3 id="profileName">
-              Local Workspace
-            </h3>
-
-            <p id="profileEmail">
-              Sign in with Google to connect your account.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="section">
-
-      <div class="card">
-
-        <h3>Privacy & Security</h3>
-
-        <p style="color:var(--muted);margin:9px 0 16px;line-height:1.6">
-
-          Your prototype workspace uses browser encryption
-          for locally stored application data. Cloud synchronization
-          requires a properly secured backend.
-
-        </p>
-
-        <button
-          class="btn btn-secondary"
-          onclick="openSecurity()">
-
-          Security Center
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="section">
-
-      <div class="card">
-
-        <h3>Data controls</h3>
-
-        <br>
-
-        <button
-          class="btn btn-secondary"
-          onclick="exportData()">
-
-          Export workspace
-
-        </button>
-
-        <br><br>
-
-        <input
-          type="file"
-          id="importInput"
-          accept=".json">
-
-        <br><br>
-
-        <button
-          class="btn btn-secondary"
-          onclick="importData()">
-
-          Import workspace
-
-        </button>
-
-        <br><br>
-
-        <button
-          class="btn btn-danger"
-          onclick="deleteAllData()">
-
-          Delete local data
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- LEGAL / INFORMATION -->
-  <section class="section">
-
-    <div class="card">
-
-      <h3>About Shine Nexus</h3>
-
-      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
-
-        Shine Nexus Global is designed as a productivity and
-        information-management platform. It aims to help people
-        capture useful information, organize documents, identify
-        actions and connect productivity services.
-
-      </p>
-
-      <br>
-
-      <h3>Privacy</h3>
-
-      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
-
-        This prototype stores workspace information locally in
-        the browser. Google-connected features require explicit
-        authorization. A production deployment should provide
-        a complete privacy policy describing data collection,
-        retention, processing, third-party services and deletion.
-
-      </p>
-
-      <br>
-
-      <h3>Security</h3>
-
-      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
-
-        Shine Nexus does not claim end-to-end encryption or
-        enterprise-grade security from this static prototype.
-        Production cloud synchronization should use secure
-        server-side token handling, HTTPS, access controls,
-        encryption at rest and appropriate security monitoring.
-
-      </p>
-
-      <br>
-
-      <h3>Terms</h3>
-
-      <p style="color:var(--muted);margin-top:10px;line-height:1.7">
-
-        The service should not be used as a substitute for
-        professional legal, financial, medical or security advice.
-        Users remain responsible for reviewing automated
-        suggestions before taking important actions.
-
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <footer>
-
-    <strong>Shine Nexus Global</strong>
-
-    <div class="footer-links">
-
-      <a href="#about">About</a>
-      <a href="#privacy">Privacy</a>
-      <a href="#terms">Terms</a>
-      <a href="#security">Security</a>
-      <a href="#contact">Contact</a>
-
-    </div>
-
-    <p style="margin-top:14px">
-      © <span id="year"></span> Shine Nexus Global.
-      Built for useful, transparent productivity.
-    </p>
-
-  </footer>
-
-</div>
-
-
-<!-- BOTTOM NAV -->
-
-<nav
-  class="bottom-nav"
-  aria-label="Main navigation">
-
-  <button
-    class="nav-btn active"
-    data-page="home"
-    onclick="goTo('home')">
-
-    <span>⌂</span>
-    Home
-
-  </button>
-
-  <button
-    class="nav-btn"
-    data-page="actions"
-    onclick="goTo('actions')">
-
-    <span>✓</span>
-    Actions
-
-  </button>
-
-  <button
-    class="nav-btn"
-    data-page="capture"
-    onclick="goTo('capture')">
-
-    <span>＋</span>
-    Capture
-
-  </button>
-
-  <button
-    class="nav-btn"
-    data-page="documents"
-    onclick="goTo('documents')">
-
-    <span>▣</span>
-    Docs
-
-  </button>
-
-  <button
-    class="nav-btn"
-    data-page="profile"
-    onclick="goTo('profile')">
-
-    <span>●</span>
-    Profile
-
-  </button>
-
-</nav>
-
-
-<!-- SECURITY MODAL -->
-
-<div
-  id="securityModal"
-  class="modal"
-  role="dialog"
-  aria-modal="true">
-
-  <div class="modal-card">
-
-    <div class="modal-head">
-
-      <h3>Security Center</h3>
-
-      <button
-        class="close"
-        onclick="closeSecurity()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="color:var(--muted);line-height:1.7">
-
-      Shine Nexus uses the browser Web Crypto API to encrypt
-      its local workspace using AES-GCM.
-
-      This protects locally stored application data against
-      casual inspection of the stored ciphertext.
-
-    </p>
-
-    <br>
-
-    <div class="list">
-
-      <div class="list-item">
-        <div class="list-main">
-          <strong>Local encryption</strong>
-          <small>AES-GCM / browser Web Crypto</small>
-        </div>
-        <span class="badge">Enabled</span>
-      </div>
-
-      <div class="list-item">
-        <div class="list-main">
-          <strong>HTTPS</strong>
-          <small>Required for production deployment</small>
-        </div>
-        <span class="badge">Required</span>
-      </div>
-
-      <div class="list-item">
-        <div class="list-main">
-          <strong>Google OAuth tokens</strong>
-          <small>Should be handled by backend</small>
-        </div>
-        <span class="badge">Backend</span>
-      </div>
-
-      <div class="list-item">
-        <div class="list-main">
-          <strong>AI provider</strong>
-          <small>No Gemini dependency in this build</small>
-        </div>
-        <span class="badge">Provider-neutral</span>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
+</section>
 
 
 <div id="toast"></div>
 
 
-<script type="module">
-
+<script>
 /* =========================================================
-   FIREBASE
-   ========================================================= */
+   SHINE NEXUS GLOBAL
+   Frontend foundation
+========================================================= */
 
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
+/* ---------------- FIREBASE ---------------- */
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
-
-  authDomain:
-    "shaheen-nexus.firebaseapp.com",
-
-  projectId:
-    "shaheen-nexus",
-
-  storageBucket:
-    "shaheen-nexus.firebasestorage.app",
-
-  messagingSenderId:
-    "1075489418521",
-
-  appId:
-    "1:1075489418521:web:1b166eb484971a387d6988",
-
-  measurementId:
-    "G-VV2CBVV3HQ"
-
+  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
+  authDomain: "shaheen-nexus.firebaseapp.com",
+  projectId: "shaheen-nexus",
+  storageBucket: "shaheen-nexus.firebasestorage.app",
+  messagingSenderId: "1075489418521",
+  appId: "1:1075489418521:web:1b166eb484971a387d6988",
+  measurementId: "G-VV2CBVV3HQ"
 };
 
+firebase.initializeApp(firebaseConfig);
 
-const firebaseApp =
-  initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-const auth =
-  getAuth(firebaseApp);
-
-
-/* =========================================================
-   GOOGLE AUTH
-   ========================================================= */
-
-const provider =
-  new GoogleAuthProvider();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 provider.setCustomParameters({
   prompt: "select_account"
 });
 
 
-window.googleLogin = async function() {
+/* ---------------- LOCAL STATE ---------------- */
 
-  try {
+const STORAGE_KEY = "shine_nexus_workspace_v1";
 
-    const result =
-      await signInWithPopup(auth, provider);
-
-    const user =
-      result.user;
-
-    updateProfileUI(user);
-
-    toast("Google sign-in successful.");
-
-  } catch(error) {
-
-    console.error(error);
-
-    toast(
-      "Google sign-in could not be completed."
-    );
-
-  }
-
+let state = {
+  tasks: [],
+  notes: [],
+  links: [],
+  documents: [],
+  inbox: [],
+  activity: []
 };
 
 
-onAuthStateChanged(auth, user => {
+function loadState() {
 
-  if(user) {
+  try {
 
-    updateProfileUI(user);
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+      state = {
+        ...state,
+        ...JSON.parse(saved)
+      };
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+function saveState() {
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(state)
+  );
+
+}
+
+
+/* ---------------- TOAST ---------------- */
+
+let toastTimer;
+
+function toast(message) {
+
+  const box = document.getElementById("toast");
+
+  box.textContent = message;
+
+  box.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    box.classList.remove("show");
+  }, 2600);
+
+}
+
+
+/* ---------------- LOGIN ---------------- */
+
+async function googleLogin() {
+
+  try {
+
+    toast("Opening Google sign-in...");
+
+    const result =
+      await auth.signInWithPopup(provider);
+
+    if (result && result.user) {
+
+      toast("Welcome to Shine Nexus.");
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    let message =
+      "Google sign-in could not be completed.";
+
+    if (error.code === "auth/popup-blocked") {
+      message =
+        "Your browser blocked the sign-in popup.";
+    }
+
+    if (error.code === "auth/popup-closed-by-user") {
+      message =
+        "Sign-in window was closed.";
+    }
+
+    if (error.code === "auth/unauthorized-domain") {
+      message =
+        "This website domain is not authorized in Firebase.";
+    }
+
+    toast(message);
+
+  }
+
+}
+
+
+function showLogin() {
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  setTimeout(() => {
+    googleLogin();
+  }, 250);
+
+}
+
+
+/* ---------------- AUTH STATE ---------------- */
+
+auth.onAuthStateChanged((user) => {
+
+  if (user) {
+
+    document
+      .getElementById("landing")
+      .classList.add("hidden");
+
+    document
+      .getElementById("app")
+      .classList.remove("hidden");
+
+    setUserUI(user);
+
+    loadState();
+
+    renderAll();
+
+  } else {
+
+    document
+      .getElementById("app")
+      .classList.add("hidden");
+
+    document
+      .getElementById("landing")
+      .classList.remove("hidden");
 
   }
 
 });
 
 
-function updateProfileUI(user) {
+function setUserUI(user) {
 
-  document
-    .getElementById("profileName")
-    .textContent =
-      user.displayName || "Google User";
+  const name =
+    user.displayName ||
+    "Shine user";
 
-  document
-    .getElementById("profileEmail")
-    .textContent =
-      user.email || "";
+  const email =
+    user.email ||
+    "";
 
-  const avatar =
-    document.getElementById("profileAvatar");
-
-  avatar.src =
+  const photo =
     user.photoURL ||
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23e9eef5'/%3E%3C/svg%3E";
+    "https://ui-avatars.com/api/?name=Shine+User&background=246bff&color=fff";
+
+  document.getElementById("userName").textContent = name;
+  document.getElementById("userEmail").textContent = email;
+
+  document.getElementById("userAvatar").src = photo;
+
+  document.getElementById("profileName").textContent = name;
+  document.getElementById("profileEmail").textContent = email;
+
+  document.getElementById("profileAvatar").src = photo;
 
 }
 
 
-/* =========================================================
-   STATE
-   ========================================================= */
+/* ---------------- LOGOUT ---------------- */
 
-let state = {
-
-  items: [],
-
-  tasks: [],
-
-  documents: [],
-
-  theme: "light"
-
-};
-
-
-const STORAGE_KEY =
-  "shine_nexus_encrypted_v1";
-
-
-/* =========================================================
-   CRYPTO
-   ========================================================= */
-
-async function deriveKey(passphrase, salt) {
-
-  const encoder =
-    new TextEncoder();
-
-  const material =
-    await crypto.subtle.importKey(
-      "raw",
-      encoder.encode(passphrase),
-      "PBKDF2",
-      false,
-      ["deriveKey"]
-    );
-
-  return crypto.subtle.deriveKey(
-    {
-      name: "PBKDF2",
-      salt,
-      iterations: 150000,
-      hash: "SHA-256"
-    },
-    material,
-    {
-      name: "AES-GCM",
-      length: 256
-    },
-    false,
-    ["encrypt", "decrypt"]
-  );
-
-}
-
-
-async function encryptState(data) {
-
-  /*
-    This prototype uses a browser-local key derived from
-    a generated passphrase stored locally.
-
-    Production multi-device encryption requires a proper
-    user-controlled key strategy and backend architecture.
-  */
-
-  const passphrase =
-    getLocalPassphrase();
-
-  const salt =
-    crypto.getRandomValues(
-      new Uint8Array(16)
-    );
-
-  const iv =
-    crypto.getRandomValues(
-      new Uint8Array(12)
-    );
-
-  const key =
-    await deriveKey(
-      passphrase,
-      salt
-    );
-
-  const encoded =
-    new TextEncoder().encode(
-      JSON.stringify(data)
-    );
-
-  const cipher =
-    await crypto.subtle.encrypt(
-      {
-        name: "AES-GCM",
-        iv
-      },
-      key,
-      encoded
-    );
-
-  return {
-
-    salt: arrayToBase64(salt),
-    iv: arrayToBase64(iv),
-    data: arrayToBase64(
-      new Uint8Array(cipher)
-    )
-
-  };
-
-}
-
-
-async function decryptState(payload) {
+async function logout() {
 
   try {
 
-    const passphrase =
-      getLocalPassphrase();
+    await auth.signOut();
 
-    const salt =
-      base64ToArray(payload.salt);
+    toast("Signed out.");
 
-    const iv =
-      base64ToArray(payload.iv);
+  } catch (error) {
 
-    const encrypted =
-      base64ToArray(payload.data);
+    toast("Could not sign out.");
 
-    const key =
-      await deriveKey(
-        passphrase,
-        salt
+  }
+
+}
+
+
+/* ---------------- NAVIGATION ---------------- */
+
+function openPage(page) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach((section) => {
+      section.classList.remove("active");
+    });
+
+  const target =
+    document.getElementById("page-" + page);
+
+  if (target) {
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach((button) => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === page
       );
 
-    const plain =
-      await crypto.subtle.decrypt(
-        {
-          name: "AES-GCM",
-          iv
-        },
-        key,
-        encrypted
-      );
+    });
 
-    return JSON.parse(
-      new TextDecoder().decode(plain)
-    );
-
-  } catch {
-
-    return null;
-
-  }
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
 }
 
 
-function getLocalPassphrase() {
+/* ---------------- CAPTURE ---------------- */
 
-  let pass =
-    localStorage.getItem(
-      "shine_nexus_local_key"
-    );
+function saveCapture(type = "note") {
 
-  if(!pass) {
-
-    const bytes =
-      crypto.getRandomValues(
-        new Uint8Array(32)
-      );
-
-    pass =
-      arrayToBase64(bytes);
-
-    localStorage.setItem(
-      "shine_nexus_local_key",
-      pass
-    );
-
-  }
-
-  return pass;
-
-}
-
-
-function arrayToBase64(bytes) {
-
-  let binary = "";
-
-  bytes.forEach(
-    byte => binary +=
-      String.fromCharCode(byte)
-  );
-
-  return btoa(binary);
-
-}
-
-
-function base64ToArray(base64) {
-
-  const binary =
-    atob(base64);
-
-  const bytes =
-    new Uint8Array(
-      binary.length
-    );
-
-  for(let i = 0; i < binary.length; i++) {
-
-    bytes[i] =
-      binary.charCodeAt(i);
-
-  }
-
-  return bytes;
-
-}
-
-
-/* =========================================================
-   SAVE / LOAD
-   ========================================================= */
-
-async function saveState() {
-
-  const encrypted =
-    await encryptState(state);
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(encrypted)
-  );
-
-}
-
-
-async function loadState() {
-
-  const raw =
-    localStorage.getItem(
-      STORAGE_KEY
-    );
-
-  if(!raw) return;
-
-  const parsed =
-    JSON.parse(raw);
-
-  const decrypted =
-    await decryptState(parsed);
-
-  if(decrypted) {
-
-    state =
-      decrypted;
-
-  }
-
-}
-
-
-/* =========================================================
-   CAPTURE ENGINE
-   ========================================================= */
-
-function analyzeText(text, type) {
-
-  const actions = [];
-
-  const lower =
-    text.toLowerCase();
-
-
-  if(
-    lower.includes("due") ||
-    lower.includes("payment") ||
-    lower.includes("pay")
-  ) {
-
-    actions.push({
-      title: "Review payment-related information",
-      reason: "Payment/due wording detected."
-    });
-
-  }
-
-
-  if(
-    lower.includes("expire") ||
-    lower.includes("expiry") ||
-    lower.includes("renew")
-  ) {
-
-    actions.push({
-      title: "Review expiry or renewal date",
-      reason: "Expiry/renewal wording detected."
-    });
-
-  }
-
-
-  if(
-    lower.includes("follow up") ||
-    lower.includes("follow-up") ||
-    lower.includes("reply")
-  ) {
-
-    actions.push({
-      title: "Follow up",
-      reason: "Follow-up wording detected."
-    });
-
-  }
-
-
-  if(
-    lower.includes("meeting") ||
-    lower.includes("call")
-  ) {
-
-    actions.push({
-      title: "Review meeting/call action",
-      reason: "Meeting/call wording detected."
-    });
-
-  }
-
-
-  const amount =
-    text.match(
-      /(?:rs\.?|pkr|\$|€|£)\s?\d+(?:[,.]\d{1,2})?/i
-    );
-
-  if(amount) {
-
-    actions.push({
-      title: `Review amount ${amount[0]}`,
-      reason: "Currency amount detected."
-    });
-
-  }
-
-
-  if(type === "invoice" &&
-     actions.length === 0) {
-
-    actions.push({
-      title: "Review invoice",
-      reason: "Invoice captured."
-    });
-
-  }
-
-
-  if(type === "document" &&
-     actions.length === 0) {
-
-    actions.push({
-      title: "Review saved document",
-      reason: "Document captured."
-    });
-
-  }
-
-
-  return actions;
-
-}
-
-
-/* =========================================================
-   CAPTURE
-   ========================================================= */
-
-window.captureItem =
-async function() {
-
-  const title =
-    document
-      .getElementById("captureTitle")
-      .value.trim();
+  const input =
+    document.getElementById("captureInput");
 
   const text =
-    document
-      .getElementById("captureText")
-      .value.trim();
+    input.value.trim();
 
-  const type =
-    document
-      .getElementById("captureType")
-      .value;
+  if (!text) {
 
-  const date =
-    document
-      .getElementById("captureDate")
-      .value;
+    toast("Write something first.");
 
-
-  if(!text) {
-
-    toast("Add some information first.");
+    input.focus();
 
     return;
 
   }
 
-
   const item = {
-
     id: crypto.randomUUID(),
-
-    title:
-      title ||
-      text.slice(0, 55),
-
     text,
-
     type,
-
-    date,
-
-    createdAt:
-      new Date().toISOString()
-
+    createdAt: new Date().toISOString(),
+    completed: false
   };
 
 
-  state.items.unshift(item);
+  if (type === "task") {
 
+    state.tasks.unshift(item);
 
-  const detected =
-    analyzeText(text, type);
+  } else if (type === "link") {
 
+    state.links.unshift(item);
 
-  detected.forEach(action => {
+  } else {
 
-    state.tasks.unshift({
-
-      id: crypto.randomUUID(),
-
-      title: action.title,
-
-      reason: action.reason,
-
-      sourceId: item.id,
-
-      completed: false,
-
-      createdAt:
-        new Date().toISOString()
-
-    });
-
-  });
-
-
-  await saveState();
-
-  document
-    .getElementById("captureTitle")
-    .value = "";
-
-  document
-    .getElementById("captureText")
-    .value = "";
-
-  document
-    .getElementById("captureDate")
-    .value = "";
-
-
-  renderAll();
-
-  toast(
-    detected.length
-      ? `${detected.length} action(s) detected.`
-      : "Information saved."
-  );
-
-
-  goTo("home");
-
-};
-
-
-/* =========================================================
-   DOCUMENTS
-   ========================================================= */
-
-window.saveDocument =
-async function() {
-
-  const input =
-    document.getElementById("fileInput");
-
-  if(!input.files.length) {
-
-    toast("Choose a file first.");
-
-    return;
+    state.notes.unshift(item);
 
   }
 
 
-  const file =
-    input.files[0];
-
-
-  state.documents.unshift({
-
-    id: crypto.randomUUID(),
-
-    name: file.name,
-
-    type: file.type || "unknown",
-
-    size: file.size,
-
-    createdAt:
-      new Date().toISOString()
-
+  state.inbox.unshift({
+    ...item,
+    source: "Capture"
   });
 
 
-  await saveState();
+  state.activity.unshift({
+    ...item
+  });
+
+
+  saveState();
 
   input.value = "";
 
   renderAll();
 
   toast(
-    "Document reference saved locally."
+    type === "task"
+      ? "Task created."
+      : type === "link"
+        ? "Link saved."
+        : "Note saved."
   );
 
-};
+  openPage(
+    type === "task"
+      ? "work"
+      : "inbox"
+  );
+
+}
 
 
-/* =========================================================
-   RENDER
-   ========================================================= */
+/* ---------------- SMART CAPTURE ---------------- */
 
-function renderStats() {
+function smartCapture() {
 
-  const open =
-    state.tasks.filter(
-      task => !task.completed
-    ).length;
+  const input =
+    document.getElementById("captureInput");
 
-  const completed =
-    state.tasks.filter(
-      task => task.completed
-    ).length;
+  const text =
+    input.value.trim();
+
+  if (!text) {
+
+    toast("Paste or write something first.");
+
+    return;
+
+  }
 
 
-  document
-    .getElementById("taskCount")
-    .textContent =
-      open;
+  const lower =
+    text.toLowerCase();
 
-  document
-    .getElementById("documentCount")
-    .textContent =
-      state.documents.length;
 
-  document
-    .getElementById("noteCount")
-    .textContent =
-      state.items.length;
+  let detected =
+    "note";
 
-  document
-    .getElementById("completedCount")
-    .textContent =
-      completed;
+
+  if (
+    lower.includes("http://") ||
+    lower.includes("https://") ||
+    lower.includes("www.")
+  ) {
+
+    detected = "link";
+
+  } else if (
+    lower.includes("todo") ||
+    lower.includes("task") ||
+    lower.includes("deadline") ||
+    lower.includes("due") ||
+    lower.includes("need to") ||
+    lower.includes("remember")
+  ) {
+
+    detected = "task";
+
+  }
+
+
+  saveCapture(detected);
+
+}
+
+
+/* ---------------- TEMPLATES ---------------- */
+
+function captureTemplate(type) {
+
+  const templates = {
+
+    task:
+      "Task: What needs to be completed?",
+
+    link:
+      "https://",
+
+    research:
+      "Research question:\n\nWhat do I want to understand?\n\nSources:\n\nNext action:",
+
+    document:
+      "Document name:\n\nPurpose:\n\nImportant information:\n\nExpiry/deadline:",
+
+    meeting:
+      "Meeting:\n\nDate:\n\nPeople:\n\nKey points:\n\nFollow-up actions:",
+
+    idea:
+      "Idea:\n\nProblem:\n\nPossible solution:\n\nNext experiment:",
+
+    project:
+      "Project:\n\nGoal:\n\nMilestones:\n\nNext action:"
+  };
+
+
+  openPage("capture");
+
+  document.getElementById(
+    "captureInput"
+  ).value =
+    templates[type] ||
+    "";
+
+}
+
+
+/* ---------------- COMPLETE TASK ---------------- */
+
+function completeTask(id) {
+
+  const task =
+    state.tasks.find(
+      item => item.id === id
+    );
+
+  if (!task) return;
+
+  task.completed =
+    !task.completed;
+
+  saveState();
+
+  renderAll();
+
+  toast(
+    task.completed
+      ? "Task completed."
+      : "Task reopened."
+  );
+
+}
+
+
+/* ---------------- ATTENTION ENGINE ---------------- */
+
+function getAttentionItems() {
+
+  return state.tasks
+    .filter(task => !task.completed)
+    .slice(0, 5);
 
 }
 
 
 function renderAttention() {
 
-  const box =
-    document.getElementById(
-      "attentionList"
-    );
+  const list =
+    document.getElementById("attentionList");
 
-  const open =
-    state.tasks.filter(
-      task => !task.completed
-    ).slice(0, 8);
+  const items =
+    getAttentionItems();
+
+  document.getElementById(
+    "attentionCount"
+  ).textContent =
+    `${items.length} open item${items.length === 1 ? "" : "s"}`;
 
 
-  if(!open.length) {
+  if (!items.length) {
 
-    box.innerHTML = `
-
+    list.innerHTML = `
       <div class="attention-item">
-
-        <div class="attention-icon">
-          ✓
-        </div>
-
         <div>
-
-          <h4>No pending actions</h4>
-
-          <p>
-            Your workspace currently has
-            no open actions.
-          </p>
-
+          <strong>You're clear 🎉</strong>
+          <br>
+          <small>No open tasks right now.</small>
         </div>
-
       </div>
-
     `;
 
     return;
@@ -2409,36 +2209,30 @@ function renderAttention() {
   }
 
 
-  box.innerHTML =
-    open.map(task => `
+  list.innerHTML =
+    items.map(item => `
 
       <div class="attention-item">
 
-        <div class="attention-icon">
-          ⚡
-        </div>
-
-        <div style="flex:1">
-
-          <h4>
-            ${escapeHTML(task.title)}
-          </h4>
-
-          <p>
-            ${escapeHTML(task.reason)}
-          </p>
+        <div>
+          <strong>
+            ${escapeHTML(item.text)}
+          </strong>
 
           <br>
 
-          <button
-            class="btn btn-secondary"
-            onclick="completeTask('${task.id}')">
-
-            Mark complete
-
-          </button>
-
+          <small>
+            Captured ${formatDate(item.createdAt)}
+          </small>
         </div>
+
+        <button
+          class="complete-btn"
+          onclick="completeTask('${item.id}')">
+
+          Done
+
+        </button>
 
       </div>
 
@@ -2447,52 +2241,31 @@ function renderAttention() {
 }
 
 
-window.renderActions =
-function() {
+/* ---------------- TASK LIST ---------------- */
 
-  const box =
-    document.getElementById(
-      "actionsList"
-    );
+function renderTasks() {
 
-  const search =
-    (
-      document
-        .getElementById("actionSearch")
-        ?.value || ""
-    ).toLowerCase();
+  const list =
+    document.getElementById("taskList");
 
 
   const tasks =
-    state.tasks.filter(task =>
-      `${task.title} ${task.reason}`
-      .toLowerCase()
-      .includes(search)
+    state.tasks.slice(0, 30);
+
+
+  if (!tasks.length) {
+
+    list.innerHTML = emptyState(
+      "No tasks yet",
+      "Capture your first task and it will appear here."
     );
-
-
-  if(!tasks.length) {
-
-    box.innerHTML = `
-
-      <div class="card">
-
-        <h3>No actions found</h3>
-
-        <p style="color:var(--muted);margin-top:7px">
-          Capture information to create real actions.
-        </p>
-
-      </div>
-
-    `;
 
     return;
 
   }
 
 
-  box.innerHTML =
+  list.innerHTML =
     tasks.map(task => `
 
       <div class="list-item">
@@ -2500,22 +2273,21 @@ function() {
         <div class="list-main">
 
           <strong>
-            ${escapeHTML(task.title)}
+            ${escapeHTML(task.text)}
           </strong>
 
-          <small>
-            ${escapeHTML(task.reason)}
-          </small>
+          <p>
+            ${task.completed ? "Completed" : "Open"}
+            · ${formatDate(task.createdAt)}
+          </p>
 
         </div>
 
         <button
-          class="btn btn-secondary"
+          class="${task.completed ? "small-btn" : "complete-btn"}"
           onclick="completeTask('${task.id}')">
 
-          ${task.completed
-            ? "Completed"
-            : "Complete"}
+          ${task.completed ? "Undo" : "Done"}
 
         </button>
 
@@ -2523,345 +2295,79 @@ function() {
 
     `).join("");
 
-};
+}
 
 
-window.renderDocuments =
-function() {
+/* ---------------- INBOX ---------------- */
 
-  const box =
-    document.getElementById(
-      "documentsList"
+function renderInbox() {
+
+  const list =
+    document.getElementById("inboxList");
+
+
+  const items =
+    state.inbox.slice(0, 50);
+
+
+  if (!items.length) {
+
+    list.innerHTML = emptyState(
+      "Your inbox is empty",
+      "Captured items will appear here."
     );
-
-  const search =
-    (
-      document
-        .getElementById("documentSearch")
-        ?.value || ""
-    ).toLowerCase();
-
-
-  const docs =
-    state.documents.filter(doc =>
-      doc.name.toLowerCase()
-      .includes(search)
-    );
-
-
-  if(!docs.length) {
-
-    box.innerHTML = `
-
-      <div class="card">
-
-        <h3>No documents yet</h3>
-
-        <p style="color:var(--muted);margin-top:7px">
-          Your document references will appear here.
-        </p>
-
-      </div>
-
-    `;
 
     return;
 
   }
 
 
-  box.innerHTML =
-    docs.map(doc => `
+  list.innerHTML =
+    items.map(item => `
 
       <div class="list-item">
 
         <div class="list-main">
 
           <strong>
-            ${escapeHTML(doc.name)}
+            ${escapeHTML(item.text)}
           </strong>
 
-          <small>
-            ${escapeHTML(doc.type)}
-            ·
-            ${formatBytes(doc.size)}
-          </small>
+          <p>
+            ${escapeHTML(item.source || "Workspace")}
+            · ${formatDate(item.createdAt)}
+          </p>
 
         </div>
 
-        <span class="badge">
-          Local
+        <span class="pill">
+          ${escapeHTML(item.type || "item")}
         </span>
 
       </div>
 
     `).join("");
 
-};
-
-
-window.completeTask =
-async function(id) {
-
-  const task =
-    state.tasks.find(
-      t => t.id === id
-    );
-
-  if(!task) return;
-
-  task.completed =
-    !task.completed;
-
-  await saveState();
-
-  renderAll();
-
-  toast(
-    task.completed
-      ? "Action completed."
-      : "Action reopened."
-  );
-
-};
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-window.goTo =
-function(page) {
-
-  document
-    .querySelectorAll(".page")
-    .forEach(el =>
-      el.classList.remove("active")
-    );
-
-
-  const target =
-    document.getElementById(
-      page + "Page"
-    );
-
-  if(target)
-    target.classList.add("active");
-
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn => {
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page === page
-      );
-
-    });
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-
-  if(page === "actions")
-    renderActions();
-
-  if(page === "documents")
-    renderDocuments();
-
-};
-
-
-/* =========================================================
-   WORKFLOWS
-   ========================================================= */
-
-window.useWorkflow =
-function(type) {
-
-  const typeMap = {
-
-    invoice: "invoice",
-
-    expiry: "document",
-
-    followup: "note",
-
-    research: "link",
-
-    meeting: "meeting",
-
-    general: "note"
-
-  };
-
-
-  goTo("capture");
-
-
-  document
-    .getElementById("captureType")
-    .value =
-      typeMap[type] || "note";
-
-
-  const examples = {
-
-    invoice:
-      "Invoice received. Payment due. Amount PKR 5000.",
-
-    expiry:
-      "Important document. Check expiry and renewal date.",
-
-    followup:
-      "Follow up with the person and reply.",
-
-    research:
-      "Research link: https://example.com",
-
-    meeting:
-      "Meeting scheduled. Review call actions.",
-
-    general:
-      ""
-
-  };
-
-
-  document
-    .getElementById("captureText")
-    .value =
-      examples[type] || "";
-
-};
-
-
-/* =========================================================
-   GOOGLE SERVICE PLACEHOLDERS
-   ========================================================= */
-
-window.connectGoogleService =
-function(service) {
-
-  toast(
-    `${service}: API enabled. Secure backend OAuth connection is the next step.`
-  );
-
-};
-
-
-/* =========================================================
-   GOOGLE IDENTITY SERVICES CALLBACK
-   ========================================================= */
-
-window.handleGoogleCredential =
-function(response) {
-
-  /*
-    This callback receives a Google credential.
-
-    Do NOT treat a browser-decoded JWT as your trusted
-    production authentication authority.
-
-    Production architecture:
-      Google credential
-        ↓
-      Secure backend
-        ↓
-      Verify token
-        ↓
-      Create authenticated session
-  */
-
-  if(response?.credential) {
-
-    document
-      .getElementById("googleStatus")
-      .textContent =
-        "Google credential received. Backend verification required for production.";
-
-    toast(
-      "Google authorization response received."
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   THEME
-   ========================================================= */
-
-document
-  .getElementById("themeBtn")
-  .addEventListener(
-    "click",
-    async () => {
-
-      state.theme =
-        state.theme === "dark"
-          ? "light"
-          : "dark";
-
-      applyTheme();
-
-      await saveState();
-
-    }
-  );
-
-
-function applyTheme() {
-
-  document.documentElement
-    .setAttribute(
-      "data-theme",
-      state.theme
-    );
-
 }
 
 
-/* =========================================================
-   SECURITY MODAL
-   ========================================================= */
+/* ---------------- RECENT ---------------- */
 
-window.openSecurity =
-function() {
+function renderRecent() {
 
-  document
-    .getElementById("securityModal")
-    .classList.add("open");
-
-};
+  const list =
+    document.getElementById("recentList");
 
 
-window.closeSecurity =
-function() {
-
-  document
-    .getElementById("securityModal")
-    .classList.remove("open");
-
-};
+  const items =
+    state.activity.slice(0, 5);
 
 
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
+  if (!items.length) {
 
-window.requestNotificationPermission =
-async function() {
-
-  if(!("Notification" in window)) {
-
-    toast(
-      "Browser notifications are not supported here."
+    list.innerHTML = emptyState(
+      "Nothing captured yet",
+      "Start by creating a note, task or saved link."
     );
 
     return;
@@ -2869,25 +2375,252 @@ async function() {
   }
 
 
-  const permission =
-    await Notification.requestPermission();
+  list.innerHTML =
+    items.map(item => `
+
+      <div class="list-item">
+
+        <div class="list-main">
+
+          <strong>
+            ${escapeHTML(item.text)}
+          </strong>
+
+          <p>
+            ${formatDate(item.createdAt)}
+          </p>
+
+        </div>
+
+        <span class="pill">
+          ${escapeHTML(item.type || "item")}
+        </span>
+
+      </div>
+
+    `).join("");
+
+}
 
 
-  toast(
-    permission === "granted"
-      ? "Browser reminders enabled."
-      : "Notification permission was not granted."
-  );
+/* ---------------- STATS ---------------- */
 
-};
+function renderStats() {
+
+  document.getElementById(
+    "statTasks"
+  ).textContent =
+    state.tasks.filter(
+      task => !task.completed
+    ).length;
+
+  document.getElementById(
+    "statNotes"
+  ).textContent =
+    state.notes.length;
+
+  document.getElementById(
+    "statLinks"
+  ).textContent =
+    state.links.length;
+
+  document.getElementById(
+    "statDocs"
+  ).textContent =
+    state.documents.length;
+
+}
 
 
-/* =========================================================
-   EXPORT
-   ========================================================= */
+/* ---------------- SEARCH ---------------- */
 
-window.exportData =
-function() {
+function globalSearch() {
+
+  const query =
+    document
+      .getElementById("globalSearch")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  if (!query) {
+
+    renderAll();
+
+    return;
+
+  }
+
+
+  const all = [
+
+    ...state.tasks.map(x => ({
+      ...x,
+      category: "Task"
+    })),
+
+    ...state.notes.map(x => ({
+      ...x,
+      category: "Note"
+    })),
+
+    ...state.links.map(x => ({
+      ...x,
+      category: "Link"
+    })),
+
+    ...state.documents.map(x => ({
+      ...x,
+      category: "Document"
+    }))
+
+  ];
+
+
+  const results =
+    all.filter(item =>
+      String(item.text || "")
+        .toLowerCase()
+        .includes(query)
+    );
+
+
+  const list =
+    document.getElementById("recentList");
+
+
+  if (!results.length) {
+
+    list.innerHTML =
+      emptyState(
+        "Nothing found",
+        "Try another search term."
+      );
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    results.map(item => `
+
+      <div class="list-item">
+
+        <div class="list-main">
+
+          <strong>
+            ${escapeHTML(item.text)}
+          </strong>
+
+          <p>
+            ${item.category}
+          </p>
+
+        </div>
+
+        <span class="pill">
+          ${item.category}
+        </span>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* ---------------- EMPTY STATE ---------------- */
+
+function emptyState(title, description) {
+
+  return `
+    <div class="list-item">
+      <div class="list-main">
+        <strong>${title}</strong>
+        <p>${description}</p>
+      </div>
+    </div>
+  `;
+
+}
+
+
+/* ---------------- FORMAT ---------------- */
+
+function formatDate(date) {
+
+  try {
+
+    return new Date(date)
+      .toLocaleDateString(
+        undefined,
+        {
+          month: "short",
+          day: "numeric"
+        }
+      );
+
+  } catch {
+
+    return "";
+
+  }
+
+}
+
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* ---------------- THEME ---------------- */
+
+function toggleTheme() {
+
+  const current =
+    localStorage.getItem("shine_theme");
+
+  if (current === "light") {
+
+    localStorage.setItem(
+      "shine_theme",
+      "dark"
+    );
+
+    document.body.style.filter = "";
+
+    toast("Dark mode enabled.");
+
+  } else {
+
+    localStorage.setItem(
+      "shine_theme",
+      "light"
+    );
+
+    document.body.style.filter =
+      "brightness(1.08)";
+
+    toast("Light preference saved.");
+
+  }
+
+}
+
+
+/* ---------------- EXPORT ---------------- */
+
+function exportData() {
 
   const blob =
     new Blob(
@@ -2899,14 +2632,14 @@ function() {
         )
       ],
       {
-        type:
-          "application/json"
+        type: "application/json"
       }
     );
 
 
   const url =
     URL.createObjectURL(blob);
+
 
   const a =
     document.createElement("a");
@@ -2920,222 +2653,58 @@ function() {
 
   URL.revokeObjectURL(url);
 
-};
+  toast("Workspace exported.");
+
+}
 
 
-/* =========================================================
-   IMPORT
-   ========================================================= */
+/* ---------------- DELETE LOCAL DATA ---------------- */
 
-window.importData =
-function() {
+function deleteLocalData() {
 
-  const input =
-    document.getElementById(
-      "importInput"
-    );
-
-
-  if(!input.files.length) {
-
-    toast("Choose a JSON file first.");
-
-    return;
-
-  }
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    async event => {
-
-      try {
-
-        const imported =
-          JSON.parse(
-            event.target.result
-          );
-
-
-        if(
-          !imported ||
-          !Array.isArray(imported.items)
-        ) {
-
-          throw new Error();
-
-        }
-
-
-        state =
-          imported;
-
-        await saveState();
-
-        renderAll();
-
-        toast(
-          "Workspace imported."
-        );
-
-      } catch {
-
-        toast(
-          "Invalid Shine Nexus workspace file."
-        );
-
-      }
-
-    };
-
-
-  reader.readAsText(
-    input.files[0]
-  );
-
-};
-
-
-/* =========================================================
-   DELETE DATA
-   ========================================================= */
-
-window.deleteAllData =
-async function() {
-
-  const ok =
+  const confirmed =
     confirm(
       "Delete all locally stored Shine Nexus workspace data?"
     );
 
-
-  if(!ok) return;
-
-
-  state = {
-
-    items: [],
-
-    tasks: [],
-
-    documents: [],
-
-    theme: state.theme
-
-  };
-
+  if (!confirmed) return;
 
   localStorage.removeItem(
     STORAGE_KEY
   );
 
-
-  await saveState();
+  state = {
+    tasks: [],
+    notes: [],
+    links: [],
+    documents: [],
+    inbox: [],
+    activity: []
+  };
 
   renderAll();
 
-  toast(
-    "Local workspace deleted."
-  );
-
-};
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function formatBytes(bytes) {
-
-  if(bytes === 0)
-    return "0 B";
-
-  const units =
-    ["B","KB","MB","GB"];
-
-  const i =
-    Math.floor(
-      Math.log(bytes) /
-      Math.log(1024)
-    );
-
-  return (
-    bytes /
-    Math.pow(1024,i)
-  ).toFixed(1)
-  + " "
-  + units[i];
+  toast("Local workspace deleted.");
 
 }
 
 
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-function toast(message) {
-
-  const el =
-    document.getElementById(
-      "toast"
-    );
-
-  el.textContent =
-    message;
-
-  el.classList.add("show");
-
-  setTimeout(
-    () => el.classList.remove("show"),
-    2800
-  );
-
-}
-
+/* ---------------- RENDER ---------------- */
 
 function renderAll() {
 
-  renderStats();
-
   renderAttention();
-
-  renderActions();
-
-  renderDocuments();
+  renderStats();
+  renderRecent();
+  renderInbox();
+  renderTasks();
 
 }
 
 
-/* =========================================================
-   START
-   ========================================================= */
+/* ---------------- START ---------------- */
 
-(async function init() {
-
-  document
-    .getElementById("year")
-    .textContent =
-      new Date().getFullYear();
-
-
-  await loadState();
-
-  applyTheme();
-
-  renderAll();
-
-})();
+loadState();
 
 </script>
 
