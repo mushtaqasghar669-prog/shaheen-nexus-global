@@ -4,94 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0757ff">
-<meta name="description" content="Shine Nexus Global — a simple personal life, work, money, document and productivity workspace.">
+
+<title>SHAHEEN — Universal Life & Work Hub</title>
+
+<meta name="description"
+content="SHAHEEN is a simple universal workspace for tasks, notes, links, useful tools, planning and everyday digital work.">
 <meta name="robots" content="index,follow">
-
-<title>Shine Nexus Global — Get Life Organized</title>
-
-<!--
-  SHINE NEXUS GLOBAL
-  Single-file edition.
-
-  IMPORTANT:
-  - The application works locally even if Firebase is unavailable.
-  - Google Sign-In is optional authentication.
-  - No fake Gmail / Calendar / Drive / Sheets buttons.
-  - No fake users, views, followers, earnings or connection states.
-  - Private workspace screens intentionally have no advertising UI.
-  - Add the exact AdSense code supplied by your AdSense account only after
-    your site is approved/ready. Never invent an ad-slot ID.
--->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Firebase: optional. App still works in local/guest mode if these fail. -->
+<!--
+  ============================================================
+  SHAHEEN + ADSENSE
+  ============================================================
+
+  IMPORTANT:
+  AdSense approval cannot be guaranteed by HTML/JavaScript.
+  Google reviews the live website.
+
+  After your AdSense account/site is approved, use the exact
+  AdSense code generated inside your AdSense account.
+
+  Do NOT invent an ad-slot ID.
+
+  Google policy also prohibits ads on screens where private
+  communication is the primary focus.
+
+  Therefore this app keeps the private workspace separate
+  from the public informational content area.
+-->
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
 <style>
 :root{
-  --brand:#0757ff;
-  --brand2:#00b8ff;
+  --blue:#0757ff;
+  --blue2:#0a78ff;
+  --cyan:#00cfff;
   --bg:#f5f7fb;
-  --surface:#ffffff;
-  --surface2:#eef3fb;
+  --card:#ffffff;
   --text:#101828;
   --muted:#667085;
-  --border:#e4e9f1;
-  --danger:#e5484d;
-  --success:#159957;
-  --warning:#b7791f;
-  --shadow:0 12px 35px rgba(16,24,40,.08);
-  --radius:20px;
+  --line:#e4e7ec;
+  --soft:#eef4ff;
+  --green:#12b76a;
+  --red:#f04438;
+  --yellow:#f79009;
+  --shadow:0 10px 35px rgba(16,24,40,.08);
+  --radius:22px;
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
-  line-height:1.55;
 }
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit}
-.hidden{display:none!important}
 
-body.dark{
-  --bg:#0b1020;
-  --surface:#121a2b;
-  --surface2:#1a2438;
-  --text:#f5f7ff;
-  --muted:#aab5c7;
-  --border:#28354c;
-  --shadow:0 15px 40px rgba(0,0,0,.3);
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none!important;
 }
 
 .container{
-  width:min(1180px,calc(100% - 30px));
+  width:min(1180px,calc(100% - 32px));
   margin:auto;
 }
 
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:color-mix(in srgb,var(--surface) 92%,transparent);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
+/* =========================================================
+   LANDING
+========================================================= */
+
+#landing{
+  min-height:100vh;
 }
 
-.topbar-inner{
-  height:70px;
+.topbar{
+  height:72px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:14px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.92);
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(15px);
 }
 
 .brand{
@@ -99,1771 +124,1686 @@ body.dark{
   align-items:center;
   gap:10px;
   font-weight:800;
-  text-decoration:none;
+  font-size:20px;
 }
+
 .logo{
   width:40px;
   height:40px;
   border-radius:13px;
   display:grid;
   place-items:center;
-  color:white;
-  background:linear-gradient(135deg,var(--brand),var(--brand2));
-  box-shadow:0 8px 20px rgba(7,87,255,.25);
-}
-.brand small{
-  display:block;
-  color:var(--muted);
-  font-weight:500;
-  font-size:10px;
+  color:#fff;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  box-shadow:0 8px 25px rgba(7,87,255,.25);
 }
 
-.header-actions{
+.top-actions{
   display:flex;
-  align-items:center;
   gap:8px;
-}
-
-.icon-btn,.avatar-btn{
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-}
-
-.avatar-btn{
-  overflow:hidden;
-  padding:0;
-}
-.avatar-btn img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.avatar-letter{
-  font-weight:800;
-  color:var(--brand);
-}
-
-.hero{
-  padding:56px 0 30px;
-}
-
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:25px;
-  align-items:stretch;
-}
-
-.hero-main{
-  padding:34px;
-  border-radius:28px;
-  color:white;
-  background:
-    radial-gradient(circle at 90% 10%,rgba(255,255,255,.18),transparent 30%),
-    linear-gradient(135deg,#0757ff,#008fd8);
-  box-shadow:var(--shadow);
-}
-
-.hero-main h1{
-  font-size:clamp(34px,6vw,64px);
-  line-height:1.02;
-  margin:0 0 18px;
-  letter-spacing:-2px;
-}
-
-.hero-main p{
-  max-width:700px;
-  color:rgba(255,255,255,.88);
-  font-size:17px;
-}
-
-.hero-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:25px;
+  align-items:center;
 }
 
 .btn{
   border:0;
   border-radius:13px;
-  padding:11px 16px;
-  background:var(--brand);
-  color:white;
+  padding:12px 17px;
   font-weight:700;
-  transition:.18s transform,.18s opacity;
-}
-.btn:hover{transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
-.btn.secondary{
-  background:var(--surface2);
-  color:var(--text);
-}
-.btn.ghost{
-  background:transparent;
-  border:1px solid var(--border);
-  color:var(--text);
-}
-.hero-main .btn.secondary{
-  background:white;
-  color:#0757ff;
+  transition:.2s;
 }
 
-.hero-side{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:25px;
-  box-shadow:var(--shadow);
+.btn:hover{
+  transform:translateY(-1px);
 }
-.hero-side h3{margin-top:0}
-.hero-side ul{
-  padding-left:20px;
+
+.btn-primary{
+  color:#fff;
+  background:var(--blue);
+  box-shadow:0 7px 20px rgba(7,87,255,.2);
+}
+
+.btn-secondary{
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--text);
+}
+
+.btn-danger{
+  background:#fff1f0;
+  color:var(--red);
+}
+
+.btn-success{
+  background:#ecfdf3;
+  color:#087443;
+}
+
+.hero{
+  padding:75px 0 45px;
+  text-align:center;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 13px;
+  border-radius:100px;
+  background:var(--soft);
+  color:var(--blue);
+  font-weight:700;
+  font-size:13px;
+}
+
+.hero h1{
+  max-width:850px;
+  margin:20px auto 15px;
+  font-size:clamp(40px,7vw,76px);
+  line-height:1;
+  letter-spacing:-3px;
+}
+
+.gradient-text{
+  background:linear-gradient(90deg,var(--blue),#00a8ff,var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:720px;
+  margin:0 auto;
   color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
 }
 
-.public-section{
-  padding:20px 0 55px;
+.hero-buttons{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.public-ad{
+  width:min(728px,100%);
+  min-height:90px;
+  margin:25px auto;
+  border:1px dashed #cbd5e1;
+  border-radius:16px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#98a2b3;
+  font-size:12px;
+}
+
+.section{
+  padding:60px 0;
 }
 
 .section-title{
-  margin-bottom:20px;
+  text-align:center;
+  max-width:700px;
+  margin:0 auto 35px;
 }
+
 .section-title h2{
-  margin:0 0 5px;
-  font-size:30px;
+  font-size:34px;
+  margin:0 0 10px;
 }
+
 .section-title p{
-  margin:0;
   color:var(--muted);
+  line-height:1.7;
 }
 
 .feature-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:15px;
+  gap:18px;
 }
 
 .feature{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:21px;
-  box-shadow:0 8px 25px rgba(16,24,40,.04);
-}
-.feature-icon{
-  width:43px;
-  height:43px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  background:var(--surface2);
-  margin-bottom:14px;
-  font-size:20px;
-}
-.feature h3{margin:0 0 7px}
-.feature p{margin:0;color:var(--muted)}
-
-.ad-slot{
-  min-height:90px;
-  margin:22px 0;
-  border:1px dashed var(--border);
-  border-radius:18px;
-  display:grid;
-  place-items:center;
-  color:var(--muted);
-  background:var(--surface);
-  font-size:12px;
-}
-/*
-  RESERVED PUBLIC-CONTENT AD AREA.
-  Paste Google's exact generated AdSense code here only when appropriate.
-  Never put ads beside interactive buttons or private communication.
-*/
-
-.footer{
-  padding:35px 0 90px;
-  border-top:1px solid var(--border);
-  color:var(--muted);
-}
-.footer-links{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px;
-}
-.footer-links button{
-  border:0;
-  background:none;
-  padding:0;
-  color:var(--muted);
-}
-
-.app{
-  display:none;
-  min-height:calc(100vh - 70px);
-}
-
-.app.active{display:block}
-
-.app-layout{
-  width:min(1250px,calc(100% - 24px));
-  margin:auto;
-  padding:20px 0 100px;
-}
-
-.app-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:18px;
-}
-
-.app-head h1{
-  margin:0;
-  font-size:30px;
-}
-
-.app-head p{
-  margin:4px 0 0;
-  color:var(--muted);
-}
-
-.search-box{
-  display:flex;
-  gap:8px;
-  margin-bottom:18px;
-}
-.search-box input{
-  flex:1;
-}
-
-.input,.select,.textarea{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  border-radius:13px;
-  outline:none;
-}
-.textarea{
-  min-height:130px;
-  resize:vertical;
-}
-.input:focus,.select:focus,.textarea:focus{
-  border-color:var(--brand);
-  box-shadow:0 0 0 3px rgba(7,87,255,.1);
-}
-
-.grid{
-  display:grid;
-  gap:15px;
-}
-.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 7px 25px rgba(16,24,40,.04);
-}
-.card h2,.card h3{
-  margin-top:0;
-}
-
-.stat{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-.stat strong{
-  display:block;
-  font-size:30px;
-}
-.stat span{color:var(--muted);font-size:13px}
-
-.progress{
-  height:8px;
-  border-radius:99px;
-  background:var(--surface2);
-  overflow:hidden;
-}
-.progress div{
-  height:100%;
-  background:linear-gradient(90deg,var(--brand),var(--brand2));
-  border-radius:99px;
-}
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-.quick{
-  padding:15px;
-  border:1px solid var(--border);
-  background:var(--surface);
-  border-radius:16px;
-  text-align:left;
-  color:var(--text);
-}
-.quick strong{display:block}
-.quick span{
-  display:block;
-  color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
-}
-
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
-.list-item{
-  border:1px solid var(--border);
-  background:var(--surface);
-  border-radius:15px;
-  padding:14px;
-}
-.list-main{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-}
-.list-title{
-  font-weight:700;
-}
-.list-meta{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
-}
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-}
-.small-btn{
-  border:1px solid var(--border);
-  background:var(--surface2);
-  color:var(--text);
-  padding:7px 9px;
-  border-radius:9px;
-  font-size:12px;
-}
-.small-btn.danger{color:var(--danger)}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  padding:5px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:700;
-  background:var(--surface2);
-  color:var(--muted);
-}
-.badge.red{background:rgba(229,72,77,.12);color:var(--danger)}
-.badge.green{background:rgba(21,153,87,.12);color:var(--success)}
-.badge.blue{background:rgba(7,87,255,.12);color:var(--brand)}
-.badge.yellow{background:rgba(183,121,31,.12);color:var(--warning)}
-
-.empty{
-  padding:30px 15px;
-  text-align:center;
-  color:var(--muted);
-  border:1px dashed var(--border);
-  border-radius:16px;
-}
-
-.bottom-nav{
-  position:fixed;
-  z-index:80;
-  left:50%;
-  bottom:12px;
-  transform:translateX(-50%);
-  width:min(760px,calc(100% - 20px));
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:5px;
-  padding:7px;
-  border:1px solid var(--border);
-  background:color-mix(in srgb,var(--surface) 94%,transparent);
-  backdrop-filter:blur(18px);
-  border-radius:21px;
-  box-shadow:0 15px 45px rgba(0,0,0,.15);
-}
-.nav-btn{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  border-radius:14px;
-  padding:9px 3px;
-  font-size:11px;
-}
-.nav-btn span{
-  display:block;
-  font-size:18px;
-  margin-bottom:2px;
-}
-.nav-btn.active{
-  color:var(--brand);
-  background:var(--surface2);
-  font-weight:700;
-}
-
-.modal{
-  position:fixed;
-  z-index:200;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  background:rgba(0,0,0,.55);
-}
-.modal.show{display:flex}
-.modal-box{
-  width:min(720px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:22px;
-  box-shadow:0 30px 80px rgba(0,0,0,.3);
-}
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-  margin-bottom:15px;
-}
-.modal-head h2{margin:0}
-.close{
-  width:38px;
-  height:38px;
-  border-radius:11px;
-  border:1px solid var(--border);
-  background:var(--surface2);
-  color:var(--text);
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.field label{
-  display:block;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:5px;
-}
-.field.full{grid-column:1/-1}
-
-.form-actions{
-  display:flex;
-  justify-content:flex-end;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:15px;
-}
-
-.menu{
-  position:fixed;
-  z-index:150;
-  right:15px;
-  top:70px;
-  width:230px;
-  display:none;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:7px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
   box-shadow:var(--shadow);
 }
-.menu.show{display:block}
-.menu button{
-  width:100%;
-  text-align:left;
-  border:0;
-  background:transparent;
-  color:var(--text);
-  padding:11px;
-  border-radius:11px;
-}
-.menu button:hover{background:var(--surface2)}
 
-.toast{
-  position:fixed;
-  z-index:300;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%) translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  background:#111827;
-  color:white;
-  padding:11px 15px;
-  border-radius:12px;
-  transition:.2s;
-  max-width:min(450px,calc(100% - 30px));
-  text-align:center;
-}
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+.feature-icon{
+  font-size:28px;
 }
 
-.timer{
-  text-align:center;
-}
-.timer-time{
-  font-size:58px;
-  font-weight:800;
-  letter-spacing:-2px;
-  margin:12px 0;
+.feature h3{
+  margin:15px 0 8px;
 }
 
-.tool-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-bottom:15px;
-}
-.tool-tab{
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  padding:9px 12px;
-  border-radius:11px;
-}
-.tool-tab.active{
-  color:white;
-  background:var(--brand);
-  border-color:var(--brand);
+.feature p{
+  color:var(--muted);
+  line-height:1.6;
+  font-size:14px;
 }
 
-.result{
-  padding:15px;
-  border-radius:14px;
-  background:var(--surface2);
-  margin-top:12px;
-  font-weight:700;
+.guide-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
 }
 
 .guide{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:23px;
 }
-.guide h3{margin:0 0 8px}
-.guide p{color:var(--muted)}
-.guide ol,.guide ul{padding-left:20px;color:var(--muted)}
 
-.article{
+.guide h3{
+  margin-top:0;
+}
+
+.guide p{
   color:var(--muted);
+  line-height:1.7;
 }
-.article h2,.article h3{color:var(--text)}
-.article strong{color:var(--text)}
 
-.profile-head{
-  display:flex;
-  align-items:center;
-  gap:15px;
+.footer{
+  padding:35px 0 80px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  text-align:center;
 }
-.profile-big{
-  width:68px;
-  height:68px;
-  border-radius:22px;
-  background:linear-gradient(135deg,var(--brand),var(--brand2));
-  color:white;
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+#authScreen{
+  min-height:100vh;
   display:grid;
   place-items:center;
-  font-size:25px;
+  padding:20px;
+  background:
+    radial-gradient(circle at 10% 10%,#dce9ff,transparent 30%),
+    radial-gradient(circle at 90% 90%,#d9fbff,transparent 30%),
+    var(--bg);
+}
+
+.auth-card{
+  width:min(440px,100%);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:30px;
+  box-shadow:var(--shadow);
+}
+
+.auth-logo{
+  margin:auto;
+}
+
+.auth-card h1{
+  text-align:center;
+  margin-bottom:8px;
+}
+
+.auth-card p{
+  text-align:center;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.google-btn{
+  width:100%;
+  margin-top:20px;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:14px;
+  border-radius:14px;
   font-weight:800;
+}
+
+.auth-status{
+  margin-top:14px;
+  min-height:20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app{
+  min-height:100vh;
+}
+
+.app-header{
+  height:68px;
+  background:rgba(255,255,255,.95);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:30;
+  backdrop-filter:blur(15px);
+}
+
+.app-header-inner{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.search{
+  flex:1;
+  max-width:520px;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  border:1px solid var(--line);
+  background:#f8fafc;
+  padding:12px 15px;
+  border-radius:14px;
+  outline:none;
+}
+
+.search input:focus{
+  border-color:var(--blue);
+  background:#fff;
+}
+
+.user-mini{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#eaf0ff;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  color:var(--blue);
   overflow:hidden;
 }
-.profile-big img{
+
+.avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.check{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
+.main{
+  width:min(1180px,calc(100% - 32px));
+  margin:28px auto 110px;
 }
-.check:last-child{border-bottom:0}
-.check input{margin-top:5px}
 
-.category-chip{
-  display:inline-flex;
-  padding:5px 9px;
-  border-radius:999px;
-  background:var(--surface2);
+.view{
+  display:none;
+}
+
+.view.active{
+  display:block;
+}
+
+.page-title{
+  margin-bottom:22px;
+}
+
+.page-title h1{
+  margin:0 0 7px;
+  font-size:30px;
+}
+
+.page-title p{
+  margin:0;
+  color:var(--muted);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:18px;
+}
+
+.col-12{grid-column:span 12}
+.col-8{grid-column:span 8}
+.col-6{grid-column:span 6}
+.col-4{grid-column:span 4}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:21px;
+  box-shadow:0 5px 20px rgba(16,24,40,.04);
+}
+
+.card h2,
+.card h3{
+  margin-top:0;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+.stat strong{
+  display:block;
+  font-size:30px;
+  margin-top:8px;
+}
+
+.attention{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:15px;
+  border:1px solid #ffe1b2;
+  background:#fffaf0;
+  border-radius:16px;
+  margin-bottom:10px;
+}
+
+.attention:last-child{
+  margin-bottom:0;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:30px 10px;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:14px;
+  background:#fff;
+}
+
+.item-main{
+  min-width:0;
+}
+
+.item-title{
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+.item-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.item-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.form{
+  display:grid;
+  gap:12px;
+}
+
+.input,
+.textarea,
+.select{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:12px 13px;
+  border-radius:13px;
+  outline:none;
+}
+
+.textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus{
+  border-color:var(--blue);
+}
+
+.row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.tool{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+}
+
+.tool h3{
+  margin:0 0 7px;
+}
+
+.tool p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.tool button{
+  width:100%;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  width:min(680px,calc(100% - 20px));
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:7px;
+  box-shadow:0 15px 40px rgba(16,24,40,.14);
+  backdrop-filter:blur(15px);
+  z-index:100;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  border-radius:16px;
+  padding:9px 5px;
   color:var(--muted);
   font-size:11px;
+  font-weight:700;
 }
 
-.money-positive{color:var(--success)}
-.money-negative{color:var(--danger)}
+.nav-btn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:2px;
+}
+
+.nav-btn.active{
+  background:var(--soft);
+  color:var(--blue);
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(16,24,40,.5);
+  display:none;
+  place-items:center;
+  padding:18px;
+  z-index:200;
+}
+
+.modal.show{
+  display:grid;
+}
+
+.modal-card{
+  width:min(720px,100%);
+  max-height:88vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 25px 80px rgba(0,0,0,.25);
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:18px;
+}
+
+.modal-head h2{
+  margin:0;
+}
+
+.close{
+  border:0;
+  background:#f2f4f7;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:20px;
+}
+
+.legal{
+  line-height:1.8;
+  color:#475467;
+}
+
+.legal h3{
+  color:var(--text);
+  margin-top:25px;
+}
+
+.menu{
+  position:absolute;
+  right:0;
+  top:48px;
+  width:220px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:7px;
+  z-index:150;
+}
+
+.menu button{
+  width:100%;
+  text-align:left;
+  border:0;
+  background:#fff;
+  padding:11px;
+  border-radius:10px;
+}
+
+.menu button:hover{
+  background:#f2f4f7;
+}
+
+.profile-menu{
+  position:relative;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%) translateY(20px);
+  background:#101828;
+  color:#fff;
+  padding:12px 17px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:500;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark{
+  --bg:#0b1220;
+  --card:#111b2e;
+  --text:#f2f4f7;
+  --muted:#98a2b3;
+  --line:#243149;
+  --soft:#142b58;
+}
+
+body.dark .topbar,
+body.dark .app-header,
+body.dark .bottom-nav,
+body.dark .modal-card,
+body.dark .feature,
+body.dark .guide,
+body.dark .card,
+body.dark .stat,
+body.dark .item,
+body.dark .tool,
+body.dark .auth-card,
+body.dark .menu,
+body.dark .menu button,
+body.dark .google-btn,
+body.dark .btn-secondary,
+body.dark .input,
+body.dark .textarea,
+body.dark .select,
+body.dark .public-ad{
+  background:#111b2e;
+  color:var(--text);
+}
+
+body.dark .search input{
+  background:#0d1728;
+  color:#fff;
+}
+
+body.dark .menu button:hover{
+  background:#18243a;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr}
-  .feature-grid{grid-template-columns:repeat(2,1fr)}
-  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .feature-grid,
+  .tool-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .col-8,
+  .col-6,
+  .col-4{
+    grid-column:span 12;
+  }
+
+  .stat-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
-@media(max-width:700px){
-  .container,.app-layout{width:min(100% - 18px,1180px)}
-  .hero{padding-top:25px}
-  .hero-main{padding:25px}
-  .hero-main h1{font-size:40px}
-  .feature-grid,.grid-2,.grid-3{grid-template-columns:1fr}
-  .quick-grid{grid-template-columns:repeat(2,1fr)}
-  .form-grid{grid-template-columns:1fr}
-  .field.full{grid-column:auto}
-  .app-head{align-items:flex-start}
-  .app-head h1{font-size:25px}
+@media(max-width:650px){
+  .container,
+  .main{
+    width:min(100% - 20px,1180px);
+  }
+
+  .topbar{
+    height:62px;
+  }
+
+  .hero{
+    padding:50px 0 30px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .feature-grid,
+  .guide-grid,
+  .tool-grid{
+    grid-template-columns:1fr;
+  }
+
+  .search{
+    display:none;
+  }
+
+  .app-header-inner{
+    padding:0 10px;
+  }
+
+  .user-mini .name{
+    display:none;
+  }
+
+  .card{
+    padding:17px;
+  }
+
   .bottom-nav{
-    grid-template-columns:repeat(6,1fr);
     bottom:7px;
   }
-  .nav-btn{font-size:9px}
-  .nav-btn span{font-size:16px}
-}
 
-@media(max-width:420px){
-  .brand-name{display:none}
-  .quick-grid{grid-template-columns:1fr 1fr}
-  .bottom-nav{width:calc(100% - 10px)}
+  .nav-btn{
+    padding:7px 2px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
+<!-- =========================================================
      PUBLIC WEBSITE
-========================= -->
+========================================================= -->
+
+<section id="landing">
 
 <header class="topbar">
-  <div class="container topbar-inner">
-    <a href="#" class="brand" onclick="showPublic();return false">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+    <div class="brand">
       <div class="logo">S</div>
-      <div class="brand-name">
-        Shine Nexus Global
-        <small>Get life organized.</small>
-      </div>
-    </a>
+      SHAHEEN
+    </div>
 
-    <div class="header-actions">
-      <button class="icon-btn" title="Theme" onclick="toggleTheme()">☀️</button>
-      <button class="btn" onclick="openLogin()">Open Workspace</button>
+    <div class="top-actions">
+      <button class="btn btn-secondary" onclick="openLegal('about')">
+        About
+      </button>
+
+      <button class="btn btn-primary" onclick="showAuth()">
+        Get Started
+      </button>
     </div>
   </div>
 </header>
 
-<main id="publicPage">
+<div class="container">
 
-  <section class="hero">
-    <div class="container hero-grid">
+<section class="hero">
+  <span class="hero-badge">One simple workspace for everyday digital work</span>
 
-      <div class="hero-main">
-        <div class="badge" style="background:rgba(255,255,255,.15);color:white;margin-bottom:15px">
-          PERSONAL LIFE + WORKSPACE
-        </div>
+  <h1>
+    Turn digital <span class="gradient-text">mess into action.</span>
+  </h1>
 
-        <h1>One simple place for the things you need to remember.</h1>
+  <p>
+    SHAHEEN brings tasks, notes, links, planning and practical everyday
+    tools into one clear workspace — designed to be simple enough for
+    anyone and useful enough for daily work.
+  </p>
 
-        <p>
-          Tasks, money, documents, notes, checklists, planning and everyday
-          tools — organized in one calm workspace.
-        </p>
+  <div class="hero-buttons">
+    <button class="btn btn-primary" onclick="showAuth()">
+      Start Free
+    </button>
 
-        <div class="hero-buttons">
-          <button class="btn secondary" onclick="openLogin()">Start My Workspace</button>
-          <button class="btn ghost" style="color:white;border-color:rgba(255,255,255,.4)" onclick="scrollToId('features')">
-            See what it does
-          </button>
-        </div>
-      </div>
+    <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView()">
+      Explore Features
+    </button>
+  </div>
 
-      <div class="hero-side">
-        <h3>Why Shine Nexus?</h3>
+  <!-- Public-content ad position.
+       Add Google's exact generated AdSense code here AFTER approval.
+       Do not invent an ad-slot. -->
+  <div class="public-ad">
+    Public content area
+  </div>
+</section>
 
-        <ul>
-          <li>Simple enough for everyday users.</li>
-          <li>Useful for home, study and work.</li>
-          <li>Local-first storage for your workspace.</li>
-          <li>No fake integrations or fake activity.</li>
-          <li>Export your information whenever you want.</li>
-          <li>Works even if Google Sign-In is unavailable.</li>
-        </ul>
+<section id="features" class="section">
 
-        <button class="btn" style="width:100%" onclick="openLogin()">
-          Create My Workspace
+<div class="section-title">
+  <h2>Everything important, without the confusion</h2>
+  <p>
+    SHAHEEN focuses on common digital problems: remembering things,
+    finding information, planning work and using small tools quickly.
+  </p>
+</div>
+
+<div class="feature-grid">
+
+<div class="feature">
+  <div class="feature-icon">📥</div>
+  <h3>Smart Inbox</h3>
+  <p>
+    Paste a message, idea, reminder or link. SHAHEEN helps turn it into
+    something useful instead of leaving it buried in a chat.
+  </p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">✅</div>
+  <h3>Tasks</h3>
+  <p>
+    Keep important work visible with priorities, due dates and completion
+    status.
+  </p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">📝</div>
+  <h3>Notes</h3>
+  <p>
+    Save ideas, study notes, meeting points and personal information
+    in one searchable workspace.
+  </p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">🔖</div>
+  <h3>Useful Links</h3>
+  <p>
+    Keep websites and resources you actually need instead of searching
+    for the same page again.
+  </p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">🧰</div>
+  <h3>Everyday Tools</h3>
+  <p>
+    Calculator, percentage calculator, converter, text tools, JSON
+    formatter and other small utilities.
+  </p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">🎯</div>
+  <h3>Focus</h3>
+  <p>
+    Use a simple focus timer and today's plan to turn a large workload
+    into smaller actions.
+  </p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="section-title">
+  <h2>Built around real problems</h2>
+  <p>
+    The goal is not to keep people trapped on a website.
+    The goal is to help them finish something and make the next visit useful.
+  </p>
+</div>
+
+<div class="guide-grid">
+
+<article class="guide">
+  <h3>For students</h3>
+  <p>
+    Keep study tasks, notes, links, word counts, calculations and a daily
+    plan together.
+  </p>
+</article>
+
+<article class="guide">
+  <h3>For creators</h3>
+  <p>
+    Save ideas, scripts, links, content tasks and reusable message templates.
+  </p>
+</article>
+
+<article class="guide">
+  <h3>For small businesses</h3>
+  <p>
+    Track simple tasks, customer follow-ups, notes, links and calculations
+    without needing a complicated system.
+  </p>
+</article>
+
+<article class="guide">
+  <h3>For everyday life</h3>
+  <p>
+    Keep reminders, important information, useful websites and personal
+    checklists in one place.
+  </p>
+</article>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="section-title">
+  <h2>How SHAHEEN works</h2>
+  <p>
+    Three simple steps.
+  </p>
+</div>
+
+<div class="feature-grid">
+
+<div class="feature">
+  <div class="feature-icon">1️⃣</div>
+  <h3>Capture</h3>
+  <p>Put the information somewhere you can actually find it.</p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">2️⃣</div>
+  <h3>Organize</h3>
+  <p>Turn information into tasks, notes or useful links.</p>
+</div>
+
+<div class="feature">
+  <div class="feature-icon">3️⃣</div>
+  <h3>Act</h3>
+  <p>Use today's view and practical tools to finish the work.</p>
+</div>
+
+</div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <button class="btn btn-secondary" onclick="openLegal('about')">About Us</button>
+    <button class="btn btn-secondary" onclick="openLegal('privacy')">Privacy Policy</button>
+    <button class="btn btn-secondary" onclick="openLegal('terms')">Terms</button>
+    <button class="btn btn-secondary" onclick="openLegal('contact')">Contact Us</button>
+    <button class="btn btn-secondary" onclick="openLegal('security')">Security</button>
+  </div>
+
+  <div>
+    © <span id="year"></span> SHAHEEN. All rights reserved.
+  </div>
+</footer>
+
+</section>
+
+<!-- =========================================================
+     AUTH SCREEN
+========================================================= -->
+
+<section id="authScreen" class="hidden">
+
+<div class="auth-card">
+
+  <div class="logo auth-logo">S</div>
+
+  <h1>Welcome to SHAHEEN</h1>
+
+  <p>
+    Sign in once and start using your personal workspace.
+  </p>
+
+  <button id="googleBtn" class="google-btn" onclick="googleLogin()">
+    Continue with Google
+  </button>
+
+  <div id="authStatus" class="auth-status"></div>
+
+  <button
+    class="btn btn-secondary"
+    style="width:100%;margin-top:12px;"
+    onclick="showLanding()">
+    ← Back
+  </button>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<section id="app" class="hidden">
+
+<header class="app-header">
+
+<div class="container app-header-inner">
+
+  <div class="brand">
+    <div class="logo">S</div>
+    <span class="name">SHAHEEN</span>
+  </div>
+
+  <div class="search">
+    <input
+      id="globalSearch"
+      placeholder="Search tasks, notes, links..."
+      oninput="globalSearch(this.value)">
+  </div>
+
+  <div class="user-mini">
+
+    <div id="avatar" class="avatar">S</div>
+
+    <span id="userName" class="name">User</span>
+
+    <div class="profile-menu">
+
+      <button
+        class="small-btn"
+        onclick="toggleProfileMenu()"
+        aria-label="Profile menu">
+        ⋮
+      </button>
+
+      <div id="profileMenu" class="menu hidden">
+
+        <button onclick="openLegal('about')">
+          ℹ️ About Us
         </button>
-      </div>
 
-    </div>
-  </section>
+        <button onclick="openLegal('privacy')">
+          🔐 Privacy Policy
+        </button>
 
-  <section id="features" class="public-section">
-    <div class="container">
+        <button onclick="openLegal('terms')">
+          📄 Terms
+        </button>
 
-      <div class="section-title">
-        <h2>Everything starts with real everyday problems.</h2>
-        <p>Not a collection of random buttons. Each section has a clear job.</p>
-      </div>
+        <button onclick="openLegal('contact')">
+          ✉️ Contact Us
+        </button>
 
-      <div class="feature-grid">
+        <button onclick="openLegal('security')">
+          🛡️ Security
+        </button>
 
-        <article class="feature">
-          <div class="feature-icon">✓</div>
-          <h3>Tasks & Priorities</h3>
-          <p>Know what needs attention today instead of keeping everything in your head.</p>
-        </article>
+        <button onclick="toggleTheme()">
+          🌓 Change Theme
+        </button>
 
-        <article class="feature">
-          <div class="feature-icon">💰</div>
-          <h3>Money Planner</h3>
-          <p>Track income, expenses, budgets and recurring subscriptions in one place.</p>
-        </article>
+        <button onclick="exportData()">
+          💾 Export My Data
+        </button>
 
-        <article class="feature">
-          <div class="feature-icon">📄</div>
-          <h3>Document Manager</h3>
-          <p>Keep important document names, expiry dates, links and reminders organized.</p>
-        </article>
-
-        <article class="feature">
-          <div class="feature-icon">📝</div>
-          <h3>Notes & Ideas</h3>
-          <p>Save information quickly and find it later with workspace search.</p>
-        </article>
-
-        <article class="feature">
-          <div class="feature-icon">📋</div>
-          <h3>Checklists</h3>
-          <p>Travel, moving, study, job applications, home projects and everyday preparation.</p>
-        </article>
-
-        <article class="feature">
-          <div class="feature-icon">🧰</div>
-          <h3>Everyday Tools</h3>
-          <p>Calculator, converters, text tools, percentage tools and a focus timer.</p>
-        </article>
-
-      </div>
-
-      <div class="ad-slot">
-        Public content area — advertising can be added here with the exact AdSense code supplied by Google.
-      </div>
-
-    </div>
-  </section>
-
-  <section class="public-section">
-    <div class="container">
-
-      <div class="section-title">
-        <h2>Useful guides</h2>
-        <p>Original practical content designed to solve common everyday problems.</p>
-      </div>
-
-      <div class="grid grid-3">
-
-        <article class="guide">
-          <h3>How to organize important documents</h3>
-          <p>Start with identity, education, financial, medical and household categories.</p>
-          <ol>
-            <li>List every important document.</li>
-            <li>Add expiry dates where applicable.</li>
-            <li>Store the secure location/link.</li>
-            <li>Set a reminder before expiration.</li>
-          </ol>
-        </article>
-
-        <article class="guide">
-          <h3>Simple monthly money review</h3>
-          <p>A basic review can reveal where money is going without complicated accounting.</p>
-          <ol>
-            <li>Record income.</li>
-            <li>Record essential expenses.</li>
-            <li>Check recurring subscriptions.</li>
-            <li>Set one realistic saving target.</li>
-          </ol>
-        </article>
-
-        <article class="guide">
-          <h3>Prepare before an important appointment</h3>
-          <p>Reduce last-minute stress by preparing information beforehand.</p>
-          <ol>
-            <li>Write the appointment purpose.</li>
-            <li>List questions.</li>
-            <li>Gather required documents.</li>
-            <li>Add date and follow-up reminder.</li>
-          </ol>
-        </article>
+        <button onclick="logout()">
+          🚪 Sign Out
+        </button>
 
       </div>
 
     </div>
-  </section>
 
-  <section class="public-section">
-    <div class="container">
+  </div>
 
-      <div class="section-title">
-        <h2>Built around clarity</h2>
-        <p>No complicated dashboard language. The interface tells you what each section is for.</p>
-      </div>
+</div>
+</header>
 
-      <div class="card article">
-        <h3>What makes Shine Nexus different?</h3>
-        <p>
-          Many productivity products focus on one category: tasks, notes,
-          finance, documents or calendars. Everyday life does not work that way.
-          A person can have a bill to remember, a document to renew, a study
-          task to finish and a budget to check on the same day.
-        </p>
-        <p>
-          Shine Nexus brings these small pieces together into one understandable
-          personal workspace. The goal is not to keep people staring at a screen
-          unnecessarily. The goal is to help them finish real-life work faster.
-        </p>
-      </div>
+<main class="main">
 
+<!-- HOME -->
+
+<section id="home" class="view active">
+
+<div class="page-title">
+  <h1>Good to see you 👋</h1>
+  <p id="todayText"></p>
+</div>
+
+<div class="stat-grid" id="stats"></div>
+
+<br>
+
+<div class="grid">
+
+<div class="col-8">
+
+<div class="card">
+
+<h2>What needs your attention?</h2>
+
+<div id="attention"></div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Quick Capture</h2>
+
+<form class="form" onsubmit="quickCapture(event)">
+
+<textarea
+  id="quickInput"
+  class="textarea"
+  placeholder="Paste a reminder, idea, link, message or task..."></textarea>
+
+<div class="row">
+
+<select id="quickType" class="select" style="max-width:180px;">
+  <option value="auto">Auto detect</option>
+  <option value="task">Task</option>
+  <option value="note">Note</option>
+  <option value="link">Link</option>
+</select>
+
+<button class="btn btn-primary">
+  Save
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="col-4">
+
+<div class="card">
+
+<h2>Today</h2>
+
+<div id="todayList"></div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Recent</h2>
+
+<div id="recentList"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- INBOX -->
+
+<section id="inbox" class="view">
+
+<div class="page-title">
+  <h1>Smart Inbox</h1>
+  <p>Put information here first. Organize it when you're ready.</p>
+</div>
+
+<div class="card">
+
+<form class="form" onsubmit="saveInbox(event)">
+
+<textarea
+  id="inboxText"
+  class="textarea"
+  placeholder="Paste anything useful here..."></textarea>
+
+<div class="row">
+
+<select id="inboxType" class="select" style="max-width:200px;">
+  <option value="auto">Auto detect</option>
+  <option value="task">Task</option>
+  <option value="note">Note</option>
+  <option value="link">Link</option>
+</select>
+
+<button class="btn btn-primary">
+  Add to Inbox
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Inbox items</h2>
+
+<div id="inboxList" class="list"></div>
+
+</div>
+
+</section>
+
+<!-- CAPTURE -->
+
+<section id="capture" class="view">
+
+<div class="page-title">
+  <h1>Capture</h1>
+  <p>Create something directly.</p>
+</div>
+
+<div class="grid">
+
+<div class="col-6">
+
+<div class="card">
+
+<h2>New Task</h2>
+
+<form class="form" onsubmit="createTask(event)">
+
+<input id="taskTitle" class="input" required placeholder="What needs to be done?">
+
+<select id="taskPriority" class="select">
+  <option value="normal">Normal priority</option>
+  <option value="high">High priority</option>
+  <option value="urgent">Urgent</option>
+</select>
+
+<input id="taskDate" type="date" class="input">
+
+<button class="btn btn-primary">
+  Create Task
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="col-6">
+
+<div class="card">
+
+<h2>New Note</h2>
+
+<form class="form" onsubmit="createNote(event)">
+
+<input id="noteTitle" class="input" placeholder="Note title" required>
+
+<textarea
+  id="noteBody"
+  class="textarea"
+  placeholder="Write your note..."
+  required></textarea>
+
+<button class="btn btn-primary">
+  Save Note
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- WORK -->
+
+<section id="work" class="view">
+
+<div class="page-title">
+  <h1>Your Work</h1>
+  <p>Tasks, notes and saved links.</p>
+</div>
+
+<div class="card">
+
+<h2>Tasks</h2>
+
+<div id="taskList" class="list"></div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Notes</h2>
+
+<div id="noteList" class="list"></div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Saved Links</h2>
+
+<div id="bookmarkList" class="list"></div>
+
+</div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section id="profile" class="view">
+
+<div class="page-title">
+  <h1>Profile</h1>
+  <p>Your SHAHEEN account and workspace controls.</p>
+</div>
+
+<div class="card">
+
+<div style="display:flex;align-items:center;gap:15px;">
+
+<div id="profileAvatar" class="avatar" style="width:65px;height:65px;">
+  S
+</div>
+
+<div>
+  <h2 id="profileName" style="margin:0;">User</h2>
+  <p id="profileEmail" style="margin:5px 0;color:var(--muted);"></p>
+</div>
+
+</div>
+
+<hr style="border:0;border-top:1px solid var(--line);margin:25px 0;">
+
+<h3>Workspace</h3>
+
+<div class="item">
+  <div>
+    <div class="item-title">Local workspace</div>
+    <div class="item-meta">
+      Your tasks, notes and links are stored in this browser.
     </div>
-  </section>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+
+<button class="btn btn-secondary" onclick="exportData()">
+  Export data
+</button>
+
+<button class="btn btn-danger" onclick="deleteData()">
+  Delete local data
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TOOLS -->
+
+<section id="tools" class="view">
+
+<div class="page-title">
+  <h1>Tools</h1>
+  <p>Small utilities for everyday work.</p>
+</div>
+
+<div class="tool-grid">
+
+<div class="tool">
+  <h3>🧮 Calculator</h3>
+  <p>Simple mathematical calculations.</p>
+  <input id="calcInput" class="input" placeholder="Example: 25*4+10">
+  <br>
+  <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+  <p id="calcResult"></p>
+</div>
+
+<div class="tool">
+  <h3>📊 Percentage</h3>
+  <p>Find a percentage of a number.</p>
+  <input id="percentValue" class="input" placeholder="Number">
+  <br>
+  <input id="percentRate" class="input" placeholder="Percentage">
+  <br>
+  <button class="btn btn-primary" onclick="percentage()">Calculate</button>
+  <p id="percentResult"></p>
+</div>
+
+<div class="tool">
+  <h3>📏 Converter</h3>
+  <p>Common unit conversions.</p>
+
+  <input id="convertValue" class="input" placeholder="Value">
+
+  <br>
+
+  <select id="convertType" class="select">
+    <option value="kmmi">Kilometres → Miles</option>
+    <option value="mikm">Miles → Kilometres</option>
+    <option value="kg lb">Kilograms → Pounds</option>
+    <option value="lb kg">Pounds → Kilograms</option>
+    <option value="cmft">Centimetres → Feet</option>
+    <option value="ftcm">Feet → Centimetres</option>
+  </select>
+
+  <br>
+
+  <button class="btn btn-primary" onclick="convertUnit()">Convert</button>
+
+  <p id="convertResult"></p>
+</div>
+
+<div class="tool">
+  <h3>🔢 Word Counter</h3>
+  <p>Count words and characters.</p>
+
+  <textarea
+    id="counterText"
+    class="textarea"
+    oninput="countWords()"
+    placeholder="Paste text..."></textarea>
+
+  <p id="counterResult">0 words · 0 characters</p>
+</div>
+
+<div class="tool">
+  <h3>🧹 Text Cleaner</h3>
+  <p>Remove extra spaces and blank lines.</p>
+
+  <textarea id="cleanInput" class="textarea" placeholder="Paste text..."></textarea>
+
+  <button class="btn btn-primary" onclick="cleanText()">Clean Text</button>
+
+  <br><br>
+
+  <textarea id="cleanResult" class="textarea" readonly></textarea>
+</div>
+
+<div class="tool">
+  <h3>🧾 JSON Formatter</h3>
+  <p>Format JSON into readable text.</p>
+
+  <textarea id="jsonInput" class="textarea" placeholder='{"name":"SHAHEEN"}'></textarea>
+
+  <button class="btn btn-primary" onclick="formatJSON()">Format JSON</button>
+
+  <br><br>
+
+  <textarea id="jsonResult" class="textarea" readonly></textarea>
+</div>
+
+<div class="tool">
+  <h3>🔐 Password Generator</h3>
+  <p>Generate a random strong-looking password locally.</p>
+
+  <button class="btn btn-primary" onclick="generatePassword()">
+    Generate
+  </button>
+
+  <p id="passwordResult" style="overflow-wrap:anywhere;font-weight:700;"></p>
+</div>
+
+<div class="tool">
+  <h3>⏱️ Focus Timer</h3>
+  <p>Start a simple 25-minute focus session.</p>
+
+  <div id="timerDisplay"
+       style="font-size:38px;font-weight:800;text-align:center;margin:20px 0;">
+    25:00
+  </div>
+
+  <div class="row">
+    <button class="btn btn-primary" onclick="startTimer()">Start</button>
+    <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
+
+<div class="tool">
+  <h3>☑️ Checklist</h3>
+  <p>Turn lines of text into a quick checklist.</p>
+
+  <textarea
+    id="checkInput"
+    class="textarea"
+    placeholder="One item per line"></textarea>
+
+  <button class="btn btn-primary" onclick="makeChecklist()">
+    Create Checklist
+  </button>
+
+  <div id="checkResult" style="margin-top:12px;"></div>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Reusable Templates</h2>
+
+<div class="row">
+
+<button class="btn btn-secondary" onclick="useTemplate('email')">
+  ✉️ Professional Email
+</button>
+
+<button class="btn btn-secondary" onclick="useTemplate('study')">
+  📚 Study Plan
+</button>
+
+<button class="btn btn-secondary" onclick="useTemplate('meeting')">
+  📝 Meeting Notes
+</button>
+
+<button class="btn btn-secondary" onclick="useTemplate('invoice')">
+  🧾 Invoice Checklist
+</button>
+
+<button class="btn btn-secondary" onclick="useTemplate('cv')">
+  📄 CV Outline
+</button>
+
+</div>
+
+<textarea
+  id="templateResult"
+  class="textarea"
+  style="margin-top:15px;"
+  placeholder="Choose a template..."></textarea>
+
+</div>
+
+</section>
 
 </main>
 
+<nav class="bottom-nav">
 
-<!-- =========================
-     APPLICATION
-========================= -->
+<button class="nav-btn active" onclick="go('home',this)">
+  <span>🏠</span>
+  Home
+</button>
 
-<main id="app" class="app">
+<button class="nav-btn" onclick="go('inbox',this)">
+  <span>📥</span>
+  Inbox
+</button>
 
-  <div class="app-layout">
+<button class="nav-btn" onclick="go('capture',this)">
+  <span>➕</span>
+  Capture
+</button>
 
-    <!-- HOME -->
-    <section id="screen-home" class="screen">
+<button class="nav-btn" onclick="go('work',this)">
+  <span>📋</span>
+  Work
+</button>
 
-      <div class="app-head">
-        <div>
-          <h1 id="helloTitle">Good morning</h1>
-          <p id="todaySubtitle">Here is what needs your attention.</p>
-        </div>
-        <button class="btn" onclick="openModal('taskModal')">+ Add Task</button>
-      </div>
+<button class="nav-btn" onclick="go('profile',this)">
+  <span>👤</span>
+  Profile
+</button>
 
-      <div class="search-box">
-        <input class="input" id="globalSearch" placeholder="Search your workspace..." oninput="globalSearch(this.value)">
-      </div>
+</nav>
 
-      <div class="grid grid-4" id="statsGrid"></div>
+</section>
 
-      <br>
+<!-- =========================================================
+     LEGAL MODAL
+========================================================= -->
 
-      <div class="card">
-        <h2>Quick actions</h2>
+<div id="legalModal" class="modal" onclick="modalOutside(event)">
 
-        <div class="quick-grid">
+<div class="modal-card">
 
-          <button class="quick" onclick="openModal('taskModal')">
-            <strong>✓ New Task</strong>
-            <span>Something you need to do</span>
-          </button>
+<div class="modal-head">
 
-          <button class="quick" onclick="openModal('noteModal')">
-            <strong>📝 New Note</strong>
-            <span>Save an idea or information</span>
-          </button>
+<h2 id="legalTitle">About Us</h2>
 
-          <button class="quick" onclick="openModal('moneyModal')">
-            <strong>💰 Add Money</strong>
-            <span>Record income or expense</span>
-          </button>
-
-          <button class="quick" onclick="openModal('documentModal')">
-            <strong>📄 Add Document</strong>
-            <span>Track an important document</span>
-          </button>
-
-          <button class="quick" onclick="openModal('checklistModal')">
-            <strong>📋 New Checklist</strong>
-            <span>Prepare for something</span>
-          </button>
-
-          <button class="quick" onclick="go('tools')">
-            <strong>🧰 Tools</strong>
-            <span>Calculator and converters</span>
-          </button>
-
-          <button class="quick" onclick="openTimer()">
-            <strong>⏱ Focus</strong>
-            <span>Start a focused session</span>
-          </button>
-
-          <button class="quick" onclick="exportData()">
-            <strong>⬇ Export</strong>
-            <span>Download your workspace</span>
-          </button>
-
-        </div>
-      </div>
-
-      <br>
-
-      <div class="grid grid-2">
-
-        <div class="card">
-          <h2>Needs attention</h2>
-          <div id="attentionList" class="list"></div>
-        </div>
-
-        <div class="card">
-          <h2>Today's progress</h2>
-          <div id="todayProgress"></div>
-        </div>
-
-      </div>
-
-      <br>
-
-      <div class="card">
-        <h2>Recent activity</h2>
-        <div id="recentList" class="list"></div>
-      </div>
-
-    </section>
-
-
-    <!-- TASKS -->
-    <section id="screen-tasks" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Tasks</h1>
-          <p>Turn things you need to do into clear next actions.</p>
-        </div>
-        <button class="btn" onclick="openModal('taskModal')">+ Add Task</button>
-      </div>
-
-      <div class="tool-tabs">
-        <button class="tool-tab active" id="taskTabAll" onclick="setTaskFilter('all')">All</button>
-        <button class="tool-tab" id="taskTabToday" onclick="setTaskFilter('today')">Today</button>
-        <button class="tool-tab" id="taskTabOpen" onclick="setTaskFilter('open')">Open</button>
-        <button class="tool-tab" id="taskTabDone" onclick="setTaskFilter('done')">Done</button>
-      </div>
-
-      <div class="card">
-        <div id="tasksList" class="list"></div>
-      </div>
-
-    </section>
-
-
-    <!-- MONEY -->
-    <section id="screen-money" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Money</h1>
-          <p>A simple personal money overview — not financial advice.</p>
-        </div>
-        <button class="btn" onclick="openModal('moneyModal')">+ Add Entry</button>
-      </div>
-
-      <div class="grid grid-4" id="moneyStats"></div>
-
-      <br>
-
-      <div class="grid grid-2">
-
-        <div class="card">
-          <h2>Monthly budget</h2>
-          <div class="field">
-            <label>Budget amount</label>
-            <input class="input" id="budgetInput" type="number" min="0" step="0.01">
-          </div>
-          <br>
-          <button class="btn" onclick="saveBudget()">Save Budget</button>
-          <div id="budgetProgress" style="margin-top:15px"></div>
-        </div>
-
-        <div class="card">
-          <h2>Money entries</h2>
-          <div id="moneyList" class="list"></div>
-        </div>
-
-      </div>
-
-      <br>
-
-      <div class="card">
-        <h2>Subscriptions / recurring costs</h2>
-        <button class="btn" onclick="openModal('subscriptionModal')">+ Add Recurring Cost</button>
-        <div id="subscriptionList" class="list" style="margin-top:12px"></div>
-      </div>
-
-    </section>
-
-
-    <!-- DOCUMENTS -->
-    <section id="screen-documents" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Documents</h1>
-          <p>Remember what you have, where it is, and when it expires.</p>
-        </div>
-        <button class="btn" onclick="openModal('documentModal')">+ Add Document</button>
-      </div>
-
-      <div class="card">
-        <div class="search-box">
-          <input class="input" id="documentSearch" placeholder="Search documents..." oninput="renderDocuments(this.value)">
-        </div>
-        <div id="documentsList" class="list"></div>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <h2>Document checklist</h2>
-
-        <div class="check">
-          <input type="checkbox">
-          <span>Identity / government documents</span>
-        </div>
-
-        <div class="check">
-          <input type="checkbox">
-          <span>Education certificates</span>
-        </div>
-
-        <div class="check">
-          <input type="checkbox">
-          <span>Bank / financial documents</span>
-        </div>
-
-        <div class="check">
-          <input type="checkbox">
-          <span>Insurance / household documents</span>
-        </div>
-
-        <div class="check">
-          <input type="checkbox">
-          <span>Important receipts and warranties</span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- NOTES -->
-    <section id="screen-notes" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Notes</h1>
-          <p>Keep useful information in one searchable place.</p>
-        </div>
-        <button class="btn" onclick="openModal('noteModal')">+ Add Note</button>
-      </div>
-
-      <div class="card">
-        <div class="search-box">
-          <input class="input" id="noteSearch" placeholder="Search notes..." oninput="renderNotes(this.value)">
-        </div>
-        <div id="notesList" class="list"></div>
-      </div>
-
-    </section>
-
-
-    <!-- CHECKLISTS -->
-    <section id="screen-checklists" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Checklists</h1>
-          <p>Prepare once, then work through the list.</p>
-        </div>
-        <button class="btn" onclick="openModal('checklistModal')">+ New Checklist</button>
-      </div>
-
-      <div id="checklistsList" class="grid grid-2"></div>
-
-    </section>
-
-
-    <!-- TOOLS -->
-    <section id="screen-tools" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Everyday Tools</h1>
-          <p>Small tools for everyday work.</p>
-        </div>
-      </div>
-
-      <div class="tool-tabs">
-        <button class="tool-tab active" onclick="tool('calculator',this)">Calculator</button>
-        <button class="tool-tab" onclick="tool('percentage',this)">Percentage</button>
-        <button class="tool-tab" onclick="tool('converter',this)">Converter</button>
-        <button class="tool-tab" onclick="tool('text',this)">Text</button>
-        <button class="tool-tab" onclick="tool('timer',this)">Focus Timer</button>
-        <button class="tool-tab" onclick="tool('generator',this)">Passphrase</button>
-      </div>
-
-      <div id="toolArea"></div>
-
-    </section>
-
-
-    <!-- GUIDES -->
-    <section id="screen-guides" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Practical Guides</h1>
-          <p>Simple checklists and explanations for everyday situations.</p>
-        </div>
-      </div>
-
-      <div class="grid grid-2">
-
-        <article class="guide">
-          <h3>Moving to a new home</h3>
-          <ol>
-            <li>Record the new address and important contacts.</li>
-            <li>Check utilities and internet arrangements.</li>
-            <li>Update important accounts.</li>
-            <li>Store agreements and receipts.</li>
-            <li>Create a follow-up task list.</li>
-          </ol>
-        </article>
-
-        <article class="guide">
-          <h3>Study project setup</h3>
-          <ol>
-            <li>Write the final outcome.</li>
-            <li>Break the project into small tasks.</li>
-            <li>Collect reliable sources.</li>
-            <li>Create deadlines.</li>
-            <li>Review progress weekly.</li>
-          </ol>
-        </article>
-
-        <article class="guide">
-          <h3>Job application preparation</h3>
-          <ol>
-            <li>Prepare a current CV.</li>
-            <li>List relevant skills.</li>
-            <li>Track each application separately.</li>
-            <li>Record dates and follow-ups.</li>
-            <li>Never share sensitive information unnecessarily.</li>
-          </ol>
-        </article>
-
-        <article class="guide">
-          <h3>Digital safety basics</h3>
-          <ul>
-            <li>Use unique passwords.</li>
-            <li>Turn on multi-factor authentication where available.</li>
-            <li>Review account recovery options.</li>
-            <li>Do not share one-time verification codes.</li>
-            <li>Check the domain before entering sensitive information.</li>
-          </ul>
-        </article>
-
-        <article class="guide">
-          <h3>Monthly personal review</h3>
-          <ul>
-            <li>Review unfinished tasks.</li>
-            <li>Check upcoming document expirations.</li>
-            <li>Review spending and recurring costs.</li>
-            <li>Clean old notes and links.</li>
-            <li>Choose three priorities for next month.</li>
-          </ul>
-        </article>
-
-        <article class="guide">
-          <h3>Before an important appointment</h3>
-          <ul>
-            <li>Write the reason for the appointment.</li>
-            <li>Prepare your questions.</li>
-            <li>Collect relevant documents.</li>
-            <li>Check the time and location.</li>
-            <li>Set a reminder.</li>
-          </ul>
-        </article>
-
-      </div>
-
-      <div class="ad-slot">
-        Public educational-content area.
-      </div>
-
-    </section>
-
-
-    <!-- PROFILE -->
-    <section id="screen-profile" class="screen hidden">
-
-      <div class="app-head">
-        <div>
-          <h1>Profile</h1>
-          <p>Your workspace settings and account controls.</p>
-        </div>
-
-        <button class="icon-btn" onclick="toggleProfileMenu()">⋮</button>
-      </div>
-
-      <div class="card">
-        <div class="profile-head">
-          <div class="profile-big" id="profileAvatar">S</div>
-          <div>
-            <h2 id="profileName" style="margin:0">Guest Workspace</h2>
-            <p id="profileEmail" style="margin:2px 0;color:var(--muted)">Local workspace</p>
-          </div>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="grid grid-2">
-
-        <div class="card">
-          <h3>Workspace</h3>
-
-          <p class="list-meta">
-            Your everyday information is stored in this browser.
-          </p>
-
-          <div style="margin-top:12px">
-            <span class="badge green">Local storage active</span>
-          </div>
-
-          <br>
-
-          <button class="btn" onclick="exportData()">Export Workspace</button>
-          <button class="btn secondary" onclick="document.getElementById('importFile').click()">
-            Import Workspace
-          </button>
-
-          <input id="importFile" type="file" accept=".json" class="hidden" onchange="importData(this.files[0])">
-        </div>
-
-        <div class="card">
-          <h3>Appearance</h3>
-          <button class="btn secondary" onclick="toggleTheme()">Toggle dark / light mode</button>
-          <br><br>
-          <button class="btn secondary" onclick="showToast('Your workspace remains stored locally in this browser.')">
-            Storage information
-          </button>
-        </div>
-
-      </div>
-
-      <br>
-
-      <div class="card">
-        <h3>Google Account</h3>
-        <p id="googleStatus" class="list-meta">
-          Google Sign-In is optional. Your workspace does not require Google to work.
-        </p>
-
-        <button class="btn" id="googleProfileButton" onclick="googleLogin()">
-          Sign in with Google
-        </button>
-
-        <button class="btn secondary hidden" id="googleLogoutButton" onclick="logout()">
-          Sign out
-        </button>
-      </div>
-
-      <br>
-
-      <div class="card">
-        <h3>Data controls</h3>
-        <p class="list-meta">
-          Export your workspace before deleting it if you want a backup.
-        </p>
-        <button class="btn" onclick="exportData()">Download Backup</button>
-        <button class="btn secondary" onclick="resetWorkspace()">Delete Local Workspace</button>
-      </div>
-
-    </section>
-
-  </div>
-
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-
-    <button class="nav-btn active" data-go="home" onclick="go('home')">
-      <span>⌂</span>Home
-    </button>
-
-    <button class="nav-btn" data-go="tasks" onclick="go('tasks')">
-      <span>✓</span>Tasks
-    </button>
-
-    <button class="nav-btn" data-go="money" onclick="go('money')">
-      <span>💰</span>Money
-    </button>
-
-    <button class="nav-btn" data-go="documents" onclick="go('documents')">
-      <span>📄</span>Docs
-    </button>
-
-    <button class="nav-btn" data-go="tools" onclick="go('tools')">
-      <span>🧰</span>Tools
-    </button>
-
-    <button class="nav-btn" data-go="profile" onclick="go('profile')">
-      <span>●</span>Profile
-    </button>
-
-  </nav>
-
-</main>
-
-
-<!-- =========================
-     PROFILE MENU
-========================= -->
-
-<div id="profileMenu" class="menu">
-
-  <button onclick="openLegal('about')">ℹ️ About Us</button>
-  <button onclick="openLegal('privacy')">🔒 Privacy Policy</button>
-  <button onclick="openLegal('terms')">📜 Terms</button>
-  <button onclick="openLegal('contact')">✉️ Contact Us</button>
-  <button onclick="openLegal('security')">🛡 Security</button>
+<button class="close" onclick="closeLegal()">×</button>
 
 </div>
 
+<div id="legalBody" class="legal"></div>
 
-<!-- =========================
-     LOGIN MODAL
-========================= -->
-
-<div class="modal" id="loginModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>Welcome to Shine Nexus</h2>
-      <button class="close" onclick="closeModal('loginModal')">×</button>
-    </div>
-
-    <p class="list-meta">
-      You can use the workspace as a guest. Google Sign-In is optional.
-    </p>
-
-    <button class="btn" style="width:100%;margin-top:12px" onclick="googleLogin()">
-      Continue with Google
-    </button>
-
-    <button class="btn secondary" style="width:100%;margin-top:8px" onclick="enterGuest()">
-      Continue as Guest
-    </button>
-
-    <p style="font-size:11px;color:var(--muted);margin-top:15px">
-      Guest data stays in this browser. Google Sign-In authenticates your
-      account; it does not automatically make local workspace data cloud-synced.
-    </p>
-
-  </div>
 </div>
 
-
-<!-- =========================
-     TASK MODAL
-========================= -->
-
-<div class="modal" id="taskModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2 id="taskModalTitle">Add Task</h2>
-      <button class="close" onclick="closeModal('taskModal')">×</button>
-    </div>
-
-    <input type="hidden" id="taskId">
-
-    <div class="form-grid">
-
-      <div class="field full">
-        <label>What needs to be done?</label>
-        <input class="input" id="taskTitle" placeholder="Example: Pay electricity bill">
-      </div>
-
-      <div class="field">
-        <label>Due date</label>
-        <input class="input" id="taskDue" type="date">
-      </div>
-
-      <div class="field">
-        <label>Priority</label>
-        <select class="select" id="taskPriority">
-          <option value="low">Low</option>
-          <option value="normal" selected>Normal</option>
-          <option value="high">High</option>
-          <option value="urgent">Urgent</option>
-        </select>
-      </div>
-
-      <div class="field full">
-        <label>Details</label>
-        <textarea class="textarea" id="taskDetails" placeholder="Optional details"></textarea>
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('taskModal')">Cancel</button>
-      <button class="btn" onclick="saveTask()">Save Task</button>
-    </div>
-
-  </div>
 </div>
-
-
-<!-- =========================
-     NOTE MODAL
-========================= -->
-
-<div class="modal" id="noteModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2 id="noteModalTitle">Add Note</h2>
-      <button class="close" onclick="closeModal('noteModal')">×</button>
-    </div>
-
-    <input type="hidden" id="noteId">
-
-    <div class="field">
-      <label>Title</label>
-      <input class="input" id="noteTitle" placeholder="Note title">
-    </div>
-
-    <br>
-
-    <div class="field">
-      <label>Note</label>
-      <textarea class="textarea" id="noteBody" placeholder="Write your note..."></textarea>
-    </div>
-
-    <br>
-
-    <div class="field">
-      <label>Category</label>
-      <select class="select" id="noteCategory">
-        <option>General</option>
-        <option>Study</option>
-        <option>Work</option>
-        <option>Personal</option>
-        <option>Ideas</option>
-        <option>Reference</option>
-      </select>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('noteModal')">Cancel</button>
-      <button class="btn" onclick="saveNote()">Save Note</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     MONEY MODAL
-========================= -->
-
-<div class="modal" id="moneyModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>Add Money Entry</h2>
-      <button class="close" onclick="closeModal('moneyModal')">×</button>
-    </div>
-
-    <div class="form-grid">
-
-      <div class="field">
-        <label>Type</label>
-        <select class="select" id="moneyType">
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Amount</label>
-        <input class="input" id="moneyAmount" type="number" min="0" step="0.01">
-      </div>
-
-      <div class="field">
-        <label>Category</label>
-        <select class="select" id="moneyCategory">
-          <option>Food</option>
-          <option>Transport</option>
-          <option>Bills</option>
-          <option>Education</option>
-          <option>Shopping</option>
-          <option>Health</option>
-          <option>Work</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Date</label>
-        <input class="input" id="moneyDate" type="date">
-      </div>
-
-      <div class="field full">
-        <label>Description</label>
-        <input class="input" id="moneyDescription" placeholder="Example: Internet bill">
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('moneyModal')">Cancel</button>
-      <button class="btn" onclick="saveMoney()">Save Entry</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     DOCUMENT MODAL
-========================= -->
-
-<div class="modal" id="documentModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2 id="documentModalTitle">Add Document</h2>
-      <button class="close" onclick="closeModal('documentModal')">×</button>
-    </div>
-
-    <input type="hidden" id="documentId">
-
-    <div class="form-grid">
-
-      <div class="field full">
-        <label>Document name</label>
-        <input class="input" id="documentTitle" placeholder="Example: Passport">
-      </div>
-
-      <div class="field">
-        <label>Category</label>
-        <select class="select" id="documentCategory">
-          <option>Identity</option>
-          <option>Education</option>
-          <option>Finance</option>
-          <option>Health</option>
-          <option>Home</option>
-          <option>Work</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Expiry date</label>
-        <input class="input" id="documentExpiry" type="date">
-      </div>
-
-      <div class="field full">
-        <label>Secure location / link</label>
-        <input class="input" id="documentLink" placeholder="Optional">
-      </div>
-
-      <div class="field full">
-        <label>Notes</label>
-        <textarea class="textarea" id="documentNotes" placeholder="Where is it stored? What should you remember?"></textarea>
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('documentModal')">Cancel</button>
-      <button class="btn" onclick="saveDocument()">Save Document</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     CHECKLIST MODAL
-========================= -->
-
-<div class="modal" id="checklistModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>Create Checklist</h2>
-      <button class="close" onclick="closeModal('checklistModal')">×</button>
-    </div>
-
-    <div class="field">
-      <label>Checklist name</label>
-      <input class="input" id="checklistTitle" placeholder="Example: Travel preparation">
-    </div>
-
-    <br>
-
-    <div class="field">
-      <label>Items — one per line</label>
-      <textarea class="textarea" id="checklistItems" placeholder="Passport&#10;Tickets&#10;Charger&#10;Important documents"></textarea>
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('checklistModal')">Cancel</button>
-      <button class="btn" onclick="saveChecklist()">Create Checklist</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     SUBSCRIPTION MODAL
-========================= -->
-
-<div class="modal" id="subscriptionModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>Recurring Cost</h2>
-      <button class="close" onclick="closeModal('subscriptionModal')">×</button>
-    </div>
-
-    <div class="form-grid">
-
-      <div class="field">
-        <label>Name</label>
-        <input class="input" id="subName" placeholder="Example: Internet">
-      </div>
-
-      <div class="field">
-        <label>Amount</label>
-        <input class="input" id="subAmount" type="number" min="0" step="0.01">
-      </div>
-
-      <div class="field">
-        <label>Frequency</label>
-        <select class="select" id="subFrequency">
-          <option>Monthly</option>
-          <option>Yearly</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Next payment</label>
-        <input class="input" id="subDate" type="date">
-      </div>
-
-    </div>
-
-    <div class="form-actions">
-      <button class="btn secondary" onclick="closeModal('subscriptionModal')">Cancel</button>
-      <button class="btn" onclick="saveSubscription()">Save</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     LEGAL / INFO MODAL
-========================= -->
-
-<div class="modal" id="legalModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2 id="legalTitle">Information</h2>
-      <button class="close" onclick="closeModal('legalModal')">×</button>
-    </div>
-
-    <div id="legalContent" class="article"></div>
-
-  </div>
-</div>
-
-
-<!-- =========================
-     TIMER MODAL
-========================= -->
-
-<div class="modal" id="timerModal">
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>Focus Timer</h2>
-      <button class="close" onclick="closeModal('timerModal')">×</button>
-    </div>
-
-    <div class="timer">
-      <div class="timer-time" id="timerDisplay">25:00</div>
-
-      <p class="list-meta">
-        Focus on one real task. The timer does not block the rest of your workspace.
-      </p>
-
-      <button class="btn" id="timerButton" onclick="toggleTimer()">Start</button>
-      <button class="btn secondary" onclick="resetTimer()">Reset</button>
-    </div>
-
-  </div>
-</div>
-
 
 <div id="toast" class="toast"></div>
 
-
 <script>
-/* =========================================================
-   SHINE NEXUS GLOBAL — APPLICATION ENGINE
-========================================================= */
+/* ============================================================
+   SHAHEEN CONFIGURATION
+============================================================ */
 
-const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpk_dv138",
+const firebaseConfig = {
+  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
   authDomain: "shaheen-nexus.firebaseapp.com",
   projectId: "shaheen-nexus",
   storageBucket: "shaheen-nexus.firebasestorage.app",
@@ -1872,1329 +1812,798 @@ const FIREBASE_CONFIG = {
   measurementId: "G-VV2CBVV3HQ"
 };
 
-const STORAGE_KEY = "shine_nexus_global_workspace_v5";
-const THEME_KEY = "shine_nexus_theme_v2";
+firebase.initializeApp(firebaseConfig);
 
-let firebaseReady = false;
-let auth = null;
-let currentUser = null;
+const auth = firebase.auth();
 
-let taskFilter = "all";
-let timerSeconds = 25 * 60;
-let timerInterval = null;
+const provider = new firebase.auth.GoogleAuthProvider();
 
-const blankData = () => ({
-  tasks: [],
-  notes: [],
-  money: [],
-  documents: [],
-  checklists: [],
-  subscriptions: [],
-  budget: 0,
-  recent: []
+provider.setCustomParameters({
+  prompt:"select_account"
 });
+
+auth.useDeviceLanguage();
+
+/* ============================================================
+   LOCAL WORKSPACE
+============================================================ */
+
+const STORAGE_KEY = "shaheen_universal_workspace_v1";
+
+function blankData(){
+  return {
+    tasks:[],
+    notes:[],
+    bookmarks:[],
+    inbox:[]
+  };
+}
 
 let data = loadData();
 
-
-/* =========================================================
-   BASIC UTILITIES
-========================================================= */
-
-function $(id){
-  return document.getElementById(id);
-}
-
-function uid(prefix="id"){
-  return prefix + "_" + Date.now().toString(36) + "_" +
-    Math.random().toString(36).slice(2,9);
-}
-
-function today(){
-  const d = new Date();
-  return [
-    d.getFullYear(),
-    String(d.getMonth()+1).padStart(2,"0"),
-    String(d.getDate()).padStart(2,"0")
-  ].join("-");
-}
-
-function nowISO(){
-  return new Date().toISOString();
-}
-
-function esc(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function formatDate(value){
-  if(!value) return "No date";
-  const d = new Date(value + (String(value).length === 10 ? "T00:00:00" : ""));
-  if(Number.isNaN(d.getTime())) return value;
-  return d.toLocaleDateString(undefined,{
-    day:"numeric",
-    month:"short",
-    year:"numeric"
-  });
-}
-
-function money(value){
-  const n = Number(value) || 0;
-  return n.toLocaleString(undefined,{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
-}
-
-function showToast(message){
-  const t = $("toast");
-  t.textContent = message;
-  t.classList.add("show");
-  clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(()=>{
-    t.classList.remove("show");
-  },2600);
-}
-
-function saveData(){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-}
-
 function loadData(){
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return blankData();
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(!saved) return blankData();
 
-    const parsed = JSON.parse(raw);
-    return Object.assign(blankData(),parsed);
-  }catch{
+    const parsed = JSON.parse(saved);
+
+    return {
+      tasks:Array.isArray(parsed.tasks)?parsed.tasks:[],
+      notes:Array.isArray(parsed.notes)?parsed.notes:[],
+      bookmarks:Array.isArray(parsed.bookmarks)?parsed.bookmarks:[],
+      inbox:Array.isArray(parsed.inbox)?parsed.inbox:[]
+    };
+  }catch(e){
     return blankData();
   }
 }
 
-function recordRecent(type,title){
-  data.recent.unshift({
-    id:uid("recent"),
-    type,
-    title,
-    createdAt:nowISO()
-  });
-
-  data.recent = data.recent.slice(0,30);
-  saveData();
-}
-
-function scrollToId(id){
-  document.getElementById(id)?.scrollIntoView({
-    behavior:"smooth"
-  });
-}
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-function loadTheme(){
-  const theme = localStorage.getItem(THEME_KEY);
-
-  if(theme === "dark"){
-    document.body.classList.add("dark");
-  }
-}
-
-function toggleTheme(){
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    THEME_KEY,
-    document.body.classList.contains("dark") ? "dark" : "light"
-  );
-}
-
-loadTheme();
-
-
-/* =========================================================
-   FIREBASE — OPTIONAL
-========================================================= */
-
-function initFirebase(){
-  try{
-    if(
-      typeof firebase === "undefined" ||
-      !firebase.apps
-    ){
-      return;
-    }
-
-    if(!firebase.apps.length){
-      firebase.initializeApp(FIREBASE_CONFIG);
-    }
-
-    auth = firebase.auth();
-    firebaseReady = true;
-
-    auth.onAuthStateChanged(user=>{
-      currentUser = user || null;
-      updateAccountUI();
-    });
-
-  }catch(error){
-    console.warn("Firebase unavailable:",error);
-    firebaseReady = false;
-  }
-}
-
-initFirebase();
-
-
-/* =========================================================
-   PUBLIC / APP SWITCH
-========================================================= */
-
-function showPublic(){
-  $("publicPage").style.display = "block";
-  $("app").classList.remove("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function openLogin(){
-  $("loginModal").classList.add("show");
-}
-
-function enterGuest(){
-  closeModal("loginModal");
-  openApp();
-  showToast("Guest workspace ready.");
-}
-
-function openApp(){
-  $("publicPage").style.display = "none";
-  $("app").classList.add("active");
-  go("home");
+function saveData(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
   renderAll();
-  updateAccountUI();
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+function id(){
+  return Date.now().toString(36)+Math.random().toString(36).slice(2);
+}
 
-/* =========================================================
+function today(){
+  const d=new Date();
+
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+}
+
+function dateText(value){
+  if(!value)return "No date";
+
+  const d=new Date(value);
+
+  if(Number.isNaN(d.getTime())) return value;
+
+  return d.toLocaleDateString(undefined,{
+    year:"numeric",
+    month:"short",
+    day:"numeric"
+  });
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+/* ============================================================
+   UI
+============================================================ */
+
+function showLanding(){
+  document.getElementById("landing").classList.remove("hidden");
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+function showAuth(){
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("authScreen").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
+
+function showApp(){
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+}
+
+function toast(message){
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+  t.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=setTimeout(()=>{
+    t.classList.remove("show");
+  },2200);
+}
+
+/* ============================================================
    GOOGLE AUTH
-========================================================= */
+============================================================ */
 
 async function googleLogin(){
-  if(!firebaseReady || !auth){
-    showToast("Google Sign-In is unavailable right now. Guest mode still works.");
-    closeModal("loginModal");
-    openApp();
-    return;
-  }
+
+  const status=document.getElementById("authStatus");
+  const btn=document.getElementById("googleBtn");
+
+  status.textContent="Opening Google sign-in...";
+  btn.disabled=true;
 
   try{
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({
-      prompt:"select_account"
-    });
-
-    const result = await auth.signInWithPopup(provider);
-
-    currentUser = result.user;
-
-    closeModal("loginModal");
-    openApp();
-
-    showToast("Signed in successfully.");
-
-  }catch(error){
-    console.error(error);
 
     /*
-      Do not show confusing "Connection failed".
-      Give the user an understandable message while preserving
-      the working guest workspace.
+      Redirect is more reliable on mobile browsers.
+      Popup is convenient on desktop.
     */
 
-    if(error.code === "auth/popup-closed-by-user"){
-      showToast("Sign-in window was closed.");
+    const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if(mobile){
+      await auth.signInWithRedirect(provider);
       return;
     }
 
-    if(error.code === "auth/popup-blocked"){
-      showToast("Your browser blocked the sign-in window. Allow pop-ups and try again.");
-      return;
-    }
+    await auth.signInWithPopup(provider);
 
-    showToast("Google Sign-In could not complete. You can continue as Guest.");
+  }catch(error){
+
+    console.error(error);
+
+    btn.disabled=false;
+
+    status.textContent=
+      "Google sign-in failed: "+friendlyAuthError(error);
+
+  }
+}
+
+function friendlyAuthError(error){
+
+  const code=error && error.code ? error.code : "";
+
+  const map={
+    "auth/popup-blocked":
+      "Your browser blocked the sign-in popup. Allow popups or use mobile redirect.",
+    "auth/popup-closed-by-user":
+      "The Google sign-in window was closed.",
+    "auth/cancelled-popup-request":
+      "Another sign-in request is already open.",
+    "auth/unauthorized-domain":
+      "This website domain is not authorized in Firebase Authentication.",
+    "auth/operation-not-allowed":
+      "Google sign-in is not enabled in Firebase Authentication.",
+    "auth/network-request-failed":
+      "Network connection failed. Please check your internet connection."
+  };
+
+  return map[code] || (error && error.message ? error.message : "Unknown error");
+}
+
+auth.getRedirectResult()
+.then(result=>{
+
+  if(result && result.user){
+    showApp();
+  }
+
+})
+.catch(error=>{
+
+  console.error("Redirect result:",error);
+
+  const status=document.getElementById("authStatus");
+
+  if(status){
+    status.textContent=friendlyAuthError(error);
+  }
+
+});
+
+auth.onAuthStateChanged(user=>{
+
+  if(user){
+
+    showApp();
+    updateUser(user);
+    renderAll();
+
+  }else{
+
+    showLanding();
+
+  }
+
+});
+
+function updateUser(user){
+
+  const name=user.displayName || "User";
+  const email=user.email || "";
+
+  document.getElementById("userName").textContent=name;
+  document.getElementById("profileName").textContent=name;
+  document.getElementById("profileEmail").textContent=email;
+
+  setAvatar("avatar",user);
+  setAvatar("profileAvatar",user);
+}
+
+function setAvatar(elementId,user){
+
+  const el=document.getElementById(elementId);
+
+  if(!el)return;
+
+  if(user.photoURL){
+
+    el.innerHTML=
+      '<img src="'+escapeHTML(user.photoURL)+'" alt="Profile">';
+
+  }else{
+
+    el.textContent=
+      (user.displayName || "S").charAt(0).toUpperCase();
+
   }
 }
 
 async function logout(){
+
   try{
-    if(auth) await auth.signOut();
-  }catch{}
-
-  currentUser = null;
-  updateAccountUI();
-  showToast("Signed out. Your local workspace remains available.");
+    await auth.signOut();
+    toast("Signed out.");
+  }catch(error){
+    toast("Could not sign out.");
+  }
 }
 
-function updateAccountUI(){
-
-  const name = currentUser?.displayName || "Guest Workspace";
-  const email = currentUser?.email || "Local workspace";
-
-  if($("profileName")) $("profileName").textContent = name;
-  if($("profileEmail")) $("profileEmail").textContent = email;
-
-  const avatar = $("profileAvatar");
-
-  if(avatar){
-    if(currentUser?.photoURL){
-      avatar.innerHTML =
-        `<img src="${esc(currentUser.photoURL)}" alt="Profile">`;
-    }else{
-      avatar.textContent = name.charAt(0).toUpperCase();
-    }
-  }
-
-  if($("googleStatus")){
-    $("googleStatus").textContent =
-      currentUser
-      ? "Google account signed in. Local workspace data remains stored in this browser."
-      : "Google Sign-In is optional. Your workspace does not require Google to work.";
-  }
-
-  $("googleProfileButton")?.classList.toggle("hidden",!!currentUser);
-  $("googleLogoutButton")?.classList.toggle("hidden",!currentUser);
-}
-
-
-/* =========================================================
+/* ============================================================
    NAVIGATION
-========================================================= */
+============================================================ */
 
-function go(screen){
+function go(view,button){
 
-  document.querySelectorAll(".screen").forEach(el=>{
-    el.classList.add("hidden");
-  });
+  document.querySelectorAll(".view")
+    .forEach(x=>x.classList.remove("active"));
 
-  const target = $("screen-" + screen);
+  const target=document.getElementById(view);
 
-  if(target){
-    target.classList.remove("hidden");
-  }
+  if(target)target.classList.add("active");
 
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.classList.toggle(
-      "active",
-      btn.dataset.go === screen
-    );
-  });
+  document.querySelectorAll(".nav-btn")
+    .forEach(x=>x.classList.remove("active"));
 
-  if(screen === "home") renderHome();
-  if(screen === "tasks") renderTasks();
-  if(screen === "money") renderMoney();
-  if(screen === "documents") renderDocuments();
-  if(screen === "notes") renderNotes();
-  if(screen === "checklists") renderChecklists();
-  if(screen === "tools") tool("calculator");
-  if(screen === "profile") updateAccountUI();
+  if(button)button.classList.add("active");
 
   window.scrollTo({top:0,behavior:"smooth"});
+
+  renderAll();
 }
 
+/* ============================================================
+   SMART CAPTURE
+============================================================ */
 
-/* =========================================================
-   MODALS
-========================================================= */
+function detectType(text,forced="auto"){
 
-function openModal(id){
-  document.getElementById(id)?.classList.add("show");
-}
+  if(forced!=="auto")return forced;
 
-function closeModal(id){
-  document.getElementById(id)?.classList.remove("show");
-}
+  const value=text.trim();
 
-document.querySelectorAll(".modal").forEach(modal=>{
-  modal.addEventListener("click",e=>{
-    if(e.target === modal){
-      modal.classList.remove("show");
-    }
-  });
-});
-
-
-/* =========================================================
-   HOME / DASHBOARD
-========================================================= */
-
-function renderAll(){
-  renderHome();
-  renderTasks();
-  renderMoney();
-  renderDocuments();
-  renderNotes();
-  renderChecklists();
-  updateAccountUI();
-}
-
-function renderHome(){
-
-  const hour = new Date().getHours();
-
-  let greeting = "Good evening";
-
-  if(hour < 12) greeting = "Good morning";
-  else if(hour < 18) greeting = "Good afternoon";
-
-  $("helloTitle").textContent =
-    `${greeting}${currentUser?.displayName ? ", " + currentUser.displayName.split(" ")[0] : ""}`;
-
-  $("todaySubtitle").textContent =
-    `${formatDate(today())} — here is what needs your attention.`;
-
-  const openTasks =
-    data.tasks.filter(t=>!t.done);
-
-  const dueToday =
-    openTasks.filter(t=>t.due === today()).length;
-
-  const overdue =
-    openTasks.filter(t=>t.due && t.due < today()).length;
-
-  const month = today().slice(0,7);
-
-  const monthExpenses =
-    data.money
-      .filter(x=>x.type==="expense" && String(x.date).startsWith(month))
-      .reduce((sum,x)=>sum + Number(x.amount),0);
-
-  $("statsGrid").innerHTML = `
-
-    <div class="card stat">
-      <div>
-        <span>Open tasks</span>
-        <strong>${openTasks.length}</strong>
-      </div>
-      <span>✓</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Due today</span>
-        <strong>${dueToday}</strong>
-      </div>
-      <span>📅</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Overdue</span>
-        <strong>${overdue}</strong>
-      </div>
-      <span>!</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Month expenses</span>
-        <strong>${money(monthExpenses)}</strong>
-      </div>
-      <span>💰</span>
-    </div>
-  `;
-
-  const attention = [];
-
-  data.tasks
-    .filter(t=>!t.done)
-    .filter(t=>t.due && t.due <= today())
-    .slice(0,6)
-    .forEach(t=>{
-      attention.push({
-        title:t.title,
-        meta:t.due < today() ? "Overdue task" : "Due today",
-        type:"Task",
-        action:`editTask('${t.id}')`
-      });
-    });
-
-  data.documents
-    .filter(d=>d.expiry)
-    .filter(d=>daysUntil(d.expiry) <= 30)
-    .slice(0,4)
-    .forEach(d=>{
-      attention.push({
-        title:d.title,
-        meta:`Expires ${formatDate(d.expiry)}`,
-        type:"Document",
-        action:`go('documents')`
-      });
-    });
-
-  if(!attention.length){
-    $("attentionList").innerHTML =
-      `<div class="empty">Nothing urgent. You're clear for now.</div>`;
-  }else{
-    $("attentionList").innerHTML =
-      attention.map(x=>`
-        <div class="list-item">
-          <div class="list-main">
-            <div>
-              <div class="list-title">${esc(x.title)}</div>
-              <div class="list-meta">${esc(x.meta)}</div>
-            </div>
-            <button class="small-btn" onclick="${x.action}">${esc(x.type)}</button>
-          </div>
-        </div>
-      `).join("");
+  if(/^https?:\/\//i.test(value)){
+    return "link";
   }
 
-  const totalTasks = data.tasks.length;
-  const doneTasks = data.tasks.filter(t=>t.done).length;
-
-  const percent = totalTasks
-    ? Math.round((doneTasks / totalTasks) * 100)
-    : 0;
-
-  $("todayProgress").innerHTML = `
-    <div class="stat">
-      <div>
-        <span>Tasks completed</span>
-        <strong>${doneTasks}/${totalTasks}</strong>
-      </div>
-      <span>${percent}%</span>
-    </div>
-
-    <div class="progress" style="margin-top:12px">
-      <div style="width:${percent}%"></div>
-    </div>
-
-    <p class="list-meta" style="margin-top:12px">
-      Small completed actions create a clearer day.
-    </p>
-  `;
-
-  if(!data.recent.length){
-    $("recentList").innerHTML =
-      `<div class="empty">Your recent activity will appear here.</div>`;
-  }else{
-    $("recentList").innerHTML =
-      data.recent.slice(0,10).map(x=>`
-        <div class="list-item">
-          <div class="list-title">${esc(x.title)}</div>
-          <div class="list-meta">
-            ${esc(x.type)} · ${new Date(x.createdAt).toLocaleString()}
-          </div>
-        </div>
-      `).join("");
-  }
-}
-
-function daysUntil(date){
-  const a = new Date(today() + "T00:00:00");
-  const b = new Date(date + "T00:00:00");
-  return Math.ceil((b-a)/(1000*60*60*24));
-}
-
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-function saveTask(){
-
-  const title = $("taskTitle").value.trim();
-
-  if(!title){
-    showToast("Please enter the task.");
-    return;
+  if(
+    /^(todo|task|remind|remember|need to|must|buy|call|finish|submit|send)\b/i.test(value)
+  ){
+    return "task";
   }
 
-  const id = $("taskId").value;
+  return "note";
+}
 
-  if(id){
-    const task = data.tasks.find(t=>t.id===id);
+function saveCapture(text,type="auto"){
 
-    if(task){
-      task.title = title;
-      task.due = $("taskDue").value;
-      task.priority = $("taskPriority").value;
-      task.details = $("taskDetails").value.trim();
-      task.updatedAt = nowISO();
-    }
+  const value=text.trim();
 
-    showToast("Task updated.");
+  if(!value)return;
 
-  }else{
+  const finalType=detectType(value,type);
+
+  const item={
+    id:id(),
+    text:value,
+    type:finalType,
+    createdAt:new Date().toISOString()
+  };
+
+  data.inbox.unshift(item);
+
+  if(finalType==="task"){
 
     data.tasks.unshift({
-      id:uid("task"),
-      title,
-      due:$("taskDue").value,
-      priority:$("taskPriority").value,
-      details:$("taskDetails").value.trim(),
-      done:false,
-      createdAt:nowISO()
+      id:item.id,
+      title:value,
+      priority:"normal",
+      due:"",
+      completed:false,
+      createdAt:item.createdAt
     });
 
-    recordRecent("Task","Created task: " + title);
-    showToast("Task added.");
   }
 
-  saveData();
-  resetTaskForm();
-  closeModal("taskModal");
-  renderAll();
-}
-
-function resetTaskForm(){
-  $("taskId").value = "";
-  $("taskTitle").value = "";
-  $("taskDue").value = "";
-  $("taskPriority").value = "normal";
-  $("taskDetails").value = "";
-  $("taskModalTitle").textContent = "Add Task";
-}
-
-function editTask(id){
-
-  const t = data.tasks.find(x=>x.id===id);
-  if(!t) return;
-
-  $("taskId").value = t.id;
-  $("taskTitle").value = t.title;
-  $("taskDue").value = t.due || "";
-  $("taskPriority").value = t.priority || "normal";
-  $("taskDetails").value = t.details || "";
-  $("taskModalTitle").textContent = "Edit Task";
-
-  openModal("taskModal");
-}
-
-function toggleTask(id){
-
-  const t = data.tasks.find(x=>x.id===id);
-
-  if(!t) return;
-
-  t.done = !t.done;
-  t.completedAt = t.done ? nowISO() : null;
-
-  saveData();
-  renderAll();
-
-  showToast(
-    t.done ? "Task completed." : "Task reopened."
-  );
-}
-
-function deleteTask(id){
-
-  if(!confirm("Delete this task?")) return;
-
-  data.tasks = data.tasks.filter(t=>t.id!==id);
-
-  saveData();
-  renderAll();
-
-  showToast("Task deleted.");
-}
-
-function setTaskFilter(filter){
-  taskFilter = filter;
-
-  ["all","today","open","done"].forEach(x=>{
-    $("taskTab"+x.charAt(0).toUpperCase()+x.slice(1))
-      ?.classList.toggle("active",x===filter);
-  });
-
-  renderTasks();
-}
-
-function renderTasks(){
-
-  let list = [...data.tasks];
-
-  if(taskFilter==="today"){
-    list = list.filter(t=>t.due===today());
-  }
-
-  if(taskFilter==="open"){
-    list = list.filter(t=>!t.done);
-  }
-
-  if(taskFilter==="done"){
-    list = list.filter(t=>t.done);
-  }
-
-  list.sort((a,b)=>{
-    if(a.done !== b.done) return a.done ? 1 : -1;
-    if(!a.due) return 1;
-    if(!b.due) return -1;
-    return a.due.localeCompare(b.due);
-  });
-
-  if(!list.length){
-    $("tasksList").innerHTML =
-      `<div class="empty">No tasks in this view.</div>`;
-    return;
-  }
-
-  $("tasksList").innerHTML = list.map(t=>{
-
-    let badge = "normal";
-
-    if(t.priority==="urgent") badge="red";
-    else if(t.priority==="high") badge="yellow";
-    else if(t.done) badge="green";
-    else badge="blue";
-
-    let dueText = t.due
-      ? formatDate(t.due)
-      : "No due date";
-
-    if(t.due && t.due < today() && !t.done){
-      dueText += " · overdue";
-    }
-
-    return `
-      <div class="list-item">
-        <div class="list-main">
-
-          <div style="flex:1">
-            <div class="list-title"
-              style="${t.done ? "text-decoration:line-through;opacity:.6" : ""}">
-              ${esc(t.title)}
-            </div>
-
-            <div class="list-meta">
-              ${esc(dueText)}
-              ${t.details ? " · " + esc(t.details) : ""}
-            </div>
-
-            <div style="margin-top:8px">
-              <span class="badge ${badge}">
-                ${esc(t.priority)}
-              </span>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="small-btn" onclick="toggleTask('${t.id}')">
-              ${t.done ? "Undo" : "Done"}
-            </button>
-
-            <button class="small-btn" onclick="editTask('${t.id}')">
-              Edit
-            </button>
-
-            <button class="small-btn danger" onclick="deleteTask('${t.id}')">
-              Delete
-            </button>
-          </div>
-
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-
-/* =========================================================
-   MONEY
-========================================================= */
-
-function saveMoney(){
-
-  const amount = Number($("moneyAmount").value);
-
-  if(!amount || amount < 0){
-    showToast("Enter a valid amount.");
-    return;
-  }
-
-  const description =
-    $("moneyDescription").value.trim() || "Money entry";
-
-  data.money.unshift({
-    id:uid("money"),
-    type:$("moneyType").value,
-    amount,
-    category:$("moneyCategory").value,
-    date:$("moneyDate").value || today(),
-    description,
-    createdAt:nowISO()
-  });
-
-  recordRecent(
-    "Money",
-    `Added ${$("moneyType").value}: ${description}`
-  );
-
-  saveData();
-
-  $("moneyAmount").value = "";
-  $("moneyDescription").value = "";
-
-  closeModal("moneyModal");
-  renderAll();
-
-  showToast("Money entry saved.");
-}
-
-function saveBudget(){
-
-  data.budget = Number($("budgetInput").value) || 0;
-
-  saveData();
-  renderMoney();
-
-  showToast("Monthly budget saved.");
-}
-
-function renderMoney(){
-
-  const month = today().slice(0,7);
-
-  const income = data.money
-    .filter(x=>x.type==="income" && String(x.date).startsWith(month))
-    .reduce((s,x)=>s+Number(x.amount),0);
-
-  const expense = data.money
-    .filter(x=>x.type==="expense" && String(x.date).startsWith(month))
-    .reduce((s,x)=>s+Number(x.amount),0);
-
-  const balance = income - expense;
-
-  $("moneyStats").innerHTML = `
-
-    <div class="card stat">
-      <div>
-        <span>Income this month</span>
-        <strong class="money-positive">${money(income)}</strong>
-      </div>
-      <span>↑</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Expenses this month</span>
-        <strong class="money-negative">${money(expense)}</strong>
-      </div>
-      <span>↓</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Balance</span>
-        <strong>${money(balance)}</strong>
-      </div>
-      <span>≡</span>
-    </div>
-
-    <div class="card stat">
-      <div>
-        <span>Budget</span>
-        <strong>${money(data.budget)}</strong>
-      </div>
-      <span>◎</span>
-    </div>
-  `;
-
-  $("budgetInput").value = data.budget || "";
-
-  const budget = Number(data.budget) || 0;
-
-  if(!budget){
-    $("budgetProgress").innerHTML =
-      `<p class="list-meta">Set a monthly budget to see your spending progress.</p>`;
-  }else{
-
-    const pct = Math.min(100,Math.round((expense/budget)*100));
-
-    $("budgetProgress").innerHTML = `
-      <div class="stat">
-        <span>Spent</span>
-        <strong>${pct}%</strong>
-      </div>
-
-      <div class="progress">
-        <div style="width:${pct}%"></div>
-      </div>
-
-      <p class="list-meta">
-        ${money(Math.max(0,budget-expense))} remaining in this budget.
-      </p>
-    `;
-  }
-
-  const list = data.money.slice(0,30);
-
-  if(!list.length){
-    $("moneyList").innerHTML =
-      `<div class="empty">No money entries yet.</div>`;
-  }else{
-    $("moneyList").innerHTML = list.map(x=>`
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <div>
-            <div class="list-title">
-              ${esc(x.description)}
-            </div>
-
-            <div class="list-meta">
-              ${esc(x.category)} · ${formatDate(x.date)}
-            </div>
-          </div>
-
-          <div style="text-align:right">
-            <strong class="${x.type==="income" ? "money-positive":"money-negative"}">
-              ${x.type==="income" ? "+":"-"}${money(x.amount)}
-            </strong>
-
-            <br>
-
-            <button class="small-btn danger" onclick="deleteMoney('${x.id}')">
-              Delete
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-    `).join("");
-  }
-
-  renderSubscriptions();
-}
-
-function deleteMoney(id){
-
-  if(!confirm("Delete this money entry?")) return;
-
-  data.money = data.money.filter(x=>x.id!==id);
-
-  saveData();
-  renderMoney();
-
-  showToast("Entry deleted.");
-}
-
-
-/* =========================================================
-   SUBSCRIPTIONS
-========================================================= */
-
-function saveSubscription(){
-
-  const name = $("subName").value.trim();
-  const amount = Number($("subAmount").value);
-
-  if(!name || !amount){
-    showToast("Enter name and amount.");
-    return;
-  }
-
-  data.subscriptions.unshift({
-    id:uid("sub"),
-    name,
-    amount,
-    frequency:$("subFrequency").value,
-    date:$("subDate").value || "",
-    createdAt:nowISO()
-  });
-
-  saveData();
-
-  $("subName").value = "";
-  $("subAmount").value = "";
-
-  closeModal("subscriptionModal");
-  renderMoney();
-
-  showToast("Recurring cost saved.");
-}
-
-function deleteSubscription(id){
-
-  if(!confirm("Delete this recurring cost?")) return;
-
-  data.subscriptions =
-    data.subscriptions.filter(x=>x.id!==id);
-
-  saveData();
-  renderMoney();
-
-  showToast("Recurring cost deleted.");
-}
-
-function renderSubscriptions(){
-
-  if(!data.subscriptions.length){
-    $("subscriptionList").innerHTML =
-      `<div class="empty">No recurring costs added.</div>`;
-    return;
-  }
-
-  $("subscriptionList").innerHTML =
-    data.subscriptions.map(x=>`
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <div>
-            <div class="list-title">${esc(x.name)}</div>
-            <div class="list-meta">
-              ${esc(x.frequency)}
-              ${x.date ? " · next " + formatDate(x.date) : ""}
-            </div>
-          </div>
-
-          <div>
-            <strong>${money(x.amount)}</strong>
-            <br>
-            <button class="small-btn danger" onclick="deleteSubscription('${x.id}')">
-              Delete
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-    `).join("");
-}
-
-
-/* =========================================================
-   DOCUMENTS
-========================================================= */
-
-function saveDocument(){
-
-  const title = $("documentTitle").value.trim();
-
-  if(!title){
-    showToast("Enter the document name.");
-    return;
-  }
-
-  const id = $("documentId").value;
-
-  if(id){
-
-    const d = data.documents.find(x=>x.id===id);
-
-    if(d){
-      d.title = title;
-      d.category = $("documentCategory").value;
-      d.expiry = $("documentExpiry").value;
-      d.link = $("documentLink").value.trim();
-      d.notes = $("documentNotes").value.trim();
-      d.updatedAt = nowISO();
-    }
-
-    showToast("Document updated.");
-
-  }else{
-
-    data.documents.unshift({
-      id:uid("doc"),
-      title,
-      category:$("documentCategory").value,
-      expiry:$("documentExpiry").value,
-      link:$("documentLink").value.trim(),
-      notes:$("documentNotes").value.trim(),
-      createdAt:nowISO()
-    });
-
-    recordRecent("Document","Added document: " + title);
-    showToast("Document added.");
-  }
-
-  saveData();
-
-  resetDocumentForm();
-  closeModal("documentModal");
-  renderAll();
-}
-
-function resetDocumentForm(){
-
-  $("documentId").value = "";
-  $("documentTitle").value = "";
-  $("documentExpiry").value = "";
-  $("documentLink").value = "";
-  $("documentNotes").value = "";
-  $("documentModalTitle").textContent = "Add Document";
-}
-
-function editDocument(id){
-
-  const d = data.documents.find(x=>x.id===id);
-
-  if(!d) return;
-
-  $("documentId").value = d.id;
-  $("documentTitle").value = d.title;
-  $("documentCategory").value = d.category || "Other";
-  $("documentExpiry").value = d.expiry || "";
-  $("documentLink").value = d.link || "";
-  $("documentNotes").value = d.notes || "";
-
-  $("documentModalTitle").textContent = "Edit Document";
-
-  openModal("documentModal");
-}
-
-function deleteDocument(id){
-
-  if(!confirm("Delete this document record?")) return;
-
-  data.documents =
-    data.documents.filter(x=>x.id!==id);
-
-  saveData();
-  renderDocuments();
-
-  showToast("Document deleted.");
-}
-
-function renderDocuments(query=""){
-
-  const q = query.trim().toLowerCase();
-
-  let list = data.documents.filter(d=>{
-    if(!q) return true;
-
-    return (
-      d.title.toLowerCase().includes(q) ||
-      String(d.category).toLowerCase().includes(q) ||
-      String(d.notes).toLowerCase().includes(q)
-    );
-  });
-
-  if(!list.length){
-    $("documentsList").innerHTML =
-      `<div class="empty">
-        No document records found.<br><br>
-        Add the name and expiry information of an important document.
-      </div>`;
-    return;
-  }
-
-  $("documentsList").innerHTML = list.map(d=>{
-
-    let badge = "green";
-
-    if(d.expiry){
-      const days = daysUntil(d.expiry);
-
-      if(days < 0) badge = "red";
-      else if(days <= 30) badge = "yellow";
-    }
-
-    return `
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <div style="flex:1">
-
-            <div class="list-title">
-              ${esc(d.title)}
-            </div>
-
-            <div class="list-meta">
-              ${esc(d.category)}
-              ${d.expiry ? " · Expires " + formatDate(d.expiry) : ""}
-            </div>
-
-            ${d.notes ? `
-              <div class="list-meta" style="margin-top:6px">
-                ${esc(d.notes)}
-              </div>
-            ` : ""}
-
-            ${d.expiry ? `
-              <div style="margin-top:8px">
-                <span class="badge ${badge}">
-                  ${daysUntil(d.expiry) < 0
-                    ? "Expired"
-                    : daysUntil(d.expiry) + " days remaining"}
-                </span>
-              </div>
-            ` : ""}
-
-          </div>
-
-          <div class="actions">
-
-            ${d.link ? `
-              <button class="small-btn" onclick="safeOpen('${esc(d.link)}')">
-                Open
-              </button>
-            ` : ""}
-
-            <button class="small-btn" onclick="editDocument('${d.id}')">
-              Edit
-            </button>
-
-            <button class="small-btn danger" onclick="deleteDocument('${d.id}')">
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
-}
-
-
-/* =========================================================
-   NOTES
-========================================================= */
-
-function saveNote(){
-
-  const title = $("noteTitle").value.trim();
-  const body = $("noteBody").value.trim();
-
-  if(!title && !body){
-    showToast("Write something first.");
-    return;
-  }
-
-  const id = $("noteId").value;
-
-  if(id){
-
-    const note = data.notes.find(x=>x.id===id);
-
-    if(note){
-      note.title = title || "Untitled note";
-      note.body = body;
-      note.category = $("noteCategory").value;
-      note.updatedAt = nowISO();
-    }
-
-    showToast("Note updated.");
-
-  }else{
+  if(finalType==="note"){
 
     data.notes.unshift({
-      id:uid("note"),
-      title:title || "Untitled note",
-      body,
-      category:$("noteCategory").value,
-      createdAt:nowISO()
+      id:item.id,
+      title:value.slice(0,60),
+      body:value,
+      createdAt:item.createdAt
     });
 
-    recordRecent("Note","Created note: " + (title || "Untitled note"));
-    showToast("Note saved.");
+  }
+
+  if(finalType==="link"){
+
+    data.bookmarks.unshift({
+      id:item.id,
+      title:value,
+      url:value,
+      createdAt:item.createdAt
+    });
+
   }
 
   saveData();
 
-  resetNoteForm();
-  closeModal("noteModal");
-  renderNotes();
-  renderHome();
+  toast("Saved as "+finalType+".");
 }
 
-function resetNoteForm(){
+function quickCapture(event){
 
-  $("noteId").value = "";
-  $("noteTitle").value = "";
-  $("noteBody").value = "";
-  $("noteCategory").value = "General";
-  $("noteModalTitle").textContent = "Add Note";
+  event.preventDefault();
+
+  const input=document.getElementById("quickInput");
+  const type=document.getElementById("quickType");
+
+  saveCapture(input.value,type.value);
+
+  input.value="";
 }
 
-function editNote(id){
+function saveInbox(event){
 
-  const n = data.notes.find(x=>x.id===id);
+  event.preventDefault();
 
-  if(!n) return;
+  const input=document.getElementById("inboxText");
+  const type=document.getElementById("inboxType");
 
-  $("noteId").value = n.id;
-  $("noteTitle").value = n.title;
-  $("noteBody").value = n.body;
-  $("noteCategory").value = n.category || "General";
+  const value=input.value.trim();
 
-  $("noteModalTitle").textContent = "Edit Note";
-
-  openModal("noteModal");
-}
-
-function deleteNote(id){
-
-  if(!confirm("Delete this note?")) return;
-
-  data.notes = data.notes.filter(x=>x.id!==id);
-
-  saveData();
-  renderNotes();
-
-  showToast("Note deleted.");
-}
-
-function renderNotes(query=""){
-
-  const q = query.trim().toLowerCase();
-
-  const list = data.notes.filter(n=>{
-    if(!q) return true;
-
-    return (
-      n.title.toLowerCase().includes(q) ||
-      n.body.toLowerCase().includes(q) ||
-      String(n.category).toLowerCase().includes(q)
-    );
-  });
-
-  if(!list.length){
-    $("notesList").innerHTML =
-      `<div class="empty">No notes found.</div>`;
+  if(!value){
+    toast("Write something first.");
     return;
   }
 
-  $("notesList").innerHTML = list.map(n=>`
+  saveCapture(value,type.value);
 
-    <div class="list-item">
+  input.value="";
+}
 
-      <div class="list-main">
+/* ============================================================
+   TASKS
+============================================================ */
 
-        <div style="flex:1">
-          <div class="list-title">${esc(n.title)}</div>
+function createTask(event){
 
-          <div class="list-meta">
-            ${esc(n.category)} · ${new Date(n.createdAt).toLocaleDateString()}
+  event.preventDefault();
+
+  const title=document.getElementById("taskTitle").value.trim();
+
+  if(!title)return;
+
+  data.tasks.unshift({
+    id:id(),
+    title:title,
+    priority:document.getElementById("taskPriority").value,
+    due:document.getElementById("taskDate").value,
+    completed:false,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  event.target.reset();
+
+  toast("Task created.");
+}
+
+function toggleTask(taskId){
+
+  const task=data.tasks.find(x=>x.id===taskId);
+
+  if(!task)return;
+
+  task.completed=!task.completed;
+
+  saveData();
+
+  toast(task.completed ? "Task completed." : "Task reopened.");
+}
+
+function deleteTask(taskId){
+
+  data.tasks=data.tasks.filter(x=>x.id!==taskId);
+
+  saveData();
+
+  toast("Task deleted.");
+}
+
+/* ============================================================
+   NOTES
+============================================================ */
+
+function createNote(event){
+
+  event.preventDefault();
+
+  const title=document.getElementById("noteTitle").value.trim();
+  const body=document.getElementById("noteBody").value.trim();
+
+  if(!title || !body)return;
+
+  data.notes.unshift({
+    id:id(),
+    title:title,
+    body:body,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  event.target.reset();
+
+  toast("Note saved.");
+}
+
+function deleteNote(noteId){
+
+  data.notes=data.notes.filter(x=>x.id!==noteId);
+
+  saveData();
+
+  toast("Note deleted.");
+}
+
+/* ============================================================
+   LINKS
+============================================================ */
+
+function addBookmark(){
+
+  const url=prompt("Enter the full website URL:");
+
+  if(!url)return;
+
+  let clean=url.trim();
+
+  if(!/^https?:\/\//i.test(clean)){
+    clean="https://"+clean;
+  }
+
+  let parsed;
+
+  try{
+    parsed=new URL(clean);
+  }catch{
+    toast("That URL is not valid.");
+    return;
+  }
+
+  data.bookmarks.unshift({
+    id:id(),
+    title:parsed.hostname,
+    url:parsed.href,
+    createdAt:new Date().toISOString()
+  });
+
+  saveData();
+
+  toast("Link saved.");
+}
+
+function openLink(url){
+
+  try{
+
+    const u=new URL(url);
+
+    if(u.protocol!=="http:" && u.protocol!=="https:"){
+      toast("Only web links can be opened.");
+      return;
+    }
+
+    window.open(u.href,"_blank","noopener,noreferrer");
+
+  }catch{
+
+    toast("Invalid link.");
+  }
+}
+
+function deleteBookmark(bookmarkId){
+
+  data.bookmarks=
+    data.bookmarks.filter(x=>x.id!==bookmarkId);
+
+  saveData();
+
+  toast("Link deleted.");
+}
+
+/* ============================================================
+   RENDER
+============================================================ */
+
+function renderAll(){
+
+  renderStats();
+  renderAttention();
+  renderToday();
+  renderRecent();
+  renderInbox();
+  renderTasks();
+  renderNotes();
+  renderBookmarks();
+
+  document.getElementById("todayText").textContent=
+    new Date().toLocaleDateString(undefined,{
+      weekday:"long",
+      year:"numeric",
+      month:"long",
+      day:"numeric"
+    });
+}
+
+function renderStats(){
+
+  const completed=
+    data.tasks.filter(x=>x.completed).length;
+
+  const pending=
+    data.tasks.filter(x=>!x.completed).length;
+
+  document.getElementById("stats").innerHTML=`
+
+    <div class="stat">
+      <small>Open tasks</small>
+      <strong>${pending}</strong>
+    </div>
+
+    <div class="stat">
+      <small>Completed</small>
+      <strong>${completed}</strong>
+    </div>
+
+    <div class="stat">
+      <small>Notes</small>
+      <strong>${data.notes.length}</strong>
+    </div>
+
+    <div class="stat">
+      <small>Saved links</small>
+      <strong>${data.bookmarks.length}</strong>
+    </div>
+
+  `;
+}
+
+function renderAttention(){
+
+  const box=document.getElementById("attention");
+
+  const overdue=data.tasks.filter(x=>
+    !x.completed &&
+    x.due &&
+    x.due<today()
+  );
+
+  const urgent=data.tasks.filter(x=>
+    !x.completed &&
+    (x.priority==="urgent" || x.priority==="high")
+  );
+
+  const items=[...overdue,...urgent]
+    .filter((item,index,self)=>
+      self.findIndex(x=>x.id===item.id)===index
+    )
+    .slice(0,5);
+
+  if(!items.length){
+
+    box.innerHTML=`
+      <div class="empty">
+        🎉 Nothing urgent right now.
+        <br>
+        Your workspace is under control.
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML=items.map(task=>`
+
+    <div class="attention">
+
+      <div style="font-size:22px;">
+        ${task.priority==="urgent"?"🚨":"⚠️"}
+      </div>
+
+      <div style="flex:1;">
+        <strong>${escapeHTML(task.title)}</strong>
+
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">
+          ${task.due ? "Due "+dateText(task.due) : "No due date"}
+        </div>
+      </div>
+
+      <button
+        class="small-btn"
+        onclick="toggleTask('${task.id}')">
+        Done
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+function renderToday(){
+
+  const box=document.getElementById("todayList");
+
+  const tasks=data.tasks.filter(x=>
+    !x.completed &&
+    x.due===today()
+  );
+
+  if(!tasks.length){
+
+    box.innerHTML=
+      '<div class="empty">No tasks due today.</div>';
+
+    return;
+  }
+
+  box.innerHTML=
+    '<div class="list">'+
+    tasks.map(task=>`
+
+      <div class="item">
+
+        <div class="item-main">
+          <div class="item-title">
+            ${escapeHTML(task.title)}
           </div>
 
-          <p style="white-space:pre-wrap;color:var(--muted);margin-bottom:0">
-            ${esc(n.body)}
-          </p>
+          <div class="item-meta">
+            ${escapeHTML(task.priority)}
+          </div>
         </div>
 
-        <div class="actions">
-          <button class="small-btn" onclick="editNote('${n.id}')">Edit</button>
-          <button class="small-btn danger" onclick="deleteNote('${n.id}')">Delete</button>
+        <button
+          class="small-btn"
+          onclick="toggleTask('${task.id}')">
+          ✓
+        </button>
+
+      </div>
+
+    `).join("")+
+    '</div>';
+}
+
+function renderRecent(){
+
+  const box=document.getElementById("recentList");
+
+  const all=[
+    ...data.tasks.map(x=>({...x,kind:"Task",title:x.title})),
+    ...data.notes.map(x=>({...x,kind:"Note",title:x.title})),
+    ...data.bookmarks.map(x=>({...x,kind:"Link",title:x.title}))
+  ]
+  .sort((a,b)=>
+    new Date(b.createdAt)-new Date(a.createdAt)
+  )
+  .slice(0,5);
+
+  if(!all.length){
+
+    box.innerHTML=
+      '<div class="empty">Nothing saved yet.</div>';
+
+    return;
+  }
+
+  box.innerHTML=
+    '<div class="list">'+
+    all.map(x=>`
+
+      <div class="item">
+
+        <div class="item-main">
+
+          <div class="item-title">
+            ${escapeHTML(x.title)}
+          </div>
+
+          <div class="item-meta">
+            ${x.kind} · ${dateText(x.createdAt)}
+          </div>
+
         </div>
+
+      </div>
+
+    `).join("")+
+    '</div>';
+}
+
+function renderInbox(){
+
+  const box=document.getElementById("inboxList");
+
+  if(!data.inbox.length){
+
+    box.innerHTML=
+      '<div class="empty">Your inbox is empty.</div>';
+
+    return;
+  }
+
+  box.innerHTML=data.inbox.map(item=>`
+
+    <div class="item">
+
+      <div class="item-main">
+
+        <div class="item-title">
+          ${escapeHTML(item.text)}
+        </div>
+
+        <div class="item-meta">
+          ${escapeHTML(item.type)} · ${dateText(item.createdAt)}
+        </div>
+
+      </div>
+
+      <div class="item-actions">
+
+        <button
+          class="small-btn"
+          onclick="removeInbox('${item.id}')">
+          Remove
+        </button>
 
       </div>
 
@@ -3203,1034 +2612,709 @@ function renderNotes(query=""){
   `).join("");
 }
 
+function removeInbox(itemId){
 
-/* =========================================================
-   CHECKLISTS
-========================================================= */
+  data.inbox=data.inbox.filter(x=>x.id!==itemId);
 
-function saveChecklist(){
+  saveData();
 
-  const title = $("checklistTitle").value.trim();
-  const raw = $("checklistItems").value.trim();
+  toast("Inbox item removed.");
+}
 
-  if(!title || !raw){
-    showToast("Enter a title and at least one item.");
+function renderTasks(){
+
+  const box=document.getElementById("taskList");
+
+  if(!data.tasks.length){
+
+    box.innerHTML=
+      '<div class="empty">No tasks yet. Create your first task.</div>';
+
     return;
   }
 
-  const items = raw
-    .split("\n")
-    .map(x=>x.trim())
-    .filter(Boolean)
-    .map(text=>({
-      id:uid("item"),
-      text,
-      done:false
-    }));
+  box.innerHTML=data.tasks.map(task=>`
 
-  data.checklists.unshift({
-    id:uid("checklist"),
-    title,
-    items,
-    createdAt:nowISO()
-  });
+    <div class="item">
 
-  saveData();
+      <div class="item-main">
 
-  $("checklistTitle").value = "";
-  $("checklistItems").value = "";
-
-  closeModal("checklistModal");
-  renderChecklists();
-
-  showToast("Checklist created.");
-}
-
-function toggleChecklistItem(listId,itemId){
-
-  const list = data.checklists.find(x=>x.id===listId);
-
-  if(!list) return;
-
-  const item = list.items.find(x=>x.id===itemId);
-
-  if(!item) return;
-
-  item.done = !item.done;
-
-  saveData();
-  renderChecklists();
-}
-
-function deleteChecklist(id){
-
-  if(!confirm("Delete this checklist?")) return;
-
-  data.checklists =
-    data.checklists.filter(x=>x.id!==id);
-
-  saveData();
-  renderChecklists();
-
-  showToast("Checklist deleted.");
-}
-
-function renderChecklists(){
-
-  if(!data.checklists.length){
-
-    $("checklistsList").innerHTML = `
-      <div class="card">
-        <div class="empty">
-          No checklists yet.<br>
-          Create one for travel, study, moving, projects or anything else.
+        <div
+          class="item-title"
+          style="${task.completed?"text-decoration:line-through;opacity:.55":""}">
+          ${escapeHTML(task.title)}
         </div>
+
+        <div class="item-meta">
+
+          ${escapeHTML(task.priority)}
+
+          ${task.due ? " · Due "+dateText(task.due) : ""}
+
+          · ${task.completed?"Completed":"Open"}
+
+        </div>
+
+      </div>
+
+      <div class="item-actions">
+
+        <button
+          class="small-btn"
+          onclick="toggleTask('${task.id}')">
+          ${task.completed?"Undo":"Done"}
+        </button>
+
+        <button
+          class="small-btn"
+          onclick="deleteTask('${task.id}')">
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+function renderNotes(){
+
+  const box=document.getElementById("noteList");
+
+  if(!data.notes.length){
+
+    box.innerHTML=
+      '<div class="empty">No notes yet.</div>';
+
+    return;
+  }
+
+  box.innerHTML=data.notes.map(note=>`
+
+    <div class="item">
+
+      <div class="item-main">
+
+        <div class="item-title">
+          ${escapeHTML(note.title)}
+        </div>
+
+        <div
+          class="item-meta"
+          style="white-space:pre-wrap;">
+          ${escapeHTML(note.body)}
+        </div>
+
+      </div>
+
+      <button
+        class="small-btn"
+        onclick="deleteNote('${note.id}')">
+        Delete
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+function renderBookmarks(){
+
+  const box=document.getElementById("bookmarkList");
+
+  if(!data.bookmarks.length){
+
+    box.innerHTML=`
+      <div class="empty">
+
+        No saved links yet.
+
+        <br><br>
+
+        <button
+          class="btn btn-primary"
+          onclick="addBookmark()">
+          Add Link
+        </button>
+
       </div>
     `;
 
     return;
   }
 
-  $("checklistsList").innerHTML =
-    data.checklists.map(list=>{
+  box.innerHTML=
+    data.bookmarks.map(bookmark=>`
 
-      const done = list.items.filter(x=>x.done).length;
-      const total = list.items.length;
-      const pct = total ? Math.round(done/total*100) : 0;
+      <div class="item">
 
-      return `
-        <div class="card">
+        <div class="item-main">
 
-          <div class="stat">
-            <div>
-              <h3 style="margin-bottom:2px">${esc(list.title)}</h3>
-              <span>${done}/${total} completed</span>
-            </div>
-
-            <button class="small-btn danger"
-              onclick="deleteChecklist('${list.id}')">
-              Delete
-            </button>
+          <div class="item-title">
+            ${escapeHTML(bookmark.title)}
           </div>
 
-          <div class="progress" style="margin:13px 0">
-            <div style="width:${pct}%"></div>
+          <div class="item-meta">
+            ${escapeHTML(bookmark.url)}
           </div>
-
-          ${list.items.map(item=>`
-            <label class="check">
-              <input
-                type="checkbox"
-                ${item.done ? "checked":""}
-                onchange="toggleChecklistItem('${list.id}','${item.id}')">
-              <span style="${item.done ? "text-decoration:line-through;opacity:.6":""}">
-                ${esc(item.text)}
-              </span>
-            </label>
-          `).join("")}
 
         </div>
-      `;
-    }).join("");
-}
 
+        <div class="item-actions">
 
-/* =========================================================
-   GLOBAL SEARCH
-========================================================= */
-
-function globalSearch(value){
-
-  const q = value.trim().toLowerCase();
-
-  if(!q){
-    renderHome();
-    return;
-  }
-
-  const results = [];
-
-  data.tasks.forEach(x=>{
-    if(
-      x.title.toLowerCase().includes(q) ||
-      String(x.details).toLowerCase().includes(q)
-    ){
-      results.push({
-        type:"Task",
-        title:x.title,
-        meta:x.done ? "Completed task" : "Open task",
-        action:`go('tasks')`
-      });
-    }
-  });
-
-  data.notes.forEach(x=>{
-    if(
-      x.title.toLowerCase().includes(q) ||
-      x.body.toLowerCase().includes(q)
-    ){
-      results.push({
-        type:"Note",
-        title:x.title,
-        meta:x.category,
-        action:`go('notes')`
-      });
-    }
-  });
-
-  data.documents.forEach(x=>{
-    if(
-      x.title.toLowerCase().includes(q) ||
-      String(x.notes).toLowerCase().includes(q)
-    ){
-      results.push({
-        type:"Document",
-        title:x.title,
-        meta:x.category,
-        action:`go('documents')`
-      });
-    }
-  });
-
-  data.checklists.forEach(x=>{
-    if(x.title.toLowerCase().includes(q)){
-      results.push({
-        type:"Checklist",
-        title:x.title,
-        meta:"Checklist",
-        action:`go('checklists')`
-      });
-    }
-  });
-
-  if(!results.length){
-
-    $("attentionList").innerHTML =
-      `<div class="empty">No results for “${esc(value)}”.</div>`;
-
-    return;
-  }
-
-  $("attentionList").innerHTML =
-    results.slice(0,20).map(r=>`
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <div>
-            <div class="list-title">${esc(r.title)}</div>
-            <div class="list-meta">${esc(r.type)} · ${esc(r.meta)}</div>
-          </div>
-
-          <button class="small-btn" onclick="${r.action}">
+          <button
+            class="small-btn"
+            onclick="openLink('${escapeHTML(bookmark.url)}')">
             Open
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="deleteBookmark('${bookmark.id}')">
+            Delete
           </button>
 
         </div>
 
       </div>
+
     `).join("");
-
-  $("todayProgress").innerHTML = `
-    <div class="empty">
-      ${results.length} matching result${results.length===1?"":"s"}.
-    </div>
-  `;
-
-  $("recentList").innerHTML =
-    `<div class="empty">Search results are shown above.</div>`;
 }
 
+/* ============================================================
+   GLOBAL SEARCH
+============================================================ */
 
-/* =========================================================
-   TOOLS
-========================================================= */
+function globalSearch(query){
 
-function tool(name,button){
+  const q=query.trim().toLowerCase();
 
-  document.querySelectorAll(".tool-tab").forEach(x=>{
-    x.classList.remove("active");
-  });
+  if(!q)return;
 
-  if(button) button.classList.add("active");
+  const results=[
+    ...data.tasks.map(x=>({
+      type:"Task",
+      title:x.title,
+      body:"",
+      id:x.id
+    })),
 
-  const area = $("toolArea");
+    ...data.notes.map(x=>({
+      type:"Note",
+      title:x.title,
+      body:x.body,
+      id:x.id
+    })),
 
-  if(name==="calculator"){
+    ...data.bookmarks.map(x=>({
+      type:"Link",
+      title:x.title,
+      body:x.url,
+      id:x.id
+    }))
+  ].filter(x=>
+    (x.title+" "+x.body).toLowerCase().includes(q)
+  );
 
-    area.innerHTML = `
-      <div class="card">
+  /*
+    Search is displayed using a simple alert-like result
+    so it remains useful without another backend.
+  */
 
-        <h2>Calculator</h2>
+  if(!results.length){
 
-        <p class="list-meta">
-          Supports numbers, +, -, *, /, %, parentheses and decimals.
-        </p>
+    toast("No matching item found.");
 
-        <input
-          class="input"
-          id="calcInput"
-          placeholder="Example: (150 * 20) / 100">
-
-        <br><br>
-
-        <button class="btn" onclick="calculate()">Calculate</button>
-
-        <div class="result" id="calcResult">
-          Result will appear here.
-        </div>
-
-      </div>
-    `;
-
-  }
-
-  if(name==="percentage"){
-
-    area.innerHTML = `
-      <div class="card">
-
-        <h2>Percentage Calculator</h2>
-
-        <div class="form-grid">
-
-          <div class="field">
-            <label>Value</label>
-            <input class="input" id="pctValue" type="number">
-          </div>
-
-          <div class="field">
-            <label>Percentage</label>
-            <input class="input" id="pctPercent" type="number">
-          </div>
-
-        </div>
-
-        <br>
-
-        <button class="btn" onclick="percentageCalc()">
-          Calculate
-        </button>
-
-        <div class="result" id="pctResult">
-          Result will appear here.
-        </div>
-
-      </div>
-    `;
-  }
-
-  if(name==="converter"){
-
-    area.innerHTML = `
-      <div class="card">
-
-        <h2>Unit Converter</h2>
-
-        <div class="form-grid">
-
-          <div class="field">
-            <label>Value</label>
-            <input class="input" id="convValue" type="number">
-          </div>
-
-          <div class="field">
-            <label>Conversion</label>
-            <select class="select" id="convType">
-              <option value="kmmi">Kilometres → Miles</option>
-              <option value="mikm">Miles → Kilometres</option>
-              <option value="kg lb">Kilograms → Pounds</option>
-              <option value="lbkg">Pounds → Kilograms</option>
-              <option value="cmft">Centimetres → Feet</option>
-              <option value="ftcm">Feet → Centimetres</option>
-              <option value="cfin">Celsius → Fahrenheit</option>
-              <option value="finc">Fahrenheit → Celsius</option>
-              <option value="mbgb">MB → GB</option>
-              <option value="gbmb">GB → MB</option>
-            </select>
-          </div>
-
-        </div>
-
-        <br>
-
-        <button class="btn" onclick="convertUnit()">Convert</button>
-
-        <div class="result" id="convResult">
-          Result will appear here.
-        </div>
-
-      </div>
-    `;
-  }
-
-  if(name==="text"){
-
-    area.innerHTML = `
-      <div class="card">
-
-        <h2>Text Tools</h2>
-
-        <textarea
-          class="textarea"
-          id="textToolInput"
-          placeholder="Paste or write text here..."
-          oninput="updateTextStats()"></textarea>
-
-        <div id="textStats" class="result">
-          0 words · 0 characters
-        </div>
-
-        <br>
-
-        <div class="actions">
-          <button class="btn" onclick="textAction('upper')">UPPERCASE</button>
-          <button class="btn secondary" onclick="textAction('lower')">lowercase</button>
-          <button class="btn secondary" onclick="textAction('clean')">Clean spaces</button>
-          <button class="btn secondary" onclick="textAction('copy')">Copy</button>
-        </div>
-
-      </div>
-    `;
-  }
-
-  if(name==="timer"){
-
-    area.innerHTML = `
-      <div class="card timer">
-
-        <h2>Focus Timer</h2>
-
-        <div class="timer-time" id="toolTimerDisplay">
-          ${formatTimer()}
-        </div>
-
-        <p class="list-meta">
-          A simple 25-minute focus session.
-        </p>
-
-        <button class="btn" onclick="toggleToolTimer()">
-          Start / Pause
-        </button>
-
-        <button class="btn secondary" onclick="resetTimer()">
-          Reset
-        </button>
-
-      </div>
-    `;
-  }
-
-  if(name==="generator"){
-
-    area.innerHTML = `
-      <div class="card">
-
-        <h2>Passphrase Generator</h2>
-
-        <p class="list-meta">
-          Generate a random memorable phrase for a new password idea.
-          Never reuse an important password.
-        </p>
-
-        <button class="btn" onclick="generatePassphrase()">
-          Generate
-        </button>
-
-        <div class="result" id="passphraseResult">
-          Click Generate.
-        </div>
-
-      </div>
-    `;
-  }
-}
-
-function calculate(){
-
-  const raw = $("calcInput").value.trim();
-
-  if(!raw){
-    $("calcResult").textContent = "Enter a calculation.";
     return;
   }
 
+  toast(results.length+" matching item(s) found.");
+
+  if(results[0].type==="Task")go("work");
+
+  if(results[0].type==="Note")go("work");
+
+  if(results[0].type==="Link")go("work");
+}
+
+/* ============================================================
+   CALCULATOR
+============================================================ */
+
+function calculate(){
+
+  const input=document.getElementById("calcInput").value.trim();
+
+  if(!input)return;
+
   /*
-    Restrict the expression before evaluation.
-    This is deliberately limited to mathematical characters.
+    Only basic mathematical characters are allowed.
   */
 
-  if(!/^[0-9+\-*/%.()\s]+$/.test(raw)){
-    $("calcResult").textContent =
-      "Only basic mathematical characters are allowed.";
+  if(!/^[0-9+\-*/().%\s]+$/.test(input)){
+
+    document.getElementById("calcResult").textContent=
+      "Only basic mathematical expressions are allowed.";
+
     return;
   }
 
   try{
-    const result = Function(
-      '"use strict"; return (' + raw + ')'
+
+    const result=Function(
+      '"use strict";return ('+input+')'
     )();
 
-    if(!Number.isFinite(result)){
-      throw new Error();
-    }
-
-    $("calcResult").textContent =
-      Number(result).toLocaleString();
+    document.getElementById("calcResult").textContent=
+      "Result: "+result;
 
   }catch{
-    $("calcResult").textContent =
-      "Please check the calculation.";
+
+    document.getElementById("calcResult").textContent=
+      "Could not calculate.";
   }
 }
 
-function percentageCalc(){
+/* ============================================================
+   PERCENTAGE
+============================================================ */
 
-  const value = Number($("pctValue").value);
-  const percent = Number($("pctPercent").value);
+function percentage(){
 
-  if(!Number.isFinite(value) || !Number.isFinite(percent)){
-    $("pctResult").textContent = "Enter both numbers.";
+  const value=Number(
+    document.getElementById("percentValue").value
+  );
+
+  const rate=Number(
+    document.getElementById("percentRate").value
+  );
+
+  if(!Number.isFinite(value)||!Number.isFinite(rate)){
+
+    document.getElementById("percentResult").textContent=
+      "Enter valid numbers.";
+
     return;
   }
 
-  $("pctResult").textContent =
-    `${percent}% of ${value} = ${(value*percent/100).toLocaleString()}`;
+  document.getElementById("percentResult").textContent=
+    rate+"% of "+value+" = "+(value*rate/100);
 }
+
+/* ============================================================
+   UNIT CONVERTER
+============================================================ */
 
 function convertUnit(){
 
-  const value = Number($("convValue").value);
-  const type = $("convType").value;
+  const value=Number(
+    document.getElementById("convertValue").value
+  );
+
+  const type=document.getElementById("convertType").value;
 
   if(!Number.isFinite(value)){
-    $("convResult").textContent = "Enter a number.";
+
+    document.getElementById("convertResult").textContent=
+      "Enter a valid number.";
+
     return;
   }
 
   let result;
-  let unit;
 
   switch(type){
 
     case "kmmi":
       result=value*0.621371;
-      unit="mi";
       break;
 
     case "mikm":
       result=value*1.609344;
-      unit="km";
       break;
 
     case "kg lb":
       result=value*2.2046226218;
-      unit="lb";
       break;
 
-    case "lbkg":
-      result=value/2.2046226218;
-      unit="kg";
+    case "lb kg":
+      result=value*0.45359237;
       break;
 
     case "cmft":
-      result=value/30.48;
-      unit="ft";
+      result=value*0.032808399;
       break;
 
     case "ftcm":
       result=value*30.48;
-      unit="cm";
-      break;
-
-    case "cfin":
-      result=(value*9/5)+32;
-      unit="°F";
-      break;
-
-    case "finc":
-      result=(value-32)*5/9;
-      unit="°C";
-      break;
-
-    case "mbgb":
-      result=value/1024;
-      unit="GB";
-      break;
-
-    case "gbmb":
-      result=value*1024;
-      unit="MB";
       break;
 
     default:
       result=value;
-      unit="";
   }
 
-  $("convResult").textContent =
-    `${value} → ${result.toLocaleString(undefined,{
-      maximumFractionDigits:6
-    })} ${unit}`;
+  document.getElementById("convertResult").textContent=
+    "Result: "+result.toFixed(4);
 }
 
-function updateTextStats(){
+/* ============================================================
+   WORD COUNTER
+============================================================ */
 
-  const text = $("textToolInput").value;
+function countWords(){
 
-  const words =
-    text.trim()
-      ? text.trim().split(/\s+/).length
-      : 0;
+  const text=document.getElementById("counterText").value;
 
-  $("textStats").textContent =
-    `${words} words · ${text.length} characters`;
+  const words=text.trim()
+    ? text.trim().split(/\s+/).length
+    : 0;
+
+  const chars=text.length;
+
+  document.getElementById("counterResult").textContent=
+    words+" words · "+chars+" characters";
 }
 
-async function textAction(action){
+/* ============================================================
+   TEXT CLEANER
+============================================================ */
 
-  const input = $("textToolInput");
+function cleanText(){
 
-  if(!input) return;
+  const input=document.getElementById("cleanInput").value;
 
-  if(action==="upper"){
-    input.value = input.value.toUpperCase();
-  }
+  const output=input
+    .split("\n")
+    .map(x=>x.trim().replace(/\s+/g," "))
+    .filter(Boolean)
+    .join("\n");
 
-  if(action==="lower"){
-    input.value = input.value.toLowerCase();
-  }
-
-  if(action==="clean"){
-    input.value =
-      input.value
-        .replace(/[ \t]+/g," ")
-        .replace(/\n{3,}/g,"\n\n")
-        .trim();
-  }
-
-  if(action==="copy"){
-
-    try{
-      await navigator.clipboard.writeText(input.value);
-      showToast("Text copied.");
-    }catch{
-      showToast("Copy was not available in this browser.");
-    }
-  }
-
-  updateTextStats();
+  document.getElementById("cleanResult").value=output;
 }
 
+/* ============================================================
+   JSON FORMATTER
+============================================================ */
 
-/* =========================================================
-   TIMER
-========================================================= */
+function formatJSON(){
 
-function formatTimer(){
+  const input=document.getElementById("jsonInput").value;
 
-  const min = String(
-    Math.floor(timerSeconds/60)
-  ).padStart(2,"0");
+  try{
 
-  const sec = String(
-    timerSeconds%60
-  ).padStart(2,"0");
+    const parsed=JSON.parse(input);
 
-  return `${min}:${sec}`;
-}
+    document.getElementById("jsonResult").value=
+      JSON.stringify(parsed,null,2);
 
-function renderTimerDisplays(){
+  }catch{
 
-  if($("timerDisplay")){
-    $("timerDisplay").textContent = formatTimer();
-  }
-
-  if($("toolTimerDisplay")){
-    $("toolTimerDisplay").textContent = formatTimer();
+    document.getElementById("jsonResult").value=
+      "Invalid JSON.";
   }
 }
 
-function toggleTimer(){
+/* ============================================================
+   PASSWORD GENERATOR
+============================================================ */
 
-  if(timerInterval){
-    clearInterval(timerInterval);
-    timerInterval = null;
-    showToast("Timer paused.");
+function generatePassword(){
+
+  const chars=
+    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
+
+  let output="";
+
+  const array=new Uint32Array(18);
+
+  crypto.getRandomValues(array);
+
+  for(let i=0;i<18;i++){
+
+    output+=chars[array[i]%chars.length];
+
+  }
+
+  document.getElementById("passwordResult").textContent=
+    output;
+}
+
+/* ============================================================
+   CHECKLIST
+============================================================ */
+
+function makeChecklist(){
+
+  const input=document.getElementById("checkInput").value;
+
+  const lines=input
+    .split("\n")
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+  const box=document.getElementById("checkResult");
+
+  if(!lines.length){
+
+    box.innerHTML="<p>No items.</p>";
+
     return;
   }
 
-  timerInterval = setInterval(()=>{
+  box.innerHTML=lines.map((line,i)=>`
+
+    <label style="display:block;margin:9px 0;">
+      <input type="checkbox">
+      ${escapeHTML(line)}
+    </label>
+
+  `).join("");
+}
+
+/* ============================================================
+   TEMPLATES
+============================================================ */
+
+function useTemplate(type){
+
+  const templates={
+
+    email:
+`Subject: [Your subject]
+
+Hello [Name],
+
+I hope you are doing well.
+
+I am writing regarding [topic].
+
+[Main message]
+
+Please let me know if you need any additional information.
+
+Best regards,
+[Your name]`,
+
+    study:
+`STUDY PLAN
+
+Goal:
+[What I want to learn]
+
+Today:
+1. Review previous lesson
+2. Learn one new concept
+3. Practice
+4. Test myself
+5. Write down difficult points
+
+Tomorrow:
+[Next step]
+
+Review date:
+[Date]`,
+
+    meeting:
+`MEETING NOTES
+
+Date:
+Participants:
+
+Main purpose:
+
+Key discussion:
+-
+
+Decisions:
+-
+
+Tasks:
+-
+
+Next follow-up:
+`,
+
+    invoice:
+`INVOICE CHECKLIST
+
+[ ] Customer name
+[ ] Customer contact
+[ ] Invoice number
+[ ] Date
+[ ] Item/service description
+[ ] Quantity
+[ ] Price
+[ ] Tax/discount if applicable
+[ ] Total
+[ ] Payment instructions
+[ ] Due date
+`,
+
+    cv:
+`CV OUTLINE
+
+FULL NAME
+Contact information
+
+PROFESSIONAL SUMMARY
+2–4 clear sentences about experience and goals.
+
+SKILLS
+- Skill 1
+- Skill 2
+- Skill 3
+
+EDUCATION
+- Qualification
+- Institution
+- Year
+
+EXPERIENCE
+- Role
+- Organization
+- Main responsibilities
+- Achievements
+
+PROJECTS
+- Project
+- What you built
+- Result
+
+LANGUAGES
+- Language
+- Level
+`
+  };
+
+  document.getElementById("templateResult").value=
+    templates[type] || "";
+}
+
+/* ============================================================
+   TIMER
+============================================================ */
+
+let timerSeconds=25*60;
+let timerInterval=null;
+
+function updateTimer(){
+
+  const minutes=Math.floor(timerSeconds/60);
+  const seconds=timerSeconds%60;
+
+  document.getElementById("timerDisplay").textContent=
+    String(minutes).padStart(2,"0")+":"+
+    String(seconds).padStart(2,"0");
+}
+
+function startTimer(){
+
+  if(timerInterval)return;
+
+  timerInterval=setInterval(()=>{
 
     timerSeconds--;
 
-    renderTimerDisplays();
+    updateTimer();
 
-    if(timerSeconds <= 0){
+    if(timerSeconds<=0){
 
       clearInterval(timerInterval);
-      timerInterval = null;
+      timerInterval=null;
 
-      timerSeconds = 25*60;
+      timerSeconds=25*60;
 
-      renderTimerDisplays();
+      updateTimer();
 
-      showToast("Focus session complete.");
+      toast("Focus session complete. Well done.");
 
-      try{
-        navigator.vibrate?.([200,100,200]);
-      }catch{}
     }
 
   },1000);
 
-  showToast("Focus session started.");
-}
-
-function toggleToolTimer(){
-  toggleTimer();
+  toast("Focus session started.");
 }
 
 function resetTimer(){
 
-  if(timerInterval){
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
+  clearInterval(timerInterval);
 
-  timerSeconds = 25*60;
+  timerInterval=null;
 
-  renderTimerDisplays();
+  timerSeconds=25*60;
 
-  showToast("Timer reset.");
+  updateTimer();
 }
 
-function openTimer(){
-  openModal("timerModal");
-  renderTimerDisplays();
-}
-
-
-/* =========================================================
-   PASSPHRASE
-========================================================= */
-
-function generatePassphrase(){
-
-  const words = [
-    "River","Cloud","Bright","Stone","Forest",
-    "Morning","Silver","Garden","Rocket","Ocean",
-    "Falcon","Cedar","Moon","Pixel","Thunder",
-    "Window","Orange","Planet","Coffee","Sun",
-    "Maple","Signal","Winter","Golden","Travel",
-    "Book","Mountain","Blue","Nexus","Light"
-  ];
-
-  const chosen = [];
-
-  for(let i=0;i<4;i++){
-    chosen.push(
-      words[Math.floor(Math.random()*words.length)]
-    );
-  }
-
-  const number =
-    Math.floor(100 + Math.random()*900);
-
-  const phrase =
-    chosen.join("-") + "-" + number;
-
-  $("passphraseResult").textContent = phrase;
-}
-
-
-/* =========================================================
+/* ============================================================
    PROFILE MENU
-========================================================= */
+============================================================ */
 
 function toggleProfileMenu(){
 
-  $("profileMenu").classList.toggle("show");
+  document
+    .getElementById("profileMenu")
+    .classList.toggle("hidden");
 }
 
-document.addEventListener("click",e=>{
+document.addEventListener("click",event=>{
 
-  const menu = $("profileMenu");
+  const menu=document.getElementById("profileMenu");
+
+  if(!menu)return;
 
   if(
-    menu &&
-    !menu.contains(e.target) &&
-    !e.target.closest(".icon-btn")
+    !event.target.closest(".profile-menu")
   ){
-    menu.classList.remove("show");
+    menu.classList.add("hidden");
   }
 
 });
 
+/* ============================================================
+   THEME
+============================================================ */
 
-/* =========================================================
-   LEGAL / INFORMATION
-========================================================= */
+function toggleTheme(){
 
-const legalPages = {
+  document.body.classList.toggle("dark");
 
-  about:{
-    title:"About Shine Nexus Global",
-
-    html:`
-      <h3>A simple workspace for real life.</h3>
-
-      <p>
-        Shine Nexus Global is designed around one practical idea:
-        everyday life creates many small responsibilities, and people
-        should not need five different systems just to remember them.
-      </p>
-
-      <p>
-        The workspace brings tasks, money planning, document records,
-        notes, checklists and everyday tools together in a clear interface.
-      </p>
-
-      <h3>Our principles</h3>
-
-      <ul>
-        <li>Make complicated things easier to understand.</li>
-        <li>Build features that solve a real problem.</li>
-        <li>Do not invent fake activity or fake results.</li>
-        <li>Give users control over their own information.</li>
-        <li>Prefer usefulness over unnecessary screen time.</li>
-      </ul>
-    `
-  },
-
-  privacy:{
-    title:"Privacy Policy",
-
-    html:`
-      <h3>Privacy at a glance</h3>
-
-      <p>
-        This single-file version is designed to store workspace information
-        locally in your browser. Your tasks, notes, money records,
-        document records and checklists are saved using browser storage.
-      </p>
-
-      <h3>Google Sign-In</h3>
-
-      <p>
-        Google Sign-In is optional. When you choose it, Google handles
-        authentication. The application does not store your Google password.
-      </p>
-
-      <h3>Google services</h3>
-
-      <p>
-        This version does not secretly access Gmail, Drive, Calendar or
-        Sheets. There are no hidden connections to those services.
-      </p>
-
-      <h3>Your control</h3>
-
-      <ul>
-        <li>Export your workspace.</li>
-        <li>Import a previous workspace.</li>
-        <li>Delete local workspace data.</li>
-        <li>Use the application without Google Sign-In.</li>
-      </ul>
-
-      <p>
-        Do not put highly sensitive information into ordinary notes.
-        Local browser storage is not the same thing as a professionally
-        encrypted document vault.
-      </p>
-    `
-  },
-
-  terms:{
-    title:"Terms of Use",
-
-    html:`
-      <h3>Use responsibly</h3>
-
-      <p>
-        Shine Nexus Global provides organizational tools and general
-        informational content. You are responsible for how you use the
-        information and tools.
-      </p>
-
-      <h3>No professional advice</h3>
-
-      <p>
-        The money tools are calculators and organizers. They are not
-        financial, legal, medical or tax advice.
-      </p>
-
-      <h3>Accuracy</h3>
-
-      <p>
-        Always verify important dates, financial figures, official
-        requirements and legal or government information with the
-        appropriate official source.
-      </p>
-
-      <h3>External links</h3>
-
-      <p>
-        If you save an external link, check its address before entering
-        passwords or sensitive information.
-      </p>
-    `
-  },
-
-  contact:{
-    title:"Contact Us",
-
-    html:`
-      <h3>We want to improve Shine Nexus.</h3>
-
-      <p>
-        If you find a bug, have a feature request or have an idea that
-        could make the workspace easier for ordinary users, write it below.
-      </p>
-
-      <textarea
-        id="contactMessage"
-        class="textarea"
-        placeholder="Write your feedback..."></textarea>
-
-      <br><br>
-
-      <button class="btn" onclick="copyContactMessage()">
-        Copy Message
-      </button>
-
-      <p class="list-meta">
-        This single-file version does not pretend to have a support
-        server when one is not configured.
-      </p>
-    `
-  },
-
-  security:{
-    title:"Security",
-
-    html:`
-      <h3>Security approach</h3>
-
-      <ul>
-        <li>Google passwords are never requested by Shine Nexus.</li>
-        <li>Google authentication is handled by Firebase Authentication.</li>
-        <li>Workspace data is stored locally in the browser in this version.</li>
-        <li>Google API access is not silently enabled.</li>
-        <li>No Google access token is intentionally saved into workspace data.</li>
-      </ul>
-
-      <h3>Important limitation</h3>
-
-      <p>
-        Browser localStorage should not be treated as an encrypted
-        enterprise database. For a future production cloud edition,
-        server authorization, encryption, backups, audit logs and secure
-        OAuth token handling should be implemented.
-      </p>
-    `
-  }
-
-};
-
-function openLegal(page){
-
-  $("profileMenu").classList.remove("show");
-
-  const item = legalPages[page];
-
-  if(!item) return;
-
-  $("legalTitle").textContent = item.title;
-  $("legalContent").innerHTML = item.html;
-
-  openModal("legalModal");
+  localStorage.setItem(
+    "shaheen_theme",
+    document.body.classList.contains("dark")
+      ?"dark"
+      :"light"
+  );
 }
 
-async function copyContactMessage(){
-
-  const text =
-    $("contactMessage")?.value?.trim() || "";
-
-  if(!text){
-    showToast("Write your message first.");
-    return;
-  }
-
-  try{
-    await navigator.clipboard.writeText(text);
-    showToast("Message copied.");
-  }catch{
-    showToast("Copy was not available.");
-  }
+if(localStorage.getItem("shaheen_theme")==="dark"){
+  document.body.classList.add("dark");
 }
 
-
-/* =========================================================
-   SAFE LINKS
-========================================================= */
-
-function safeOpen(url){
-
-  if(!url) return;
-
-  let normalized = url.trim();
-
-  if(
-    !normalized.startsWith("https://") &&
-    !normalized.startsWith("http://")
-  ){
-    normalized = "https://" + normalized;
-  }
-
-  try{
-    const parsed = new URL(normalized);
-
-    if(!["http:","https:"].includes(parsed.protocol)){
-      showToast("Only web links can be opened.");
-      return;
-    }
-
-    window.open(
-      parsed.href,
-      "_blank",
-      "noopener,noreferrer"
-    );
-
-  }catch{
-    showToast("That link does not look valid.");
-  }
-}
-
-
-/* =========================================================
-   EXPORT / IMPORT
-========================================================= */
+/* ============================================================
+   EXPORT
+============================================================ */
 
 function exportData(){
 
-  const backup = {
-    app:"Shine Nexus Global",
-    version:5,
-    exportedAt:nowISO(),
-    data
+  const payload={
+    exportedAt:new Date().toISOString(),
+    app:"SHAHEEN",
+    data:data
   };
 
-  const blob = new Blob(
-    [JSON.stringify(backup,null,2)],
+  const blob=new Blob(
+    [JSON.stringify(payload,null,2)],
     {type:"application/json"}
   );
 
-  const url = URL.createObjectURL(blob);
+  const url=URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "shine-nexus-workspace.json";
+  const a=document.createElement("a");
+
+  a.href=url;
+  a.download="shaheen-workspace-backup.json";
 
   document.body.appendChild(a);
   a.click();
@@ -4238,118 +3322,280 @@ function exportData(){
 
   URL.revokeObjectURL(url);
 
-  showToast("Workspace backup downloaded.");
+  toast("Backup downloaded.");
 }
 
-async function importData(file){
+/* ============================================================
+   DELETE LOCAL DATA
+============================================================ */
 
-  if(!file) return;
+function deleteData(){
 
-  try{
+  const confirmed=confirm(
+    "Delete all tasks, notes, links and inbox items from this browser?"
+  );
 
-    const text = await file.text();
-    const parsed = JSON.parse(text);
+  if(!confirmed)return;
 
-    if(
-      !parsed.data ||
-      typeof parsed.data !== "object"
-    ){
-      throw new Error("Invalid backup");
-    }
+  data=blankData();
 
-    data = Object.assign(
-      blankData(),
-      parsed.data
-    );
-
-    saveData();
-    renderAll();
-
-    showToast("Workspace imported successfully.");
-
-  }catch{
-    showToast("That backup file could not be imported.");
-  }
-}
-
-function resetWorkspace(){
-
-  const answer =
-    confirm(
-      "Delete your local Shine Nexus workspace? This cannot be undone unless you have an export backup."
-    );
-
-  if(!answer) return;
-
-  data = blankData();
-  saveData();
-  renderAll();
-
-  showToast("Local workspace deleted.");
-}
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-function initializeDefaults(){
-
-  $("moneyDate").value = today();
-  $("subDate").value = today();
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
 
   renderAll();
 
-  /*
-    If the user opens the app directly through a previous
-    session marker, we can still keep the public landing page.
-  */
+  toast("Local workspace deleted.");
 }
 
-initializeDefaults();
+/* ============================================================
+   LEGAL CONTENT
+============================================================ */
 
+const legalContent={
 
-/* =========================================================
-   KEYBOARD SHORTCUTS
-========================================================= */
+about:{
+  title:"About SHAHEEN",
+  body:`
+    <h3>What is SHAHEEN?</h3>
 
-document.addEventListener("keydown",e=>{
+    <p>
+      SHAHEEN is a simple digital workspace designed to help people
+      organize everyday information and turn it into useful actions.
+    </p>
 
-  if(
-    (e.ctrlKey || e.metaKey) &&
-    e.key.toLowerCase()==="k"
-  ){
+    <p>
+      Instead of opening many small websites for different tasks,
+      SHAHEEN brings practical organization and everyday utilities
+      into one clear interface.
+    </p>
 
-    e.preventDefault();
+    <h3>Our principle</h3>
 
-    if($("globalSearch")){
-      $("globalSearch").focus();
-    }
+    <p>
+      Useful technology should be understandable. A person should not
+      need to be a professional developer to understand what a button
+      does.
+    </p>
+
+    <h3>What SHAHEEN is not</h3>
+
+    <p>
+      SHAHEEN does not pretend that unavailable services are connected.
+      If a future feature requires a server integration, it will be
+      clearly identified rather than showing a fake connection.
+    </p>
+  `
+},
+
+privacy:{
+  title:"Privacy Policy",
+  body:`
+    <h3>Information you enter</h3>
+
+    <p>
+      In this single-file version, tasks, notes, bookmarks and inbox
+      information are stored locally in your browser using localStorage.
+    </p>
+
+    <h3>Google Sign-In</h3>
+
+    <p>
+      Google Sign-In is handled through Firebase Authentication.
+      SHAHEEN uses the authenticated account information supplied by
+      Firebase, such as your display name, email address and profile
+      image when available.
+    </p>
+
+    <h3>Your workspace</h3>
+
+    <p>
+      The current workspace is not a cloud database. Clearing browser
+      storage or deleting local data can remove your locally stored
+      workspace. Use the Export option to create a backup.
+    </p>
+
+    <h3>Advertising</h3>
+
+    <p>
+      If advertising is enabled, advertising services may process
+      information according to their own policies and settings.
+      Private workspace screens are intentionally kept separate from
+      public advertising content.
+    </p>
+
+    <h3>Control</h3>
+
+    <p>
+      You can export or delete the locally stored workspace from the
+      Profile section.
+    </p>
+  `
+},
+
+terms:{
+  title:"Terms of Use",
+  body:`
+    <h3>Use of SHAHEEN</h3>
+
+    <p>
+      SHAHEEN is provided as a general productivity and utility
+      workspace. You are responsible for checking important information
+      before relying on it.
+    </p>
+
+    <h3>Calculations</h3>
+
+    <p>
+      Calculator and conversion results are provided for convenience.
+      For financial, legal, medical or other high-stakes decisions,
+      verify important results using appropriate professional sources.
+    </p>
+
+    <h3>Links</h3>
+
+    <p>
+      Users may save links to external websites. SHAHEEN does not
+      control the content or availability of third-party websites.
+    </p>
+
+    <h3>Changes</h3>
+
+    <p>
+      Features may be improved, changed or removed as the product
+      develops.
+    </p>
+  `
+},
+
+contact:{
+  title:"Contact Us",
+  body:`
+    <h3>We want to hear from you</h3>
+
+    <p>
+      If you find a bug, have a feature idea, or have a problem using
+      SHAHEEN, write your message below.
+    </p>
+
+    <textarea
+      id="contactMessage"
+      class="textarea"
+      placeholder="Write your message..."></textarea>
+
+    <br><br>
+
+    <button
+      class="btn btn-primary"
+      onclick="copyContact()">
+      Copy Message
+    </button>
+
+    <p>
+      This single-file version does not pretend to have a server-side
+      support system. A production support endpoint can be connected
+      later.
+    </p>
+  `
+},
+
+security:{
+  title:"Security",
+  body:`
+    <h3>Current architecture</h3>
+
+    <p>
+      Authentication is handled by Firebase Authentication.
+      Workspace data in this single-file version is stored locally
+      inside the browser.
+    </p>
+
+    <h3>Important limitation</h3>
+
+    <p>
+      Browser localStorage should not be described as an encrypted
+      enterprise database. Do not store highly sensitive secrets,
+      passwords, private keys or confidential documents in the current
+      local workspace.
+    </p>
+
+    <h3>Future production architecture</h3>
+
+    <p>
+      A production cloud version should use authenticated database
+      rules, least-privilege access, secure server-side OAuth handling,
+      encryption where appropriate, backups and audit controls.
+    </p>
+  `
+}
+
+};
+
+function openLegal(type){
+
+  const item=legalContent[type];
+
+  if(!item)return;
+
+  document.getElementById("legalTitle").textContent=
+    item.title;
+
+  document.getElementById("legalBody").innerHTML=
+    item.body;
+
+  document.getElementById("legalModal").classList.add("show");
+}
+
+function closeLegal(){
+
+  document
+    .getElementById("legalModal")
+    .classList.remove("show");
+}
+
+function modalOutside(event){
+
+  if(event.target.id==="legalModal"){
+    closeLegal();
   }
 
-  if(e.key==="Escape"){
+}
 
-    document.querySelectorAll(".modal.show").forEach(m=>{
-      m.classList.remove("show");
+function copyContact(){
+
+  const text=
+    document.getElementById("contactMessage").value.trim();
+
+  if(!text){
+
+    toast("Write your message first.");
+
+    return;
+  }
+
+  navigator.clipboard.writeText(text)
+    .then(()=>{
+      toast("Message copied.");
+    })
+    .catch(()=>{
+      toast("Copy failed. Select the text manually.");
     });
+}
 
-    $("profileMenu")?.classList.remove("show");
-  }
+/* ============================================================
+   YEAR
+============================================================ */
 
-});
+document.getElementById("year").textContent=
+  new Date().getFullYear();
 
+/* ============================================================
+   INITIAL RENDER
+============================================================ */
 
-/* =========================================================
-   PERIODIC UI REFRESH
-========================================================= */
-
-setInterval(()=>{
-
-  if($("app").classList.contains("active")){
-    renderHome();
-  }
-
-},60000);
+updateTimer();
+renderAll();
 
 </script>
 
