@@ -1,2712 +1,486 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Shine Nexus Global — One Workspace for Your Digital Life</title>
-
-  <meta
-    name="description"
-    content="Shine Nexus Global helps you capture information, organize tasks, manage documents, research ideas and keep important work in one simple workspace."
-  />
-
-  <meta
-    name="keywords"
-    content="productivity, tasks, notes, documents, research, digital workspace, organization, productivity tools"
-  />
-
-  <meta name="theme-color" content="#07111f" />
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-
-  <!-- Google AdSense
-       Keep monetized ads on public content pages.
-       Do NOT put ads inside private email/workspace screens.
-  -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
-    crossorigin="anonymous"></script>
-
-  <style>
-    :root {
-      --bg: #07111f;
-      --bg2: #0b1728;
-      --card: rgba(17, 31, 52, 0.82);
-      --card2: #101f34;
-      --text: #f4f8ff;
-      --muted: #9db0c9;
-      --line: rgba(255,255,255,.09);
-
-      --blue: #246bff;
-      --cyan: #16d9ff;
-      --green: #26d07c;
-      --yellow: #ffd166;
-      --red: #ff637d;
-
-      --shadow: 0 18px 60px rgba(0,0,0,.28);
-      --radius: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(36,107,255,.18), transparent 35%),
-        radial-gradient(circle at 90% 10%, rgba(22,217,255,.12), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* ---------------- LANDING ---------------- */
-
-    #landing {
-      min-height: 100vh;
-    }
-
-    .landing-nav {
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 6%;
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(7,17,31,.78);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 800;
-      letter-spacing: -.4px;
-    }
-
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(135deg, var(--blue), var(--cyan));
-      box-shadow:
-        0 8px 30px rgba(22,217,255,.18);
-      font-size: 19px;
-    }
-
-    .brand small {
-      display: block;
-      color: var(--muted);
-      font-weight: 500;
-      margin-top: 2px;
-    }
-
-    .landing-nav-links {
-      display: flex;
-      gap: 22px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .landing-nav-links a:hover {
-      color: white;
-    }
-
-    .hero {
-      max-width: 1150px;
-      margin: auto;
-      padding: 80px 20px 60px;
-      text-align: center;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border: 1px solid rgba(22,217,255,.25);
-      background: rgba(22,217,255,.06);
-      border-radius: 999px;
-      color: #b9f7ff;
-      font-size: 13px;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 8vw, 82px);
-      line-height: .98;
-      letter-spacing: -4px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, #fff, #73eaff, #6c8cff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: 25px auto 30px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .primary-btn {
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      color: white;
-      padding: 15px 23px;
-      border-radius: 14px;
-      font-weight: 800;
-      box-shadow: 0 12px 30px rgba(36,107,255,.25);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,.06);
-      color: white;
-      border: 1px solid var(--line);
-      padding: 15px 23px;
-      border-radius: 14px;
-      font-weight: 700;
-    }
-
-    .google-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-      min-width: 245px;
-      background: white;
-      color: #111827;
-      padding: 15px 20px;
-      border-radius: 14px;
-      font-weight: 800;
-    }
-
-    .google-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: conic-gradient(
-        #4285f4 0 25%,
-        #34a853 25% 50%,
-        #fbbc05 50% 75%,
-        #ea4335 75%
-      );
-    }
-
-    .feature-grid {
-      max-width: 1100px;
-      margin: 20px auto 80px;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .feature-card {
-      padding: 25px;
-      border: 1px solid var(--line);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .feature-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .feature-card h3 {
-      margin-bottom: 9px;
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    /* ---------------- PUBLIC CONTENT ---------------- */
-
-    .public-section {
-      max-width: 1000px;
-      margin: 0 auto 70px;
-      padding: 0 20px;
-    }
-
-    .public-section h2 {
-      font-size: 34px;
-      margin-bottom: 14px;
-    }
-
-    .public-section > p {
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 15px;
-      margin-top: 25px;
-    }
-
-    .guide {
-      padding: 22px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--line);
-    }
-
-    .guide h3 {
-      margin-bottom: 8px;
-    }
-
-    .guide p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .ad-container {
-      max-width: 900px;
-      margin: 25px auto 45px;
-      min-height: 90px;
-      padding: 10px;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .public-footer {
-      border-top: 1px solid var(--line);
-      padding: 30px 20px 50px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 18px;
-      margin-bottom: 15px;
-    }
-
-    /* ---------------- APP ---------------- */
-
-    #app {
-      min-height: 100vh;
-      padding-bottom: 92px;
-    }
-
-    .app-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 15px 16px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(7,17,31,.86);
-      backdrop-filter: blur(20px);
-    }
-
-    .header-row {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .user-mini {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: var(--card2);
-    }
-
-    .user-mini strong {
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 180px;
-    }
-
-    .user-mini span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .icon-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      background: rgba(255,255,255,.06);
-      color: white;
-      border: 1px solid var(--line);
-    }
-
-    .app-main {
-      max-width: 1150px;
-      margin: auto;
-      padding: 22px 16px;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-      animation: fade .22s ease;
-    }
-
-    @keyframes fade {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 16px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      margin-bottom: 22px;
-    }
-
-    .search-box input {
-      flex: 1;
-      background: none;
-      border: 0;
-      outline: 0;
-      color: white;
-      font-size: 15px;
-    }
-
-    .search-box input::placeholder {
-      color: #71839b;
-    }
-
-    .welcome {
-      margin-bottom: 25px;
-    }
-
-    .welcome h1 {
-      font-size: clamp(27px, 5vw, 42px);
-      letter-spacing: -1.5px;
-    }
-
-    .welcome p {
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .attention {
-      padding: 20px;
-      border-radius: var(--radius);
-      background:
-        linear-gradient(135deg,
-        rgba(36,107,255,.16),
-        rgba(22,217,255,.05));
-      border: 1px solid rgba(22,217,255,.16);
-      margin-bottom: 20px;
-    }
-
-    .attention-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .attention-count {
-      color: #9defff;
-      font-size: 13px;
-    }
-
-    .attention-list {
-      display: grid;
-      gap: 9px;
-    }
-
-    .attention-item {
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.18);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .attention-item small {
-      color: var(--muted);
-    }
-
-    .complete-btn {
-      padding: 8px 11px;
-      border-radius: 9px;
-      background: rgba(38,208,124,.12);
-      color: #8ff0bb;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 26px 0 12px;
-    }
-
-    .section-title h2 {
-      font-size: 19px;
-    }
-
-    .section-title button {
-      color: #79e9ff;
-      background: none;
-      font-size: 13px;
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 12px;
-    }
-
-    .quick-card {
-      padding: 18px 14px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: white;
-      text-align: left;
-    }
-
-    .quick-card .q-icon {
-      font-size: 24px;
-      margin-bottom: 11px;
-    }
-
-    .quick-card strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .quick-card span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 3px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 12px;
-    }
-
-    .stat {
-      padding: 18px;
-      border-radius: 17px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 26px;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .list-item {
-      padding: 17px;
-      border-radius: 17px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .list-main {
-      min-width: 0;
-    }
-
-    .list-main strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .list-main p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .pill {
-      padding: 6px 9px;
-      border-radius: 999px;
-      background: rgba(36,107,255,.13);
-      color: #8db1ff;
-      font-size: 11px;
-      white-space: nowrap;
-    }
-
-    /* ---------------- CAPTURE ---------------- */
-
-    .capture-hero {
-      padding: 24px;
-      border-radius: 25px;
-      background:
-        linear-gradient(135deg,
-        rgba(36,107,255,.2),
-        rgba(22,217,255,.07));
-      border: 1px solid rgba(22,217,255,.16);
-      margin-bottom: 18px;
-    }
-
-    .capture-hero h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
-    }
-
-    .capture-hero p {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .capture-input {
-      width: 100%;
-      min-height: 190px;
-      resize: vertical;
-      background: var(--card);
-      color: white;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 17px;
-      outline: none;
-      margin-bottom: 12px;
-    }
-
-    .capture-actions {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-    }
-
-    .small-btn {
-      padding: 11px 14px;
-      border-radius: 11px;
-      background: rgba(255,255,255,.07);
-      color: white;
-      border: 1px solid var(--line);
-    }
-
-    /* ---------------- WORK ---------------- */
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 14px;
-    }
-
-    .work-card {
-      min-height: 150px;
-      padding: 20px;
-      border-radius: 20px;
-      background: var(--card);
-      border: 1px solid var(--line);
-    }
-
-    .work-card .icon {
-      font-size: 27px;
-      margin-bottom: 14px;
-    }
-
-    .work-card h3 {
-      margin-bottom: 6px;
-    }
-
-    .work-card p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* ---------------- PROFILE ---------------- */
-
-    .profile-card {
-      padding: 25px;
-      border-radius: 24px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      margin-bottom: 14px;
-    }
-
-    .profile-big {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .profile-big .avatar {
-      width: 68px;
-      height: 68px;
-    }
-
-    .profile-big h2 {
-      font-size: 20px;
-    }
-
-    .profile-big p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 4px;
-      word-break: break-word;
-    }
-
-    .setting-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .setting-row:last-child {
-      border-bottom: 0;
-    }
-
-    .setting-row strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .setting-row span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .danger {
-      background: rgba(255,99,125,.1);
-      color: #ff8da0;
-      border: 1px solid rgba(255,99,125,.15);
-      padding: 11px 14px;
-      border-radius: 11px;
-    }
-
-    /* ---------------- BOTTOM NAV ---------------- */
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 12px;
-      z-index: 100;
-      width: min(700px, calc(100% - 18px));
-      padding: 8px;
-      border: 1px solid var(--line);
-      background: rgba(9,20,35,.92);
-      backdrop-filter: blur(22px);
-      border-radius: 22px;
-      display: grid;
-      grid-template-columns: repeat(5,1fr);
-      box-shadow: var(--shadow);
-    }
-
-    .nav-btn {
-      padding: 9px 4px;
-      border-radius: 15px;
-      background: transparent;
-      color: #7e92ad;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-    }
-
-    .nav-btn .nav-icon {
-      font-size: 19px;
-    }
-
-    .nav-btn.active {
-      background: rgba(36,107,255,.15);
-      color: white;
-    }
-
-    /* ---------------- TOAST ---------------- */
-
-    #toast {
-      position: fixed;
-      left: 50%;
-      bottom: 95px;
-      transform: translateX(-50%) translateY(15px);
-      background: #12243b;
-      border: 1px solid var(--line);
-      color: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      opacity: 0;
-      pointer-events: none;
-      transition: .25s;
-      z-index: 300;
-      max-width: calc(100% - 30px);
-      text-align: center;
-      font-size: 13px;
-    }
-
-    #toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ---------------- RESPONSIVE ---------------- */
-
-    @media (max-width: 800px) {
-      .landing-nav-links {
-        display: none;
-      }
-
-      .feature-grid,
-      .guide-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .quick-grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .work-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 60px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .quick-grid {
-        gap: 8px;
-      }
-
-      .quick-card {
-        padding: 14px 12px;
-      }
-
-      .stats-grid {
-        gap: 8px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Shine Nexus Global — Your Digital Life, Organized</title>
+<meta name="description" content="Shine Nexus Global is a simple workspace for tasks, notes, bookmarks, research, daily planning and useful everyday tools.">
+<style>
+:root{
+  --bg:#07111f;--bg2:#0b1728;--panel:#0e1c30;--panel2:#12243b;
+  --text:#f5f8ff;--muted:#9fb0c6;--line:rgba(255,255,255,.09);
+  --blue:#2d6bff;--cyan:#19d8ff;--green:#35d58a;--yellow:#ffd166;--red:#ff6680;
+  --shadow:0 18px 55px rgba(0,0,0,.28);--r:20px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:
+radial-gradient(circle at 15% 0%,rgba(45,107,255,.16),transparent 34%),
+radial-gradient(circle at 90% 10%,rgba(25,216,255,.10),transparent 28%),var(--bg);
+color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}
+.container{width:min(1120px,calc(100% - 28px));margin:auto}
+.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:800}
+.btn.primary{color:#fff;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 10px 28px rgba(45,107,255,.22)}
+.btn.ghost{color:#fff;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.btn.danger{color:#ff9aac;background:rgba(255,102,128,.09);border:1px solid rgba(255,102,128,.18)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:20px;box-shadow:0 10px 30px rgba(25,216,255,.16)}
+.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600}
+.public-nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-links{display:flex;gap:20px;color:var(--muted);font-size:13px}.nav-links a:hover{color:#fff}
+.hero{text-align:center;padding:74px 0 55px}
+.badge{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(25,216,255,.2);background:rgba(25,216,255,.06);color:#b9f7ff;font-size:12px}
+.hero h1{font-size:clamp(42px,8vw,78px);line-height:.98;letter-spacing:-4px;max-width:900px;margin:20px auto}
+.gradient{background:linear-gradient(90deg,#fff,#7eeeff,#7894ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:720px;margin:0 auto 26px;color:var(--muted);font-size:17px}
+.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.google{background:#fff;color:#111;border:0;border-radius:13px;padding:13px 18px;font-weight:900;display:inline-flex;gap:10px;align-items:center}
+.gdot{width:19px;height:19px;border-radius:50%;background:conic-gradient(#4285f4 0 25%,#34a853 25% 50%,#fbbc05 50% 75%,#ea4335 75%)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 0 55px}
+.card{background:rgba(14,28,48,.82);border:1px solid var(--line);border-radius:var(--r);padding:21px;box-shadow:var(--shadow)}
+.card h3{margin:8px 0}.card p{margin:0;color:var(--muted);font-size:13px}.icon{font-size:25px}
+.public-section{padding:25px 0 55px}.public-section h2{font-size:30px;margin:0 0 8px}.public-section>p{color:var(--muted);max-width:780px}
+.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.ad-wrap{min-height:90px;margin:15px auto 35px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.footer{border-top:1px solid var(--line);padding:30px 0 50px;text-align:center;color:var(--muted);font-size:12px}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:17px;margin-bottom:12px}
+
+#app{min-height:100vh;padding-bottom:92px}.appbar{position:sticky;top:0;z-index:40;background:rgba(7,17,31,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.appbar-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.user-mini{display:flex;align-items:center;gap:10px;min-width:0}.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#18304d}.user-mini strong{display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-mini span{display:block;color:var(--muted);font-size:11px}
+.app-main{padding:20px 0}.page{display:none}.page.active{display:block;animation:up .18s ease}@keyframes up{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
+.search{display:flex;align-items:center;gap:9px;padding:13px 15px;background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-bottom:20px}
+.search input{flex:1;background:none;border:0;outline:0;color:#fff}.search input::placeholder{color:#70839c}
+.welcome{margin-bottom:19px}.welcome h1{font-size:31px;letter-spacing:-1.2px;margin:0}.welcome p{color:var(--muted);margin:4px 0 0}
+.attention{padding:18px;border-radius:var(--r);background:linear-gradient(135deg,rgba(45,107,255,.16),rgba(25,216,255,.04));border:1px solid rgba(25,216,255,.13)}
+.att-top{display:flex;justify-content:space-between;margin-bottom:11px}.attention-list{display:grid;gap:8px}.attention-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(0,0,0,.16);padding:12px;border-radius:13px}
+.count{color:#a4efff;font-size:12px}.done{border:0;border-radius:9px;padding:8px 10px;background:rgba(53,213,138,.12);color:#8df0bb}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px}.section-head h2{font-size:18px;margin:0}.section-head button{border:0;background:none;color:#83eaff;font-size:12px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{background:var(--panel);border:1px solid var(--line);color:#fff;border-radius:17px;padding:15px;text-align:left}.quick b{display:block;margin-top:7px}.quick span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{font-size:25px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.list{display:grid;gap:9px}.item{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item-main{min-width:0}.item-main b{display:block}.item-main p{margin:4px 0 0;color:var(--muted);font-size:12px;white-space:pre-wrap;word-break:break-word}.pill{display:inline-flex;padding:5px 8px;border-radius:999px;background:rgba(45,107,255,.12);color:#9dbbff;font-size:10px;white-space:nowrap}
+.capture{background:linear-gradient(135deg,rgba(45,107,255,.18),rgba(25,216,255,.04));border:1px solid rgba(25,216,255,.12);border-radius:22px;padding:20px;margin-bottom:13px}.capture h1{margin:0 0 5px}.capture p{margin:0;color:var(--muted);font-size:13px}
+textarea,input,select{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;color:#fff;padding:13px;outline:none}
+textarea{min-height:170px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-row{margin-bottom:10px}.form-row label{display:block;font-size:11px;color:var(--muted);margin:0 0 5px}.row{display:flex;gap:8px;flex-wrap:wrap}
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.tool{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}.tool h3{margin:0 0 8px}.tool input,.tool select{margin-bottom:8px}
+.focus{font-size:52px;text-align:center;font-variant-numeric:tabular-nums;padding:20px 0}
+.menu-wrap{position:relative}.dots{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.06);color:#fff;font-size:21px}
+.menu{position:absolute;right:0;top:49px;width:210px;background:#102039;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:6px;z-index:100}.menu button{display:block;width:100%;padding:11px;text-align:left;border:0;background:none;color:#fff;border-radius:10px}.menu button:hover{background:rgba(255,255,255,.06)}
+.profile-head{display:flex;align-items:center;gap:14px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:22px;margin-bottom:12px}.profile-head .avatar{width:65px;height:65px}.settings{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:0 17px}.setting{padding:15px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.setting:last-child{border:0}.setting b{display:block}.setting span{display:block;color:var(--muted);font-size:11px}
+.bottom{position:fixed;bottom:11px;left:50%;transform:translateX(-50%);z-index:90;width:min(700px,calc(100% - 16px));display:grid;grid-template-columns:repeat(5,1fr);padding:7px;background:rgba(8,20,35,.94);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:21px;box-shadow:var(--shadow)}
+.navbtn{background:none;border:0;color:#7f92ab;border-radius:14px;padding:8px 3px;font-size:10px}.navbtn span{display:block;font-size:18px;margin-bottom:2px}.navbtn.active{background:rgba(45,107,255,.15);color:#fff}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:flex-end;justify-content:center;z-index:200;padding:12px}.modal-back.show{display:flex}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:#0d1c31;border:1px solid var(--line);border-radius:23px;padding:20px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modal h3{margin-bottom:5px}.modal p,.modal li{color:var(--muted);font-size:13px;line-height:1.7}.modal-top{display:flex;justify-content:space-between;align-items:center}.close{width:38px;height:38px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:11px}
+#toast{position:fixed;left:50%;bottom:88px;transform:translate(-50%,15px);opacity:0;pointer-events:none;z-index:300;background:#142844;border:1px solid var(--line);padding:11px 15px;border-radius:12px;font-size:12px;transition:.22s;max-width:calc(100% - 25px);text-align:center}#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){.cards,.guide-grid{grid-template-columns:1fr}.nav-links{display:none}.quick{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.tool-grid{grid-template-columns:1fr}.hero{padding-top:55px}.hero h1{letter-spacing:-2.5px}}
+@media(max-width:480px){.container{width:min(100% - 20px,1120px)}.form-grid{grid-template-columns:1fr}.hero p{font-size:15px}.hero-actions .btn,.google{width:100%;justify-content:center}.quick button{padding:13px}}
+</style>
 </head>
-
 <body>
 
-<!-- =========================================================
-     PUBLIC LANDING
-========================================================= -->
-
 <section id="landing">
-
-  <nav class="landing-nav">
-    <div class="brand">
-      <div class="brand-logo">S</div>
-      <div>
-        Shine Nexus
-        <small>Global Workspace</small>
-      </div>
+  <header class="public-nav">
+    <div class="container nav-inner">
+      <div class="brand"><div class="logo">S</div><div>Shine Nexus<small>Global Workspace</small></div></div>
+      <nav class="nav-links"><a href="#features">Features</a><a href="#guides">Guides</a><a href="#about">About</a></nav>
+      <button class="btn ghost" onclick="login()">Sign in</button>
     </div>
-
-    <div class="landing-nav-links">
-      <a href="#features">Features</a>
-      <a href="#guides">Guides</a>
-      <a href="#about">About</a>
-    </div>
-
-    <button class="secondary-btn" onclick="showLogin()">
-      Sign in
-    </button>
-  </nav>
-
-  <div class="hero">
-
-    <div class="hero-badge">
-      ✦ One workspace for your digital life
-    </div>
-
-    <h1>
-      Turn scattered information into
-      <span class="gradient-text">organized action.</span>
-    </h1>
-
-    <p>
-      Capture notes, links, documents, ideas and tasks.
-      Find what matters. Understand what needs attention.
-      Keep your important work in one calm workspace.
-    </p>
-
-    <div class="hero-actions">
-
-      <button class="google-btn" onclick="googleLogin()">
-        <span class="google-icon"></span>
-        Continue with Google
-      </button>
-
-      <button class="secondary-btn"
-              onclick="document.getElementById('features').scrollIntoView()">
-        Explore features
-      </button>
-
-    </div>
-
-  </div>
-
-  <div id="features" class="feature-grid">
-
-    <article class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <h3>Capture Anything</h3>
-      <p>
-        Save a thought, task, link, document or important information
-        before it gets lost.
-      </p>
-    </article>
-
-    <article class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <h3>Know What Matters</h3>
-      <p>
-        Turn scattered information into clear actions and priorities.
-      </p>
-    </article>
-
-    <article class="feature-card">
-      <div class="feature-icon">🔎</div>
-      <h3>Find Faster</h3>
-      <p>
-        Search across your workspace instead of opening many different apps.
-      </p>
-    </article>
-
-    <article class="feature-card">
-      <div class="feature-icon">📚</div>
-      <h3>Research Workspace</h3>
-      <p>
-        Organize research topics, references, notes and next actions.
-      </p>
-    </article>
-
-    <article class="feature-card">
-      <div class="feature-icon">🔐</div>
-      <h3>Privacy First</h3>
-      <p>
-        Keep private workspace information separate from public content.
-      </p>
-    </article>
-
-    <article class="feature-card">
-      <div class="feature-icon">🌍</div>
-      <h3>Built for Everyone</h3>
-      <p>
-        Designed around universal problems: information overload,
-        forgotten tasks and scattered digital work.
-      </p>
-    </article>
-
-  </div>
-
-  <!-- PUBLIC CONTENT = possible AdSense area -->
-
-  <section id="guides" class="public-section">
-
-    <h2>Useful Digital Life Guides</h2>
-
-    <p>
-      Shine Nexus is designed around practical problems people face every day:
-      managing information, organizing work, researching topics and keeping
-      important tasks visible.
-    </p>
-
-    <div class="guide-grid">
-
-      <article class="guide">
-        <h3>Organize Your Digital Life</h3>
-        <p>
-          Start with three categories: things to do, things to remember,
-          and things to research.
-        </p>
-      </article>
-
-      <article class="guide">
-        <h3>Build Better Research Habits</h3>
-        <p>
-          Capture the source, summarize the useful point and write the
-          next action instead of collecting endless tabs.
-        </p>
-      </article>
-
-      <article class="guide">
-        <h3>Reduce Information Overload</h3>
-        <p>
-          Keep important information searchable and turn actionable items
-          into clear tasks.
-        </p>
-      </article>
-
-    </div>
-
-  </section>
-
-  <!-- AdSense public-content slot -->
-
-  <div class="ad-container">
-
-    <!--
-      Google may automatically fill this area according to your
-      AdSense configuration.
-
-      Never encourage users to click ads.
-      Never place ads so they look like navigation buttons.
-    -->
-
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-2057536839831582"
-      data-ad-slot=""
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-
-    <script>
-      /*
-        Auto Ads can manage placement.
-        If you use a manual ad unit, replace data-ad-slot
-        with the real ad-unit slot ID from AdSense.
-      */
-
-      try {
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.log("AdSense waiting for configuration.");
-      }
-    </script>
-
-  </div>
-
-  <section id="about" class="public-section">
-
-    <h2>About Shine Nexus Global</h2>
-
-    <p>
-      Shine Nexus Global is a productivity workspace focused on one simple
-      idea: important information should lead to useful action.
-      The platform combines capture, organization, search, tasks and research
-      into one understandable experience.
-    </p>
-
-  </section>
-
-  <footer class="public-footer">
-
-    <div class="footer-links">
-      <a href="#about">About</a>
-      <a href="#guides">Guides</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Contact</a>
-      <a href="#">Security</a>
-    </div>
-
-    © 2026 Shine Nexus Global. Built for useful digital work.
-
-  </footer>
-
-</section>
-
-
-<!-- =========================================================
-     PRIVATE APP
-========================================================= -->
-
-<section id="app" class="hidden">
-
-  <header class="app-header">
-
-    <div class="header-row">
-
-      <div class="user-mini">
-
-        <img id="userAvatar"
-             class="avatar"
-             src=""
-             alt="Profile">
-
-        <div>
-          <strong id="userName">User</strong>
-          <span id="userEmail">Loading...</span>
-        </div>
-
-      </div>
-
-      <button class="icon-btn"
-              onclick="toggleTheme()"
-              title="Toggle theme">
-        ◐
-      </button>
-
-    </div>
-
   </header>
 
-
-  <main class="app-main">
-
-    <!-- HOME -->
-
-    <section id="page-home" class="page active">
-
-      <div class="search-box">
-
-        <span>⌕</span>
-
-        <input
-          id="globalSearch"
-          type="search"
-          placeholder="Search tasks, notes, links, documents..."
-          oninput="globalSearch()"
-        />
-
+  <main class="container">
+    <section class="hero">
+      <span class="badge">✦ Simple tools for real everyday problems</span>
+      <h1>Everything important.<br><span class="gradient">One clear workspace.</span></h1>
+      <p>Plan your day, save useful information, manage tasks, build research notes and use everyday tools without jumping between confusing screens.</p>
+      <div class="hero-actions">
+        <button class="google" onclick="login()"><span class="gdot"></span>Continue with Google</button>
+        <button class="btn ghost" onclick="document.querySelector('#features').scrollIntoView({behavior:'smooth'})">See what it does</button>
       </div>
-
-      <div class="welcome">
-
-        <h1 id="greeting">
-          Good day 👋
-        </h1>
-
-        <p>
-          Your important work, in one place.
-        </p>
-
-      </div>
-
-
-      <div class="attention">
-
-        <div class="attention-top">
-
-          <div>
-            <strong>Needs your attention</strong>
-            <div class="attention-count"
-                 id="attentionCount">
-              0 open items
-            </div>
-          </div>
-
-          <span>🎯</span>
-
-        </div>
-
-        <div id="attentionList"
-             class="attention-list">
-        </div>
-
-      </div>
-
-
-      <div class="section-title">
-        <h2>Quick actions</h2>
-      </div>
-
-      <div class="quick-grid">
-
-        <button class="quick-card"
-                onclick="openPage('capture')">
-
-          <div class="q-icon">✍️</div>
-          <strong>New note</strong>
-          <span>Capture an idea</span>
-
-        </button>
-
-        <button class="quick-card"
-                onclick="captureTemplate('task')">
-
-          <div class="q-icon">✅</div>
-          <strong>New task</strong>
-          <span>Add something to do</span>
-
-        </button>
-
-        <button class="quick-card"
-                onclick="captureTemplate('link')">
-
-          <div class="q-icon">🔗</div>
-          <strong>Save link</strong>
-          <span>Keep a useful URL</span>
-
-        </button>
-
-        <button class="quick-card"
-                onclick="openPage('work')">
-
-          <div class="q-icon">🧠</div>
-          <strong>Research</strong>
-          <span>Start a topic</span>
-
-        </button>
-
-      </div>
-
-
-      <div class="section-title">
-        <h2>Workspace overview</h2>
-      </div>
-
-      <div class="stats-grid">
-
-        <div class="stat">
-          <strong id="statTasks">0</strong>
-          <span>Open tasks</span>
-        </div>
-
-        <div class="stat">
-          <strong id="statNotes">0</strong>
-          <span>Notes</span>
-        </div>
-
-        <div class="stat">
-          <strong id="statLinks">0</strong>
-          <span>Saved links</span>
-        </div>
-
-        <div class="stat">
-          <strong id="statDocs">0</strong>
-          <span>Documents</span>
-        </div>
-
-      </div>
-
-
-      <div class="section-title">
-        <h2>Recent activity</h2>
-        <button onclick="openPage('inbox')">
-          View all
-        </button>
-      </div>
-
-      <div id="recentList"
-           class="list">
-      </div>
-
     </section>
 
-
-    <!-- INBOX -->
-
-    <section id="page-inbox" class="page">
-
-      <div class="welcome">
-        <h1>Inbox</h1>
-        <p>
-          Everything you recently captured or saved.
-        </p>
-      </div>
-
-      <div id="inboxList"
-           class="list">
-      </div>
-
+    <section id="features" class="cards">
+      <article class="card"><div class="icon">✅</div><h3>Tasks & deadlines</h3><p>Create tasks, set a date, mark them done and keep open work visible.</p></article>
+      <article class="card"><div class="icon">📝</div><h3>Notes</h3><p>Keep ideas, instructions and important information in one searchable place.</p></article>
+      <article class="card"><div class="icon">🔗</div><h3>Bookmarks</h3><p>Save useful websites so you do not have to search for the same thing again.</p></article>
+      <article class="card"><div class="icon">🔬</div><h3>Research</h3><p>Turn a question into a small research project with sources, findings and next steps.</p></article>
+      <article class="card"><div class="icon">📅</div><h3>Daily plan</h3><p>Choose today's priorities and avoid a crowded list that hides what matters.</p></article>
+      <article class="card"><div class="icon">🧰</div><h3>Useful tools</h3><p>Calculator, unit conversion and a focused timer are built into the workspace.</p></article>
     </section>
 
-
-    <!-- CAPTURE -->
-
-    <section id="page-capture" class="page">
-
-      <div class="capture-hero">
-
-        <h1>Capture</h1>
-
-        <p>
-          Don't organize first. Capture first.
-          Shine Nexus will help you turn the information into something useful.
-        </p>
-
+    <section id="guides" class="public-section">
+      <h2>Practical guides</h2>
+      <p>Original educational content helps visitors understand the problems the product solves. It is also kept separate from private workspace screens.</p>
+      <div class="guide-grid">
+        <article class="card"><h3>How to organize a busy day</h3><p>Choose three priorities, capture everything else, and keep one next action visible for each active project.</p></article>
+        <article class="card"><h3>How to research without losing sources</h3><p>Record the question, source, useful finding and next action. This makes research reusable instead of becoming a pile of tabs.</p></article>
+        <article class="card"><h3>How to reduce digital clutter</h3><p>Capture first, review later, and delete or archive information that no longer helps you make a decision.</p></article>
       </div>
-
-      <textarea
-        id="captureInput"
-        class="capture-input"
-        placeholder="Write a note, paste a link, describe a task, or paste important information..."></textarea>
-
-      <div class="capture-actions">
-
-        <button class="primary-btn"
-                onclick="saveCapture('note')">
-          Save note
-        </button>
-
-        <button class="small-btn"
-                onclick="saveCapture('task')">
-          Save as task
-        </button>
-
-        <button class="small-btn"
-                onclick="saveCapture('link')">
-          Save as link
-        </button>
-
-        <button class="small-btn"
-                onclick="smartCapture()">
-          ✦ Smart organize
-        </button>
-
-      </div>
-
-      <div class="section-title">
-        <h2>Capture ideas</h2>
-      </div>
-
-      <div class="list">
-
-        <div class="list-item">
-          <div class="list-main">
-            <strong>Important deadline</strong>
-            <p>Paste the deadline and describe what needs to happen.</p>
-          </div>
-          <span class="pill">Task</span>
-        </div>
-
-        <div class="list-item">
-          <div class="list-main">
-            <strong>Research topic</strong>
-            <p>Capture a question and turn it into a research workspace.</p>
-          </div>
-          <span class="pill">Research</span>
-        </div>
-
-        <div class="list-item">
-          <div class="list-main">
-            <strong>Useful website</strong>
-            <p>Save a URL so you don't have to search for it again.</p>
-          </div>
-          <span class="pill">Link</span>
-        </div>
-
-      </div>
-
     </section>
 
-
-    <!-- WORK -->
-
-    <section id="page-work" class="page">
-
-      <div class="welcome">
-
-        <h1>Work</h1>
-
-        <p>
-          Choose what you want to accomplish.
-        </p>
-
-      </div>
-
-      <div class="work-grid">
-
-        <button class="work-card"
-                onclick="captureTemplate('task')">
-
-          <div class="icon">✅</div>
-          <h3>Tasks</h3>
-          <p>
-            Keep actions visible and complete them one by one.
-          </p>
-
-        </button>
-
-
-        <button class="work-card"
-                onclick="captureTemplate('research')">
-
-          <div class="icon">🔬</div>
-          <h3>Research</h3>
-          <p>
-            Turn questions into structured research topics.
-          </p>
-
-        </button>
-
-
-        <button class="work-card"
-                onclick="captureTemplate('document')">
-
-          <div class="icon">📄</div>
-          <h3>Documents</h3>
-          <p>
-            Keep important document information organized.
-          </p>
-
-        </button>
-
-
-        <button class="work-card"
-                onclick="captureTemplate('meeting')">
-
-          <div class="icon">📅</div>
-          <h3>Meetings</h3>
-          <p>
-            Capture meeting notes and follow-up actions.
-          </p>
-
-        </button>
-
-
-        <button class="work-card"
-                onclick="captureTemplate('idea')">
-
-          <div class="icon">💡</div>
-          <h3>Ideas</h3>
-          <p>
-            Save ideas before they disappear.
-          </p>
-
-        </button>
-
-
-        <button class="work-card"
-                onclick="captureTemplate('project')">
-
-          <div class="icon">🚀</div>
-          <h3>Projects</h3>
-          <p>
-            Turn multiple tasks into one organized goal.
-          </p>
-
-        </button>
-
-      </div>
-
-
-      <div class="section-title">
-        <h2>Your tasks</h2>
-      </div>
-
-      <div id="taskList"
-           class="list">
-      </div>
-
-    </section>
-
-
-    <!-- PROFILE -->
-
-    <section id="page-profile" class="page">
-
-      <div class="profile-card">
-
-        <div class="profile-big">
-
-          <img id="profileAvatar"
-               class="avatar"
-               src=""
-               alt="Profile">
-
-          <div>
-            <h2 id="profileName">User</h2>
-            <p id="profileEmail">Email</p>
-          </div>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Google account</strong>
-            <span>Your Firebase authentication account.</span>
-          </div>
-
-          <span class="pill">Connected</span>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Gmail</strong>
-            <span>Secure backend OAuth connection will be added.</span>
-          </div>
-
-          <span class="pill">Available later</span>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Google Drive</strong>
-            <span>Secure document integration.</span>
-          </div>
-
-          <span class="pill">Available later</span>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Google Calendar</strong>
-            <span>Secure calendar integration.</span>
-          </div>
-
-          <span class="pill">Available later</span>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Google Sheets</strong>
-            <span>Structured data integration.</span>
-          </div>
-
-          <span class="pill">Available later</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="profile-card">
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Export workspace</strong>
-            <span>Download your current local data.</span>
-          </div>
-
-          <button class="small-btn"
-                  onclick="exportData()">
-            Export
-          </button>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Sign out</strong>
-            <span>Leave your Shine Nexus workspace.</span>
-          </div>
-
-          <button class="small-btn"
-                  onclick="logout()">
-            Sign out
-          </button>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div>
-            <strong>Delete local workspace</strong>
-            <span>This removes locally stored app data.</span>
-          </div>
-
-          <button class="danger"
-                  onclick="deleteLocalData()">
-            Delete
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- PRIVATE APP NAV -->
-
-  <nav class="bottom-nav">
-
-    <button class="nav-btn active"
-            data-page="home"
-            onclick="openPage('home')">
-
-      <span class="nav-icon">⌂</span>
-      <span>Home</span>
-
-    </button>
-
-    <button class="nav-btn"
-            data-page="inbox"
-            onclick="openPage('inbox')">
-
-      <span class="nav-icon">▣</span>
-      <span>Inbox</span>
-
-    </button>
-
-    <button class="nav-btn"
-            data-page="capture"
-            onclick="openPage('capture')">
-
-      <span class="nav-icon">＋</span>
-      <span>Capture</span>
-
-    </button>
-
-    <button class="nav-btn"
-            data-page="work"
-            onclick="openPage('work')">
-
-      <span class="nav-icon">◈</span>
-      <span>Work</span>
-
-    </button>
-
-    <button class="nav-btn"
-            data-page="profile"
-            onclick="openPage('profile')">
-
-      <span class="nav-icon">◯</span>
-      <span>Profile</span>
-
-    </button>
-
-  </nav>
-
-</section>
-
-
-<div id="toast"></div>
-
-
-<script>
-/* =========================================================
-   SHINE NEXUS GLOBAL
-   Frontend foundation
-========================================================= */
-
-
-/* ---------------- FIREBASE ---------------- */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
-  authDomain: "shaheen-nexus.firebaseapp.com",
-  projectId: "shaheen-nexus",
-  storageBucket: "shaheen-nexus.firebasestorage.app",
-  messagingSenderId: "1075489418521",
-  appId: "1:1075489418521:web:1b166eb484971a387d6988",
-  measurementId: "G-VV2CBVV3HQ"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-
-const provider = new firebase.auth.GoogleAuthProvider();
-
-provider.setCustomParameters({
-  prompt: "select_account"
-});
-
-
-/* ---------------- LOCAL STATE ---------------- */
-
-const STORAGE_KEY = "shine_nexus_workspace_v1";
-
-let state = {
-  tasks: [],
-  notes: [],
-  links: [],
-  documents: [],
-  inbox: [],
-  activity: []
-};
-
-
-function loadState() {
-
-  try {
-
-    const saved = localStorage.getItem(STORAGE_KEY);
-
-    if (saved) {
-      state = {
-        ...state,
-        ...JSON.parse(saved)
-      };
-    }
-
-  } catch (error) {
-
-    console.error(error);
-
-  }
-
-}
-
-
-function saveState() {
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(state)
-  );
-
-}
-
-
-/* ---------------- TOAST ---------------- */
-
-let toastTimer;
-
-function toast(message) {
-
-  const box = document.getElementById("toast");
-
-  box.textContent = message;
-
-  box.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(() => {
-    box.classList.remove("show");
-  }, 2600);
-
-}
-
-
-/* ---------------- LOGIN ---------------- */
-
-async function googleLogin() {
-
-  try {
-
-    toast("Opening Google sign-in...");
-
-    const result =
-      await auth.signInWithPopup(provider);
-
-    if (result && result.user) {
-
-      toast("Welcome to Shine Nexus.");
-
-    }
-
-  } catch (error) {
-
-    console.error(error);
-
-    let message =
-      "Google sign-in could not be completed.";
-
-    if (error.code === "auth/popup-blocked") {
-      message =
-        "Your browser blocked the sign-in popup.";
-    }
-
-    if (error.code === "auth/popup-closed-by-user") {
-      message =
-        "Sign-in window was closed.";
-    }
-
-    if (error.code === "auth/unauthorized-domain") {
-      message =
-        "This website domain is not authorized in Firebase.";
-    }
-
-    toast(message);
-
-  }
-
-}
-
-
-function showLogin() {
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-  setTimeout(() => {
-    googleLogin();
-  }, 250);
-
-}
-
-
-/* ---------------- AUTH STATE ---------------- */
-
-auth.onAuthStateChanged((user) => {
-
-  if (user) {
-
-    document
-      .getElementById("landing")
-      .classList.add("hidden");
-
-    document
-      .getElementById("app")
-      .classList.remove("hidden");
-
-    setUserUI(user);
-
-    loadState();
-
-    renderAll();
-
-  } else {
-
-    document
-      .getElementById("app")
-      .classList.add("hidden");
-
-    document
-      .getElementById("landing")
-      .classList.remove("hidden");
-
-  }
-
-});
-
-
-function setUserUI(user) {
-
-  const name =
-    user.displayName ||
-    "Shine user";
-
-  const email =
-    user.email ||
-    "";
-
-  const photo =
-    user.photoURL ||
-    "https://ui-avatars.com/api/?name=Shine+User&background=246bff&color=fff";
-
-  document.getElementById("userName").textContent = name;
-  document.getElementById("userEmail").textContent = email;
-
-  document.getElementById("userAvatar").src = photo;
-
-  document.getElementById("profileName").textContent = name;
-  document.getElementById("profileEmail").textContent = email;
-
-  document.getElementById("profileAvatar").src = photo;
-
-}
-
-
-/* ---------------- LOGOUT ---------------- */
-
-async function logout() {
-
-  try {
-
-    await auth.signOut();
-
-    toast("Signed out.");
-
-  } catch (error) {
-
-    toast("Could not sign out.");
-
-  }
-
-}
-
-
-/* ---------------- NAVIGATION ---------------- */
-
-function openPage(page) {
-
-  document
-    .querySelectorAll(".page")
-    .forEach((section) => {
-      section.classList.remove("active");
-    });
-
-  const target =
-    document.getElementById("page-" + page);
-
-  if (target) {
-    target.classList.add("active");
-  }
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach((button) => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.page === page
-      );
-
-    });
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-/* ---------------- CAPTURE ---------------- */
-
-function saveCapture(type = "note") {
-
-  const input =
-    document.getElementById("captureInput");
-
-  const text =
-    input.value.trim();
-
-  if (!text) {
-
-    toast("Write something first.");
-
-    input.focus();
-
-    return;
-
-  }
-
-  const item = {
-    id: crypto.randomUUID(),
-    text,
-    type,
-    createdAt: new Date().toISOString(),
-    completed: false
-  };
-
-
-  if (type === "task") {
-
-    state.tasks.unshift(item);
-
-  } else if (type === "link") {
-
-    state.links.unshift(item);
-
-  } else {
-
-    state.notes.unshift(item);
-
-  }
-
-
-  state.inbox.unshift({
-    ...item,
-    source: "Capture"
-  });
-
-
-  state.activity.unshift({
-    ...item
-  });
-
-
-  saveState();
-
-  input.value = "";
-
-  renderAll();
-
-  toast(
-    type === "task"
-      ? "Task created."
-      : type === "link"
-        ? "Link saved."
-        : "Note saved."
-  );
-
-  openPage(
-    type === "task"
-      ? "work"
-      : "inbox"
-  );
-
-}
-
-
-/* ---------------- SMART CAPTURE ---------------- */
-
-function smartCapture() {
-
-  const input =
-    document.getElementById("captureInput");
-
-  const text =
-    input.value.trim();
-
-  if (!text) {
-
-    toast("Paste or write something first.");
-
-    return;
-
-  }
-
-
-  const lower =
-    text.toLowerCase();
-
-
-  let detected =
-    "note";
-
-
-  if (
-    lower.includes("http://") ||
-    lower.includes("https://") ||
-    lower.includes("www.")
-  ) {
-
-    detected = "link";
-
-  } else if (
-    lower.includes("todo") ||
-    lower.includes("task") ||
-    lower.includes("deadline") ||
-    lower.includes("due") ||
-    lower.includes("need to") ||
-    lower.includes("remember")
-  ) {
-
-    detected = "task";
-
-  }
-
-
-  saveCapture(detected);
-
-}
-
-
-/* ---------------- TEMPLATES ---------------- */
-
-function captureTemplate(type) {
-
-  const templates = {
-
-    task:
-      "Task: What needs to be completed?",
-
-    link:
-      "https://",
-
-    research:
-      "Research question:\n\nWhat do I want to understand?\n\nSources:\n\nNext action:",
-
-    document:
-      "Document name:\n\nPurpose:\n\nImportant information:\n\nExpiry/deadline:",
-
-    meeting:
-      "Meeting:\n\nDate:\n\nPeople:\n\nKey points:\n\nFollow-up actions:",
-
-    idea:
-      "Idea:\n\nProblem:\n\nPossible solution:\n\nNext experiment:",
-
-    project:
-      "Project:\n\nGoal:\n\nMilestones:\n\nNext action:"
-  };
-
-
-  openPage("capture");
-
-  document.getElementById(
-    "captureInput"
-  ).value =
-    templates[type] ||
-    "";
-
-}
-
-
-/* ---------------- COMPLETE TASK ---------------- */
-
-function completeTask(id) {
-
-  const task =
-    state.tasks.find(
-      item => item.id === id
-    );
-
-  if (!task) return;
-
-  task.completed =
-    !task.completed;
-
-  saveState();
-
-  renderAll();
-
-  toast(
-    task.completed
-      ? "Task completed."
-      : "Task reopened."
-  );
-
-}
-
-
-/* ---------------- ATTENTION ENGINE ---------------- */
-
-function getAttentionItems() {
-
-  return state.tasks
-    .filter(task => !task.completed)
-    .slice(0, 5);
-
-}
-
-
-function renderAttention() {
-
-  const list =
-    document.getElementById("attentionList");
-
-  const items =
-    getAttentionItems();
-
-  document.getElementById(
-    "attentionCount"
-  ).textContent =
-    `${items.length} open item${items.length === 1 ? "" : "s"}`;
-
-
-  if (!items.length) {
-
-    list.innerHTML = `
-      <div class="attention-item">
-        <div>
-          <strong>You're clear 🎉</strong>
-          <br>
-          <small>No open tasks right now.</small>
-        </div>
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    items.map(item => `
-
-      <div class="attention-item">
-
-        <div>
-          <strong>
-            ${escapeHTML(item.text)}
-          </strong>
-
-          <br>
-
-          <small>
-            Captured ${formatDate(item.createdAt)}
-          </small>
-        </div>
-
-        <button
-          class="complete-btn"
-          onclick="completeTask('${item.id}')">
-
-          Done
-
-        </button>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ---------------- TASK LIST ---------------- */
-
-function renderTasks() {
-
-  const list =
-    document.getElementById("taskList");
-
-
-  const tasks =
-    state.tasks.slice(0, 30);
-
-
-  if (!tasks.length) {
-
-    list.innerHTML = emptyState(
-      "No tasks yet",
-      "Capture your first task and it will appear here."
-    );
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    tasks.map(task => `
-
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <strong>
-            ${escapeHTML(task.text)}
-          </strong>
-
-          <p>
-            ${task.completed ? "Completed" : "Open"}
-            · ${formatDate(task.createdAt)}
-          </p>
-
-        </div>
-
-        <button
-          class="${task.completed ? "small-btn" : "complete-btn"}"
-          onclick="completeTask('${task.id}')">
-
-          ${task.completed ? "Undo" : "Done"}
-
-        </button>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ---------------- INBOX ---------------- */
-
-function renderInbox() {
-
-  const list =
-    document.getElementById("inboxList");
-
-
-  const items =
-    state.inbox.slice(0, 50);
-
-
-  if (!items.length) {
-
-    list.innerHTML = emptyState(
-      "Your inbox is empty",
-      "Captured items will appear here."
-    );
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    items.map(item => `
-
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <strong>
-            ${escapeHTML(item.text)}
-          </strong>
-
-          <p>
-            ${escapeHTML(item.source || "Workspace")}
-            · ${formatDate(item.createdAt)}
-          </p>
-
-        </div>
-
-        <span class="pill">
-          ${escapeHTML(item.type || "item")}
-        </span>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ---------------- RECENT ---------------- */
-
-function renderRecent() {
-
-  const list =
-    document.getElementById("recentList");
-
-
-  const items =
-    state.activity.slice(0, 5);
-
-
-  if (!items.length) {
-
-    list.innerHTML = emptyState(
-      "Nothing captured yet",
-      "Start by creating a note, task or saved link."
-    );
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    items.map(item => `
-
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <strong>
-            ${escapeHTML(item.text)}
-          </strong>
-
-          <p>
-            ${formatDate(item.createdAt)}
-          </p>
-
-        </div>
-
-        <span class="pill">
-          ${escapeHTML(item.type || "item")}
-        </span>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ---------------- STATS ---------------- */
-
-function renderStats() {
-
-  document.getElementById(
-    "statTasks"
-  ).textContent =
-    state.tasks.filter(
-      task => !task.completed
-    ).length;
-
-  document.getElementById(
-    "statNotes"
-  ).textContent =
-    state.notes.length;
-
-  document.getElementById(
-    "statLinks"
-  ).textContent =
-    state.links.length;
-
-  document.getElementById(
-    "statDocs"
-  ).textContent =
-    state.documents.length;
-
-}
-
-
-/* ---------------- SEARCH ---------------- */
-
-function globalSearch() {
-
-  const query =
-    document
-      .getElementById("globalSearch")
-      .value
-      .trim()
-      .toLowerCase();
-
-
-  if (!query) {
-
-    renderAll();
-
-    return;
-
-  }
-
-
-  const all = [
-
-    ...state.tasks.map(x => ({
-      ...x,
-      category: "Task"
-    })),
-
-    ...state.notes.map(x => ({
-      ...x,
-      category: "Note"
-    })),
-
-    ...state.links.map(x => ({
-      ...x,
-      category: "Link"
-    })),
-
-    ...state.documents.map(x => ({
-      ...x,
-      category: "Document"
-    }))
-
-  ];
-
-
-  const results =
-    all.filter(item =>
-      String(item.text || "")
-        .toLowerCase()
-        .includes(query)
-    );
-
-
-  const list =
-    document.getElementById("recentList");
-
-
-  if (!results.length) {
-
-    list.innerHTML =
-      emptyState(
-        "Nothing found",
-        "Try another search term."
-      );
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    results.map(item => `
-
-      <div class="list-item">
-
-        <div class="list-main">
-
-          <strong>
-            ${escapeHTML(item.text)}
-          </strong>
-
-          <p>
-            ${item.category}
-          </p>
-
-        </div>
-
-        <span class="pill">
-          ${item.category}
-        </span>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ---------------- EMPTY STATE ---------------- */
-
-function emptyState(title, description) {
-
-  return `
-    <div class="list-item">
-      <div class="list-main">
-        <strong>${title}</strong>
-        <p>${description}</p>
+    <div class="ad-wrap" aria-label="Advertisement">
+      <!--
+        Public-content ad area.
+        Do not invent an ad-slot ID. After AdSense provides a real ad unit,
+        paste Google's exact generated ad code here.
+        Keep this area away from navigation and interactive controls.
+      -->
+      <div class="muted small" style="text-align:center;padding:22px 0">
+        Public content area
       </div>
     </div>
-  `;
 
+    <section id="about" class="public-section">
+      <h2>About Shine Nexus Global</h2>
+      <p>Shine Nexus Global is a practical digital workspace built around a simple problem: important information is scattered across notes, browser tabs and to-do lists. The first release focuses on useful features that work directly in the browser rather than showing unfinished integrations.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#" onclick="openLegal('about');return false">About Us</a>
+      <a href="#" onclick="openLegal('privacy');return false">Privacy Policy</a>
+      <a href="#" onclick="openLegal('terms');return false">Terms</a>
+      <a href="#" onclick="openLegal('contact');return false">Contact Us</a>
+      <a href="#" onclick="openLegal('security');return false">Security</a>
+    </div>
+    © 2026 Shine Nexus Global
+  </footer>
+</section>
+
+<section id="app" class="hidden">
+  <header class="appbar">
+    <div class="container appbar-inner">
+      <div class="user-mini">
+        <img id="avatar" class="avatar" alt="Profile">
+        <div><strong id="name">User</strong><span id="email">Signed in</span></div>
+      </div>
+      <div class="menu-wrap">
+        <button class="dots" onclick="toggleMenu()" aria-label="More options">⋮</button>
+        <div id="profileMenu" class="menu hidden">
+          <button onclick="openLegal('about');toggleMenu()">About Us</button>
+          <button onclick="openLegal('privacy');toggleMenu()">Privacy Policy</button>
+          <button onclick="openLegal('terms');toggleMenu()">Terms</button>
+          <button onclick="openLegal('contact');toggleMenu()">Contact Us</button>
+          <button onclick="openLegal('security');toggleMenu()">Security</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container app-main">
+    <section id="home" class="page active">
+      <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search your workspace..." oninput="searchAll()"></div>
+      <div class="welcome"><h1 id="hello">Good day 👋</h1><p>Here is what matters right now.</p></div>
+
+      <div class="attention">
+        <div class="att-top"><div><b>Needs attention</b><div id="attentionCount" class="count">0 open tasks</div></div><span>🎯</span></div>
+        <div id="attentionList" class="attention-list"></div>
+      </div>
+
+      <div class="section-head"><h2>Quick actions</h2></div>
+      <div class="quick">
+        <button onclick="newNote()"><span>📝</span><b>New note</b><small class="muted">Save an idea</small></button>
+        <button onclick="newTask()"><span>✅</span><b>New task</b><small class="muted">Add something to do</small></button>
+        <button onclick="newBookmark()"><span>🔗</span><b>Save link</b><small class="muted">Keep a website</small></button>
+        <button onclick="newResearch()"><span>🔬</span><b>Research</b><small class="muted">Explore a question</small></button>
+      </div>
+
+      <div class="section-head"><h2>Overview</h2></div>
+      <div class="stats">
+        <div class="stat"><b id="sTasks">0</b><span>Open tasks</span></div>
+        <div class="stat"><b id="sNotes">0</b><span>Notes</span></div>
+        <div class="stat"><b id="sLinks">0</b><span>Bookmarks</span></div>
+        <div class="stat"><b id="sResearch">0</b><span>Research</span></div>
+      </div>
+
+      <div class="section-head"><h2>Recent</h2><button onclick="go('inbox')">View all</button></div>
+      <div id="recent" class="list"></div>
+    </section>
+
+    <section id="inbox" class="page">
+      <div class="welcome"><h1>Inbox</h1><p>Everything you captured recently.</p></div>
+      <div class="section-head"><h2>All captured items</h2><button onclick="clearInbox()">Clear history</button></div>
+      <div id="inboxList" class="list"></div>
+    </section>
+
+    <section id="capture" class="page">
+      <div class="capture"><h1>Capture</h1><p>Write it first. Organize it in seconds.</p></div>
+      <div class="form-row"><label>What do you want to save?</label><textarea id="captureText" placeholder="Write a note, paste a URL, or describe a task..."></textarea></div>
+      <div class="form-grid">
+        <div class="form-row"><label>Type</label><select id="captureType"><option value="note">Note</option><option value="task">Task</option><option value="bookmark">Bookmark</option><option value="research">Research note</option></select></div>
+        <div class="form-row"><label>Date (optional)</label><input id="captureDate" type="date"></div>
+      </div>
+      <div class="row"><button class="btn primary" onclick="saveCapture()">Save</button><button class="btn ghost" onclick="smartCapture()">Smart choose</button></div>
+      <div class="section-head"><h2>Simple rule</h2></div>
+      <div class="card"><b>Capture → Review → Act</b><p>Do not make every piece of information a task. Keep notes as notes, links as bookmarks and actions as tasks.</p></div>
+    </section>
+
+    <section id="work" class="page">
+      <div class="welcome"><h1>Work</h1><p>Four places for the things you want to keep moving.</p></div>
+      <div class="section-head"><h2>Tasks</h2><button onclick="newTask()">+ Add</button></div>
+      <div id="taskList" class="list"></div>
+      <div class="section-head"><h2>Bookmarks</h2><button onclick="newBookmark()">+ Add</button></div>
+      <div id="bookmarkList" class="list"></div>
+      <div class="section-head"><h2>Research</h2><button onclick="newResearch()">+ Add</button></div>
+      <div id="researchList" class="list"></div>
+    </section>
+
+    <section id="tools" class="page">
+      <div class="welcome"><h1>Tools</h1><p>Small utilities for everyday work.</p></div>
+      <div class="tool-grid">
+        <div class="tool">
+          <h3>Calculator</h3>
+          <input id="calc" inputmode="decimal" placeholder="e.g. 125*4+20">
+          <button class="btn primary" onclick="calculate()">Calculate</button>
+          <p id="calcResult" class="muted"></p>
+        </div>
+        <div class="tool">
+          <h3>Unit converter</h3>
+          <input id="convValue" type="number" placeholder="Value">
+          <select id="convType"><option value="kmmi">Kilometers → Miles</option><option value="mikm">Miles → Kilometers</option><option value="kgp">Kilograms → Pounds</option><option value="pkg">Pounds → Kilograms</option><option value="cmft">Centimeters → Feet</option><option value="ftcm">Feet → Centimeters</option></select>
+          <button class="btn primary" onclick="convert()">Convert</button>
+          <p id="convResult" class="muted"></p>
+        </div>
+        <div class="tool">
+          <h3>Focus timer</h3>
+          <div id="timer" class="focus">25:00</div>
+          <div class="row"><button class="btn primary" onclick="startTimer()">Start</button><button class="btn ghost" onclick="pauseTimer()">Pause</button><button class="btn ghost" onclick="resetTimer()">Reset</button></div>
+        </div>
+        <div class="tool">
+          <h3>Today's plan</h3>
+          <div id="todayPlan" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile" class="page">
+      <div class="profile-head">
+        <img id="profileAvatar" class="avatar" alt="Profile">
+        <div><h2 id="profileName" style="margin:0">User</h2><p id="profileEmail" class="muted small" style="margin:3px 0">Email</p></div>
+      </div>
+      <div class="settings">
+        <div class="setting"><div><b>Data storage</b><span>Your workspace in this version is stored in this browser.</span></div><span class="pill">Local</span></div>
+        <div class="setting"><div><b>Google sign-in</b><span>Used only for authentication in this version.</span></div><span class="pill">Active</span></div>
+        <div class="setting"><div><b>Gmail / Drive / Calendar</b><span>Not shown as connected because this release does not pretend to have unfinished integrations.</span></div><span class="pill">Not connected</span></div>
+        <div class="setting"><div><b>Export</b><span>Save a JSON copy of your workspace.</span></div><button class="btn ghost" onclick="exportData()">Export</button></div>
+        <div class="setting"><div><b>Sign out</b><span>Return to the public home page.</span></div><button class="btn ghost" onclick="logout()">Sign out</button></div>
+        <div class="setting"><div><b>Delete local data</b><span>Removes workspace data from this browser.</span></div><button class="btn danger" onclick="deleteData()">Delete</button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom">
+    <button class="navbtn active" data-page="home" onclick="go('home')"><span>⌂</span>Home</button>
+    <button class="navbtn" data-page="inbox" onclick="go('inbox')"><span>▣</span>Inbox</button>
+    <button class="navbtn" data-page="capture" onclick="go('capture')"><span>＋</span>Capture</button>
+    <button class="navbtn" data-page="work" onclick="go('work')"><span>◈</span>Work</button>
+    <button class="navbtn" data-page="tools" onclick="go('tools')"><span>🧰</span>Tools</button>
+  </nav>
+</section>
+
+<div id="legalBack" class="modal-back" onclick="if(event.target===this)closeLegal()">
+  <article class="modal">
+    <div class="modal-top"><h2 id="legalTitle">About Us</h2><button class="close" onclick="closeLegal()">×</button></div>
+    <div id="legalBody"></div>
+  </article>
+</div>
+<div id="toast"></div>
+
+<script>
+/* ===== Firebase: only authentication is connected in this release ===== */
+const firebaseConfig={
+ apiKey:"AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
+ authDomain:"shaheen-nexus.firebaseapp.com",
+ projectId:"shaheen-nexus",
+ storageBucket:"shaheen-nexus.firebasestorage.app",
+ messagingSenderId:"1075489418521",
+ appId:"1:1075489418521:web:1b166eb484971a387d6988",
+ measurementId:"G-VV2CBVV3HQ"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(),provider=new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+
+/* ===== Local workspace ===== */
+const KEY="shine_nexus_global_v2";
+const blank=()=>({tasks:[],notes:[],bookmarks:[],research:[],inbox:[]});
+let db=loadDB();
+function loadDB(){try{return {...blank(),...(JSON.parse(localStorage.getItem(KEY)||"{}"))}}catch{return blank()}}
+function saveDB(){localStorage.setItem(KEY,JSON.stringify(db))}
+function id(){return crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function dateText(v){if(!v)return"";return new Date(v).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
+function toast(s){const x=document.getElementById("toast");x.textContent=s;x.classList.add("show");clearTimeout(window._t);window._t=setTimeout(()=>x.classList.remove("show"),2300)}
+function empty(t,d){return `<div class="item"><div class="item-main"><b>${esc(t)}</b><p>${esc(d)}</p></div></div>`}
+
+/* ===== Auth ===== */
+async function login(){
+ try{await auth.signInWithPopup(provider)}
+ catch(e){
+  console.error(e);
+  const map={"auth/popup-blocked":"Your browser blocked the Google window.","auth/popup-closed-by-user":"The Google window was closed.","auth/unauthorized-domain":"Add this website domain to Firebase Authentication → Authorized domains."};
+  toast(map[e.code]||"Google sign-in failed. Check Firebase Auth settings.")
+ }
+}
+async function logout(){try{await auth.signOut();toast("Signed out.")}catch{toast("Could not sign out.")}}
+auth.onAuthStateChanged(user=>{
+ if(user){
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  setUser(user);render();
+ }else{
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("landing").classList.remove("hidden");
+ }
+});
+function setUser(u){
+ const photo=u.photoURL||"";
+ ["avatar","profileAvatar"].forEach(x=>{document.getElementById(x).src=photo});
+ ["name","profileName"].forEach(x=>document.getElementById(x).textContent=u.displayName||"Shine user");
+ ["email","profileEmail"].forEach(x=>document.getElementById(x).textContent=u.email||"");
 }
 
+/* ===== Navigation ===== */
+function go(page){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ const p=document.getElementById(page);if(p)p.classList.add("active");
+ document.querySelectorAll(".navbtn").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleMenu(){document.getElementById("profileMenu").classList.toggle("hidden")}
 
-/* ---------------- FORMAT ---------------- */
-
-function formatDate(date) {
-
-  try {
-
-    return new Date(date)
-      .toLocaleDateString(
-        undefined,
-        {
-          month: "short",
-          day: "numeric"
-        }
-      );
-
-  } catch {
-
-    return "";
-
-  }
-
+/* ===== Capture ===== */
+function openCapture(type="note",prefill="",date=""){
+ go("capture");document.getElementById("captureType").value=type;document.getElementById("captureText").value=prefill;document.getElementById("captureDate").value=date;
+ setTimeout(()=>document.getElementById("captureText").focus(),150)
+}
+function newNote(){openCapture("note")}
+function newTask(){openCapture("task")}
+function newBookmark(){openCapture("bookmark","https://")}
+function newResearch(){openCapture("research","Research question:\n\nSources:\n\nFindings:\n\nNext action:")}
+function smartCapture(){
+ const t=document.getElementById("captureText").value.trim().toLowerCase();
+ if(!t){toast("Write or paste something first.");return}
+ let type="note";
+ if(/^https?:\/\//i.test(t)||t.includes("www."))type="bookmark";
+ else if(/todo|task|deadline|due|need to|remember|appointment/i.test(t))type="task";
+ document.getElementById("captureType").value=type;toast("Type selected: "+type)
+}
+function saveCapture(){
+ const text=document.getElementById("captureText").value.trim();
+ if(!text){toast("Write something first.");return}
+ const type=document.getElementById("captureType").value,date=document.getElementById("captureDate").value;
+ const item={id:id(),text,type,date,createdAt:new Date().toISOString(),done:false};
+ if(type==="task")db.tasks.unshift(item);
+ else if(type==="bookmark")db.bookmarks.unshift(item);
+ else if(type==="research")db.research.unshift(item);
+ else db.notes.unshift(item);
+ db.inbox.unshift(item);saveDB();document.getElementById("captureText").value="";document.getElementById("captureDate").value="";render();toast("Saved.");go(type==="task"?"work":"inbox")
 }
 
+/* ===== Rendering ===== */
+function render(){
+ renderAttention();renderStats();renderRecent();renderInbox();renderTasks();renderBookmarks();renderResearch();renderToday()
+}
+function renderAttention(){
+ const open=db.tasks.filter(x=>!x.done).sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999")).slice(0,5);
+ document.getElementById("attentionCount").textContent=open.length+" open task"+(open.length===1?"":"s");
+ document.getElementById("attentionList").innerHTML=open.length?open.map(x=>`
+  <div class="attention-item"><div><b>${esc(x.text)}</b><div class="small muted">${x.date?"Due "+dateText(x.date):"No date set"}</div></div>
+  <button class="done" onclick="completeTask('${x.id}')">Done</button></div>`).join(""):empty("Nothing urgent here","Create a task when something needs action.")
+}
+function renderStats(){
+ document.getElementById("sTasks").textContent=db.tasks.filter(x=>!x.done).length;
+ document.getElementById("sNotes").textContent=db.notes.length;
+ document.getElementById("sLinks").textContent=db.bookmarks.length;
+ document.getElementById("sResearch").textContent=db.research.length;
+}
+function renderRecent(){
+ const items=db.inbox.slice(0,7);
+ document.getElementById("recent").innerHTML=items.length?items.map(item=>itemHTML(item)).join(""):empty("Your workspace is ready","Create a note, task, bookmark or research item.")
+}
+function renderInbox(){
+ const items=db.inbox;
+ document.getElementById("inboxList").innerHTML=items.length?items.map(item=>itemHTML(item)).join(""):empty("Inbox is empty","Captured items will appear here.")
+}
+function itemHTML(x){
+ return `<div class="item"><div class="item-main"><b>${esc(x.text).slice(0,500)}</b><p>${esc(x.type)}${x.date?" · "+dateText(x.date):""} · ${dateText(x.createdAt)}</p></div>${x.type==="task"?`<button class="done" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button>`:`<span class="pill">${esc(x.type)}</span>`}</div>`
+}
+function renderTasks(){
+ const a=db.tasks;
+ document.getElementById("taskList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${x.done?"✓ ":""}${esc(x.text)}</b><p>${x.done?"Completed":x.date?"Due "+dateText(x.date):"No date"} · ${dateText(x.createdAt)}</p></div><button class="${x.done?"btn ghost":"done"}" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button></div>`).join(""):empty("No tasks","When something needs action, add it here.")
+}
+function renderBookmarks(){
+ const a=db.bookmarks;
+ document.getElementById("bookmarkList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b><p>Saved ${dateText(x.createdAt)}</p></div><button class="btn ghost" onclick="openLink('${encodeURIComponent(x.text)}')">Open</button></div>`).join(""):empty("No bookmarks","Save a useful website from Capture.")
+}
+function openLink(s){let u=decodeURIComponent(s);if(!/^https?:\/\//i.test(u))u="https://"+u;window.open(u,"_blank","noopener,noreferrer")}
+function renderResearch(){
+ const a=db.research;
+ document.getElementById("researchList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text).split("\n")[0]}</b><p>${esc(x.text).slice(0,180)}</p></div><span class="pill">Research</span></div>`).join(""):empty("No research yet","Create a research note with question, sources, findings and next action.")
+}
+function renderToday(){
+ const a=db.tasks.filter(x=>!x.done&&x.date===today());
+ document.getElementById("todayPlan").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b></div><button class="done" onclick="completeTask('${x.id}')">Done</button></div>`).join(""):empty("No dated tasks today","Set a date on a task to see it here.")
+}
+function today(){return new Date().toISOString().slice(0,10)}
+function completeTask(i){const x=db.tasks.find(x=>x.id===i);if(!x)return;x.done=!x.done;saveDB();render();toast(x.done?"Task completed.":"Task reopened.")}
 
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
+/* ===== Search ===== */
+function searchAll(){
+ const q=document.getElementById("searchInput").value.trim().toLowerCase();
+ if(!q){renderRecent();return}
+ const all=[...db.tasks,...db.notes,...db.bookmarks,...db.research].filter(x=>(x.text||"").toLowerCase().includes(q));
+ document.getElementById("recent").innerHTML=all.length?all.map(itemHTML).join(""):empty("No results","Try another word.")
 }
 
-
-/* ---------------- THEME ---------------- */
-
-function toggleTheme() {
-
-  const current =
-    localStorage.getItem("shine_theme");
-
-  if (current === "light") {
-
-    localStorage.setItem(
-      "shine_theme",
-      "dark"
-    );
-
-    document.body.style.filter = "";
-
-    toast("Dark mode enabled.");
-
-  } else {
-
-    localStorage.setItem(
-      "shine_theme",
-      "light"
-    );
-
-    document.body.style.filter =
-      "brightness(1.08)";
-
-    toast("Light preference saved.");
-
-  }
-
+/* ===== Inbox / data ===== */
+function clearInbox(){if(!confirm("Clear captured history? This does not delete your tasks, notes, bookmarks or research."))return;db.inbox=[];saveDB();render();toast("History cleared.")}
+function exportData(){
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=u;a.download="shine-nexus-workspace.json";a.click();URL.revokeObjectURL(u);toast("Workspace exported.")
 }
+function deleteData(){if(!confirm("Delete all Shine Nexus workspace data from this browser?"))return;db=blank();saveDB();render();toast("Local data deleted.")}
 
-
-/* ---------------- EXPORT ---------------- */
-
-function exportData() {
-
-  const blob =
-    new Blob(
-      [
-        JSON.stringify(
-          state,
-          null,
-          2
-        )
-      ],
-      {
-        type: "application/json"
-      }
-    );
-
-
-  const url =
-    URL.createObjectURL(blob);
-
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-    "shine-nexus-workspace.json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-
-  toast("Workspace exported.");
-
+/* ===== Tools ===== */
+function calculate(){
+ const raw=document.getElementById("calc").value.trim();
+ if(!/^[0-9+\-*/().%\s]+$/.test(raw)){document.getElementById("calcResult").textContent="Use numbers and + - * / % ( ) only.";return}
+ try{const result=Function('"use strict";return ('+raw+')')();document.getElementById("calcResult").textContent=Number.isFinite(result)?String(result):"Invalid result"}catch{document.getElementById("calcResult").textContent="Check the expression."}
 }
-
-
-/* ---------------- DELETE LOCAL DATA ---------------- */
-
-function deleteLocalData() {
-
-  const confirmed =
-    confirm(
-      "Delete all locally stored Shine Nexus workspace data?"
-    );
-
-  if (!confirmed) return;
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
-
-  state = {
-    tasks: [],
-    notes: [],
-    links: [],
-    documents: [],
-    inbox: [],
-    activity: []
-  };
-
-  renderAll();
-
-  toast("Local workspace deleted.");
-
+function convert(){
+ const v=Number(document.getElementById("convValue").value),t=document.getElementById("convType").value;
+ if(!Number.isFinite(v)){document.getElementById("convResult").textContent="Enter a number.";return}
+ const m={kmmi:v*.621371,mikm:v*1.609344,kgp:v*2.2046226218,pkg:v*.45359237,cmft:v*.032808399,ftcm:v*30.48};
+ document.getElementById("convResult").textContent=m[t].toLocaleString(undefined,{maximumFractionDigits:6})
 }
+let timerSeconds=1500,timerId=null;
+function paintTimer(){document.getElementById("timer").textContent=String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+String(timerSeconds%60).padStart(2,"0")}
+function startTimer(){if(timerId)return;timerId=setInterval(()=>{if(timerSeconds<=0){clearInterval(timerId);timerId=null;toast("Focus session complete.");return}timerSeconds--;paintTimer()},1000)}
+function pauseTimer(){clearInterval(timerId);timerId=null}
+function resetTimer(){pauseTimer();timerSeconds=1500;paintTimer()}
 
+/* ===== Legal / information ===== */
+const legal={
+ about:["About Us",`<h3>What is Shine Nexus?</h3><p>Shine Nexus Global is a practical workspace for organizing tasks, notes, bookmarks, research and everyday planning. The goal is clarity: users should understand what each screen does without needing technical knowledge.</p><h3>What this release does</h3><p>This release provides Google authentication plus browser-based workspace features. It deliberately does not claim that Gmail, Drive or Calendar are connected when they are not.</p>`],
+ privacy:["Privacy Policy",`<h3>Information we use</h3><p>Google sign-in is handled by Firebase Authentication. Your workspace items in this release are stored in your browser's local storage on the device/browser where you use the app.</p><h3>What we do not claim</h3><p>This release does not connect to your Gmail, Drive, Calendar or Sheets and therefore does not read those services.</p><h3>Deleting data</h3><p>Use Profile → Delete local data to remove the workspace stored in this browser. Signing out does not automatically delete local workspace data.</p><p>This is a product disclosure for the current code, not legal advice. Before public launch, replace this page with a policy reviewed for your actual company, hosting, analytics and data practices.</p>`],
+ terms:["Terms",`<h3>Use of the service</h3><p>Use Shine Nexus responsibly and do not use it to violate laws, other people's rights or the terms of services you connect to.</p><h3>Availability</h3><p>Features can change as the product develops. This release focuses on the features that are actually implemented rather than promising unfinished integrations.</p><h3>Third-party services</h3><p>Google authentication is provided through Firebase. Their own terms and policies also apply.</p>`],
+ contact:["Contact Us",`<h3>We want useful feedback</h3><p>Tell us what was confusing, what failed, and what problem you want Shine Nexus to solve. For a real public launch, replace this section with your verified support email or support form.</p><div class="form-row"><label>Your message</label><textarea id="contactMessage" placeholder="What should we improve?"></textarea></div><button class="btn primary" onclick="copyFeedback()">Copy message</button><p class="small muted">The current single-file version cannot send email from the browser by itself. Copy the message and send it through your normal email/support channel.</p>`],
+ security:["Security",`<h3>Current security model</h3><p>Google authentication is handled by Firebase Authentication. Workspace data in this release stays in browser local storage. No Gmail, Drive, Calendar or Sheets tokens are stored because those integrations are not enabled in this release.</p><h3>Important limitation</h3><p>Browser local storage is not a substitute for a production encrypted database. A future server-backed version should add proper authorization rules, encryption strategy, backups, audit logging and secure OAuth token handling before sensitive business data is supported.</p>`]
+};
+function openLegal(k){document.getElementById("legalTitle").textContent=legal[k][0];document.getElementById("legalBody").innerHTML=legal[k][1];document.getElementById("legalBack").classList.add("show")}
+function closeLegal(){document.getElementById("legalBack").classList.remove("show")}
+function copyFeedback(){const x=document.getElementById("contactMessage");if(!x)return;navigator.clipboard?.writeText(x.value||"").then(()=>toast("Message copied.")).catch(()=>toast("Select and copy your message manually."))}
 
-/* ---------------- RENDER ---------------- */
-
-function renderAll() {
-
-  renderAttention();
-  renderStats();
-  renderRecent();
-  renderInbox();
-  renderTasks();
-
-}
-
-
-/* ---------------- START ---------------- */
-
-loadState();
-
+/* ===== Start ===== */
+paintTimer();render();
 </script>
 
+<!--
+  AdSense note:
+  Add the exact ad code generated inside AdSense only after your real ad unit
+  exists. This starter does not fabricate an ad-slot ID.
+-->
 </body>
 </html>
