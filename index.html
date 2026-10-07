@@ -4,483 +4,189 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<title>Shine Nexus Global — Your Digital Life, Organized</title>
-<meta name="description" content="Shine Nexus Global is a simple workspace for tasks, notes, bookmarks, research, daily planning and useful everyday tools.">
+<title>Shine Nexus Global — Simple tools for work and life</title>
+<meta name="description" content="Shine Nexus Global helps you capture information, organize tasks, save useful links, plan your day and optionally connect read-only Google services.">
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <style>
-:root{
-  --bg:#07111f;--bg2:#0b1728;--panel:#0e1c30;--panel2:#12243b;
-  --text:#f5f8ff;--muted:#9fb0c6;--line:rgba(255,255,255,.09);
-  --blue:#2d6bff;--cyan:#19d8ff;--green:#35d58a;--yellow:#ffd166;--red:#ff6680;
-  --shadow:0 18px 55px rgba(0,0,0,.28);--r:20px;
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:
-radial-gradient(circle at 15% 0%,rgba(45,107,255,.16),transparent 34%),
-radial-gradient(circle at 90% 10%,rgba(25,216,255,.10),transparent 28%),var(--bg);
-color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-button,input,textarea,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
-.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px}
-.container{width:min(1120px,calc(100% - 28px));margin:auto}
-.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:800}
-.btn.primary{color:#fff;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 10px 28px rgba(45,107,255,.22)}
-.btn.ghost{color:#fff;background:rgba(255,255,255,.06);border:1px solid var(--line)}
-.btn.danger{color:#ff9aac;background:rgba(255,102,128,.09);border:1px solid rgba(255,102,128,.18)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900}
-.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:20px;box-shadow:0 10px 30px rgba(25,216,255,.16)}
-.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600}
-.public-nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.nav-links{display:flex;gap:20px;color:var(--muted);font-size:13px}.nav-links a:hover{color:#fff}
-.hero{text-align:center;padding:74px 0 55px}
-.badge{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(25,216,255,.2);background:rgba(25,216,255,.06);color:#b9f7ff;font-size:12px}
-.hero h1{font-size:clamp(42px,8vw,78px);line-height:.98;letter-spacing:-4px;max-width:900px;margin:20px auto}
-.gradient{background:linear-gradient(90deg,#fff,#7eeeff,#7894ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:720px;margin:0 auto 26px;color:var(--muted);font-size:17px}
-.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.google{background:#fff;color:#111;border:0;border-radius:13px;padding:13px 18px;font-weight:900;display:inline-flex;gap:10px;align-items:center}
-.gdot{width:19px;height:19px;border-radius:50%;background:conic-gradient(#4285f4 0 25%,#34a853 25% 50%,#fbbc05 50% 75%,#ea4335 75%)}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 0 55px}
-.card{background:rgba(14,28,48,.82);border:1px solid var(--line);border-radius:var(--r);padding:21px;box-shadow:var(--shadow)}
-.card h3{margin:8px 0}.card p{margin:0;color:var(--muted);font-size:13px}.icon{font-size:25px}
-.public-section{padding:25px 0 55px}.public-section h2{font-size:30px;margin:0 0 8px}.public-section>p{color:var(--muted);max-width:780px}
-.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-.ad-wrap{min-height:90px;margin:15px auto 35px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.footer{border-top:1px solid var(--line);padding:30px 0 50px;text-align:center;color:var(--muted);font-size:12px}
-.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:17px;margin-bottom:12px}
-
-#app{min-height:100vh;padding-bottom:92px}.appbar{position:sticky;top:0;z-index:40;background:rgba(7,17,31,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.appbar-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.user-mini{display:flex;align-items:center;gap:10px;min-width:0}.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#18304d}.user-mini strong{display:block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-mini span{display:block;color:var(--muted);font-size:11px}
-.app-main{padding:20px 0}.page{display:none}.page.active{display:block;animation:up .18s ease}@keyframes up{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}
-.search{display:flex;align-items:center;gap:9px;padding:13px 15px;background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-bottom:20px}
-.search input{flex:1;background:none;border:0;outline:0;color:#fff}.search input::placeholder{color:#70839c}
-.welcome{margin-bottom:19px}.welcome h1{font-size:31px;letter-spacing:-1.2px;margin:0}.welcome p{color:var(--muted);margin:4px 0 0}
-.attention{padding:18px;border-radius:var(--r);background:linear-gradient(135deg,rgba(45,107,255,.16),rgba(25,216,255,.04));border:1px solid rgba(25,216,255,.13)}
-.att-top{display:flex;justify-content:space-between;margin-bottom:11px}.attention-list{display:grid;gap:8px}.attention-item{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(0,0,0,.16);padding:12px;border-radius:13px}
-.count{color:#a4efff;font-size:12px}.done{border:0;border-radius:9px;padding:8px 10px;background:rgba(53,213,138,.12);color:#8df0bb}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px}.section-head h2{font-size:18px;margin:0}.section-head button{border:0;background:none;color:#83eaff;font-size:12px}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{background:var(--panel);border:1px solid var(--line);color:#fff;border-radius:17px;padding:15px;text-align:left}.quick b{display:block;margin-top:7px}.quick span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.stat b{font-size:25px;display:block}.stat span{font-size:11px;color:var(--muted)}
-.list{display:grid;gap:9px}.item{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item-main{min-width:0}.item-main b{display:block}.item-main p{margin:4px 0 0;color:var(--muted);font-size:12px;white-space:pre-wrap;word-break:break-word}.pill{display:inline-flex;padding:5px 8px;border-radius:999px;background:rgba(45,107,255,.12);color:#9dbbff;font-size:10px;white-space:nowrap}
-.capture{background:linear-gradient(135deg,rgba(45,107,255,.18),rgba(25,216,255,.04));border:1px solid rgba(25,216,255,.12);border-radius:22px;padding:20px;margin-bottom:13px}.capture h1{margin:0 0 5px}.capture p{margin:0;color:var(--muted);font-size:13px}
-textarea,input,select{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;color:#fff;padding:13px;outline:none}
-textarea{min-height:170px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-row{margin-bottom:10px}.form-row label{display:block;font-size:11px;color:var(--muted);margin:0 0 5px}.row{display:flex;gap:8px;flex-wrap:wrap}
-.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.tool{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}.tool h3{margin:0 0 8px}.tool input,.tool select{margin-bottom:8px}
-.focus{font-size:52px;text-align:center;font-variant-numeric:tabular-nums;padding:20px 0}
-.menu-wrap{position:relative}.dots{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.06);color:#fff;font-size:21px}
-.menu{position:absolute;right:0;top:49px;width:210px;background:#102039;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:6px;z-index:100}.menu button{display:block;width:100%;padding:11px;text-align:left;border:0;background:none;color:#fff;border-radius:10px}.menu button:hover{background:rgba(255,255,255,.06)}
-.profile-head{display:flex;align-items:center;gap:14px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:22px;margin-bottom:12px}.profile-head .avatar{width:65px;height:65px}.settings{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:0 17px}.setting{padding:15px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.setting:last-child{border:0}.setting b{display:block}.setting span{display:block;color:var(--muted);font-size:11px}
-.bottom{position:fixed;bottom:11px;left:50%;transform:translateX(-50%);z-index:90;width:min(700px,calc(100% - 16px));display:grid;grid-template-columns:repeat(5,1fr);padding:7px;background:rgba(8,20,35,.94);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:21px;box-shadow:var(--shadow)}
-.navbtn{background:none;border:0;color:#7f92ab;border-radius:14px;padding:8px 3px;font-size:10px}.navbtn span{display:block;font-size:18px;margin-bottom:2px}.navbtn.active{background:rgba(45,107,255,.15);color:#fff}
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:flex-end;justify-content:center;z-index:200;padding:12px}.modal-back.show{display:flex}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:#0d1c31;border:1px solid var(--line);border-radius:23px;padding:20px;box-shadow:var(--shadow)}.modal h2{margin-top:0}.modal h3{margin-bottom:5px}.modal p,.modal li{color:var(--muted);font-size:13px;line-height:1.7}.modal-top{display:flex;justify-content:space-between;align-items:center}.close{width:38px;height:38px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:11px}
-#toast{position:fixed;left:50%;bottom:88px;transform:translate(-50%,15px);opacity:0;pointer-events:none;z-index:300;background:#142844;border:1px solid var(--line);padding:11px 15px;border-radius:12px;font-size:12px;transition:.22s;max-width:calc(100% - 25px);text-align:center}#toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:800px){.cards,.guide-grid{grid-template-columns:1fr}.nav-links{display:none}.quick{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.tool-grid{grid-template-columns:1fr}.hero{padding-top:55px}.hero h1{letter-spacing:-2.5px}}
-@media(max-width:480px){.container{width:min(100% - 20px,1120px)}.form-grid{grid-template-columns:1fr}.hero p{font-size:15px}.hero-actions .btn,.google{width:100%;justify-content:center}.quick button{padding:13px}}
+:root{--bg:#07111f;--bg2:#0b1728;--panel:#0f1d31;--panel2:#13263f;--text:#f5f8ff;--muted:#9eafc5;--line:rgba(255,255,255,.09);--blue:#2d6bff;--cyan:#19d8ff;--green:#35d58a;--yellow:#ffd166;--red:#ff6680;--shadow:0 18px 55px rgba(0,0,0,.26);--r:20px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0%,rgba(45,107,255,.16),transparent 32%),radial-gradient(circle at 90% 10%,rgba(25,216,255,.10),transparent 26%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.hidden{display:none!important}.container{width:min(1160px,calc(100% - 28px));margin:auto}.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:11px}
+.btn{border:0;border-radius:14px;padding:12px 16px;font-weight:800}.btn.primary{color:white;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 10px 28px rgba(45,107,255,.22)}.btn.ghost{color:#fff;background:rgba(255,255,255,.06);border:1px solid var(--line)}.btn.danger{color:#ff9aac;background:rgba(255,102,128,.08);border:1px solid rgba(255,102,128,.18)}.btn.small{padding:8px 10px;font-size:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:20px;box-shadow:0 10px 30px rgba(25,216,255,.16)}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600}
+.public-nav{position:sticky;top:0;z-index:60;background:rgba(7,17,31,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:12px}.nav-links{display:flex;gap:20px;color:var(--muted);font-size:13px}.nav-links a:hover{color:#fff}
+.hero{text-align:center;padding:76px 0 56px}.badge{display:inline-flex;padding:8px 13px;border-radius:999px;border:1px solid rgba(25,216,255,.18);background:rgba(25,216,255,.05);color:#bdf8ff;font-size:12px}.hero h1{font-size:clamp(42px,8vw,78px);line-height:.98;letter-spacing:-4px;max-width:920px;margin:20px auto}.gradient{background:linear-gradient(90deg,#fff,#7eeeff,#7894ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:760px;margin:0 auto 26px;color:var(--muted);font-size:17px}.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.google{background:#fff;color:#111;border:0;border-radius:13px;padding:13px 18px;font-weight:900;display:inline-flex;gap:10px;align-items:center}.gdot{width:19px;height:19px;border-radius:50%;background:conic-gradient(#4285f4 0 25%,#34a853 25% 50%,#fbbc05 50% 75%,#ea4335 75%)}
+.public-section{padding:44px 0}.public-section h2{text-align:center;font-size:30px;margin:0 0 9px}.public-section>p{max-width:780px;margin:0 auto 24px;text-align:center;color:var(--muted)}.cards,.guide-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}.card h3{margin:0 0 6px}.card p{margin:0;color:var(--muted)}.ad-wrap{margin:16px auto 0;min-height:76px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;place-items:center}.ad-note{color:var(--muted);font-size:11px}
+.footer{border-top:1px solid var(--line);padding:28px 0 90px;color:var(--muted);text-align:center}.footer-links{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:10px}.footer-links a:hover{color:#fff}
+.appbar{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.appbar-inner{height:64px;display:flex;align-items:center;justify-content:space-between}.user-mini{display:flex;align-items:center;gap:10px}.user-mini span{display:block;color:var(--muted);font-size:11px}.avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--blue),var(--cyan))}.dots{border:0;background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line);width:38px;height:38px;border-radius:50%;font-size:22px}.menu-wrap{position:relative}.menu{position:absolute;right:0;top:47px;min-width:200px;background:#0d1a2c;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:7px}.menu button{display:block;width:100%;text-align:left;border:0;background:none;color:#fff;padding:11px 12px;border-radius:10px}.menu button:hover{background:rgba(255,255,255,.06)}
+.app-main{padding:20px 0 95px}.page{display:none}.page.active{display:block}.welcome h1{margin:0;font-size:30px}.welcome p{margin:3px 0 18px;color:var(--muted)}.search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px 14px;margin-bottom:18px}.search span{font-size:20px;color:var(--muted)}.search input{width:100%;border:0;outline:0;background:transparent;color:#fff}.attention{background:linear-gradient(135deg,rgba(45,107,255,.12),rgba(25,216,255,.06));border:1px solid rgba(45,107,255,.2);border-radius:22px;padding:18px;margin-bottom:18px}.att-top{display:flex;justify-content:space-between;align-items:center}.count{font-size:12px;color:var(--muted);margin-top:3px}.attention-list{margin-top:12px;display:grid;gap:8px}.attention-item{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(0,0,0,.12);border:1px solid var(--line);padding:11px 12px;border-radius:14px}.done{border:0;border-radius:11px;padding:8px 11px;background:rgba(53,213,138,.12);color:#8bf3bc;font-weight:800}.section-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 11px}.section-head h2{margin:0;font-size:17px}.section-head button{border:0;background:none;color:#b8caff;font-weight:800}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:18px;padding:16px;text-align:left}.quick button:hover{border-color:rgba(45,107,255,.35);transform:translateY(-1px)}.quick span{display:block;font-size:22px;margin-bottom:8px}.quick b{display:block}.quick small{display:block;margin-top:2px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px}.stat b{font-size:28px;display:block}.stat span{color:var(--muted);font-size:12px}.list{display:grid;gap:9px}.item{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.item-main{min-width:0}.item-main b{display:block;overflow-wrap:anywhere}.item-main p{margin:3px 0 0;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.pill{display:inline-flex;align-items:center;white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:6px 9px;font-size:11px;color:#c8d6ea}.empty{padding:25px;border:1px dashed rgba(255,255,255,.12);border-radius:18px;text-align:center;background:rgba(255,255,255,.025)}.empty b{display:block;margin-bottom:4px}.empty p{margin:0;color:var(--muted);font-size:12px}
+.capture,.tool{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:19px}.capture h1,.tool h3{margin:0 0 4px}.capture p{margin:0;color:var(--muted)}.form-row{display:grid;gap:6px;margin:12px 0}.form-row label{font-size:12px;font-weight:800;color:#c9d6e8}.form-row input,.form-row textarea,.form-row select,.tool input,.tool select{width:100%;border:1px solid var(--line);border-radius:13px;background:#0a1626;color:#fff;padding:12px;outline:none}.form-row textarea{min-height:150px;resize:vertical}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.focus{font-variant-numeric:tabular-nums;font-size:46px;font-weight:900;padding:10px 0 15px}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 15px}.tab{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:999px;padding:8px 12px;font-weight:800;font-size:12px}.tab.active{background:rgba(45,107,255,.16);border-color:rgba(45,107,255,.3)}
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.service{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}.service-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.service h3{margin:0}.service p{margin:3px 0 12px;color:var(--muted);font-size:12px}.service .status{font-size:11px;color:#8bf3bc}.google-data{margin-top:14px;display:grid;gap:8px}.google-row{background:var(--panel2);border:1px solid var(--line);padding:12px;border-radius:14px}.google-row b{display:block;overflow-wrap:anywhere}.google-row p{margin:4px 0 0;color:var(--muted);font-size:11px;overflow-wrap:anywhere}.google-row a{color:#9fdcff}
+.profile-head{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:21px;padding:18px;margin-bottom:12px}.profile-head .avatar{width:65px;height:65px}.settings{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:0 17px}.setting{padding:15px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.setting:last-child{border:0}.setting b{display:block}.setting span{display:block;color:var(--muted);font-size:11px}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:55;background:rgba(7,17,31,.96);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:3px;padding:8px 6px calc(8px + env(safe-area-inset-bottom))}.navbtn{background:none;border:0;color:#7f92ab;border-radius:14px;padding:8px 7px;font-size:10px;min-width:58px}.navbtn span{display:block;font-size:18px;margin-bottom:2px}.navbtn.active{background:rgba(45,107,255,.15);color:#fff}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:100;display:none;padding:20px;overflow:auto}.modal-back.show{display:flex;align-items:center;justify-content:center}.modal{width:min(760px,100%);max-height:88vh;overflow:auto;background:#0d1a2c;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.modal h2{margin:0}.modal h3{margin:19px 0 5px}.modal p{color:#c9d6e8}.close{border:0;background:rgba(255,255,255,.06);color:#fff;width:36px;height:36px;border-radius:50%;font-size:22px}
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%) translateY(14px);background:#0b1523;border:1px solid var(--line);color:#fff;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:120}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.notice{padding:12px 14px;border-radius:14px;background:rgba(255,209,102,.07);border:1px solid rgba(255,209,102,.18);color:#f4d98b;font-size:12px;margin-top:12px}.error{padding:12px 14px;border-radius:14px;background:rgba(255,102,128,.08);border:1px solid rgba(255,102,128,.18);color:#ffb1c0;font-size:12px;margin-top:12px}.success{padding:12px 14px;border-radius:14px;background:rgba(53,213,138,.08);border:1px solid rgba(53,213,138,.17);color:#9aefc2;font-size:12px;margin-top:12px}
+@media(max-width:850px){.cards,.guide-grid,.quick,.tool-grid,.service-grid{grid-template-columns:1fr 1fr}.hero h1{letter-spacing:-2.5px}.nav-links{display:none}}
+@media(max-width:600px){.cards,.guide-grid,.quick,.tool-grid,.service-grid,.form-grid{grid-template-columns:1fr}.hero{padding-top:55px}.hero h1{font-size:46px}.bottom{gap:0}.navbtn{min-width:0;flex:1;padding:8px 4px}}
 </style>
 </head>
 <body>
-
-<section id="landing">
-  <header class="public-nav">
-    <div class="container nav-inner">
-      <div class="brand"><div class="logo">S</div><div>Shine Nexus<small>Global Workspace</small></div></div>
-      <nav class="nav-links"><a href="#features">Features</a><a href="#guides">Guides</a><a href="#about">About</a></nav>
-      <button class="btn ghost" onclick="login()">Sign in</button>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <span class="badge">✦ Simple tools for real everyday problems</span>
-      <h1>Everything important.<br><span class="gradient">One clear workspace.</span></h1>
-      <p>Plan your day, save useful information, manage tasks, build research notes and use everyday tools without jumping between confusing screens.</p>
-      <div class="hero-actions">
-        <button class="google" onclick="login()"><span class="gdot"></span>Continue with Google</button>
-        <button class="btn ghost" onclick="document.querySelector('#features').scrollIntoView({behavior:'smooth'})">See what it does</button>
-      </div>
-    </section>
-
-    <section id="features" class="cards">
-      <article class="card"><div class="icon">✅</div><h3>Tasks & deadlines</h3><p>Create tasks, set a date, mark them done and keep open work visible.</p></article>
-      <article class="card"><div class="icon">📝</div><h3>Notes</h3><p>Keep ideas, instructions and important information in one searchable place.</p></article>
-      <article class="card"><div class="icon">🔗</div><h3>Bookmarks</h3><p>Save useful websites so you do not have to search for the same thing again.</p></article>
-      <article class="card"><div class="icon">🔬</div><h3>Research</h3><p>Turn a question into a small research project with sources, findings and next steps.</p></article>
-      <article class="card"><div class="icon">📅</div><h3>Daily plan</h3><p>Choose today's priorities and avoid a crowded list that hides what matters.</p></article>
-      <article class="card"><div class="icon">🧰</div><h3>Useful tools</h3><p>Calculator, unit conversion and a focused timer are built into the workspace.</p></article>
-    </section>
-
-    <section id="guides" class="public-section">
-      <h2>Practical guides</h2>
-      <p>Original educational content helps visitors understand the problems the product solves. It is also kept separate from private workspace screens.</p>
-      <div class="guide-grid">
-        <article class="card"><h3>How to organize a busy day</h3><p>Choose three priorities, capture everything else, and keep one next action visible for each active project.</p></article>
-        <article class="card"><h3>How to research without losing sources</h3><p>Record the question, source, useful finding and next action. This makes research reusable instead of becoming a pile of tabs.</p></article>
-        <article class="card"><h3>How to reduce digital clutter</h3><p>Capture first, review later, and delete or archive information that no longer helps you make a decision.</p></article>
-      </div>
-    </section>
-
-    <div class="ad-wrap" aria-label="Advertisement">
-      <!--
-        Public-content ad area.
-        Do not invent an ad-slot ID. After AdSense provides a real ad unit,
-        paste Google's exact generated ad code here.
-        Keep this area away from navigation and interactive controls.
-      -->
-      <div class="muted small" style="text-align:center;padding:22px 0">
-        Public content area
-      </div>
-    </div>
-
-    <section id="about" class="public-section">
-      <h2>About Shine Nexus Global</h2>
-      <p>Shine Nexus Global is a practical digital workspace built around a simple problem: important information is scattered across notes, browser tabs and to-do lists. The first release focuses on useful features that work directly in the browser rather than showing unfinished integrations.</p>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="#" onclick="openLegal('about');return false">About Us</a>
-      <a href="#" onclick="openLegal('privacy');return false">Privacy Policy</a>
-      <a href="#" onclick="openLegal('terms');return false">Terms</a>
-      <a href="#" onclick="openLegal('contact');return false">Contact Us</a>
-      <a href="#" onclick="openLegal('security');return false">Security</a>
-    </div>
-    © 2026 Shine Nexus Global
-  </footer>
+<section id="public">
+<header class="public-nav"><div class="container nav-inner"><a class="brand" href="#"><span class="logo">✦</span><span>Shine Nexus Global<small>Simple tools. Clear work.</small></span></a><nav class="nav-links"><a href="#features">Features</a><a href="#guides">Guides</a><a href="#about">About</a></nav><button class="btn ghost" onclick="startSignIn()">Sign in</button></div></header>
+<main>
+<section class="hero container"><span class="badge">Built for normal people, not complicated dashboards</span><h1>Put your important things in <span class="gradient">one clear place.</span></h1><p>Capture an idea, make a task, save a link, plan your day and keep useful information easy to find. Optional Google access is clearly separated from your private workspace.</p><div class="hero-actions"><button class="google" onclick="startSignIn()"><span class="gdot"></span> Continue with Google</button><a class="btn ghost" href="#features">See how it works</a></div></section>
+<section id="features" class="public-section container"><h2>What you can actually use</h2><p>No fake buttons. The private workspace only shows features that are implemented in this single-file release.</p><div class="cards"><article class="card"><h3>📥 Capture</h3><p>Save a thought, task, link or research note in seconds. Smart choose can suggest the type.</p></article><article class="card"><h3>🎯 Needs attention</h3><p>See open tasks and dated work first, so your next action is obvious.</p></article><article class="card"><h3>🗂 Organize</h3><p>Keep tasks, notes, links and research separate while keeping one search box.</p></article><article class="card"><h3>📅 Plan today</h3><p>Put dates on tasks and instantly see what is due today.</p></article><article class="card"><h3>🧰 Everyday tools</h3><p>Calculator, unit converter and focus timer are included and run in your browser.</p></article><article class="card"><h3>🔐 Clear Google access</h3><p>Gmail, Calendar, Drive and Sheets are read-only integrations that you start yourself. No fake “connected” status.</p></article></div><div class="ad-wrap"><div class="ad-note">Public content area reserved for your real AdSense unit. Never invent an ad-slot ID.</div></div></section>
+<section id="guides" class="public-section container"><h2>Quick guides</h2><p>Useful public information makes the site easier to understand and gives visitors a reason to return without deceptive engagement.</p><div class="guide-grid"><article class="card"><h3>Capture before you forget</h3><p>Use Capture for anything that is important but not yet organized. Review the Inbox later and turn only real actions into tasks.</p></article><article class="card"><h3>Keep tasks actionable</h3><p>Write tasks as a clear action, such as “Send the form” rather than a vague label like “Form”. Add a date only when a date matters.</p></article><article class="card"><h3>Protect private information</h3><p>Do not paste passwords, one-time codes, financial secrets or other highly sensitive information into a browser-local workspace unless you understand the risks.</p></article></div></section>
+<section id="about" class="public-section container"><h2>About Shine Nexus Global</h2><p>Shine Nexus Global is a practical productivity workspace. The product is designed around clarity: every screen should tell a normal user what it does, why it exists and what happens after they press a button.</p></section>
+</main>
+<footer class="footer"><div class="footer-links"><a href="#" onclick="openLegal('about');return false">About Us</a><a href="#" onclick="openLegal('privacy');return false">Privacy Policy</a><a href="#" onclick="openLegal('terms');return false">Terms</a><a href="#" onclick="openLegal('contact');return false">Contact Us</a><a href="#" onclick="openLegal('security');return false">Security</a></div>© 2026 Shine Nexus Global</footer>
 </section>
 
 <section id="app" class="hidden">
-  <header class="appbar">
-    <div class="container appbar-inner">
-      <div class="user-mini">
-        <img id="avatar" class="avatar" alt="Profile">
-        <div><strong id="name">User</strong><span id="email">Signed in</span></div>
-      </div>
-      <div class="menu-wrap">
-        <button class="dots" onclick="toggleMenu()" aria-label="More options">⋮</button>
-        <div id="profileMenu" class="menu hidden">
-          <button onclick="openLegal('about');toggleMenu()">About Us</button>
-          <button onclick="openLegal('privacy');toggleMenu()">Privacy Policy</button>
-          <button onclick="openLegal('terms');toggleMenu()">Terms</button>
-          <button onclick="openLegal('contact');toggleMenu()">Contact Us</button>
-          <button onclick="openLegal('security');toggleMenu()">Security</button>
-        </div>
-      </div>
-    </div>
-  </header>
+<header class="appbar"><div class="container appbar-inner"><div class="user-mini"><img id="avatar" class="avatar" alt="Profile"><div><strong id="name">User</strong><span id="email">Signed in</span></div></div><div class="menu-wrap"><button class="dots" onclick="toggleMenu()" aria-label="Profile menu">⋮</button><div id="profileMenu" class="menu hidden"><button onclick="go('profile');toggleMenu()">Profile</button><button onclick="openLegal('about');toggleMenu()">About Us</button><button onclick="openLegal('privacy');toggleMenu()">Privacy Policy</button><button onclick="openLegal('terms');toggleMenu()">Terms</button><button onclick="openLegal('contact');toggleMenu()">Contact Us</button><button onclick="openLegal('security');toggleMenu()">Security</button></div></div></div></header>
+<main class="container app-main">
+<section id="home" class="page active"><div class="search"><span>⌕</span><input id="searchInput" placeholder="Search tasks, notes, links and research..." oninput="searchAll()"></div><div class="welcome"><h1 id="hello">Good day 👋</h1><p>Your workspace at a glance.</p></div><div class="attention"><div class="att-top"><div><b>Needs attention</b><div id="attentionCount" class="count">0 open tasks</div></div><span>🎯</span></div><div id="attentionList" class="attention-list"></div></div><div class="section-head"><h2>Quick actions</h2></div><div class="quick"><button onclick="newNote()"><span>📝</span><b>New note</b><small class="muted">Save an idea</small></button><button onclick="newTask()"><span>✅</span><b>New task</b><small class="muted">Add something to do</small></button><button onclick="newBookmark()"><span>🔗</span><b>Save link</b><small class="muted">Keep a website</small></button><button onclick="newResearch()"><span>🔬</span><b>Research</b><small class="muted">Build a research brief</small></button></div><div class="section-head"><h2>Overview</h2></div><div class="stats"><div class="stat"><b id="sTasks">0</b><span>Open tasks</span></div><div class="stat"><b id="sNotes">0</b><span>Notes</span></div><div class="stat"><b id="sLinks">0</b><span>Saved links</span></div><div class="stat"><b id="sResearch">0</b><span>Research briefs</span></div></div><div class="section-head"><h2>Recent</h2><button onclick="go('inbox')">View all</button></div><div id="recent" class="list"></div><div class="section-head"><h2>Google services</h2><button onclick="go('work');showWorkTab('google')">Open</button></div><div class="card"><b>Optional, read-only access</b><p class="muted">Connect only when you need Gmail, Calendar, Drive or Sheets data. Your access token stays in memory and is not saved to local storage.</p></div></section>
 
-  <main class="container app-main">
-    <section id="home" class="page active">
-      <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search your workspace..." oninput="searchAll()"></div>
-      <div class="welcome"><h1 id="hello">Good day 👋</h1><p>Here is what matters right now.</p></div>
+<section id="inbox" class="page"><div class="welcome"><h1>Inbox</h1><p>Everything you captured recently.</p></div><div class="section-head"><h2>Captured items</h2><button onclick="clearInbox()">Clear history</button></div><div id="inboxList" class="list"></div></section>
 
-      <div class="attention">
-        <div class="att-top"><div><b>Needs attention</b><div id="attentionCount" class="count">0 open tasks</div></div><span>🎯</span></div>
-        <div id="attentionList" class="attention-list"></div>
-      </div>
+<section id="capture" class="page"><div class="capture"><h1>Capture</h1><p>Write it first. Organize it in seconds.</p><div class="form-row"><label>What do you want to save?</label><textarea id="captureText" placeholder="Write a note, paste a URL, or describe a task..."></textarea></div><div class="form-grid"><div class="form-row"><label>Type</label><select id="captureType"><option value="note">Note</option><option value="task">Task</option><option value="bookmark">Saved link</option><option value="research">Research brief</option></select></div><div class="form-row"><label>Date (optional)</label><input id="captureDate" type="date"></div></div><div class="row"><button class="btn primary" onclick="saveCapture()">Save</button><button class="btn ghost" onclick="smartCapture()">Smart choose</button></div><div class="notice">Tip: a task should describe an action. A note can be anything you want to remember. A link should be a full web address.</div></div></section>
 
-      <div class="section-head"><h2>Quick actions</h2></div>
-      <div class="quick">
-        <button onclick="newNote()"><span>📝</span><b>New note</b><small class="muted">Save an idea</small></button>
-        <button onclick="newTask()"><span>✅</span><b>New task</b><small class="muted">Add something to do</small></button>
-        <button onclick="newBookmark()"><span>🔗</span><b>Save link</b><small class="muted">Keep a website</small></button>
-        <button onclick="newResearch()"><span>🔬</span><b>Research</b><small class="muted">Explore a question</small></button>
-      </div>
+<section id="work" class="page"><div class="welcome"><h1>Work</h1><p>Keep your actual work in clear sections.</p></div><div class="tabs"><button id="tabTasks" class="tab active" onclick="showWorkTab('tasks')">Tasks</button><button id="tabNotes" class="tab" onclick="showWorkTab('notes')">Notes</button><button id="tabLinks" class="tab" onclick="showWorkTab('links')">Links</button><button id="tabResearch" class="tab" onclick="showWorkTab('research')">Research</button><button id="tabGoogle" class="tab" onclick="showWorkTab('google')">Google</button><button id="tabTools" class="tab" onclick="showWorkTab('tools')">Tools</button></div><div id="workTasks"><div class="section-head"><h2>Tasks</h2><button onclick="newTask()">+ Add</button></div><div id="taskList" class="list"></div></div><div id="workNotes" class="hidden"><div class="section-head"><h2>Notes</h2><button onclick="newNote()">+ Add</button></div><div id="noteList" class="list"></div></div><div id="workLinks" class="hidden"><div class="section-head"><h2>Saved links</h2><button onclick="newBookmark()">+ Add</button></div><div id="bookmarkList" class="list"></div></div><div id="workResearch" class="hidden"><div class="section-head"><h2>Research</h2><button onclick="newResearch()">+ Add</button></div><div id="researchList" class="list"></div></div><div id="workGoogle" class="hidden"><div class="card"><h3 style="margin-top:0">Google Workspace</h3><p class="muted">Use your own Google account. This release requests read-only scopes and only when you press Connect.</p><div class="row"><button class="btn primary" onclick="connectGoogleServices()">Connect Google services</button><button class="btn ghost" onclick="disconnectGoogleServices()">Forget Google access</button></div><div id="googleStatus"></div></div><div class="service-grid" style="margin-top:12px"><div class="service"><div class="service-head"><div><h3>✉️ Gmail</h3><p>Recent inbox messages</p></div><span class="status" id="gmailStatus">Not connected</span></div><button class="btn ghost small" onclick="loadGmail()">Load Gmail</button><div id="gmailData" class="google-data"></div></div><div class="service"><div class="service-head"><div><h3>📅 Calendar</h3><p>Upcoming primary-calendar events</p></div><span class="status" id="calendarStatus">Not connected</span></div><button class="btn ghost small" onclick="loadCalendar()">Load Calendar</button><div id="calendarData" class="google-data"></div></div><div class="service"><div class="service-head"><div><h3>📁 Drive</h3><p>Recent files</p></div><span class="status" id="driveStatus">Not connected</span></div><button class="btn ghost small" onclick="loadDrive()">Load Drive</button><div id="driveData" class="google-data"></div></div><div class="service"><div class="service-head"><div><h3>📊 Sheets</h3><p>Recent spreadsheet files</p></div><span class="status" id="sheetsStatus">Not connected</span></div><button class="btn ghost small" onclick="loadSheets()">Load Sheets</button><div id="sheetsData" class="google-data"></div></div></div><div class="notice">Google API access can require OAuth consent configuration, test users and verification before a public launch. The app will show the real Google error instead of pretending a connection worked.</div></div><div id="workTools" class="hidden"><div class="tool-grid"><div class="tool"><h3>Calculator</h3><input id="calc" inputmode="decimal" placeholder="125*4+20"><button class="btn primary" onclick="calculate()">Calculate</button><p id="calcResult" class="muted"></p></div><div class="tool"><h3>Unit converter</h3><input id="convValue" type="number" placeholder="Value"><select id="convType"><option value="kmmi">Kilometers → Miles</option><option value="mikm">Miles → Kilometers</option><option value="kgp">Kilograms → Pounds</option><option value="pkg">Pounds → Kilograms</option><option value="cmft">Centimeters → Feet</option><option value="ftcm">Feet → Centimeters</option></select><button class="btn primary" onclick="convert()">Convert</button><p id="convResult" class="muted"></p></div><div class="tool"><h3>Focus timer</h3><div id="timer" class="focus">25:00</div><div class="row"><button class="btn primary" onclick="startTimer()">Start</button><button class="btn ghost" onclick="pauseTimer()">Pause</button><button class="btn ghost" onclick="resetTimer()">Reset</button></div></div><div class="tool"><h3>Today’s plan</h3><div id="todayPlan" class="list"></div></div></div></div></section>
 
-      <div class="section-head"><h2>Overview</h2></div>
-      <div class="stats">
-        <div class="stat"><b id="sTasks">0</b><span>Open tasks</span></div>
-        <div class="stat"><b id="sNotes">0</b><span>Notes</span></div>
-        <div class="stat"><b id="sLinks">0</b><span>Bookmarks</span></div>
-        <div class="stat"><b id="sResearch">0</b><span>Research</span></div>
-      </div>
-
-      <div class="section-head"><h2>Recent</h2><button onclick="go('inbox')">View all</button></div>
-      <div id="recent" class="list"></div>
-    </section>
-
-    <section id="inbox" class="page">
-      <div class="welcome"><h1>Inbox</h1><p>Everything you captured recently.</p></div>
-      <div class="section-head"><h2>All captured items</h2><button onclick="clearInbox()">Clear history</button></div>
-      <div id="inboxList" class="list"></div>
-    </section>
-
-    <section id="capture" class="page">
-      <div class="capture"><h1>Capture</h1><p>Write it first. Organize it in seconds.</p></div>
-      <div class="form-row"><label>What do you want to save?</label><textarea id="captureText" placeholder="Write a note, paste a URL, or describe a task..."></textarea></div>
-      <div class="form-grid">
-        <div class="form-row"><label>Type</label><select id="captureType"><option value="note">Note</option><option value="task">Task</option><option value="bookmark">Bookmark</option><option value="research">Research note</option></select></div>
-        <div class="form-row"><label>Date (optional)</label><input id="captureDate" type="date"></div>
-      </div>
-      <div class="row"><button class="btn primary" onclick="saveCapture()">Save</button><button class="btn ghost" onclick="smartCapture()">Smart choose</button></div>
-      <div class="section-head"><h2>Simple rule</h2></div>
-      <div class="card"><b>Capture → Review → Act</b><p>Do not make every piece of information a task. Keep notes as notes, links as bookmarks and actions as tasks.</p></div>
-    </section>
-
-    <section id="work" class="page">
-      <div class="welcome"><h1>Work</h1><p>Four places for the things you want to keep moving.</p></div>
-      <div class="section-head"><h2>Tasks</h2><button onclick="newTask()">+ Add</button></div>
-      <div id="taskList" class="list"></div>
-      <div class="section-head"><h2>Bookmarks</h2><button onclick="newBookmark()">+ Add</button></div>
-      <div id="bookmarkList" class="list"></div>
-      <div class="section-head"><h2>Research</h2><button onclick="newResearch()">+ Add</button></div>
-      <div id="researchList" class="list"></div>
-    </section>
-
-    <section id="tools" class="page">
-      <div class="welcome"><h1>Tools</h1><p>Small utilities for everyday work.</p></div>
-      <div class="tool-grid">
-        <div class="tool">
-          <h3>Calculator</h3>
-          <input id="calc" inputmode="decimal" placeholder="e.g. 125*4+20">
-          <button class="btn primary" onclick="calculate()">Calculate</button>
-          <p id="calcResult" class="muted"></p>
-        </div>
-        <div class="tool">
-          <h3>Unit converter</h3>
-          <input id="convValue" type="number" placeholder="Value">
-          <select id="convType"><option value="kmmi">Kilometers → Miles</option><option value="mikm">Miles → Kilometers</option><option value="kgp">Kilograms → Pounds</option><option value="pkg">Pounds → Kilograms</option><option value="cmft">Centimeters → Feet</option><option value="ftcm">Feet → Centimeters</option></select>
-          <button class="btn primary" onclick="convert()">Convert</button>
-          <p id="convResult" class="muted"></p>
-        </div>
-        <div class="tool">
-          <h3>Focus timer</h3>
-          <div id="timer" class="focus">25:00</div>
-          <div class="row"><button class="btn primary" onclick="startTimer()">Start</button><button class="btn ghost" onclick="pauseTimer()">Pause</button><button class="btn ghost" onclick="resetTimer()">Reset</button></div>
-        </div>
-        <div class="tool">
-          <h3>Today's plan</h3>
-          <div id="todayPlan" class="list"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="profile" class="page">
-      <div class="profile-head">
-        <img id="profileAvatar" class="avatar" alt="Profile">
-        <div><h2 id="profileName" style="margin:0">User</h2><p id="profileEmail" class="muted small" style="margin:3px 0">Email</p></div>
-      </div>
-      <div class="settings">
-        <div class="setting"><div><b>Data storage</b><span>Your workspace in this version is stored in this browser.</span></div><span class="pill">Local</span></div>
-        <div class="setting"><div><b>Google sign-in</b><span>Used only for authentication in this version.</span></div><span class="pill">Active</span></div>
-        <div class="setting"><div><b>Gmail / Drive / Calendar</b><span>Not shown as connected because this release does not pretend to have unfinished integrations.</span></div><span class="pill">Not connected</span></div>
-        <div class="setting"><div><b>Export</b><span>Save a JSON copy of your workspace.</span></div><button class="btn ghost" onclick="exportData()">Export</button></div>
-        <div class="setting"><div><b>Sign out</b><span>Return to the public home page.</span></div><button class="btn ghost" onclick="logout()">Sign out</button></div>
-        <div class="setting"><div><b>Delete local data</b><span>Removes workspace data from this browser.</span></div><button class="btn danger" onclick="deleteData()">Delete</button></div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="bottom">
-    <button class="navbtn active" data-page="home" onclick="go('home')"><span>⌂</span>Home</button>
-    <button class="navbtn" data-page="inbox" onclick="go('inbox')"><span>▣</span>Inbox</button>
-    <button class="navbtn" data-page="capture" onclick="go('capture')"><span>＋</span>Capture</button>
-    <button class="navbtn" data-page="work" onclick="go('work')"><span>◈</span>Work</button>
-    <button class="navbtn" data-page="tools" onclick="go('tools')"><span>🧰</span>Tools</button>
-  </nav>
+<section id="profile" class="page"><div class="profile-head"><img id="profileAvatar" class="avatar" alt="Profile"><div><h2 id="profileName" style="margin:0">User</h2><p id="profileEmail" class="muted small" style="margin:3px 0">Email</p></div></div><div class="settings"><div class="setting"><div><b>Workspace storage</b><span>This release keeps tasks, notes, links and research in this browser.</span></div><span class="pill">Local</span></div><div class="setting"><div><b>Google sign-in</b><span>Firebase Authentication identifies your account.</span></div><span class="pill">Active</span></div><div class="setting"><div><b>Google API access</b><span>Gmail, Calendar, Drive and Sheets are read-only and start only after you connect them.</span></div><button class="btn ghost small" onclick="go('work');showWorkTab('google')">Open</button></div><div class="setting"><div><b>Export workspace</b><span>Download your local data as JSON.</span></div><button class="btn ghost" onclick="exportData()">Export</button></div><div class="setting"><div><b>Import workspace</b><span>Restore a JSON workspace exported from Shine Nexus Global.</span></div><button class="btn ghost" onclick="document.getElementById('importFile').click()">Import</button></div><div class="setting"><div><b>Theme</b><span>Switch between a dark and light interface.</span></div><button class="btn ghost" onclick="toggleTheme()">Toggle</button></div><div class="setting"><div><b>Sign out</b><span>Return to the public home page.</span></div><button class="btn ghost" onclick="logout()">Sign out</button></div><div class="setting"><div><b>Delete local data</b><span>Removes your workspace from this browser.</span></div><button class="btn danger" onclick="deleteData()">Delete</button></div></div><input id="importFile" class="hidden" type="file" accept="application/json" onchange="importData(event)"><div class="notice">Never store passwords, one-time codes, private keys or other high-risk secrets in browser local storage.</div></section>
+</main>
+<nav class="bottom"><button class="navbtn active" data-page="home" onclick="go('home')"><span>⌂</span>Home</button><button class="navbtn" data-page="inbox" onclick="go('inbox')"><span>▣</span>Inbox</button><button class="navbtn" data-page="capture" onclick="go('capture')"><span>＋</span>Capture</button><button class="navbtn" data-page="work" onclick="go('work')"><span>◈</span>Work</button><button class="navbtn" data-page="profile" onclick="go('profile')"><span>◉</span>Profile</button></nav>
 </section>
 
-<div id="legalBack" class="modal-back" onclick="if(event.target===this)closeLegal()">
-  <article class="modal">
-    <div class="modal-top"><h2 id="legalTitle">About Us</h2><button class="close" onclick="closeLegal()">×</button></div>
-    <div id="legalBody"></div>
-  </article>
-</div>
-<div id="toast"></div>
-
+<div id="legalBack" class="modal-back" onclick="if(event.target===this)closeLegal()"><article class="modal"><div class="modal-top"><h2 id="legalTitle">About Us</h2><button class="close" onclick="closeLegal()">×</button></div><div id="legalBody"></div></article></div><div id="toast" class="toast"></div>
 <script>
-/* ===== Firebase: only authentication is connected in this release ===== */
-const firebaseConfig={
- apiKey:"AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",
- authDomain:"shaheen-nexus.firebaseapp.com",
- projectId:"shaheen-nexus",
- storageBucket:"shaheen-nexus.firebasestorage.app",
- messagingSenderId:"1075489418521",
- appId:"1:1075489418521:web:1b166eb484971a387d6988",
- measurementId:"G-VV2CBVV3HQ"
-};
-firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(),provider=new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({prompt:"select_account"});
+/* ===================== Firebase ===================== */
+const firebaseConfig={apiKey:"AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpK_dv138",authDomain:"shaheen-nexus.firebaseapp.com",projectId:"shaheen-nexus",storageBucket:"shaheen-nexus.firebasestorage.app",messagingSenderId:"1075489418521",appId:"1:1075489418521:web:1b166eb484971a387d6988",measurementId:"G-VV2CBVV3HQ"};
+try{if(!firebase.apps.length)firebase.initializeApp(firebaseConfig)}catch(e){console.error(e)}
+const auth=firebase.auth();
+const signInProvider=new firebase.auth.GoogleAuthProvider();
+signInProvider.setCustomParameters({prompt:"select_account"});
+let googleAccessToken="";
 
-/* ===== Local workspace ===== */
-const KEY="shine_nexus_global_v2";
-const blank=()=>({tasks:[],notes:[],bookmarks:[],research:[],inbox:[]});
+/* ===================== Local workspace ===================== */
+const DB_KEY="shine_nexus_global_v3";
+function blank(){return{tasks:[],notes:[],bookmarks:[],research:[],inbox:[]}}
+function loadDB(){try{const x=JSON.parse(localStorage.getItem(DB_KEY)||"");if(!x||typeof x!=="object")return blank();const b=blank();for(const k of Object.keys(b))b[k]=Array.isArray(x[k])?x[k]:[];return b}catch{return blank()}}
 let db=loadDB();
-function loadDB(){try{return {...blank(),...(JSON.parse(localStorage.getItem(KEY)||"{}"))}}catch{return blank()}}
-function saveDB(){localStorage.setItem(KEY,JSON.stringify(db))}
-function id(){return crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random()}
-function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function dateText(v){if(!v)return"";return new Date(v).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
-function toast(s){const x=document.getElementById("toast");x.textContent=s;x.classList.add("show");clearTimeout(window._t);window._t=setTimeout(()=>x.classList.remove("show"),2300)}
-function empty(t,d){return `<div class="item"><div class="item-main"><b>${esc(t)}</b><p>${esc(d)}</p></div></div>`}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));}
+function id(){return window.crypto?.randomUUID?window.crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function now(){return new Date().toISOString()}
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function dateText(v){if(!v)return"";const d=new Date(v+((/^\d{4}-\d{2}-\d{2}$/.test(v))?"T12:00:00":""));return isNaN(d)?String(v):d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})}
+function esc(s){return String(s??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]))}
+function empty(title,desc){return `<div class="empty"><b>${esc(title)}</b><p>${esc(desc)}</p></div>`}
+function kindLabel(k){return({task:"Task",note:"Note",bookmark:"Saved link",research:"Research"})[k]||k}
+function titleFrom(text){return String(text||"").split(/\n/)[0].trim().slice(0,80)||"Untitled"}
+function collection(type){return type==="research"?db.research:db[type+"s"]}
+function addItem(type,text,date=""){const item={id:id(),text:String(text).trim(),date:date||"",createdAt:now(),done:false};collection(type).unshift(item);db.inbox.unshift({...item,type});db.inbox=db.inbox.slice(0,100);saveDB();render();toast(kindLabel(type)+" saved.")}
 
-/* ===== Auth ===== */
-async function login(){
- try{await auth.signInWithPopup(provider)}
- catch(e){
-  console.error(e);
-  const map={"auth/popup-blocked":"Your browser blocked the Google window.","auth/popup-closed-by-user":"The Google window was closed.","auth/unauthorized-domain":"Add this website domain to Firebase Authentication → Authorized domains."};
-  toast(map[e.code]||"Google sign-in failed. Check Firebase Auth settings.")
- }
+/* ===================== Auth ===================== */
+function startSignIn(){
+  auth.signInWithPopup(signInProvider).catch(async err=>{
+    if(err?.code==="auth/popup-blocked"||err?.code==="auth/popup-closed-by-user"){toast("Google sign-in popup was blocked or closed. Try again.");return}
+    showError("Google sign-in",err);
+  });
 }
-async function logout(){try{await auth.signOut();toast("Signed out.")}catch{toast("Could not sign out.")}}
-auth.onAuthStateChanged(user=>{
- if(user){
-  document.getElementById("landing").classList.add("hidden");
-  document.getElementById("app").classList.remove("hidden");
-  setUser(user);render();
- }else{
-  document.getElementById("app").classList.add("hidden");
-  document.getElementById("landing").classList.remove("hidden");
- }
-});
-function setUser(u){
- const photo=u.photoURL||"";
- ["avatar","profileAvatar"].forEach(x=>{document.getElementById(x).src=photo});
- ["name","profileName"].forEach(x=>document.getElementById(x).textContent=u.displayName||"Shine user");
- ["email","profileEmail"].forEach(x=>document.getElementById(x).textContent=u.email||"");
+auth.onAuthStateChanged(u=>{if(u){showApp(u);renderUser(u)}else{showPublic()}});
+function showApp(u){document.getElementById("public").classList.add("hidden");document.getElementById("app").classList.remove("hidden");go("home")}
+function showPublic(){document.getElementById("app").classList.add("hidden");document.getElementById("public").classList.remove("hidden")}
+function renderUser(u){
+ const display=u.displayName||"Shine user",email=u.email||"Signed in",photo=u.photoURL||"";
+ ["name","profileName"].forEach(k=>{const e=document.getElementById(k);if(e)e.textContent=display});
+ ["email","profileEmail"].forEach(k=>{const e=document.getElementById(k);if(e)e.textContent=email});
+ ["avatar","profileAvatar"].forEach(k=>{const e=document.getElementById(k);if(e){e.src=photo||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%232d6bff'/%3E%3Ctext x='60' y='73' text-anchor='middle' font-family='Arial' font-size='48' fill='white'%3ES%3C/text%3E%3C/svg%3E"}});
+ document.getElementById("hello").textContent=(new Date().getHours()<12?"Good morning":new Date().getHours()<18?"Good afternoon":"Good evening")+" 👋";
 }
-
-/* ===== Navigation ===== */
-function go(page){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- const p=document.getElementById(page);if(p)p.classList.add("active");
- document.querySelectorAll(".navbtn").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
- window.scrollTo({top:0,behavior:"smooth"});
-}
+function logout(){auth.signOut().catch(e=>showError("Sign out",e));googleAccessToken="";}
 function toggleMenu(){document.getElementById("profileMenu").classList.toggle("hidden")}
 
-/* ===== Capture ===== */
-function openCapture(type="note",prefill="",date=""){
- go("capture");document.getElementById("captureType").value=type;document.getElementById("captureText").value=prefill;document.getElementById("captureDate").value=date;
- setTimeout(()=>document.getElementById("captureText").focus(),150)
-}
-function newNote(){openCapture("note")}
-function newTask(){openCapture("task")}
-function newBookmark(){openCapture("bookmark","https://")}
-function newResearch(){openCapture("research","Research question:\n\nSources:\n\nFindings:\n\nNext action:")}
-function smartCapture(){
- const t=document.getElementById("captureText").value.trim().toLowerCase();
- if(!t){toast("Write or paste something first.");return}
- let type="note";
- if(/^https?:\/\//i.test(t)||t.includes("www."))type="bookmark";
- else if(/todo|task|deadline|due|need to|remember|appointment/i.test(t))type="task";
- document.getElementById("captureType").value=type;toast("Type selected: "+type)
-}
-function saveCapture(){
- const text=document.getElementById("captureText").value.trim();
- if(!text){toast("Write something first.");return}
- const type=document.getElementById("captureType").value,date=document.getElementById("captureDate").value;
- const item={id:id(),text,type,date,createdAt:new Date().toISOString(),done:false};
- if(type==="task")db.tasks.unshift(item);
- else if(type==="bookmark")db.bookmarks.unshift(item);
- else if(type==="research")db.research.unshift(item);
- else db.notes.unshift(item);
- db.inbox.unshift(item);saveDB();document.getElementById("captureText").value="";document.getElementById("captureDate").value="";render();toast("Saved.");go(type==="task"?"work":"inbox")
+/* ===================== Navigation ===================== */
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll(".navbtn").forEach(x=>x.classList.toggle("active",x.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});if(page==="work")showWorkTab("tasks")}
+function showWorkTab(tab){
+ const map={tasks:"workTasks",notes:"workNotes",links:"workLinks",research:"workResearch",google:"workGoogle",tools:"workTools"};
+ Object.entries(map).forEach(([k,v])=>document.getElementById(v).classList.toggle("hidden",k!==tab));
+ document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.id.toLowerCase()==="tab"+tab.toLowerCase().replace(/^./,m=>m.toUpperCase())));
+ if(tab==="tools")renderToday();
+ if(tab==="google")renderGoogleState();
 }
 
-/* ===== Rendering ===== */
-function render(){
- renderAttention();renderStats();renderRecent();renderInbox();renderTasks();renderBookmarks();renderResearch();renderToday()
-}
-function renderAttention(){
- const open=db.tasks.filter(x=>!x.done).sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999")).slice(0,5);
- document.getElementById("attentionCount").textContent=open.length+" open task"+(open.length===1?"":"s");
- document.getElementById("attentionList").innerHTML=open.length?open.map(x=>`
-  <div class="attention-item"><div><b>${esc(x.text)}</b><div class="small muted">${x.date?"Due "+dateText(x.date):"No date set"}</div></div>
-  <button class="done" onclick="completeTask('${x.id}')">Done</button></div>`).join(""):empty("Nothing urgent here","Create a task when something needs action.")
-}
-function renderStats(){
- document.getElementById("sTasks").textContent=db.tasks.filter(x=>!x.done).length;
- document.getElementById("sNotes").textContent=db.notes.length;
- document.getElementById("sLinks").textContent=db.bookmarks.length;
- document.getElementById("sResearch").textContent=db.research.length;
-}
-function renderRecent(){
- const items=db.inbox.slice(0,7);
- document.getElementById("recent").innerHTML=items.length?items.map(item=>itemHTML(item)).join(""):empty("Your workspace is ready","Create a note, task, bookmark or research item.")
-}
-function renderInbox(){
- const items=db.inbox;
- document.getElementById("inboxList").innerHTML=items.length?items.map(item=>itemHTML(item)).join(""):empty("Inbox is empty","Captured items will appear here.")
-}
-function itemHTML(x){
- return `<div class="item"><div class="item-main"><b>${esc(x.text).slice(0,500)}</b><p>${esc(x.type)}${x.date?" · "+dateText(x.date):""} · ${dateText(x.createdAt)}</p></div>${x.type==="task"?`<button class="done" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button>`:`<span class="pill">${esc(x.type)}</span>`}</div>`
-}
-function renderTasks(){
- const a=db.tasks;
- document.getElementById("taskList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${x.done?"✓ ":""}${esc(x.text)}</b><p>${x.done?"Completed":x.date?"Due "+dateText(x.date):"No date"} · ${dateText(x.createdAt)}</p></div><button class="${x.done?"btn ghost":"done"}" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button></div>`).join(""):empty("No tasks","When something needs action, add it here.")
-}
-function renderBookmarks(){
- const a=db.bookmarks;
- document.getElementById("bookmarkList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b><p>Saved ${dateText(x.createdAt)}</p></div><button class="btn ghost" onclick="openLink('${encodeURIComponent(x.text)}')">Open</button></div>`).join(""):empty("No bookmarks","Save a useful website from Capture.")
-}
-function openLink(s){let u=decodeURIComponent(s);if(!/^https?:\/\//i.test(u))u="https://"+u;window.open(u,"_blank","noopener,noreferrer")}
-function renderResearch(){
- const a=db.research;
- document.getElementById("researchList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text).split("\n")[0]}</b><p>${esc(x.text).slice(0,180)}</p></div><span class="pill">Research</span></div>`).join(""):empty("No research yet","Create a research note with question, sources, findings and next action.")
-}
-function renderToday(){
- const a=db.tasks.filter(x=>!x.done&&x.date===today());
- document.getElementById("todayPlan").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b></div><button class="done" onclick="completeTask('${x.id}')">Done</button></div>`).join(""):empty("No dated tasks today","Set a date on a task to see it here.")
-}
-function today(){return new Date().toISOString().slice(0,10)}
-function completeTask(i){const x=db.tasks.find(x=>x.id===i);if(!x)return;x.done=!x.done;saveDB();render();toast(x.done?"Task completed.":"Task reopened.")}
+/* ===================== CRUD ===================== */
+function newTask(){const text=prompt("What needs to be done?");if(!text?.trim())return;const date=prompt("Due date (YYYY-MM-DD), optional:","")||"";addItem("task",text,date)}
+function newNote(){const text=prompt("Write your note:");if(!text?.trim())return;addItem("note",text)}
+function newBookmark(){const url=prompt("Paste the website address:","https://");if(!url?.trim()||url.trim()==="https://")return;addItem("bookmark",url)}
+function newResearch(){const q=prompt("What question are you researching? ");if(!q?.trim())return;const brief=`Question: ${q.trim()}\n\nWhat I need to know:\n\nSources:\n\nFindings:\n\nNext action:`;addItem("research",brief)}
+function smartCapture(){const t=document.getElementById("captureText").value.trim();if(!t){toast("Write something first.");return}let type="note";if(/^https?:\/\//i.test(t)||/^www\./i.test(t))type="bookmark";else if(/^(todo|task|do|finish|send|call|buy|submit|pay)\b/i.test(t))type="task";else if(/\?$/.test(t)||/^research\b/i.test(t))type="research";document.getElementById("captureType").value=type;toast("Suggested type: "+kindLabel(type)+".")}
+function saveCapture(){const text=document.getElementById("captureText").value.trim();if(!text){toast("Write something first.");return}const type=document.getElementById("captureType").value,date=document.getElementById("captureDate").value;addItem(type,text,date);document.getElementById("captureText").value="";document.getElementById("captureDate").value=""}
+function removeItem(type,i){if(!confirm("Delete this item?"))return;const key=type==="research"?"research":type+"s";db[key]=db[key].filter(x=>x.id!==i);db.inbox=db.inbox.filter(x=>x.id!==i);saveDB();render();toast("Deleted.")}
+function editNote(i){const x=db.notes.find(x=>x.id===i);if(!x)return;const t=prompt("Edit note:",x.text);if(!t?.trim())return;x.text=t.trim();saveDB();render();toast("Note updated.")}
+function editTask(i){const x=db.tasks.find(x=>x.id===i);if(!x)return;const t=prompt("Edit task:",x.text);if(!t?.trim())return;x.text=t.trim();const d=prompt("Due date (YYYY-MM-DD), optional:",x.date||"");x.date=d||"";const item=db.inbox.find(y=>y.id===i);if(item){item.text=x.text;item.date=x.date}saveDB();render();toast("Task updated.")}
+function editBookmark(i){const x=db.bookmarks.find(x=>x.id===i);if(!x)return;const t=prompt("Edit website address:",x.text);if(!t?.trim())return;x.text=t.trim();const item=db.inbox.find(y=>y.id===i);if(item)item.text=x.text;saveDB();render();toast("Link updated.")}
+function editResearch(i){const x=db.research.find(x=>x.id===i);if(!x)return;const t=prompt("Edit research brief:",x.text);if(!t?.trim())return;x.text=t.trim();const item=db.inbox.find(y=>y.id===i);if(item)item.text=x.text;saveDB();render();toast("Research updated.")}
+function completeTask(i){const x=db.tasks.find(x=>x.id===i);if(!x)return;x.done=!x.done;const item=db.inbox.find(y=>y.id===i);if(item)item.done=x.done;saveDB();render();toast(x.done?"Task completed.":"Task reopened.")}
+function openLink(raw){let u=decodeURIComponent(raw);if(!/^https?:\/\//i.test(u))u="https://"+u;try{const url=new URL(u);if(!["http:","https:"].includes(url.protocol))throw 0;window.open(url.toString(),"_blank","noopener,noreferrer")}catch{toast("That link is not valid.")}}
 
-/* ===== Search ===== */
-function searchAll(){
- const q=document.getElementById("searchInput").value.trim().toLowerCase();
- if(!q){renderRecent();return}
- const all=[...db.tasks,...db.notes,...db.bookmarks,...db.research].filter(x=>(x.text||"").toLowerCase().includes(q));
- document.getElementById("recent").innerHTML=all.length?all.map(itemHTML).join(""):empty("No results","Try another word.")
-}
+/* ===================== Rendering ===================== */
+function render(){renderAttention();renderStats();renderRecent();renderInbox();renderTasks();renderNotes();renderBookmarks();renderResearch();renderToday();renderGoogleState()}
+function renderAttention(){const open=db.tasks.filter(x=>!x.done).sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999")).slice(0,5);document.getElementById("attentionCount").textContent=db.tasks.filter(x=>!x.done).length+" open task"+(db.tasks.filter(x=>!x.done).length===1?"":"s");document.getElementById("attentionList").innerHTML=open.length?open.map(x=>`<div class="attention-item"><div><b>${esc(x.text)}</b><div class="small muted">${x.date?"Due "+dateText(x.date):"No date set"}</div></div><div class="row"><button class="btn ghost small" onclick="editTask('${x.id}')">Edit</button><button class="done" onclick="completeTask('${x.id}')">Done</button></div></div>`).join(""):empty("Nothing needs attention","Your open-task list is empty.")}
+function renderStats(){document.getElementById("sTasks").textContent=db.tasks.filter(x=>!x.done).length;document.getElementById("sNotes").textContent=db.notes.length;document.getElementById("sLinks").textContent=db.bookmarks.length;document.getElementById("sResearch").textContent=db.research.length}
+function itemHTML(x){return `<div class="item"><div class="item-main"><b>${esc(titleFrom(x.text))}</b><p>${esc(kindLabel(x.type))}${x.date?" · "+dateText(x.date):""} · ${dateText(x.createdAt)}</p></div>${x.type==="task"?`<div class="row"><button class="btn ghost small" onclick="editTask('${x.id}')">Edit</button><button class="done" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button></div>`:x.type==="bookmark"?`<div class="row"><button class="btn ghost small" onclick="openLink('${encodeURIComponent(x.text)}')">Open</button><button class="btn ghost small" onclick="editBookmark('${x.id}')">Edit</button></div>`:`<span class="pill">${esc(kindLabel(x.type))}</span>`}</div>`}
+function renderRecent(){const items=db.inbox.slice(0,8);document.getElementById("recent").innerHTML=items.length?items.map(itemHTML).join(""):empty("Your workspace is ready","Create a note, task, saved link or research brief.")}
+function renderInbox(){const items=db.inbox;document.getElementById("inboxList").innerHTML=items.length?items.map(x=>`<div class="item"><div class="item-main"><b>${esc(titleFrom(x.text))}</b><p>${esc(kindLabel(x.type))} · ${dateText(x.createdAt)}</p></div><div class="row"><button class="btn ghost small" onclick="${x.type==='task'?`editTask('${x.id}')`:x.type==='note'?`editNote('${x.id}')`:x.type==='bookmark'?`editBookmark('${x.id}')`:`editResearch('${x.id}')`}">Edit</button><button class="btn danger small" onclick="removeItem('${x.type}','${x.id}')">Delete</button></div></div>`).join(""):empty("Inbox is empty","Captured items will appear here.")}
+function renderTasks(){const a=db.tasks;document.getElementById("taskList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${x.done?"✓ ":""}${esc(x.text)}</b><p>${x.done?"Completed":x.date?"Due "+dateText(x.date):"No date"} · ${dateText(x.createdAt)}</p></div><div class="row"><button class="btn ghost small" onclick="editTask('${x.id}')">Edit</button><button class="done" onclick="completeTask('${x.id}')">${x.done?"Undo":"Done"}</button><button class="btn danger small" onclick="removeItem('task','${x.id}')">Delete</button></div></div>`).join(""):empty("No tasks yet","Add a task when something really needs action.")}
+function renderNotes(){const a=db.notes;document.getElementById("noteList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(titleFrom(x.text))}</b><p>${esc(x.text).slice(0,160)}</p></div><div class="row"><button class="btn ghost small" onclick="editNote('${x.id}')">Edit</button><button class="btn danger small" onclick="removeItem('note','${x.id}')">Delete</button></div></div>`).join(""):empty("No notes yet","Save ideas, reminders or information you want to remember.")}
+function renderBookmarks(){const a=db.bookmarks;document.getElementById("bookmarkList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b><p>Saved ${dateText(x.createdAt)}</p></div><div class="row"><button class="btn ghost small" onclick="openLink('${encodeURIComponent(x.text)}')">Open</button><button class="btn ghost small" onclick="editBookmark('${x.id}')">Edit</button><button class="btn danger small" onclick="removeItem('bookmark','${x.id}')">Delete</button></div></div>`).join(""):empty("No saved links","Save a website you want to find again.")}
+function renderResearch(){const a=db.research;document.getElementById("researchList").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(titleFrom(x.text))}</b><p>${esc(x.text).slice(0,200)}</p></div><div class="row"><button class="btn ghost small" onclick="editResearch('${x.id}')">Edit</button><button class="btn danger small" onclick="removeItem('research','${x.id}')">Delete</button></div></div>`).join(""):empty("No research briefs","Start with a question and keep sources, findings and the next action together.")}
+function renderToday(){const a=db.tasks.filter(x=>!x.done&&x.date===today());document.getElementById("todayPlan").innerHTML=a.length?a.map(x=>`<div class="item"><div class="item-main"><b>${esc(x.text)}</b></div><button class="done" onclick="completeTask('${x.id}')">Done</button></div>`).join(""):empty("No dated tasks today","Add a date to a task to include it here.")}
 
-/* ===== Inbox / data ===== */
-function clearInbox(){if(!confirm("Clear captured history? This does not delete your tasks, notes, bookmarks or research."))return;db.inbox=[];saveDB();render();toast("History cleared.")}
-function exportData(){
- const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=u;a.download="shine-nexus-workspace.json";a.click();URL.revokeObjectURL(u);toast("Workspace exported.")
-}
-function deleteData(){if(!confirm("Delete all Shine Nexus workspace data from this browser?"))return;db=blank();saveDB();render();toast("Local data deleted.")}
+/* ===================== Search + data ===================== */
+function searchAll(){const q=document.getElementById("searchInput").value.trim().toLowerCase();if(!q){renderRecent();return}const all=[...db.inbox].filter(x=>(x.text||"").toLowerCase().includes(q));document.getElementById("recent").innerHTML=all.length?all.map(itemHTML).join(""):empty("No results","Try another word.")}
+function clearInbox(){if(!confirm("Clear captured history? Your tasks, notes, links and research stay in place."))return;db.inbox=[];saveDB();render();toast("Inbox history cleared.")}
+function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download="shine-nexus-workspace.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);toast("Workspace exported.")}
+function importData(e){const file=e.target.files?.[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||typeof x!=="object"||!Array.isArray(x.tasks)||!Array.isArray(x.notes)||!Array.isArray(x.bookmarks)||!Array.isArray(x.research)||!Array.isArray(x.inbox))throw new Error("Invalid workspace file");db=x;saveDB();render();toast("Workspace imported.")}catch(err){showError("Import",err)}e.target.value=""};r.readAsText(file)}
+function deleteData(){if(!confirm("Delete all local Shine Nexus workspace data from this browser?"))return;db=blank();saveDB();render();toast("Local data deleted.")}
 
-/* ===== Tools ===== */
-function calculate(){
- const raw=document.getElementById("calc").value.trim();
- if(!/^[0-9+\-*/().%\s]+$/.test(raw)){document.getElementById("calcResult").textContent="Use numbers and + - * / % ( ) only.";return}
- try{const result=Function('"use strict";return ('+raw+')')();document.getElementById("calcResult").textContent=Number.isFinite(result)?String(result):"Invalid result"}catch{document.getElementById("calcResult").textContent="Check the expression."}
-}
-function convert(){
- const v=Number(document.getElementById("convValue").value),t=document.getElementById("convType").value;
- if(!Number.isFinite(v)){document.getElementById("convResult").textContent="Enter a number.";return}
- const m={kmmi:v*.621371,mikm:v*1.609344,kgp:v*2.2046226218,pkg:v*.45359237,cmft:v*.032808399,ftcm:v*30.48};
- document.getElementById("convResult").textContent=m[t].toLocaleString(undefined,{maximumFractionDigits:6})
-}
-let timerSeconds=1500,timerId=null;
-function paintTimer(){document.getElementById("timer").textContent=String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+String(timerSeconds%60).padStart(2,"0")}
-function startTimer(){if(timerId)return;timerId=setInterval(()=>{if(timerSeconds<=0){clearInterval(timerId);timerId=null;toast("Focus session complete.");return}timerSeconds--;paintTimer()},1000)}
-function pauseTimer(){clearInterval(timerId);timerId=null}
-function resetTimer(){pauseTimer();timerSeconds=1500;paintTimer()}
+/* ===================== Tools ===================== */
+function calculate(){const raw=document.getElementById("calc").value.trim();if(!/^[0-9+\-*/().%\s]+$/.test(raw)){document.getElementById("calcResult").textContent="Use numbers and + - * / % ( ) only.";return}try{const v=Function('"use strict";return ('+raw+')')();document.getElementById("calcResult").textContent=Number.isFinite(v)?String(v):"Invalid result"}catch{document.getElementById("calcResult").textContent="Check the expression."}}
+function convert(){const v=Number(document.getElementById("convValue").value),t=document.getElementById("convType").value;if(!Number.isFinite(v)){document.getElementById("convResult").textContent="Enter a number.";return}const m={kmmi:v*.621371,mikm:v*1.609344,kgp:v*2.2046226218,pkg:v*.45359237,cmft:v*.032808399,ftcm:v*30.48};document.getElementById("convResult").textContent=m[t].toLocaleString(undefined,{maximumFractionDigits:6})}
+let timerSeconds=1500,timerId=null;function paintTimer(){document.getElementById("timer").textContent=String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+String(timerSeconds%60).padStart(2,"0")}function startTimer(){if(timerId)return;timerId=setInterval(()=>{if(timerSeconds<=0){clearInterval(timerId);timerId=null;toast("Focus session complete.");return}timerSeconds--;paintTimer()},1000)}function pauseTimer(){clearInterval(timerId);timerId=null}function resetTimer(){pauseTimer();timerSeconds=1500;paintTimer()}
+function toggleTheme(){document.documentElement.classList.toggle("light");if(document.documentElement.classList.contains("light")){document.documentElement.style.setProperty("--bg","#f4f7fb");document.documentElement.style.setProperty("--bg2","#ffffff");document.documentElement.style.setProperty("--panel","#ffffff");document.documentElement.style.setProperty("--panel2","#eef4fb");document.documentElement.style.setProperty("--text","#102033");document.documentElement.style.setProperty("--muted","#617189");document.documentElement.style.setProperty("--line","rgba(16,32,51,.12)");document.body.style.background="#f4f7fb"}else{["--bg","--bg2","--panel","--panel2","--text","--muted","--line"].forEach(k=>document.documentElement.style.removeProperty(k));document.body.style.background=""}}
 
-/* ===== Legal / information ===== */
+/* ===================== Google services ===================== */
+function googleProviderForServices(){const p=new firebase.auth.GoogleAuthProvider();p.addScope("https://www.googleapis.com/auth/gmail.readonly");p.addScope("https://www.googleapis.com/auth/calendar.readonly");p.addScope("https://www.googleapis.com/auth/drive.readonly");p.addScope("https://www.googleapis.com/auth/spreadsheets.readonly");p.setCustomParameters({prompt:"consent"});return p}
+async function connectGoogleServices(){const u=auth.currentUser;if(!u){toast("Sign in first.");return}try{const cred=await u.reauthenticateWithPopup(googleProviderForServices());googleAccessToken=firebase.auth.GoogleAuthProvider.credentialFromResult(cred)?.accessToken||"";if(!googleAccessToken)throw new Error("Google did not return an access token. Please connect again.");renderGoogleState();toast("Google services connected for this session.")}catch(e){showError("Google services",e);renderGoogleState()}}
+function disconnectGoogleServices(){googleAccessToken="";clearGoogleData();renderGoogleState();toast("Google access forgotten on this page.")}
+function renderGoogleState(){const connected=!!googleAccessToken;["gmailStatus","calendarStatus","driveStatus","sheetsStatus"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=connected?"Connected":"Not connected"});const box=document.getElementById("googleStatus");if(box)box.innerHTML=connected?'<div class="success">Connected for this browser session. Access is read-only and the token is not saved to local storage.</div>':''}
+function clearGoogleData(){["gmailData","calendarData","driveData","sheetsData"].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=""})}
+async function gfetch(url){if(!googleAccessToken)throw new Error("Connect Google services first.");const r=await fetch(url,{headers:{Authorization:"Bearer "+googleAccessToken}});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j?.error?.message||("Google API error "+r.status));return j}
+function googleErrorBox(name,e){const el=document.getElementById(name+"Data");if(el)el.innerHTML=`<div class="error">${esc(e.message||"Google API request failed")}</div>`}
+async function loadGmail(){try{const x=await gfetch("https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=8");const ids=(x.messages||[]).map(m=>m.id);if(!ids.length){document.getElementById("gmailData").innerHTML=empty("No recent messages","The Gmail API returned an empty inbox list.");return}const rows=await Promise.all(ids.slice(0,8).map(id=>gfetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/"+encodeURIComponent(id)+"?format=metadata&metadataHeaders=Subject&metadataHeaders=From&metadataHeaders=Date")));document.getElementById("gmailData").innerHTML=rows.map(m=>{const h=Object.fromEntries((m.payload?.headers||[]).map(x=>[x.name.toLowerCase(),x.value]));return `<div class="google-row"><b>${esc(h.subject||"(No subject)")}</b><p>${esc(h.from||"")} · ${esc(h.date||"")}</p><button class="btn ghost small" onclick="saveGoogleNote(${JSON.stringify(titleFrom((h.subject||"No subject")))},${JSON.stringify((h.from||"")+"\n"+(h.subject||""))})">Save as note</button></div>`}).join("")}catch(e){googleErrorBox("gmail",e)}}
+async function loadCalendar(){try{const tm=new Date().toISOString();const x=await gfetch("https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=8&singleEvents=true&orderBy=startTime&timeMin="+encodeURIComponent(tm));const rows=x.items||[];document.getElementById("calendarData").innerHTML=rows.length?rows.map(m=>{const start=m.start?.dateTime||m.start?.date||"";return `<div class="google-row"><b>${esc(m.summary||"Untitled event")}</b><p>${esc(start?new Date(start).toLocaleString():"")}</p>${m.htmlLink?`<a href="${esc(m.htmlLink)}" target="_blank" rel="noopener noreferrer">Open in Google Calendar</a>`:""}</div>`}).join(""):empty("No upcoming events","Your primary calendar has no events in this window.")}catch(e){googleErrorBox("calendar",e)}}
+async function loadDrive(){try{const x=await gfetch("https://www.googleapis.com/drive/v3/files?orderBy=modifiedTime%20desc&pageSize=8&fields=files(id,name,mimeType,modifiedTime,webViewLink)");const rows=x.files||[];document.getElementById("driveData").innerHTML=rows.length?rows.map(m=>`<div class="google-row"><b>${esc(m.name||"Untitled")}</b><p>${esc(m.mimeType||"")} · Updated ${esc(m.modifiedTime?new Date(m.modifiedTime).toLocaleString():"")}</p>${m.webViewLink?`<a href="${esc(m.webViewLink)}" target="_blank" rel="noopener noreferrer">Open in Drive</a>`:""}</div>`).join(""):empty("No files returned","Google Drive returned no recent files.")}catch(e){googleErrorBox("drive",e)}}
+async function loadSheets(){try{const q=encodeURIComponent("mimeType='application/vnd.google-apps.spreadsheet' and trashed=false");const x=await gfetch("https://www.googleapis.com/drive/v3/files?q="+q+"&orderBy=modifiedTime%20desc&pageSize=8&fields=files(id,name,mimeType,modifiedTime,webViewLink)");const rows=x.files||[];document.getElementById("sheetsData").innerHTML=rows.length?rows.map(m=>`<div class="google-row"><b>${esc(m.name||"Untitled spreadsheet")}</b><p>Updated ${esc(m.modifiedTime?new Date(m.modifiedTime).toLocaleString():"")}</p>${m.webViewLink?`<a href="${esc(m.webViewLink)}" target="_blank" rel="noopener noreferrer">Open in Sheets</a>`:""}</div>`).join(""):empty("No spreadsheets found","Drive returned no recent Google Sheets files.")}catch(e){googleErrorBox("sheets",e)}}
+function saveGoogleNote(title,text){addItem("note",title+"\n\n"+text);go("work");showWorkTab("notes")}
+
+/* ===================== Legal / contact ===================== */
 const legal={
- about:["About Us",`<h3>What is Shine Nexus?</h3><p>Shine Nexus Global is a practical workspace for organizing tasks, notes, bookmarks, research and everyday planning. The goal is clarity: users should understand what each screen does without needing technical knowledge.</p><h3>What this release does</h3><p>This release provides Google authentication plus browser-based workspace features. It deliberately does not claim that Gmail, Drive or Calendar are connected when they are not.</p>`],
- privacy:["Privacy Policy",`<h3>Information we use</h3><p>Google sign-in is handled by Firebase Authentication. Your workspace items in this release are stored in your browser's local storage on the device/browser where you use the app.</p><h3>What we do not claim</h3><p>This release does not connect to your Gmail, Drive, Calendar or Sheets and therefore does not read those services.</p><h3>Deleting data</h3><p>Use Profile → Delete local data to remove the workspace stored in this browser. Signing out does not automatically delete local workspace data.</p><p>This is a product disclosure for the current code, not legal advice. Before public launch, replace this page with a policy reviewed for your actual company, hosting, analytics and data practices.</p>`],
- terms:["Terms",`<h3>Use of the service</h3><p>Use Shine Nexus responsibly and do not use it to violate laws, other people's rights or the terms of services you connect to.</p><h3>Availability</h3><p>Features can change as the product develops. This release focuses on the features that are actually implemented rather than promising unfinished integrations.</p><h3>Third-party services</h3><p>Google authentication is provided through Firebase. Their own terms and policies also apply.</p>`],
- contact:["Contact Us",`<h3>We want useful feedback</h3><p>Tell us what was confusing, what failed, and what problem you want Shine Nexus to solve. For a real public launch, replace this section with your verified support email or support form.</p><div class="form-row"><label>Your message</label><textarea id="contactMessage" placeholder="What should we improve?"></textarea></div><button class="btn primary" onclick="copyFeedback()">Copy message</button><p class="small muted">The current single-file version cannot send email from the browser by itself. Copy the message and send it through your normal email/support channel.</p>`],
- security:["Security",`<h3>Current security model</h3><p>Google authentication is handled by Firebase Authentication. Workspace data in this release stays in browser local storage. No Gmail, Drive, Calendar or Sheets tokens are stored because those integrations are not enabled in this release.</p><h3>Important limitation</h3><p>Browser local storage is not a substitute for a production encrypted database. A future server-backed version should add proper authorization rules, encryption strategy, backups, audit logging and secure OAuth token handling before sensitive business data is supported.</p>`]
+about:["About Us",`<h3>Our purpose</h3><p>Shine Nexus Global is a practical workspace for organizing everyday information. The aim is straightforward: fewer scattered notes, fewer forgotten actions and clearer next steps.</p><h3>What this release includes</h3><p>Google authentication, local tasks, notes, saved links, research briefs, search, export/import, everyday tools and optional read-only Google integrations.</p><h3>What we do not pretend</h3><p>The app never labels Gmail, Calendar, Drive or Sheets as connected until Google actually returns an access token.</p>`],
+privacy:["Privacy Policy",`<h3>Workspace data</h3><p>Tasks, notes, saved links, research briefs and inbox history are stored in your browser's local storage in this release. This means they are not a cloud database owned by Shine Nexus Global.</p><h3>Google authentication</h3><p>Google sign-in is handled by Firebase Authentication. When you choose to connect Google services, the app requests read-only Google API permissions and keeps the resulting access token in page memory for the current session. The token is not written to local storage by this code.</p><h3>Google data</h3><p>Gmail, Calendar, Drive and Sheets data is fetched only after you press Connect and then a Load button. The app does not display ads inside these private screens.</p><h3>Your controls</h3><p>You can sign out, forget the in-memory Google connection, export your local workspace, import an exported workspace or delete local data from Profile.</p><h3>Important</h3><p>This product page is a plain-language disclosure for this code. Before commercial launch, update it for your real company name, domain, support contact, analytics, hosting and any server-side data processing you add.</p>`],
+terms:["Terms",`<h3>Use</h3><p>Use Shine Nexus Global lawfully and responsibly. Do not use the service to violate another service's terms or another person's rights.</p><h3>Availability</h3><p>Software can change, be updated or temporarily fail. The app is designed to show honest error messages instead of claiming an operation succeeded when it did not.</p><h3>Third-party services</h3><p>Firebase and Google services are operated by their respective providers and are subject to their own terms and policies.</p>`],
+contact:["Contact Us",`<h3>Tell us what is unclear</h3><p>Use the message box below to write feedback. The button copies the message so you can send it through your chosen email or support channel.</p><div class="form-row"><label>Message</label><textarea id="contactMessage" placeholder="What failed? What were you trying to do? What should be clearer?"></textarea></div><div class="row"><button class="btn primary" onclick="copyFeedback()">Copy message</button><button class="btn ghost" onclick="downloadFeedback()">Save as text</button></div><p class="small muted">A real support email or form endpoint must be added by the site owner before public launch. This code does not invent one.</p>`],
+security:["Security",`<h3>Current model</h3><p>Authentication uses Firebase Authentication. Local workspace data stays in browser storage. Google API tokens are kept only in memory while the page is open.</p><h3>What this does not provide</h3><p>Local storage is not the same as an encrypted production database. Before sensitive business data is stored server-side, add proper authorization rules, encryption strategy, secure OAuth token handling, audit logs and backups.</p><h3>Good practice</h3><p>Never put secrets such as API private keys or service-account credentials into this frontend file.</p>`]
 };
 function openLegal(k){document.getElementById("legalTitle").textContent=legal[k][0];document.getElementById("legalBody").innerHTML=legal[k][1];document.getElementById("legalBack").classList.add("show")}
 function closeLegal(){document.getElementById("legalBack").classList.remove("show")}
-function copyFeedback(){const x=document.getElementById("contactMessage");if(!x)return;navigator.clipboard?.writeText(x.value||"").then(()=>toast("Message copied.")).catch(()=>toast("Select and copy your message manually."))}
+function copyFeedback(){const x=document.getElementById("contactMessage");if(!x)return;if(navigator.clipboard){navigator.clipboard.writeText(x.value||"").then(()=>toast("Message copied."),()=>toast("Could not copy automatically."))}else toast("Copy is not available in this browser.")}
+function downloadFeedback(){const x=document.getElementById("contactMessage");if(!x)return;const blob=new Blob([x.value||""],{type:"text/plain"}),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download="shine-nexus-feedback.txt";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);toast("Feedback file saved.")}
 
-/* ===== Start ===== */
+/* ===================== UI helpers ===================== */
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),2200)}
+function showError(title,e){const code=e?.code?" ("+e.code+")":"";toast(title+" failed"+code);console.error(title,e)}
 paintTimer();render();
 </script>
-
-<!--
-  AdSense note:
-  Add the exact ad code generated inside AdSense only after your real ad unit
-  exists. This starter does not fabricate an ad-slot ID.
--->
-</body>
-</html>
+<!-- AdSense policy note: add only the exact Google-generated AdSense code you receive for the real site. Do not invent an ad slot. Keep ads on public content pages, not private communication screens. -->
+</body></html>
