@@ -4,63 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<meta name="description" content="Shaheen is a practical document action workspace that helps you understand information, extract important details, create tasks and organize your work.">
+<meta name="description" content="SHAHEEN NEXUS turns documents and everyday information into clear actions, deadlines, requirements, checklists and useful tools.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://YOUR-DOMAIN.example/">
 
-<title>Shaheen — Document Action Hub</title>
+<title>SHAHEEN NEXUS — Turn Information Into Action</title>
 
 <!--
   ============================================================
-  ADSENSE
+  SHAHEEN NEXUS
+  Single-file web application
   ============================================================
-  Keep Google AdSense restricted to PUBLIC informational content.
-  Do NOT put ads inside private workspace screens.
 
-  After your AdSense site is approved, paste Google's EXACT
-  generated AdSense code here.
+  IMPORTANT:
+  The Firebase API key must be the CURRENT Web App API key
+  from Firebase Console > Project settings > Your apps.
 
-  Do NOT invent data-ad-slot values.
-
-  Example Auto Ads script supplied by Google:
-
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
-    crossorigin="anonymous"></script>
-
-  Google makes the final approval decision.
-  ============================================================
+  The rest of this configuration is based on the Firebase
+  configuration previously supplied for shaheen-nexus.
 -->
 
 <style>
 :root{
-  --bg:#f5f7fb;
-  --surface:#ffffff;
-  --surface2:#eef3f9;
-  --text:#101827;
-  --muted:#64748b;
-  --border:#dce3ec;
-  --primary:#0757d9;
-  --primary2:#00a9e8;
-  --danger:#dc2626;
-  --success:#159957;
-  --shadow:0 14px 45px rgba(15,23,42,.08);
+  --bg:#07111f;
+  --bg2:#0b1728;
+  --card:#101f33;
+  --card2:#14263e;
+  --text:#f5f8ff;
+  --muted:#9eb0c8;
+  --line:#213651;
+  --primary:#1677ff;
+  --primary2:#00cfff;
+  --success:#25c281;
+  --warning:#f4b740;
+  --danger:#ff5f6d;
+  --shadow:0 18px 50px rgba(0,0,0,.25);
   --radius:20px;
 }
 
-[data-theme="dark"]{
-  --bg:#07111f;
-  --surface:#0d1a2b;
-  --surface2:#122238;
-  --text:#f4f7fb;
-  --muted:#9aaac0;
-  --border:#22334a;
-  --primary:#4d91ff;
-  --primary2:#00d0ff;
-  --shadow:0 20px 50px rgba(0,0,0,.28);
+body.light{
+  --bg:#f5f8fc;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f0f5fb;
+  --text:#0b1728;
+  --muted:#607089;
+  --line:#dce5f0;
+  --shadow:0 15px 45px rgba(24,50,80,.10);
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 html{
   scroll-behavior:smooth;
@@ -68,10 +62,20 @@ html{
 
 body{
   margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
+  background:
+    radial-gradient(circle at 10% 0%,rgba(0,207,255,.10),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(22,119,255,.14),transparent 32%),
+    var(--bg);
   color:var(--text);
-  line-height:1.55;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  min-height:100vh;
 }
 
 button,
@@ -102,18 +106,22 @@ a{
 .topbar{
   position:sticky;
   top:0;
-  z-index:100;
-  background:color-mix(in srgb,var(--surface) 92%,transparent);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
+  z-index:50;
+  backdrop-filter:blur(18px);
+  background:rgba(7,17,31,.78);
+  border-bottom:1px solid var(--line);
 }
 
-.topbar-inner{
-  min-height:68px;
+.light .topbar{
+  background:rgba(255,255,255,.82);
+}
+
+.nav{
+  min-height:70px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:14px;
+  gap:15px;
 }
 
 .brand{
@@ -121,227 +129,246 @@ a{
   align-items:center;
   gap:10px;
   font-weight:900;
-  font-size:21px;
+  letter-spacing:.5px;
 }
 
-.brand-mark{
-  width:40px;
-  height:40px;
+.logo{
+  width:42px;
+  height:42px;
   border-radius:13px;
   display:grid;
   place-items:center;
   color:white;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  box-shadow:0 8px 25px rgba(0,120,255,.25);
+  background:
+    linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 10px 30px rgba(0,207,255,.20);
+}
+
+.logo svg{
+  width:25px;
+  height:25px;
 }
 
 .navlinks{
   display:flex;
-  gap:6px;
+  gap:8px;
   align-items:center;
 }
 
-.navlinks a{
-  padding:9px 12px;
-  border-radius:10px;
+.navlinks button{
+  border:0;
+  background:transparent;
   color:var(--muted);
-  font-size:14px;
+  padding:9px 11px;
+  border-radius:10px;
 }
 
-.navlinks a:hover{
-  background:var(--surface2);
+.navlinks button:hover{
   color:var(--text);
+  background:var(--card);
+}
+
+.btn{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:13px;
+  padding:11px 16px;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn.primary{
+  border:0;
+  color:white;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 12px 30px rgba(22,119,255,.22);
+}
+
+.btn.danger{
+  color:white;
+  background:var(--danger);
+  border:0;
+}
+
+.btn.small{
+  padding:8px 11px;
+  font-size:13px;
 }
 
 .hero{
-  padding:72px 0 54px;
+  padding:75px 0 50px;
 }
 
 .hero-grid{
   display:grid;
   grid-template-columns:1.15fr .85fr;
-  gap:45px;
+  gap:35px;
   align-items:center;
 }
 
 .badge{
   display:inline-flex;
+  align-items:center;
+  gap:7px;
   padding:7px 11px;
+  border:1px solid var(--line);
   border-radius:999px;
-  background:var(--surface2);
-  color:var(--primary);
+  color:var(--primary2);
+  background:rgba(0,207,255,.07);
   font-size:13px;
-  font-weight:800;
-  margin-bottom:15px;
+  font-weight:700;
 }
 
-h1{
-  font-size:clamp(40px,6vw,72px);
-  line-height:1.02;
+.hero h1{
+  font-size:clamp(40px,6vw,76px);
+  line-height:.98;
+  margin:20px 0;
   letter-spacing:-3px;
-  margin:0 0 20px;
 }
 
-h2{
-  font-size:clamp(27px,4vw,42px);
-  line-height:1.1;
-  margin:0 0 14px;
-  letter-spacing:-1.5px;
-}
-
-h3{
-  margin:0 0 8px;
-}
-
-.hero p{
-  font-size:19px;
-  color:var(--muted);
-  max-width:680px;
-}
-
-.gradient-text{
-  background:linear-gradient(90deg,var(--primary),var(--primary2));
+.gradient{
+  background:linear-gradient(90deg,var(--primary2),#fff,var(--primary));
   -webkit-background-clip:text;
-  background-clip:text;
   color:transparent;
 }
 
-.actions{
+.hero p{
+  font-size:18px;
+  line-height:1.7;
+  color:var(--muted);
+  max-width:720px;
+}
+
+.hero-actions{
   display:flex;
-  gap:10px;
+  gap:12px;
   flex-wrap:wrap;
-  margin-top:24px;
-}
-
-.btn{
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  border-radius:13px;
-  padding:11px 16px;
-  font-weight:800;
-  transition:.18s;
-}
-
-.btn:hover{
-  transform:translateY(-1px);
-  box-shadow:var(--shadow);
-}
-
-.btn-primary{
-  color:#fff;
-  border-color:transparent;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-}
-
-.btn-danger{
-  color:#fff;
-  background:var(--danger);
-  border-color:transparent;
-}
-
-.btn-small{
-  padding:8px 11px;
-  font-size:13px;
+  margin-top:25px;
 }
 
 .hero-card{
-  border:1px solid var(--border);
-  background:var(--surface);
+  border:1px solid var(--line);
   border-radius:28px;
-  padding:22px;
+  padding:25px;
+  background:
+    linear-gradient(145deg,rgba(22,119,255,.13),rgba(0,207,255,.04)),
+    var(--card);
   box-shadow:var(--shadow);
 }
 
-.mock-window{
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
+.mock-flow{
+  display:grid;
+  gap:12px;
 }
 
-.mock-head{
-  padding:12px 14px;
-  border-bottom:1px solid var(--border);
+.flow-item{
   display:flex;
-  gap:6px;
+  gap:13px;
+  align-items:center;
+  border:1px solid var(--line);
+  padding:14px;
+  border-radius:15px;
+  background:rgba(255,255,255,.02);
 }
 
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--border);
+.flow-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:var(--card2);
 }
 
-.mock-body{
-  padding:18px;
+.section{
+  padding:65px 0;
 }
 
-.mock-row{
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  margin-bottom:10px;
-  background:var(--surface2);
-}
-
-section.public-section{
-  padding:70px 0;
-}
-
-.section-head{
-  max-width:720px;
+.section-title{
+  max-width:760px;
   margin-bottom:30px;
 }
 
-.section-head p{
+.section-title h2{
+  font-size:clamp(28px,4vw,44px);
+  margin:0 0 12px;
+}
+
+.section-title p{
   color:var(--muted);
+  line-height:1.7;
 }
 
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:16px;
+  gap:17px;
 }
 
 .card{
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:var(--radius);
   padding:22px;
   box-shadow:var(--shadow);
 }
 
-.card-icon{
-  font-size:25px;
-  margin-bottom:13px;
+.card h3{
+  margin-top:0;
 }
 
 .card p{
   color:var(--muted);
-  margin-bottom:0;
+  line-height:1.65;
 }
 
-.guide-grid{
+.iconbox{
+  width:45px;
+  height:45px;
+  border-radius:14px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
+  place-items:center;
+  background:rgba(22,119,255,.12);
+  color:var(--primary2);
+  font-size:21px;
+  margin-bottom:15px;
 }
 
-.guide{
-  padding:22px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:var(--surface);
+.public-page{
+  min-height:100vh;
 }
 
-.guide p{
+.public-content{
+  padding:50px 0 90px;
+}
+
+.prose{
+  max-width:850px;
+  margin:auto;
+}
+
+.prose h1{
+  font-size:42px;
+}
+
+.prose h2{
+  margin-top:35px;
+}
+
+.prose p,
+.prose li{
   color:var(--muted);
+  line-height:1.8;
 }
 
-.footer{
-  padding:40px 0;
-  border-top:1px solid var(--border);
+footer{
+  border-top:1px solid var(--line);
+  padding:35px 0;
+  color:var(--muted);
 }
 
 .footer-grid{
@@ -353,99 +380,14 @@ section.public-section{
 
 .footer-links{
   display:flex;
-  gap:14px;
+  gap:15px;
   flex-wrap:wrap;
+}
+
+.footer-links button{
+  background:none;
+  border:0;
   color:var(--muted);
-}
-
-/* AUTH */
-
-.auth-screen{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:24px;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(0,160,255,.12),transparent 30%),
-    var(--bg);
-}
-
-.auth-card{
-  width:min(470px,100%);
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:28px;
-  padding:30px;
-  box-shadow:var(--shadow);
-}
-
-.auth-card h1{
-  font-size:34px;
-  letter-spacing:-1.5px;
-}
-
-.form{
-  display:grid;
-  gap:12px;
-}
-
-.label{
-  font-size:13px;
-  font-weight:800;
-  color:var(--muted);
-}
-
-.input,
-.textarea,
-.select{
-  width:100%;
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--text);
-  border-radius:12px;
-  padding:12px 13px;
-  outline:none;
-}
-
-.input:focus,
-.textarea:focus,
-.select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(0,90,220,.10);
-}
-
-.textarea{
-  min-height:130px;
-  resize:vertical;
-}
-
-.divider{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-  margin:16px 0;
-  font-size:12px;
-}
-
-.divider:before,
-.divider:after{
-  content:"";
-  height:1px;
-  flex:1;
-  background:var(--border);
-}
-
-.message{
-  padding:11px 13px;
-  border-radius:12px;
-  background:var(--surface2);
-  color:var(--muted);
-  font-size:13px;
-}
-
-.message.error{
-  color:var(--danger);
 }
 
 /* APP */
@@ -454,103 +396,97 @@ section.public-section{
   min-height:100vh;
 }
 
-.app-topbar{
-  position:sticky;
-  top:0;
-  z-index:80;
-  background:color-mix(in srgb,var(--surface) 94%,transparent);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-}
-
-.app-topbar-inner{
-  min-height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  width:min(1320px,calc(100% - 24px));
-  margin:auto;
-}
-
 .app-layout{
-  width:min(1320px,calc(100% - 24px));
-  margin:20px auto 100px;
   display:grid;
-  grid-template-columns:230px 1fr;
-  gap:20px;
+  grid-template-columns:235px 1fr;
+  min-height:calc(100vh - 70px);
 }
 
 .sidebar{
+  border-right:1px solid var(--line);
+  padding:18px 13px;
+  background:rgba(7,17,31,.30);
   position:sticky;
-  top:88px;
-  height:calc(100vh - 108px);
+  top:70px;
+  height:calc(100vh - 70px);
   overflow:auto;
-  border:1px solid var(--border);
-  background:var(--surface);
-  border-radius:22px;
-  padding:12px;
+}
+
+.light .sidebar{
+  background:rgba(255,255,255,.55);
+}
+
+.side-section{
+  margin-bottom:20px;
+}
+
+.side-label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+  padding:8px 11px;
 }
 
 .side-btn{
   width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
   border:0;
   background:transparent;
   color:var(--muted);
-  text-align:left;
   padding:12px;
   border-radius:12px;
-  font-weight:750;
-  margin-bottom:4px;
+  text-align:left;
+  margin:2px 0;
 }
 
 .side-btn:hover,
 .side-btn.active{
-  background:var(--surface2);
-  color:var(--primary);
+  background:var(--card);
+  color:var(--text);
 }
 
-.app-main{
+.main{
+  padding:25px;
   min-width:0;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.page-title{
+.page-head{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  gap:15px;
-  margin-bottom:20px;
+  gap:20px;
+  margin-bottom:25px;
 }
 
-.page-title p{
+.page-head h1{
+  margin:0 0 7px;
+  font-size:32px;
+}
+
+.page-head p{
   color:var(--muted);
-  margin:5px 0 0;
+  margin:0;
 }
 
-.stats{
+.dashboard-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:13px;
+  gap:14px;
   margin-bottom:18px;
 }
 
 .stat{
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:17px;
   padding:17px;
 }
 
 .stat-value{
-  font-size:28px;
+  font-size:27px;
   font-weight:900;
 }
 
@@ -559,300 +495,350 @@ section.public-section{
   font-size:13px;
 }
 
-.dashboard-grid{
+.workspace{
   display:grid;
-  grid-template-columns:1.35fr .65fr;
-  gap:16px;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
 }
 
-.list{
+.panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px;
+}
+
+.panel.full{
+  grid-column:1/-1;
+}
+
+.panel h2{
+  margin-top:0;
+}
+
+.input,
+.textarea,
+.select{
+  width:100%;
+  border:1px solid var(--line);
+  background:var(--bg2);
+  color:var(--text);
+  border-radius:13px;
+  padding:12px 13px;
+  outline:none;
+}
+
+.textarea{
+  min-height:220px;
+  resize:vertical;
+  line-height:1.6;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus{
+  border-color:var(--primary);
+}
+
+.form-grid{
   display:grid;
-  gap:10px;
-}
-
-.list-item{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:15px;
-}
-
-.list-item-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.meta{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.chip{
-  display:inline-flex;
-  align-items:center;
-  padding:5px 8px;
-  border-radius:999px;
-  background:var(--surface2);
-  color:var(--muted);
-  font-size:11px;
-  font-weight:800;
-}
-
-.priority-high{
-  color:#fff;
-  background:#dc2626;
-}
-
-.priority-medium{
-  color:#fff;
-  background:#d97706;
-}
-
-.priority-low{
-  color:#fff;
-  background:#159957;
-}
-
-.empty{
-  padding:30px;
-  text-align:center;
-  color:var(--muted);
-  border:1px dashed var(--border);
-  border-radius:16px;
-}
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:1fr 1fr;
   gap:12px;
 }
 
-.quick{
-  border:1px solid var(--border);
-  background:var(--surface);
-  border-radius:17px;
-  padding:18px;
-  text-align:left;
-}
-
-.quick:hover{
-  border-color:var(--primary);
-}
-
-.quick strong{
-  display:block;
-  margin-bottom:5px;
-}
-
-.quick span{
-  font-size:13px;
-  color:var(--muted);
-}
-
-/* DOCUMENT */
-
-.upload-zone{
-  border:2px dashed var(--border);
-  border-radius:22px;
-  padding:35px 20px;
-  text-align:center;
-  background:var(--surface);
-}
-
-.upload-zone.drag{
-  border-color:var(--primary);
-  background:var(--surface2);
-}
-
-.file-name{
-  font-weight:800;
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
   margin-top:12px;
 }
 
-.analysis{
-  margin-top:18px;
-  display:grid;
-  gap:15px;
-}
-
-.analysis-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.action-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.action{
-  border:1px solid var(--border);
-  border-radius:16px;
+.result{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:15px;
   padding:15px;
-  background:var(--surface);
+  margin-top:13px;
 }
 
-.action strong{
-  display:block;
-  margin-bottom:5px;
+.result h3{
+  margin:0 0 10px;
 }
 
-.action small{
+.result ul{
+  padding-left:20px;
+}
+
+.result li{
+  margin:8px 0;
   color:var(--muted);
 }
 
-.extracted{
-  max-height:420px;
-  overflow:auto;
-  white-space:pre-wrap;
-  background:var(--surface2);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:16px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+.tag{
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:999px;
   font-size:12px;
+  background:var(--card2);
+  color:var(--muted);
+  margin:3px;
 }
 
-/* TOOLS */
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
+.task{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
 }
 
-.tool-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
+.task:last-child{
+  border-bottom:0;
 }
 
-.tool-card h3{
-  margin-bottom:12px;
+.task input{
+  margin-top:4px;
 }
 
-.tool-result{
-  margin-top:10px;
-  padding:11px;
-  background:var(--surface2);
-  border-radius:11px;
-  font-weight:800;
-  min-height:42px;
+.task.done span{
+  text-decoration:line-through;
+  color:var(--muted);
 }
 
-/* MODAL */
+.empty{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+  border:1px dashed var(--line);
+  border-radius:15px;
+}
 
-.modal{
+.profile{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.avatar{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--card2);
+}
+
+.mobile-bottom{
+  display:none;
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:200;
+  max-width:360px;
+  background:#101c2d;
+  color:white;
+  border:1px solid #28405e;
+  border-radius:14px;
+  padding:13px 15px;
+  box-shadow:var(--shadow);
+  transform:translateY(130px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.modal-backdrop{
   position:fixed;
   inset:0;
-  z-index:300;
+  z-index:100;
+  background:rgba(0,0,0,.65);
   display:none;
-  place-items:center;
-  padding:18px;
-  background:rgba(0,0,0,.55);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-.modal.show{
-  display:grid;
+.modal-backdrop.show{
+  display:flex;
 }
 
-.modal-card{
-  width:min(720px,100%);
+.modal{
+  width:min(450px,100%);
   max-height:90vh;
   overflow:auto;
-  background:var(--surface);
-  border:1px solid var(--border);
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:24px;
   padding:24px;
-  box-shadow:0 25px 80px rgba(0,0,0,.25);
+  box-shadow:var(--shadow);
 }
 
 .modal-head{
   display:flex;
   justify-content:space-between;
-  gap:15px;
-  margin-bottom:15px;
+  align-items:center;
 }
 
-.icon-btn{
-  width:38px;
-  height:38px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  background:var(--surface);
+.close{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:23px;
+}
+
+.auth-tabs{
+  display:flex;
+  gap:5px;
+  padding:4px;
+  background:var(--bg2);
+  border-radius:13px;
+  margin:15px 0;
+}
+
+.auth-tab{
+  flex:1;
+  border:0;
+  padding:10px;
+  border-radius:9px;
+  background:transparent;
+  color:var(--muted);
+}
+
+.auth-tab.active{
+  background:var(--card2);
   color:var(--text);
 }
 
-/* MOBILE */
-
-.bottom-nav{
-  display:none;
+.auth-form{
+  display:grid;
+  gap:10px;
 }
 
-@media(max-width:950px){
-  .hero-grid,
-  .dashboard-grid{
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  margin:15px 0;
+  font-size:12px;
+}
+
+.divider:before,
+.divider:after{
+  content:"";
+  height:1px;
+  background:var(--line);
+  flex:1;
+}
+
+.status{
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:13px;
+  margin-top:10px;
+}
+
+.status.error{
+  color:#ffd4d7;
+  background:rgba(255,95,109,.12);
+  border:1px solid rgba(255,95,109,.25);
+}
+
+.status.success{
+  color:#c9ffe9;
+  background:rgba(37,194,129,.10);
+  border:1px solid rgba(37,194,129,.22);
+}
+
+.ad-safe-note{
+  border:1px dashed var(--line);
+  padding:15px;
+  border-radius:15px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/*
+  AdSense:
+  DO NOT put ads in the private workspace.
+  DO NOT reward users for ad views/clicks.
+  DO NOT invent an ad-slot ID.
+
+  After Google approves/configures the site, paste the exact
+  AdSense code generated for the PUBLIC content area here.
+
+  Publisher ID previously supplied:
+  ca-pub-2057536839831582
+
+  Example normal AdSense loader:
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
+    crossorigin="anonymous"></script>
+
+  This is intentionally NOT activated automatically in this
+  private application shell.
+*/
+
+@media(max-width:900px){
+  .hero-grid{
     grid-template-columns:1fr;
   }
 
   .cards{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .tool-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .sidebar{
-    display:none;
+    grid-template-columns:1fr 1fr;
   }
 
   .app-layout{
     display:block;
   }
 
-  .bottom-nav{
-    display:grid;
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    padding:17px 15px 95px;
+  }
+
+  .mobile-bottom{
+    display:flex;
     position:fixed;
-    left:8px;
-    right:8px;
-    bottom:8px;
-    z-index:100;
-    grid-template-columns:repeat(5,1fr);
-    background:color-mix(in srgb,var(--surface) 95%,transparent);
+    z-index:60;
+    bottom:0;
+    left:0;
+    right:0;
+    background:rgba(7,17,31,.94);
     backdrop-filter:blur(18px);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:6px;
-    box-shadow:0 12px 40px rgba(0,0,0,.15);
+    border-top:1px solid var(--line);
+    padding:7px 5px calc(7px + env(safe-area-inset-bottom));
   }
 
-  .bottom-btn{
+  .light .mobile-bottom{
+    background:rgba(255,255,255,.95);
+  }
+
+  .mobile-bottom button{
+    flex:1;
     border:0;
-    background:transparent;
+    background:none;
     color:var(--muted);
-    padding:8px 3px;
     font-size:10px;
-    font-weight:800;
-    border-radius:12px;
+    padding:6px 2px;
   }
 
-  .bottom-btn.active{
-    color:var(--primary);
-    background:var(--surface2);
+  .mobile-bottom button.active{
+    color:var(--primary2);
   }
 }
 
 @media(max-width:650px){
-  .container{
-    width:min(100% - 22px,1180px);
-  }
-
   .navlinks{
     display:none;
   }
@@ -861,1224 +847,1448 @@ section.public-section{
     padding-top:45px;
   }
 
-  h1{
+  .hero h1{
     letter-spacing:-2px;
   }
 
-  .cards,
-  .guide-grid,
-  .stats,
-  .quick-grid,
-  .action-grid,
-  .tool-grid{
+  .cards{
     grid-template-columns:1fr;
   }
 
-  .app-topbar-inner{
-    width:calc(100% - 16px);
+  .workspace{
+    grid-template-columns:1fr;
   }
 
-  .app-layout{
-    width:calc(100% - 16px);
+  .panel.full{
+    grid-column:auto;
   }
 
-  .page-title{
+  .dashboard-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-head{
     flex-direction:column;
+  }
+
+  .container{
+    width:min(100% - 24px,1180px);
   }
 }
 </style>
+
+<!-- Firebase compat SDK: deliberately explicit for a single-file deployment -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
 
-<!-- ============================================================
-     PUBLIC WEBSITE
-============================================================= -->
+<!-- =========================================================
+     PUBLIC SITE
+========================================================= -->
 
 <div id="publicSite">
 
 <header class="topbar">
-  <div class="container topbar-inner">
-    <a class="brand" href="#">
-      <span class="brand-mark">S</span>
-      <span>Shaheen</span>
-    </a>
+  <div class="container nav">
+
+    <button class="brand" onclick="showPublic('home')" style="border:0;background:none;color:inherit">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
+                fill="currentColor"/>
+        </svg>
+      </span>
+      SHAHEEN
+    </button>
 
     <nav class="navlinks">
-      <a href="#how">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#guides">Guides</a>
-      <a href="#security">Security</a>
+      <button onclick="showPublic('home')">Home</button>
+      <button onclick="showPublic('how')">How it works</button>
+      <button onclick="showPublic('guides')">Guides</button>
+      <button onclick="showPublic('about')">About</button>
+      <button onclick="showPublic('privacy')">Privacy</button>
+      <button onclick="showPublic('contact')">Contact</button>
     </nav>
 
-    <button class="btn btn-primary btn-small" onclick="showAuth()">
-      Open Shaheen
+    <button class="btn primary" onclick="openAuth('login')">
+      Sign in
     </button>
+
   </div>
 </header>
 
-<main>
+<!-- HOME -->
 
-<section class="hero">
-  <div class="container hero-grid">
+<section id="public-home" class="public-page">
 
-    <div>
-      <span class="badge">DOCUMENT → UNDERSTANDING → ACTION</span>
+  <div class="container hero">
 
-      <h1>
-        Don't just read information.
-        <span class="gradient-text">Know what to do next.</span>
-      </h1>
+    <div class="hero-grid">
+
+      <div>
+
+        <span class="badge">
+          ✦ Information → Understanding → Action
+        </span>
+
+        <h1>
+          Stop reading information.
+          <span class="gradient">Start acting on it.</span>
+        </h1>
+
+        <p>
+          SHAHEEN turns documents, letters, notes and everyday information
+          into clear facts, dates, requirements, actions and checklists.
+          Process supported documents directly in your browser and keep
+          your workspace organized.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn primary" onclick="openAuth('signup')">
+            Start Free
+          </button>
+
+          <button class="btn" onclick="showPublic('how')">
+            See how it works
+          </button>
+        </div>
+
+      </div>
+
+      <div class="hero-card">
+
+        <div class="mock-flow">
+
+          <div class="flow-item">
+            <div class="flow-icon">📄</div>
+            <div>
+              <b>1. Give information</b>
+              <div style="color:var(--muted);font-size:13px">
+                Paste text or upload supported documents
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-icon">🔎</div>
+            <div>
+              <b>2. Find what matters</b>
+              <div style="color:var(--muted);font-size:13px">
+                Dates, amounts, contacts and requirements
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-icon">✓</div>
+            <div>
+              <b>3. Build actions</b>
+              <div style="color:var(--muted);font-size:13px">
+                Checklist and next steps
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-icon">☁</div>
+            <div>
+              <b>4. Keep organized</b>
+              <div style="color:var(--muted);font-size:13px">
+                Save projects and notes
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container section">
+
+    <div class="section-title">
+      <h2>Built around real problems</h2>
+      <p>
+        The product is not positioned as another generic chatbot.
+        The core idea is to convert information into useful work.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="card">
+        <div class="iconbox">📑</div>
+        <h3>Document → Action</h3>
+        <p>
+          Extract important information from letters, applications,
+          instructions, notices and other text.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="iconbox">⏰</div>
+        <h3>Dates & deadlines</h3>
+        <p>
+          Identify date-like information and organize it so users
+          can understand what may require attention.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="iconbox">✓</div>
+        <h3>Checklists</h3>
+        <p>
+          Turn requirements and action-oriented sentences into a
+          practical checklist.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="iconbox">🧹</div>
+        <h3>Data utilities</h3>
+        <p>
+          Clean text, inspect structured information and use everyday
+          calculators and formatting tools.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="iconbox">🔐</div>
+        <h3>Privacy-conscious</h3>
+        <p>
+          Browser-side processing is used for document analysis where
+          practical. The site does not pretend that local processing
+          is the same thing as end-to-end encryption.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="iconbox">☁</div>
+        <h3>Personal workspace</h3>
+        <p>
+          Signed-in users can save their workspace to Firebase
+          Firestore when the Firebase project is correctly configured.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+  <div class="container section">
+
+    <div class="section-title">
+      <h2>Useful guides</h2>
+      <p>
+        Public educational content gives users information before
+        asking them to use the product.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="card">
+        <h3>How to turn a document into a checklist</h3>
+        <p>
+          Read the document once, identify requirements, dates,
+          responsible parties and evidence, then convert each
+          actionable requirement into a checkable step.
+        </p>
+        <button class="btn small" onclick="showPublic('guides')">
+          Read guide
+        </button>
+      </article>
+
+      <article class="card">
+        <h3>How to organize important deadlines</h3>
+        <p>
+          Separate dates into deadlines, appointments, validity
+          periods and informational dates instead of treating every
+          date as the same kind of event.
+        </p>
+        <button class="btn small" onclick="showPublic('guides')">
+          Read guide
+        </button>
+      </article>
+
+      <article class="card">
+        <h3>Why document privacy matters</h3>
+        <p>
+          Documents can contain names, addresses, account numbers
+          and other sensitive information. Understand what should
+          be processed locally and what should never be shared.
+        </p>
+        <button class="btn small" onclick="showPublic('privacy')">
+          Read policy
+        </button>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HOW -->
+
+<section id="public-how" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>How SHAHEEN works</h1>
 
       <p>
-        Shaheen turns documents, text, links and messy information into
-        clear actions, checklists, tasks and organized work.
+        SHAHEEN is designed around one simple workflow:
+        <strong>information → understanding → action.</strong>
       </p>
 
-      <div class="actions">
-        <button class="btn btn-primary" onclick="showAuth()">
-          Start free
-        </button>
+      <h2>Step 1 — Add information</h2>
 
-        <a class="btn" href="#how">
-          See how it works
+      <p>
+        Paste text into the analyzer or upload a supported text-based
+        document. The application can analyze the extracted text
+        directly in your browser.
+      </p>
+
+      <h2>Step 2 — Identify important information</h2>
+
+      <p>
+        The analyzer looks for common dates, amounts, email addresses,
+        URLs, phone-like values, headings and action-oriented phrases.
+      </p>
+
+      <h2>Step 3 — Create an action list</h2>
+
+      <p>
+        Requirements and action-oriented sentences can be converted
+        into a checklist. This is deterministic browser-side analysis,
+        not a claim that an AI system has understood every legal or
+        financial implication.
+      </p>
+
+      <h2>Step 4 — Save your work</h2>
+
+      <p>
+        Signed-in users can save their workspace. Local storage also
+        keeps a local copy so a temporary cloud connection problem
+        does not destroy the interface or the local project.
+      </p>
+
+      <h2>Important</h2>
+
+      <p>
+        SHAHEEN is a productivity and information-organization tool.
+        It is not a lawyer, doctor, financial adviser, immigration
+        authority or government agency. Always verify important
+        decisions with the relevant official source.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- GUIDES -->
+
+<section id="public-guides" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>SHAHEEN Guides</h1>
+
+      <h2>Document → Action method</h2>
+
+      <p>
+        When reading an important document, first identify its purpose.
+        Then find the people or organizations involved, important dates,
+        required documents, amounts, conditions and requested actions.
+      </p>
+
+      <p>
+        A useful checklist should describe an action clearly enough
+        that someone can tell whether it is complete.
+      </p>
+
+      <h2>Deadline organization</h2>
+
+      <p>
+        Not every date is a deadline. A date can represent an event,
+        an expiry date, a submission deadline, a payment date or
+        simply historical information. Treating these differently
+        reduces mistakes.
+      </p>
+
+      <h2>Cleaning messy information</h2>
+
+      <p>
+        When working with copied information, remove unnecessary
+        whitespace, standardize capitalization and separate records
+        consistently. Always verify cleaned data before using it
+        for important business or official purposes.
+      </p>
+
+      <h2>Privacy checklist</h2>
+
+      <ul>
+        <li>Do not upload information you do not have permission to process.</li>
+        <li>Remove unnecessary personal information before sharing.</li>
+        <li>Use browser-side processing where appropriate.</li>
+        <li>Never publish private documents publicly.</li>
+        <li>Verify the destination before submitting sensitive information.</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="public-about" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>About SHAHEEN</h1>
+
+      <p>
+        SHAHEEN is a utility-first web application concept focused on
+        one problem: people receive information everywhere, but the
+        difficult part is understanding what to do next.
+      </p>
+
+      <p>
+        The product combines document analysis, organization,
+        checklists, notes and practical utilities in one workspace.
+      </p>
+
+      <h2>Our principle</h2>
+
+      <p>
+        Useful software should reduce work, not create more work.
+      </p>
+
+      <h2>No fake claims</h2>
+
+      <p>
+        SHAHEEN does not claim that deterministic browser parsing is
+        perfect AI understanding, legal advice or guaranteed fraud
+        detection. Results should be checked when the underlying
+        information is important.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PRIVACY -->
+
+<section id="public-privacy" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>Privacy Policy</h1>
+
+      <p>
+        SHAHEEN is designed to minimize unnecessary collection of
+        information.
+      </p>
+
+      <h2>Document processing</h2>
+
+      <p>
+        Supported document analysis is designed to happen in the
+        browser. This reduces the need to upload document contents
+        to a server for basic extraction.
+      </p>
+
+      <h2>Account information</h2>
+
+      <p>
+        If you create an account through Firebase Authentication,
+        Firebase processes authentication information according to
+        Google's Firebase terms and privacy practices.
+      </p>
+
+      <h2>Cloud workspace</h2>
+
+      <p>
+        If Firestore synchronization is enabled, saved workspace
+        information can be stored in your Firebase project. Access
+        should be restricted using Firebase Security Rules.
+      </p>
+
+      <h2>Third-party services</h2>
+
+      <p>
+        The application may use Firebase services and browser libraries
+        necessary for specific functions. Users should review the
+        applicable third-party privacy policies before using those
+        services.
+      </p>
+
+      <h2>Important</h2>
+
+      <p>
+        Do not upload extremely sensitive information unless you
+        understand how the relevant service processes it and you have
+        permission to use the information.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- TERMS -->
+
+<section id="public-terms" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>Terms of Use</h1>
+
+      <p>
+        SHAHEEN is provided as a productivity and information
+        organization service.
+      </p>
+
+      <h2>No professional advice</h2>
+
+      <p>
+        Information generated by the application does not replace
+        professional legal, medical, financial, tax or governmental
+        advice.
+      </p>
+
+      <h2>User responsibility</h2>
+
+      <p>
+        Users are responsible for checking extracted information and
+        confirming important decisions with authoritative sources.
+      </p>
+
+      <h2>Acceptable use</h2>
+
+      <p>
+        Do not use the service to violate laws, abuse other people,
+        upload information without authorization or interfere with
+        the operation of the service.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SECURITY -->
+
+<section id="public-security" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>Security</h1>
+
+      <p>
+        Security starts with minimizing unnecessary data transfer.
+        SHAHEEN therefore uses browser-side processing for supported
+        local document analysis.
+      </p>
+
+      <h2>Firebase authentication</h2>
+
+      <p>
+        Authentication is handled through Firebase Authentication
+        rather than storing passwords inside SHAHEEN.
+      </p>
+
+      <h2>Firestore</h2>
+
+      <p>
+        Private user data should be protected by rules matching the
+        authenticated user's UID. Never use an unrestricted
+        production Firestore ruleset.
+      </p>
+
+      <h2>Important limitation</h2>
+
+      <p>
+        A client-side web application cannot honestly promise
+        perfect security or end-to-end encryption without implementing
+        and independently auditing a complete cryptographic architecture.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="public-contact" class="public-page hidden">
+
+  <div class="container public-content">
+
+    <div class="prose">
+
+      <h1>Contact SHAHEEN</h1>
+
+      <p>
+        For general questions, product feedback or security reports,
+        use the contact address configured by the site owner.
+      </p>
+
+      <div class="card">
+        <h3>Contact</h3>
+        <p>
+          Replace this address with your real support email before
+          publishing the production site.
+        </p>
+        <a class="btn primary" href="mailto:support@example.com">
+          Email support
         </a>
       </div>
-    </div>
 
-    <div class="hero-card">
-      <div class="mock-window">
-        <div class="mock-head">
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </div>
-
-        <div class="mock-body">
-          <div class="mock-row">
-            <strong>📄 University admission letter</strong>
-            <div class="meta">Document analyzed locally</div>
-          </div>
-
-          <div class="mock-row">
-            <strong>✓ Important deadline</strong>
-            <div class="meta">Application fee • Required before submission</div>
-          </div>
-
-          <div class="mock-row">
-            <strong>☑ Action checklist</strong>
-            <div class="meta">ID • Transcript • Photo • Payment proof</div>
-          </div>
-
-          <div class="mock-row">
-            <strong>→ Next step</strong>
-            <div class="meta">Complete missing documents and review deadline.</div>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
+
 </section>
 
-<section id="features" class="public-section">
-  <div class="container">
+<footer>
 
-    <div class="section-head">
-      <span class="badge">ONE WORKSPACE</span>
-      <h2>From information to action.</h2>
-      <p>
-        Most tools stop after converting or summarizing something.
-        Shaheen focuses on the next useful step.
-      </p>
-    </div>
-
-    <div class="cards">
-
-      <article class="card">
-        <div class="card-icon">📄</div>
-        <h3>Document Action Engine</h3>
-        <p>
-          Extract text from supported files, detect dates, requirements,
-          amounts, emails and action-oriented phrases.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">☑️</div>
-        <h3>Automatic Checklist</h3>
-        <p>
-          Important requirements can become actionable checklist items
-          instead of remaining buried inside a document.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">🔎</div>
-        <h3>Search Everything</h3>
-        <p>
-          Search tasks, notes, links, projects and extracted document
-          information from one place.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">☁️</div>
-        <h3>Firebase Account</h3>
-        <p>
-          Sign in with Google or email and synchronize your workspace
-          through Firebase when Firestore is enabled.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">🔐</div>
-        <h3>Privacy First Processing</h3>
-        <p>
-          Browser-side document processing is used for supported analysis,
-          so the file does not need to be uploaded to Shaheen's own server.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">🧰</div>
-        <h3>Everyday Tools</h3>
-        <p>
-          Calculator, converter, JSON formatter, text tools, date tools
-          and focus timer live beside your workspace.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section id="how" class="public-section">
-  <div class="container">
-
-    <div class="section-head">
-      <span class="badge">SIMPLE WORKFLOW</span>
-      <h2>Three steps.</h2>
-      <p>
-        The product is intentionally designed around a simple mental model.
-      </p>
-    </div>
-
-    <div class="cards">
-
-      <article class="card">
-        <div class="card-icon">1️⃣</div>
-        <h3>Give it information</h3>
-        <p>
-          Upload a supported document or paste text, a URL, or a note.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">2️⃣</div>
-        <h3>Understand it</h3>
-        <p>
-          Shaheen extracts useful information and highlights things that
-          may require attention.
-        </p>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">3️⃣</div>
-        <h3>Act on it</h3>
-        <p>
-          Turn important findings into tasks, notes, checklists and saved
-          projects.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section id="guides" class="public-section">
-  <div class="container">
-
-    <div class="section-head">
-      <span class="badge">ORIGINAL INFORMATION</span>
-      <h2>Useful guides, not filler.</h2>
-      <p>
-        Public informational content gives the website value beyond the
-        private workspace.
-      </p>
-    </div>
-
-    <div class="guide-grid">
-
-      <article class="guide">
-        <h3>How to review an important document</h3>
-        <p>
-          Check dates, obligations, amounts, missing information,
-          required documents and next actions before submitting anything.
-        </p>
-      </article>
-
-      <article class="guide">
-        <h3>How to organize a document-heavy project</h3>
-        <p>
-          Keep the original document, important notes, action checklist,
-          deadlines and completed tasks connected.
-        </p>
-      </article>
-
-      <article class="guide">
-        <h3>How to avoid missing deadlines</h3>
-        <p>
-          Extract dates early, convert them into explicit tasks and keep
-          the source document available for verification.
-        </p>
-      </article>
-
-      <article class="guide">
-        <h3>Why document automation needs human review</h3>
-        <p>
-          Automated extraction can help with organization, but important
-          legal, financial, medical or academic decisions should still
-          be verified against the original source.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section id="security" class="public-section">
-  <div class="container">
-    <div class="card">
-
-      <span class="badge">SECURITY & PRIVACY</span>
-
-      <h2>Your files should remain yours.</h2>
-
-      <p>
-        Supported browser-side document processing happens locally in the
-        browser. Shaheen does not pretend that browser-side processing is
-        equivalent to enterprise encryption or professional legal/medical
-        confidentiality.
-      </p>
-
-      <p>
-        Firebase account information is used for authentication and,
-        when Firestore is enabled, workspace synchronization.
-      </p>
-
-      <p>
-        Never upload passwords, private keys, payment credentials or other
-        secrets into documents merely for analysis.
-      </p>
-
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer class="footer">
   <div class="container footer-grid">
+
     <div>
-      <strong>Shaheen</strong>
-      <div class="meta">Document Action Hub</div>
+      <b>SHAHEEN</b>
+      <div style="margin-top:6px">
+        Information → Action
+      </div>
     </div>
 
     <div class="footer-links">
-      <a href="#" onclick="openPublicModal('about');return false">About</a>
-      <a href="#" onclick="openPublicModal('privacy');return false">Privacy</a>
-      <a href="#" onclick="openPublicModal('terms');return false">Terms</a>
-      <a href="#" onclick="openPublicModal('security');return false">Security</a>
-      <a href="#" onclick="openPublicModal('contact');return false">Contact</a>
+      <button onclick="showPublic('about')">About</button>
+      <button onclick="showPublic('privacy')">Privacy</button>
+      <button onclick="showPublic('terms')">Terms</button>
+      <button onclick="showPublic('security')">Security</button>
+      <button onclick="showPublic('contact')">Contact</button>
     </div>
+
   </div>
+
 </footer>
 
 </div>
 
+<!-- =========================================================
+     PRIVATE APP
+========================================================= -->
 
-<!-- ============================================================
-     AUTH
-============================================================= -->
+<div id="appSite" class="app-shell hidden">
 
-<div id="authScreen" class="auth-screen hidden">
+<header class="topbar">
 
-  <div class="auth-card">
-
-    <div class="brand" style="margin-bottom:20px">
-      <span class="brand-mark">S</span>
-      <span>Shaheen</span>
-    </div>
-
-    <h1 id="authTitle">Welcome to Shaheen</h1>
-
-    <p id="authSubtitle" style="color:var(--muted)">
-      Sign in to save your workspace.
-    </p>
-
-    <div id="authMessage" class="message hidden"></div>
-
-    <form id="authForm" class="form">
-
-      <div>
-        <div class="label">Email</div>
-        <input id="authEmail"
-               class="input"
-               type="email"
-               autocomplete="email"
-               required>
-      </div>
-
-      <div>
-        <div class="label">Password</div>
-        <input id="authPassword"
-               class="input"
-               type="password"
-               autocomplete="current-password"
-               minlength="6"
-               required>
-      </div>
-
-      <button class="btn btn-primary" type="submit">
-        Continue with email
-      </button>
-
-    </form>
-
-    <div class="actions">
-      <button class="btn" id="toggleAuthMode">
-        Create account
-      </button>
-
-      <button class="btn" id="forgotBtn">
-        Forgot password
-      </button>
-    </div>
-
-    <div class="divider">OR</div>
-
-    <button id="googleBtn"
-            class="btn btn-primary"
-            style="width:100%">
-      Continue with Google
-    </button>
-
-    <div class="actions">
-      <button class="btn" onclick="backToPublic()">
-        Back to website
-      </button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- ============================================================
-     PRIVATE APPLICATION
-============================================================= -->
-
-<div id="appShell" class="app-shell hidden">
-
-<header class="app-topbar">
-  <div class="app-topbar-inner">
+  <div class="container nav">
 
     <div class="brand">
-      <span class="brand-mark">S</span>
-      <span>Shaheen</span>
+      <span class="logo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
+                fill="currentColor"/>
+        </svg>
+      </span>
+      SHAHEEN NEXUS
     </div>
 
     <div style="display:flex;align-items:center;gap:8px">
 
-      <button class="icon-btn" onclick="toggleTheme()" title="Theme">
-        ◐
+      <button class="btn small" onclick="toggleTheme()">
+        ◐ Theme
       </button>
 
-      <button class="btn btn-small" onclick="openProfileMenu()">
-        <span id="userName">Account</span> ⋮
+      <button class="btn small" onclick="openProfile()">
+        Profile
       </button>
 
     </div>
 
   </div>
+
 </header>
 
 <div class="app-layout">
 
-<aside class="sidebar">
+  <aside class="sidebar">
 
-  <button class="side-btn active" data-page="home">
-    🏠 Today
-  </button>
+    <div class="side-section">
 
-  <button class="side-btn" data-page="documents">
-    📄 Documents
-  </button>
+      <div class="side-label">Workspace</div>
 
-  <button class="side-btn" data-page="capture">
-    ✚ Quick Capture
-  </button>
+      <button class="side-btn active" data-page="dashboard" onclick="openPage('dashboard',this)">
+        🏠 <span>Today</span>
+      </button>
 
-  <button class="side-btn" data-page="tasks">
-    ☑ Tasks
-  </button>
+      <button class="side-btn" data-page="documents" onclick="openPage('documents',this)">
+        📄 <span>Documents</span>
+      </button>
 
-  <button class="side-btn" data-page="notes">
-    📝 Notes
-  </button>
+      <button class="side-btn" data-page="tasks" onclick="openPage('tasks',this)">
+        ✓ <span>Tasks</span>
+      </button>
 
-  <button class="side-btn" data-page="links">
-    🔗 Saved Links
-  </button>
+      <button class="side-btn" data-page="notes" onclick="openPage('notes',this)">
+        📝 <span>Notes</span>
+      </button>
 
-  <button class="side-btn" data-page="projects">
-    📁 Projects
-  </button>
+      <button class="side-btn" data-page="saved" onclick="openPage('saved',this)">
+        ★ <span>Saved</span>
+      </button>
 
-  <button class="side-btn" data-page="tools">
-    🧰 Tools
-  </button>
-
-  <button class="side-btn" data-page="search">
-    🔎 Search
-  </button>
-
-  <button class="side-btn" data-page="profile">
-    👤 Profile
-  </button>
-
-</aside>
-
-
-<main class="app-main">
-
-<!-- HOME -->
-
-<section id="page-home" class="page active">
-
-  <div class="page-title">
-    <div>
-      <h2>Today</h2>
-      <p id="todayText"></p>
     </div>
 
-    <button class="btn btn-primary"
-            onclick="goPage('capture')">
-      + Add something
-    </button>
-  </div>
+    <div class="side-section">
 
-  <div class="stats">
+      <div class="side-label">Tools</div>
 
-    <div class="stat">
-      <div id="statTasks" class="stat-value">0</div>
-      <div class="stat-label">Open tasks</div>
+      <button class="side-btn" data-page="tools" onclick="openPage('tools',this)">
+        🧰 <span>All tools</span>
+      </button>
+
+      <button class="side-btn" data-page="calculator" onclick="openPage('calculator',this)">
+        🧮 <span>Calculator</span>
+      </button>
+
+      <button class="side-btn" data-page="texttools" onclick="openPage('texttools',this)">
+        Aa <span>Text tools</span>
+      </button>
+
     </div>
 
-    <div class="stat">
-      <div id="statNotes" class="stat-value">0</div>
-      <div class="stat-label">Notes</div>
+    <div class="side-section">
+
+      <div class="side-label">Account</div>
+
+      <button class="side-btn" onclick="openProfile()">
+        👤 <span>Profile</span>
+      </button>
+
+      <button class="side-btn" onclick="toggleTheme()">
+        ◐ <span>Theme</span>
+      </button>
+
+      <button class="side-btn" onclick="logout()">
+        ⇥ <span>Sign out</span>
+      </button>
+
     </div>
 
-    <div class="stat">
-      <div id="statLinks" class="stat-value">0</div>
-      <div class="stat-label">Saved links</div>
-    </div>
+  </aside>
 
-    <div class="stat">
-      <div id="statProjects" class="stat-value">0</div>
-      <div class="stat-label">Projects</div>
-    </div>
+  <main class="main">
 
-  </div>
+    <!-- DASHBOARD -->
 
-  <div class="dashboard-grid">
+    <section id="page-dashboard" class="app-page">
 
-    <div class="card">
-      <div class="list-item-head">
+      <div class="page-head">
+
         <div>
-          <h3>What needs attention?</h3>
-          <div class="meta">
-            Your highest-priority unfinished work.
+          <h1 id="helloTitle">Today</h1>
+          <p>Turn information into your next useful action.</p>
+        </div>
+
+        <button class="btn primary" onclick="openPage('documents')">
+          + Analyze information
+        </button>
+
+      </div>
+
+      <div class="dashboard-grid">
+
+        <div class="stat">
+          <div class="stat-value" id="statDocs">0</div>
+          <div class="stat-label">Documents</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-value" id="statTasks">0</div>
+          <div class="stat-label">Open tasks</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-value" id="statNotes">0</div>
+          <div class="stat-label">Notes</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-value" id="statSaved">0</div>
+          <div class="stat-label">Saved projects</div>
+        </div>
+
+      </div>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <h2>Quick capture</h2>
+
+          <textarea
+            id="quickText"
+            class="textarea"
+            style="min-height:150px"
+            placeholder="Paste a letter, instructions, notice, email text or any information here..."
+          ></textarea>
+
+          <div class="actions">
+            <button class="btn primary" onclick="analyzeQuick()">
+              Analyze
+            </button>
+
+            <button class="btn" onclick="saveQuickNote()">
+              Save as note
+            </button>
           </div>
+
         </div>
 
-        <button class="btn btn-small"
-                onclick="goPage('tasks')">
-          All tasks
-        </button>
-      </div>
+        <div class="panel">
 
-      <div id="attentionList"
-           class="list"
-           style="margin-top:14px">
-      </div>
-    </div>
+          <h2>Recent activity</h2>
 
-    <div class="card">
+          <div id="recentActivity">
+            <div class="empty">
+              Your recent documents, tasks and notes will appear here.
+            </div>
+          </div>
 
-      <h3>Quick actions</h3>
+        </div>
 
-      <div class="quick-grid" style="margin-top:14px">
+        <div class="panel full">
 
-        <button class="quick" onclick="goPage('documents')">
-          <strong>📄 Analyze</strong>
-          <span>Understand a document</span>
-        </button>
+          <div class="ad-safe-note">
+            <b>Workspace privacy:</b>
+            This private workspace intentionally does not contain
+            Google AdSense advertising. Ads should not be used to
+            interfere with private communication or core account
+            functionality.
+          </div>
 
-        <button class="quick" onclick="goPage('tasks')">
-          <strong>☑ Task</strong>
-          <span>Create something to do</span>
-        </button>
-
-        <button class="quick" onclick="goPage('notes')">
-          <strong>📝 Note</strong>
-          <span>Save an idea</span>
-        </button>
-
-        <button class="quick" onclick="goPage('links')">
-          <strong>🔗 Link</strong>
-          <span>Save a useful page</span>
-        </button>
+        </div>
 
       </div>
 
-    </div>
+    </section>
 
-  </div>
+    <!-- DOCUMENTS -->
 
-</section>
+    <section id="page-documents" class="app-page hidden">
 
-
-<!-- DOCUMENTS -->
-
-<section id="page-documents" class="page">
-
-  <div class="page-title">
-    <div>
-      <h2>Document Action Engine</h2>
-      <p>
-        Upload supported files and turn information into useful actions.
-      </p>
-    </div>
-  </div>
-
-  <div id="dropZone" class="upload-zone">
-
-    <div style="font-size:42px">📄</div>
-
-    <h3>Drop a file here</h3>
-
-    <p class="meta">
-      PDF, DOCX, XLSX, CSV, TXT, JSON and common images.
-    </p>
-
-    <input id="fileInput"
-           type="file"
-           hidden
-           accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.json,.png,.jpg,.jpeg,.webp">
-
-    <button class="btn btn-primary"
-            onclick="document.getElementById('fileInput').click()">
-      Choose file
-    </button>
-
-    <div id="fileName" class="file-name"></div>
-
-  </div>
-
-  <div id="analysisArea" class="analysis hidden">
-
-    <div class="card">
-
-      <div class="analysis-header">
+      <div class="page-head">
 
         <div>
-          <h3 id="analysisTitle">
-            Analysis
-          </h3>
-
-          <div id="analysisMeta" class="meta"></div>
+          <h1>Document Action Engine</h1>
+          <p>
+            Paste information and turn it into facts, dates,
+            requirements and actions.
+          </p>
         </div>
 
-        <button class="btn btn-small"
-                onclick="saveAnalysisAsNote()">
-          Save as note
-        </button>
-
       </div>
 
-    </div>
+      <div class="workspace">
 
-    <div class="card">
+        <div class="panel">
 
-      <h3>Important findings</h3>
+          <h2>Input</h2>
 
-      <div id="findings"
-           class="action-grid"
-           style="margin-top:12px">
-      </div>
+          <input
+            id="documentTitle"
+            class="input"
+            placeholder="Document title (optional)"
+          >
 
-    </div>
+          <br><br>
 
-    <div class="card">
+          <textarea
+            id="documentText"
+            class="textarea"
+            placeholder="Paste the document text here..."
+          ></textarea>
 
-      <h3>Suggested actions</h3>
+          <div class="actions">
 
-      <div id="suggestedActions"
-           class="list"
-           style="margin-top:12px">
-      </div>
+            <button class="btn primary" onclick="analyzeDocument()">
+              Analyze document
+            </button>
 
-    </div>
+            <button class="btn" onclick="clearDocument()">
+              Clear
+            </button>
 
-    <div class="card">
+          </div>
 
-      <h3>Extracted content</h3>
+          <div style="margin-top:15px;color:var(--muted);font-size:13px">
+            Browser-side analysis is used here. No claim is made that
+            automatic extraction is perfect.
+          </div>
 
-      <div id="extractedText"
-           class="extracted"
-           style="margin-top:12px">
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- CAPTURE -->
-
-<section id="page-capture" class="page">
-
-  <div class="page-title">
-    <div>
-      <h2>Quick Capture</h2>
-      <p>
-        Paste something here. Shaheen will help organize it.
-      </p>
-    </div>
-  </div>
-
-  <div class="card">
-
-    <div class="form">
-
-      <div>
-        <div class="label">What do you want to save?</div>
-
-        <textarea id="captureText"
-                  class="textarea"
-                  placeholder="Paste text, a URL, a requirement, an idea, or a task..."></textarea>
-      </div>
-
-      <div>
-        <div class="label">Type</div>
-
-        <select id="captureType"
-                class="select">
-          <option value="auto">Auto detect</option>
-          <option value="task">Task</option>
-          <option value="note">Note</option>
-          <option value="link">Link</option>
-          <option value="research">Research note</option>
-        </select>
-      </div>
-
-      <button class="btn btn-primary"
-              onclick="saveCapture()">
-        Save
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- TASKS -->
-
-<section id="page-tasks" class="page">
-
-  <div class="page-title">
-
-    <div>
-      <h2>My Tasks</h2>
-      <p>Keep actions explicit and easy to finish.</p>
-    </div>
-
-    <button class="btn btn-primary"
-            onclick="openTaskModal()">
-      + New task
-    </button>
-
-  </div>
-
-  <div id="tasksList" class="list"></div>
-
-</section>
-
-
-<!-- NOTES -->
-
-<section id="page-notes" class="page">
-
-  <div class="page-title">
-
-    <div>
-      <h2>My Notes</h2>
-      <p>Ideas, extracted information and useful context.</p>
-    </div>
-
-    <button class="btn btn-primary"
-            onclick="openNoteModal()">
-      + New note
-    </button>
-
-  </div>
-
-  <div id="notesList" class="list"></div>
-
-</section>
-
-
-<!-- LINKS -->
-
-<section id="page-links" class="page">
-
-  <div class="page-title">
-
-    <div>
-      <h2>Saved Links</h2>
-      <p>Keep useful websites in one searchable place.</p>
-    </div>
-
-    <button class="btn btn-primary"
-            onclick="openLinkModal()">
-      + Save link
-    </button>
-
-  </div>
-
-  <div id="linksList" class="list"></div>
-
-</section>
-
-
-<!-- PROJECTS -->
-
-<section id="page-projects" class="page">
-
-  <div class="page-title">
-
-    <div>
-      <h2>Projects</h2>
-      <p>Group tasks, notes and links around a goal.</p>
-    </div>
-
-    <button class="btn btn-primary"
-            onclick="openProjectModal()">
-      + New project
-    </button>
-
-  </div>
-
-  <div id="projectsList" class="cards"></div>
-
-</section>
-
-
-<!-- TOOLS -->
-
-<section id="page-tools" class="page">
-
-  <div class="page-title">
-    <div>
-      <h2>Tools</h2>
-      <p>Small tools for everyday work.</p>
-    </div>
-  </div>
-
-  <div class="tool-grid">
-
-    <div class="tool-card">
-      <h3>Calculator</h3>
-
-      <input id="calcInput"
-             class="input"
-             placeholder="Example: 25*4+10">
-
-      <button class="btn btn-primary"
-              style="margin-top:8px"
-              onclick="calculate()">
-        Calculate
-      </button>
-
-      <div id="calcResult"
-           class="tool-result">
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Percentage</h3>
-
-      <input id="percentA"
-             class="input"
-             type="number"
-             placeholder="Value">
-
-      <input id="percentB"
-             class="input"
-             type="number"
-             placeholder="Percent"
-             style="margin-top:8px">
-
-      <button class="btn btn-primary"
-              style="margin-top:8px"
-              onclick="percentage()">
-        Calculate
-      </button>
-
-      <div id="percentResult"
-           class="tool-result">
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Unit Converter</h3>
-
-      <select id="unitType"
-              class="select">
-        <option value="km-mi">Kilometers → Miles</option>
-        <option value="mi-km">Miles → Kilometers</option>
-        <option value="kg-lb">Kilograms → Pounds</option>
-        <option value="lb-kg">Pounds → Kilograms</option>
-        <option value="c-f">Celsius → Fahrenheit</option>
-        <option value="f-c">Fahrenheit → Celsius</option>
-        <option value="m-ft">Meters → Feet</option>
-        <option value="ft-m">Feet → Meters</option>
-      </select>
-
-      <input id="unitValue"
-             class="input"
-             type="number"
-             placeholder="Value"
-             style="margin-top:8px">
-
-      <button class="btn btn-primary"
-              style="margin-top:8px"
-              onclick="convertUnit()">
-        Convert
-      </button>
-
-      <div id="unitResult"
-           class="tool-result">
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Age Calculator</h3>
-
-      <input id="birthDate"
-             class="input"
-             type="date">
-
-      <button class="btn btn-primary"
-              style="margin-top:8px"
-              onclick="calculateAge()">
-        Calculate age
-      </button>
-
-      <div id="ageResult"
-           class="tool-result">
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Text Counter</h3>
-
-      <textarea id="counterText"
-                class="textarea"
-                placeholder="Paste text..."></textarea>
-
-      <div id="counterResult"
-           class="tool-result">
-        0 words • 0 characters
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>JSON Formatter</h3>
-
-      <textarea id="jsonInput"
-                class="textarea"
-                placeholder='{"hello":"world"}'></textarea>
-
-      <button class="btn btn-primary"
-              style="margin-top:8px"
-              onclick="formatJSON()">
-        Format JSON
-      </button>
-
-      <div id="jsonResult"
-           class="extracted"
-           style="margin-top:8px">
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Text Case</h3>
-
-      <textarea id="caseText"
-                class="textarea"
-                placeholder="Enter text..."></textarea>
-
-      <div class="actions">
-        <button class="btn btn-small"
-                onclick="changeCase('upper')">
-          UPPER
-        </button>
-
-        <button class="btn btn-small"
-                onclick="changeCase('lower')">
-          lower
-        </button>
-
-        <button class="btn btn-small"
-                onclick="changeCase('title')">
-          Title
-        </button>
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Focus Timer</h3>
-
-      <div id="timerDisplay"
-           style="font-size:42px;font-weight:900">
-        25:00
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-primary"
-                onclick="startTimer()">
-          Start
-        </button>
-
-        <button class="btn"
-                onclick="pauseTimer()">
-          Pause
-        </button>
-
-        <button class="btn"
-                onclick="resetTimer()">
-          Reset
-        </button>
-      </div>
-    </div>
-
-
-    <div class="tool-card">
-      <h3>Data Backup</h3>
-
-      <p class="meta">
-        Export your local workspace as JSON or import a previous backup.
-      </p>
-
-      <div class="actions">
-
-        <button class="btn btn-primary"
-                onclick="exportData()">
-          Export
-        </button>
-
-        <button class="btn"
-                onclick="document.getElementById('importFile').click()">
-          Import
-        </button>
-
-      </div>
-
-      <input id="importFile"
-             type="file"
-             accept=".json"
-             hidden>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- SEARCH -->
-
-<section id="page-search" class="page">
-
-  <div class="page-title">
-    <div>
-      <h2>Search Everything</h2>
-      <p>Search across your Shaheen workspace.</p>
-    </div>
-  </div>
-
-  <input id="globalSearch"
-         class="input"
-         placeholder="Search tasks, notes, links, projects..."
-         oninput="renderSearch()">
-
-  <div id="searchResults"
-       class="list"
-       style="margin-top:15px">
-  </div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section id="page-profile" class="page">
-
-  <div class="page-title">
-    <div>
-      <h2>Profile</h2>
-      <p>Your Shaheen account and workspace controls.</p>
-    </div>
-  </div>
-
-  <div class="card">
-
-    <div style="display:flex;align-items:center;gap:15px">
-
-      <img id="profilePhoto"
-           src=""
-           alt=""
-           width="64"
-           height="64"
-           style="border-radius:50%;object-fit:cover;background:var(--surface2)">
-
-      <div>
-        <h3 id="profileName">User</h3>
-        <div id="profileEmail"
-             class="meta">
         </div>
-      </div>
 
-    </div>
+        <div class="panel">
 
-    <div class="actions">
+          <h2>Analysis</h2>
 
-      <button class="btn"
-              onclick="openPublicModal('about')">
-        About Us
-      </button>
+          <div id="analysisOutput">
 
-      <button class="btn"
-              onclick="openPublicModal('privacy')">
-        Privacy Policy
-      </button>
+            <div class="empty">
+              Add information and select “Analyze document”.
+            </div>
 
-      <button class="btn"
-              onclick="openPublicModal('terms')">
-        Terms
-      </button>
+          </div>
 
-      <button class="btn"
-              onclick="openPublicModal('security')">
-        Security
-      </button>
-
-      <button class="btn"
-              onclick="openPublicModal('contact')">
-        Contact Us
-      </button>
-
-      <button class="btn"
-              onclick="toggleTheme()">
-        Change theme
-      </button>
-
-      <button class="btn btn-danger"
-              onclick="signOutUser()">
-        Sign out
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="card" style="margin-top:15px">
-
-    <h3>Workspace status</h3>
-
-    <div class="list" style="margin-top:12px">
-
-      <div class="list-item">
-        <strong>Local workspace</strong>
-        <div class="meta">
-          Available in this browser.
         </div>
+
       </div>
 
-      <div class="list-item">
-        <strong>Cloud sync</strong>
-        <div id="cloudStatus" class="meta">
-          Checking...
+    </section>
+
+    <!-- TASKS -->
+
+    <section id="page-tasks" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Tasks</h1>
+          <p>Keep actionable items visible.</p>
         </div>
+
       </div>
 
-      <div class="list-item">
-        <strong>Document processing</strong>
-        <div class="meta">
-          Supported analysis runs in the browser.
+      <div class="panel">
+
+        <div class="actions">
+
+          <input
+            id="newTask"
+            class="input"
+            style="max-width:600px"
+            placeholder="Add a task..."
+          >
+
+          <button class="btn primary" onclick="addTask()">
+            Add task
+          </button>
+
         </div>
+
+        <div id="taskList" style="margin-top:18px"></div>
+
       </div>
 
-    </div>
+    </section>
 
-  </div>
+    <!-- NOTES -->
 
-</section>
+    <section id="page-notes" class="app-page hidden">
 
-</main>
+      <div class="page-head">
+
+        <div>
+          <h1>Notes</h1>
+          <p>Keep useful information in one place.</p>
+        </div>
+
+      </div>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <h2>New note</h2>
+
+          <input
+            id="noteTitle"
+            class="input"
+            placeholder="Note title"
+          >
+
+          <br><br>
+
+          <textarea
+            id="noteBody"
+            class="textarea"
+            style="min-height:180px"
+            placeholder="Write your note..."
+          ></textarea>
+
+          <div class="actions">
+
+            <button class="btn primary" onclick="addNote()">
+              Save note
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Saved notes</h2>
+
+          <div id="noteList"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SAVED -->
+
+    <section id="page-saved" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Saved projects</h1>
+          <p>Your analyzed documents and reusable information.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn" onclick="exportData()">
+            Export
+          </button>
+
+          <label class="btn">
+            Import
+            <input
+              id="importFile"
+              type="file"
+              accept=".json"
+              hidden
+              onchange="importData(event)"
+            >
+          </label>
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <div id="savedList"></div>
+
+      </div>
+
+    </section>
+
+    <!-- TOOLS -->
+
+    <section id="page-tools" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Tools</h1>
+          <p>Small utilities for everyday work.</p>
+        </div>
+
+      </div>
+
+      <div class="cards">
+
+        <button class="card" style="text-align:left" onclick="openPage('calculator')">
+          <div class="iconbox">🧮</div>
+          <h3>Calculator</h3>
+          <p>Basic calculations and percentages.</p>
+        </button>
+
+        <button class="card" style="text-align:left" onclick="openPage('texttools')">
+          <div class="iconbox">Aa</div>
+          <h3>Text tools</h3>
+          <p>Count, format and transform text.</p>
+        </button>
+
+        <div class="card">
+          <div class="iconbox">📅</div>
+          <h3>Date tools</h3>
+          <p>
+            Use the date difference and age calculator below.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="iconbox">🔢</div>
+          <h3>Converters</h3>
+          <p>
+            Convert common length and weight units.
+          </p>
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <h2>Date difference</h2>
+
+          <div class="form-grid">
+
+            <input
+              id="dateA"
+              type="date"
+              class="input"
+            >
+
+            <input
+              id="dateB"
+              type="date"
+              class="input"
+            >
+
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="dateDifference()">
+              Calculate
+            </button>
+          </div>
+
+          <div id="dateResult"></div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Age calculator</h2>
+
+          <input
+            id="birthDate"
+            type="date"
+            class="input"
+          >
+
+          <div class="actions">
+            <button class="btn primary" onclick="calculateAge()">
+              Calculate age
+            </button>
+          </div>
+
+          <div id="ageResult"></div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Unit converter</h2>
+
+          <div class="form-grid">
+
+            <input
+              id="unitValue"
+              type="number"
+              class="input"
+              placeholder="Value"
+            >
+
+            <select id="unitType" class="select">
+              <option value="km-mi">Kilometers → Miles</option>
+              <option value="mi-km">Miles → Kilometers</option>
+              <option value="kg-lb">Kilograms → Pounds</option>
+              <option value="lb-kg">Pounds → Kilograms</option>
+              <option value="cm-in">Centimeters → Inches</option>
+              <option value="in-cm">Inches → Centimeters</option>
+            </select>
+
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="convertUnit()">
+              Convert
+            </button>
+          </div>
+
+          <div id="unitResult"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CALCULATOR -->
+
+    <section id="page-calculator" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Calculator</h1>
+          <p>Simple browser-side calculations.</p>
+        </div>
+
+      </div>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <input
+            id="calcInput"
+            class="input"
+            placeholder="Example: 125 * 4 + 10"
+          >
+
+          <div class="actions">
+            <button class="btn primary" onclick="calculate()">
+              Calculate
+            </button>
+          </div>
+
+          <div id="calcResult" class="result hidden"></div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Percentage</h2>
+
+          <div class="form-grid">
+
+            <input
+              id="percentValue"
+              type="number"
+              class="input"
+              placeholder="Value"
+            >
+
+            <input
+              id="percentOf"
+              type="number"
+              class="input"
+              placeholder="%"
+            >
+
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="percentage()">
+              Calculate
+            </button>
+          </div>
+
+          <div id="percentResult"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TEXT TOOLS -->
+
+    <section id="page-texttools" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Text tools</h1>
+          <p>Count, format and transform text locally.</p>
+        </div>
+
+      </div>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <textarea
+            id="textToolInput"
+            class="textarea"
+            style="min-height:300px"
+            placeholder="Enter text..."
+            oninput="updateTextStats()"
+          ></textarea>
+
+          <div id="textStats" class="result">
+            Characters: 0 · Words: 0 · Lines: 0
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Transform</h2>
+
+          <div class="actions">
+
+            <button class="btn" onclick="textUpper()">
+              UPPERCASE
+            </button>
+
+            <button class="btn" onclick="textLower()">
+              lowercase
+            </button>
+
+            <button class="btn" onclick="textTitle()">
+              Title Case
+            </button>
+
+            <button class="btn" onclick="removeExtraSpaces()">
+              Clean spaces
+            </button>
+
+          </div>
+
+          <h2 style="margin-top:30px">JSON formatter</h2>
+
+          <textarea
+            id="jsonInput"
+            class="textarea"
+            style="min-height:160px"
+            placeholder='{"name":"SHAHEEN"}'
+          ></textarea>
+
+          <div class="actions">
+            <button class="btn primary" onclick="formatJSON()">
+              Format JSON
+            </button>
+          </div>
+
+          <pre
+            id="jsonOutput"
+            class="result"
+            style="white-space:pre-wrap;overflow:auto"
+          ></pre>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PROFILE -->
+
+    <section id="page-profile" class="app-page hidden">
+
+      <div class="page-head">
+
+        <div>
+          <h1>Profile</h1>
+          <p>Account and workspace controls.</p>
+        </div>
+
+      </div>
+
+      <div class="workspace">
+
+        <div class="panel">
+
+          <div class="profile">
+
+            <img
+              id="profileAvatar"
+              class="avatar"
+              alt="Profile"
+            >
+
+            <div>
+              <h2 id="profileName" style="margin:0">
+                User
+              </h2>
+
+              <div id="profileEmail" style="color:var(--muted)">
+                —
+              </div>
+            </div>
+
+          </div>
+
+          <div class="actions">
+            <button class="btn" onclick="toggleTheme()">
+              Toggle theme
+            </button>
+
+            <button class="btn danger" onclick="logout()">
+              Sign out
+            </button>
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <h2>Account information</h2>
+
+          <p style="color:var(--muted);line-height:1.7">
+            Your authentication is handled by Firebase Authentication.
+            SHAHEEN does not store your password in this page.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
 </div>
-
 
 <!-- MOBILE NAV -->
 
-<nav class="bottom-nav">
+<nav class="mobile-bottom">
 
-  <button class="bottom-btn active"
-          data-page="home">
+  <button data-page="dashboard" onclick="mobilePage('dashboard')">
     🏠<br>Today
   </button>
 
-  <button class="bottom-btn"
-          data-page="documents">
+  <button data-page="documents" onclick="mobilePage('documents')">
     📄<br>Docs
   </button>
 
-  <button class="bottom-btn"
-          data-page="tasks">
-    ☑<br>Tasks
+  <button data-page="tasks" onclick="mobilePage('tasks')">
+    ✓<br>Tasks
   </button>
 
-  <button class="bottom-btn"
-          data-page="tools">
-    🧰<br>Tools
+  <button data-page="notes" onclick="mobilePage('notes')">
+    📝<br>Notes
   </button>
 
-  <button class="bottom-btn"
-          data-page="profile">
+  <button data-page="profile" onclick="mobilePage('profile')">
     👤<br>Profile
   </button>
 
@@ -2086,62 +2296,110 @@ section.public-section{
 
 </div>
 
+<!-- =========================================================
+     AUTH MODAL
+========================================================= -->
 
-<!-- ============================================================
-     MODAL
-============================================================= -->
+<div id="authModal" class="modal-backdrop">
 
-<div id="modal" class="modal">
-
-  <div class="modal-card">
+  <div class="modal">
 
     <div class="modal-head">
 
-      <h2 id="modalTitle">Window</h2>
+      <h2 id="authTitle">Welcome</h2>
 
-      <button class="icon-btn"
-              onclick="closeModal()">
-        ×
+      <button class="close" onclick="closeAuth()">×</button>
+
+    </div>
+
+    <div class="auth-tabs">
+
+      <button
+        id="loginTab"
+        class="auth-tab active"
+        onclick="setAuthMode('login')"
+      >
+        Login
+      </button>
+
+      <button
+        id="signupTab"
+        class="auth-tab"
+        onclick="setAuthMode('signup')"
+      >
+        Create account
       </button>
 
     </div>
 
-    <div id="modalBody"></div>
+    <form id="authForm" class="auth-form" onsubmit="submitAuth(event)">
+
+      <input
+        id="authEmail"
+        type="email"
+        class="input"
+        required
+        autocomplete="email"
+        placeholder="Email address"
+      >
+
+      <input
+        id="authPassword"
+        type="password"
+        class="input"
+        required
+        minlength="6"
+        autocomplete="current-password"
+        placeholder="Password"
+      >
+
+      <button class="btn primary" id="authSubmit">
+        Continue
+      </button>
+
+    </form>
+
+    <button
+      id="forgotBtn"
+      class="btn"
+      style="width:100%;margin-top:10px"
+      onclick="forgotPassword()"
+    >
+      Forgot password?
+    </button>
+
+    <div class="divider">OR</div>
+
+    <button
+      class="btn"
+      style="width:100%"
+      onclick="googleLogin()"
+    >
+      Continue with Google
+    </button>
+
+    <div id="authStatus"></div>
+
+    <div
+      style="margin-top:14px;color:var(--muted);font-size:12px;line-height:1.6"
+    >
+      By continuing, you agree to use SHAHEEN responsibly and not
+      upload information without permission.
+    </div>
 
   </div>
 
 </div>
 
-
-<!-- ============================================================
-     FIREBASE + DOCUMENT LIBRARIES
-============================================================= -->
-
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-
-<!-- PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs"
-        type="module"></script>
-
-<!-- DOCX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
-
-<!-- XLSX / CSV -->
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-
-<!-- OCR -->
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
+<div id="toast" class="toast"></div>
 
 <script>
-/* ============================================================
-   FIREBASE
-============================================================= */
+/* ==========================================================
+   FIREBASE CONFIG
+========================================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpk_dv138",
+  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnp_kd_v138",
   authDomain: "shaheen-nexus.firebaseapp.com",
   projectId: "shaheen-nexus",
   storageBucket: "shaheen-nexus.firebasestorage.app",
@@ -2150,581 +2408,614 @@ const firebaseConfig = {
   measurementId: "G-VV2CBVV3HQ"
 };
 
-firebase.initializeApp(firebaseConfig);
+let firebaseReady = false;
+let auth = null;
+let db = null;
+let currentUser = null;
+let unsubscribeCloud = null;
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+const LOCAL_KEY = "shaheen_nexus_workspace_v1";
 
-const googleProvider =
-  new firebase.auth.GoogleAuthProvider();
+/* ==========================================================
+   APP STATE
+========================================================== */
 
-googleProvider.setCustomParameters({
-  prompt:"select_account"
-});
-
-
-/* ============================================================
-   STATE
-============================================================= */
-
-const EMPTY_DATA = {
-  tasks:[],
-  notes:[],
-  links:[],
-  projects:[],
-  captures:[],
-  settings:{
-    theme:"light"
-  }
+let state = {
+  documents: [],
+  tasks: [],
+  notes: [],
+  saved: [],
+  theme: "dark"
 };
 
-let data = structuredClone(EMPTY_DATA);
-let currentUser = null;
-let firestoreUnsubscribe = null;
 let authMode = "login";
 
-let currentAnalysis = null;
+/* ==========================================================
+   STARTUP
+========================================================== */
 
-let timerSeconds = 25 * 60;
-let timerInterval = null;
+document.addEventListener("DOMContentLoaded", () => {
 
+  loadLocal();
 
-/* ============================================================
-   BASIC HELPERS
-============================================================= */
+  applyTheme();
 
-function uid(){
-  return Date.now().toString(36) +
-         Math.random().toString(36).slice(2,9);
-}
+  initFirebase();
 
-function escapeHTML(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+  showPublic("home");
 
-function localDate(){
-  return new Intl.DateTimeFormat(
-    "en-US",
-    {
-      dateStyle:"full"
-    }
-  ).format(new Date());
-}
+});
 
-function todayISO(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-
-function saveLocal(){
-  if(!currentUser) return;
-
-  localStorage.setItem(
-    "shaheen_workspace_" + currentUser.uid,
-    JSON.stringify(data)
-  );
-}
-
-function loadLocal(){
-  if(!currentUser){
-    data = structuredClone(EMPTY_DATA);
-    return;
-  }
-
-  const raw =
-    localStorage.getItem(
-      "shaheen_workspace_" + currentUser.uid
-    );
-
-  if(raw){
-    try{
-      data = {
-        ...structuredClone(EMPTY_DATA),
-        ...JSON.parse(raw)
-      };
-    }catch{
-      data = structuredClone(EMPTY_DATA);
-    }
-  }else{
-    data = structuredClone(EMPTY_DATA);
-  }
-}
-
-async function saveCloud(){
-
-  if(!currentUser) return;
-
-  saveLocal();
+function initFirebase(){
 
   try{
 
-    await db
-      .collection("users")
-      .doc(currentUser.uid)
-      .set(
-        {
-          workspace:data,
-          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-        },
-        {
-          merge:true
-        }
-      );
+    firebase.initializeApp(firebaseConfig);
 
-    document.getElementById("cloudStatus").textContent =
-      "Cloud sync is active.";
+    auth = firebase.auth();
+    db = firebase.firestore();
 
-  }catch(error){
+    firebaseReady = true;
 
-    console.warn("Cloud sync unavailable:",error);
+    auth.useDeviceLanguage();
 
-    document.getElementById("cloudStatus").textContent =
-      "Local workspace is active. Enable Firestore rules to sync.";
+    auth.onAuthStateChanged(user => {
 
-  }
-}
+      currentUser = user || null;
 
-async function loadCloud(){
+      if(user){
 
-  if(!currentUser) return;
+        enterApp(user);
 
-  try{
-
-    const ref =
-      db.collection("users").doc(currentUser.uid);
-
-    const snap = await ref.get();
-
-    if(snap.exists){
-
-      const cloud = snap.data().workspace;
-
-      if(cloud){
-
-        data = {
-          ...structuredClone(EMPTY_DATA),
-          ...cloud
-        };
-
-        saveLocal();
-
-      }
-    }
-
-    document.getElementById("cloudStatus").textContent =
-      "Cloud sync is active.";
-
-  }catch(error){
-
-    console.warn(error);
-
-    document.getElementById("cloudStatus").textContent =
-      "Local workspace active.";
-
-  }
-
-}
-
-
-/* ============================================================
-   AUTH UI
-============================================================= */
-
-function showAuth(){
-  document.getElementById("publicSite").classList.add("hidden");
-  document.getElementById("authScreen").classList.remove("hidden");
-  document.getElementById("appShell").classList.add("hidden");
-}
-
-function backToPublic(){
-  document.getElementById("publicSite").classList.remove("hidden");
-  document.getElementById("authScreen").classList.add("hidden");
-}
-
-function showAuthMessage(message,error=false){
-
-  const el =
-    document.getElementById("authMessage");
-
-  el.textContent = message;
-
-  el.classList.remove("hidden");
-  el.classList.toggle("error",error);
-}
-
-function clearAuthMessage(){
-  document
-    .getElementById("authMessage")
-    .classList.add("hidden");
-}
-
-document
-  .getElementById("toggleAuthMode")
-  .addEventListener("click",()=>{
-
-    authMode =
-      authMode === "login"
-        ? "register"
-        : "login";
-
-    document.getElementById("authTitle").textContent =
-      authMode === "login"
-        ? "Welcome to Shaheen"
-        : "Create your Shaheen account";
-
-    document.getElementById("authSubtitle").textContent =
-      authMode === "login"
-        ? "Sign in to save your workspace."
-        : "Create an account and keep your workspace separate.";
-
-    document.getElementById("toggleAuthMode").textContent =
-      authMode === "login"
-        ? "Create account"
-        : "I already have an account";
-
-    clearAuthMessage();
-
-  });
-
-
-document
-  .getElementById("authForm")
-  .addEventListener("submit",async e=>{
-
-    e.preventDefault();
-
-    clearAuthMessage();
-
-    const email =
-      document.getElementById("authEmail").value.trim();
-
-    const password =
-      document.getElementById("authPassword").value;
-
-    try{
-
-      if(authMode === "login"){
-
-        await auth.signInWithEmailAndPassword(
-          email,
-          password
-        );
+        loadCloud(user);
 
       }else{
 
+        leaveApp();
+
+      }
+
+    });
+
+  }catch(error){
+
+    firebaseReady = false;
+
+    console.error("Firebase initialization failed:",error);
+
+    showToast(
+      "Firebase initialization failed. Check the Firebase Web App configuration."
+    );
+
+  }
+
+}
+
+/* ==========================================================
+   PUBLIC NAVIGATION
+========================================================== */
+
+function showPublic(page){
+
+  document.querySelectorAll(".public-page")
+    .forEach(el => el.classList.add("hidden"));
+
+  const target =
+    document.getElementById("public-"+page);
+
+  if(target){
+    target.classList.remove("hidden");
+  }
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ==========================================================
+   AUTH
+========================================================== */
+
+function openAuth(mode="login"){
+
+  setAuthMode(mode);
+
+  document.getElementById("authModal")
+    .classList.add("show");
+
+}
+
+function closeAuth(){
+
+  document.getElementById("authModal")
+    .classList.remove("show");
+
+  clearAuthStatus();
+
+}
+
+function setAuthMode(mode){
+
+  authMode = mode;
+
+  const loginTab =
+    document.getElementById("loginTab");
+
+  const signupTab =
+    document.getElementById("signupTab");
+
+  loginTab.classList.toggle(
+    "active",
+    mode==="login"
+  );
+
+  signupTab.classList.toggle(
+    "active",
+    mode==="signup"
+  );
+
+  document.getElementById("authTitle").textContent =
+    mode==="login"
+      ? "Welcome back"
+      : "Create your SHAHEEN account";
+
+  document.getElementById("authSubmit").textContent =
+    mode==="login"
+      ? "Sign in"
+      : "Create account";
+
+  document.getElementById("forgotBtn")
+    .classList.toggle(
+      "hidden",
+      mode!=="login"
+    );
+
+  clearAuthStatus();
+
+}
+
+async function submitAuth(event){
+
+  event.preventDefault();
+
+  if(!firebaseReady){
+
+    showAuthError(
+      "Firebase is not initialized. Your Firebase Web App API key/configuration must be valid."
+    );
+
+    return;
+
+  }
+
+  const email =
+    document.getElementById("authEmail").value.trim();
+
+  const password =
+    document.getElementById("authPassword").value;
+
+  if(!email || !password){
+
+    showAuthError("Enter your email and password.");
+
+    return;
+
+  }
+
+  const button =
+    document.getElementById("authSubmit");
+
+  button.disabled = true;
+
+  button.textContent = "Working...";
+
+  try{
+
+    if(authMode==="login"){
+
+      await auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+      showToast("Signed in successfully.");
+
+    }else{
+
+      const credential =
         await auth.createUserWithEmailAndPassword(
           email,
           password
         );
 
-      }
-
-    }catch(error){
-
-      showAuthMessage(
-        friendlyAuthError(error),
-        true
+      await createUserProfile(
+        credential.user
       );
+
+      showToast("Account created successfully.");
 
     }
 
-  });
+    closeAuth();
 
+  }catch(error){
 
-document
-  .getElementById("googleBtn")
-  .addEventListener("click",async()=>{
+    console.error(error);
 
-    clearAuthMessage();
+    showAuthError(firebaseAuthMessage(error));
 
-    try{
+  }finally{
 
-      await auth.signInWithPopup(
-        googleProvider
-      );
+    button.disabled = false;
 
-    }catch(error){
+    button.textContent =
+      authMode==="login"
+        ? "Sign in"
+        : "Create account";
 
-      if(
-        error.code === "auth/popup-blocked" ||
-        error.code === "auth/popup-closed-by-user"
-      ){
-
-        try{
-
-          await auth.signInWithRedirect(
-            googleProvider
-          );
-
-        }catch(e){
-
-          showAuthMessage(
-            friendlyAuthError(e),
-            true
-          );
-
-        }
-
-      }else{
-
-        showAuthMessage(
-          friendlyAuthError(error),
-          true
-        );
-
-      }
-
-    }
-
-  });
-
-
-document
-  .getElementById("forgotBtn")
-  .addEventListener("click",async()=>{
-
-    const email =
-      document.getElementById("authEmail").value.trim();
-
-    if(!email){
-      showAuthMessage(
-        "Enter your email address first.",
-        true
-      );
-      return;
-    }
-
-    try{
-
-      await auth.sendPasswordResetEmail(email);
-
-      showAuthMessage(
-        "Password reset email sent."
-      );
-
-    }catch(error){
-
-      showAuthMessage(
-        friendlyAuthError(error),
-        true
-      );
-
-    }
-
-  });
-
-
-function friendlyAuthError(error){
-
-  const code = error?.code || "";
-
-  const map = {
-
-    "auth/invalid-email":
-      "Please enter a valid email address.",
-
-    "auth/user-not-found":
-      "No account was found for this email.",
-
-    "auth/wrong-password":
-      "The password is incorrect.",
-
-    "auth/email-already-in-use":
-      "This email already has an account.",
-
-    "auth/weak-password":
-      "Use a stronger password.",
-
-    "auth/popup-blocked":
-      "The browser blocked the Google sign-in popup.",
-
-    "auth/popup-closed-by-user":
-      "Google sign-in was closed before completion.",
-
-    "auth/unauthorized-domain":
-      "This website domain is not authorized in Firebase Authentication."
-
-  };
-
-  return map[code] ||
-    error?.message ||
-    "Authentication could not be completed.";
+  }
 
 }
 
+async function forgotPassword(){
 
-/* ============================================================
-   AUTH STATE
-============================================================= */
+  if(!firebaseReady){
 
-auth.onAuthStateChanged(async user=>{
-
-  currentUser = user;
-
-  if(!user){
-
-    document
-      .getElementById("appShell")
-      .classList.add("hidden");
-
-    document
-      .getElementById("authScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("publicSite")
-      .classList.remove("hidden");
+    showAuthError(
+      "Firebase is not initialized. Check the current Firebase Web App API key."
+    );
 
     return;
 
   }
 
-  document
-    .getElementById("publicSite")
-    .classList.add("hidden");
+  const email =
+    document.getElementById("authEmail").value.trim();
 
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
+  if(!email){
 
-  document
-    .getElementById("appShell")
-    .classList.remove("hidden");
+    showAuthError(
+      "Enter your email first, then select Forgot password."
+    );
 
-  loadLocal();
+    return;
 
-  await loadCloud();
-
-  updateProfile();
-
-  renderAll();
-
-});
-
-
-async function signOutUser(){
+  }
 
   try{
 
-    if(firestoreUnsubscribe){
-      firestoreUnsubscribe();
-      firestoreUnsubscribe = null;
-    }
+    await auth.sendPasswordResetEmail(email);
 
-    await auth.signOut();
+    showAuthSuccess(
+      "Password reset email sent. Check your inbox."
+    );
 
   }catch(error){
 
-    alert(error.message);
+    showAuthError(
+      firebaseAuthMessage(error)
+    );
 
   }
 
 }
 
+async function googleLogin(){
 
-/* ============================================================
+  if(!firebaseReady){
+
+    showAuthError(
+      "Firebase is not initialized. Check the Firebase Web App configuration."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    const provider =
+      new firebase.auth.GoogleAuthProvider();
+
+    provider.setCustomParameters({
+      prompt:"select_account"
+    });
+
+    /*
+      Popup is used first because it is convenient for desktop.
+      If the browser/platform blocks it, redirect is attempted.
+    */
+
+    await auth.signInWithPopup(provider);
+
+    closeAuth();
+
+  }catch(error){
+
+    console.error("Google sign-in:",error);
+
+    if(
+      error.code==="auth/popup-blocked" ||
+      error.code==="auth/popup-closed-by-user"
+    ){
+
+      try{
+
+        const provider =
+          new firebase.auth.GoogleAuthProvider();
+
+        provider.setCustomParameters({
+          prompt:"select_account"
+        });
+
+        await auth.signInWithRedirect(provider);
+
+      }catch(redirectError){
+
+        showAuthError(
+          firebaseAuthMessage(redirectError)
+        );
+
+      }
+
+      return;
+
+    }
+
+    showAuthError(
+      firebaseAuthMessage(error)
+    );
+
+  }
+
+}
+
+function firebaseAuthMessage(error){
+
+  const code = error?.code || "";
+
+  const messages = {
+
+    "auth/api-key-not-valid":
+      "Firebase API key invalid hai. Firebase Console → Project settings → Your apps → Web app se CURRENT firebaseConfig copy karo. Agar API key restrictions enabled hain to Identity Toolkit / Firebase Authentication access bhi check karo.",
+
+    "auth/invalid-api-key":
+      "Firebase API key invalid hai. Current Web App config se exact apiKey copy karo.",
+
+    "auth/operation-not-allowed":
+      "Firebase Console → Authentication → Sign-in method mein is sign-in provider ko enable karo.",
+
+    "auth/email-already-in-use":
+      "Is email par account already exist karta hai. Login try karo.",
+
+    "auth/invalid-email":
+      "Email address valid nahi hai.",
+
+    "auth/weak-password":
+      "Password kam az kam 6 characters ka hona chahiye.",
+
+    "auth/user-not-found":
+      "Is email ka account nahi mila.",
+
+    "auth/wrong-password":
+      "Password incorrect hai.",
+
+    "auth/invalid-credential":
+      "Email ya password incorrect hai.",
+
+    "auth/network-request-failed":
+      "Network request fail hui. Internet connection check karo.",
+
+    "auth/too-many-requests":
+      "Temporary security limit apply hui hai. Kuch der baad dobara try karo.",
+
+    "auth/unauthorized-domain":
+      "Current website domain Firebase Authentication ke Authorized Domains mein add nahi hai.",
+
+    "auth/popup-blocked":
+      "Browser ne Google popup block kiya. Redirect sign-in attempt ki jayegi."
+
+  };
+
+  return messages[code] ||
+    error?.message ||
+    "Authentication failed. Firebase Console settings check karo.";
+
+}
+
+function showAuthError(message){
+
+  const el =
+    document.getElementById("authStatus");
+
+  el.className = "status error";
+
+  el.textContent = message;
+
+}
+
+function showAuthSuccess(message){
+
+  const el =
+    document.getElementById("authStatus");
+
+  el.className = "status success";
+
+  el.textContent = message;
+
+}
+
+function clearAuthStatus(){
+
+  const el =
+    document.getElementById("authStatus");
+
+  el.className = "";
+
+  el.textContent = "";
+
+}
+
+/* ==========================================================
+   APP ENTRY
+========================================================== */
+
+function enterApp(user){
+
+  document.getElementById("publicSite")
+    .classList.add("hidden");
+
+  document.getElementById("appSite")
+    .classList.remove("hidden");
+
+  updateProfile(user);
+
+  updateStats();
+
+  renderAll();
+
+  openPage("dashboard");
+
+}
+
+function leaveApp(){
+
+  currentUser = null;
+
+  if(unsubscribeCloud){
+
+    unsubscribeCloud();
+
+    unsubscribeCloud = null;
+
+  }
+
+  document.getElementById("appSite")
+    .classList.add("hidden");
+
+  document.getElementById("publicSite")
+    .classList.remove("hidden");
+
+}
+
+async function logout(){
+
+  try{
+
+    if(auth){
+      await auth.signOut();
+    }
+
+    showToast("Signed out.");
+
+  }catch(error){
+
+    showToast(
+      "Sign out failed."
+    );
+
+  }
+
+}
+
+/* ==========================================================
    PROFILE
-============================================================= */
+========================================================== */
 
-function updateProfile(){
+function updateProfile(user){
 
-  if(!currentUser) return;
+  if(!user) return;
 
   const name =
-    currentUser.displayName ||
-    currentUser.email?.split("@")[0] ||
-    "User";
-
-  document.getElementById("userName").textContent =
-    name;
+    user.displayName ||
+    (user.email ? user.email.split("@")[0] : "User");
 
   document.getElementById("profileName").textContent =
     name;
 
   document.getElementById("profileEmail").textContent =
-    currentUser.email || "";
+    user.email || "—";
 
-  const photo =
-    document.getElementById("profilePhoto");
+  const avatar =
+    document.getElementById("profileAvatar");
 
-  if(currentUser.photoURL){
+  if(user.photoURL){
 
-    photo.src = currentUser.photoURL;
+    avatar.src = user.photoURL;
 
   }else{
 
-    photo.src =
-      "data:image/svg+xml;charset=UTF-8," +
-      encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg"
-        width="100" height="100">
-        <rect width="100" height="100" rx="50"
-        fill="#dbe7f5"/>
-        <text x="50" y="61"
-        text-anchor="middle"
-        font-size="40"
-        fill="#0757d9">S</text>
-        </svg>`
-      );
+    avatar.src =
+      "data:image/svg+xml;charset=UTF-8,"+
+      encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="100" height="100">
+          <rect width="100" height="100" rx="50"
+                fill="#1677ff"/>
+          <text x="50" y="60"
+                text-anchor="middle"
+                font-size="42"
+                fill="white"
+                font-family="Arial">
+            ${(name[0]||"U").toUpperCase()}
+          </text>
+        </svg>
+      `);
 
   }
+
+  document.getElementById("helloTitle").textContent =
+    "Hello, "+name;
 
 }
 
+function openProfile(){
 
-/* ============================================================
-   NAVIGATION
-============================================================= */
+  openPage("profile");
 
-function goPage(page){
+}
 
-  document
-    .querySelectorAll(".page")
-    .forEach(el=>el.classList.remove("active"));
+/* ==========================================================
+   PAGE NAV
+========================================================== */
+
+function openPage(page,clickedButton=null){
+
+  document.querySelectorAll(".app-page")
+    .forEach(el => el.classList.add("hidden"));
 
   const target =
-    document.getElementById("page-" + page);
+    document.getElementById("page-"+page);
 
   if(target){
-    target.classList.add("active");
+
+    target.classList.remove("hidden");
+
+  }else{
+
+    return;
+
   }
 
-  document
-    .querySelectorAll("[data-page]")
-    .forEach(btn=>{
+  document.querySelectorAll(".side-btn[data-page]")
+    .forEach(btn => {
+
       btn.classList.toggle(
         "active",
-        btn.dataset.page === page
+        btn.dataset.page===page
       );
+
     });
 
-  if(page === "search"){
-    renderSearch();
-  }
+  document.querySelectorAll(".mobile-bottom button")
+    .forEach(btn => {
 
-  if(page === "tasks"){
-    renderTasks();
-  }
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page===page
+      );
 
-  if(page === "notes"){
-    renderNotes();
-  }
+    });
 
-  if(page === "links"){
-    renderLinks();
-  }
-
-  if(page === "projects"){
-    renderProjects();
-  }
+  renderAll();
 
   window.scrollTo({
     top:0,
@@ -2733,163 +3024,714 @@ function goPage(page){
 
 }
 
-document
-  .querySelectorAll("[data-page]")
-  .forEach(btn=>{
-    btn.addEventListener(
-      "click",
-      ()=>goPage(btn.dataset.page)
-    );
-  });
+function mobilePage(page){
 
-
-/* ============================================================
-   RENDER DASHBOARD
-============================================================= */
-
-function renderAll(){
-
-  document.getElementById("todayText").textContent =
-    localDate();
-
-  document.getElementById("statTasks").textContent =
-    data.tasks.filter(x=>!x.done).length;
-
-  document.getElementById("statNotes").textContent =
-    data.notes.length;
-
-  document.getElementById("statLinks").textContent =
-    data.links.length;
-
-  document.getElementById("statProjects").textContent =
-    data.projects.length;
-
-  renderAttention();
-  renderTasks();
-  renderNotes();
-  renderLinks();
-  renderProjects();
-  renderSearch();
+  openPage(page);
 
 }
 
+/* ==========================================================
+   LOCAL STORAGE
+========================================================== */
 
-function renderAttention(){
+function loadLocal(){
 
-  const el =
-    document.getElementById("attentionList");
+  try{
 
-  const tasks =
-    data.tasks
-      .filter(t=>!t.done)
-      .sort((a,b)=>{
+    const raw =
+      localStorage.getItem(LOCAL_KEY);
 
-        const rank = {
-          high:0,
-          medium:1,
-          low:2
-        };
+    if(raw){
 
-        return (rank[a.priority] ?? 1) -
-               (rank[b.priority] ?? 1);
+      const saved =
+        JSON.parse(raw);
 
-      })
-      .slice(0,5);
+      state = {
+        ...state,
+        ...saved
+      };
 
-  if(!tasks.length){
+    }
 
-    el.innerHTML =
-      `<div class="empty">
-        Nothing urgent right now.
-        Add a task when something needs your attention.
-      </div>`;
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+function saveLocal(){
+
+  try{
+
+    localStorage.setItem(
+      LOCAL_KEY,
+      JSON.stringify(state)
+    );
+
+  }catch(error){
+
+    console.error(
+      "Local storage failed:",
+      error
+    );
+
+  }
+
+}
+
+/* ==========================================================
+   FIRESTORE
+========================================================== */
+
+async function createUserProfile(user){
+
+  if(!db || !user) return;
+
+  try{
+
+    await db
+      .collection("users")
+      .doc(user.uid)
+      .set({
+        uid:user.uid,
+        email:user.email || "",
+        displayName:user.displayName || "",
+        photoURL:user.photoURL || "",
+        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+      },{
+        merge:true
+      });
+
+  }catch(error){
+
+    console.error(
+      "User profile save failed:",
+      error
+    );
+
+  }
+
+}
+
+function cloudRef(){
+
+  if(!db || !currentUser){
+
+    return null;
+
+  }
+
+  return db
+    .collection("users")
+    .doc(currentUser.uid)
+    .collection("workspace")
+    .doc("main");
+
+}
+
+async function saveCloud(){
+
+  saveLocal();
+
+  const ref =
+    cloudRef();
+
+  if(!ref){
 
     return;
 
   }
 
-  el.innerHTML =
-    tasks.map(taskHTML).join("");
+  try{
+
+    await ref.set({
+      state:state,
+      updatedAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+  }catch(error){
+
+    console.error(
+      "Cloud save failed:",
+      error
+    );
+
+    /*
+      Do not destroy local work when Firestore is unavailable.
+      Local state remains the fallback.
+    */
+
+  }
 
 }
 
+function loadCloud(user){
 
-/* ============================================================
-   TASKS
-============================================================= */
+  if(!db || !user){
 
-function taskHTML(task){
+    return;
 
-  return `
-    <div class="list-item">
+  }
 
-      <div class="list-item-head">
+  const ref =
+    db
+      .collection("users")
+      .doc(user.uid)
+      .collection("workspace")
+      .doc("main");
 
-        <div>
+  if(unsubscribeCloud){
 
-          <strong>${escapeHTML(task.title)}</strong>
+    unsubscribeCloud();
 
-          <div class="meta">
-            ${task.due
-              ? "Due " + escapeHTML(task.due)
-              : "No due date"}
-          </div>
+  }
 
-        </div>
+  unsubscribeCloud =
+    ref.onSnapshot(
 
-        <span class="chip ${
-          task.priority === "high"
-            ? "priority-high"
-            : task.priority === "medium"
-              ? "priority-medium"
-              : "priority-low"
-        }">
-          ${escapeHTML(task.priority)}
-        </span>
+      snap => {
 
-      </div>
+        if(!snap.exists){
 
-      ${
-        task.description
-          ? `<p class="meta">
-               ${escapeHTML(task.description)}
-             </p>`
-          : ""
+          saveCloud();
+
+          return;
+
+        }
+
+        const remote =
+          snap.data();
+
+        if(remote.state){
+
+          state = {
+            ...state,
+            ...remote.state
+          };
+
+          saveLocal();
+
+          renderAll();
+
+        }
+
+      },
+
+      error => {
+
+        console.error(
+          "Firestore listener:",
+          error
+        );
+
       }
 
-      <div class="actions">
+    );
 
-        <button class="btn btn-small"
-                onclick="toggleTask('${task.id}')">
-          ${task.done ? "Undo" : "Complete"}
-        </button>
+}
 
-        <button class="btn btn-small"
-                onclick="editTask('${task.id}')">
-          Edit
-        </button>
+/* ==========================================================
+   DOCUMENT ANALYZER
+========================================================== */
 
-        <button class="btn btn-small"
-                onclick="deleteTask('${task.id}')">
-          Delete
-        </button>
+function analyzeQuick(){
 
-      </div>
+  const text =
+    document.getElementById("quickText")
+      .value.trim();
+
+  if(!text){
+
+    showToast("Paste some information first.");
+
+    return;
+
+  }
+
+  document.getElementById("documentText").value =
+    text;
+
+  document.getElementById("documentTitle").value =
+    "Quick capture";
+
+  openPage("documents");
+
+  analyzeDocument();
+
+}
+
+function analyzeDocument(){
+
+  const title =
+    document.getElementById("documentTitle")
+      .value.trim() ||
+    "Untitled document";
+
+  const text =
+    document.getElementById("documentText")
+      .value.trim();
+
+  if(!text){
+
+    showToast("Add document text first.");
+
+    return;
+
+  }
+
+  const analysis =
+    buildAnalysis(text);
+
+  const item = {
+
+    id:cryptoRandom(),
+
+    title,
+
+    text,
+
+    analysis,
+
+    createdAt:new Date().toISOString()
+
+  };
+
+  state.documents.unshift(item);
+
+  state.saved.unshift(item);
+
+  /*
+    Automatically convert detected action items
+    into user-editable tasks.
+  */
+
+  analysis.actions
+    .slice(0,10)
+    .forEach(action => {
+
+      state.tasks.push({
+
+        id:cryptoRandom(),
+
+        text:action,
+
+        done:false,
+
+        createdAt:new Date().toISOString(),
+
+        source:item.id
+
+      });
+
+    });
+
+  saveCloud();
+
+  renderAnalysis(analysis);
+
+  updateStats();
+
+  renderAll();
+
+  showToast("Document analyzed.");
+
+}
+
+function buildAnalysis(text){
+
+  const lines =
+    text
+      .split(/\r?\n/)
+      .map(x => x.trim())
+      .filter(Boolean);
+
+  const sentences =
+    text
+      .split(/(?<=[.!?])\s+/)
+      .map(x => x.trim())
+      .filter(x => x.length>15);
+
+  const dates =
+    detectDates(text);
+
+  const amounts =
+    detectAmounts(text);
+
+  const emails =
+    unique(
+      text.match(
+        /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi
+      ) || []
+    );
+
+  const urls =
+    unique(
+      text.match(
+        /https?:\/\/[^\s<>"']+/gi
+      ) || []
+    );
+
+  const phones =
+    unique(
+      text.match(
+        /(?:\+?\d[\d\s().-]{7,}\d)/g
+      ) || []
+    );
+
+  const actionWords = [
+
+    "submit",
+    "complete",
+    "provide",
+    "send",
+    "pay",
+    "renew",
+    "register",
+    "apply",
+    "upload",
+    "download",
+    "sign",
+    "verify",
+    "confirm",
+    "contact",
+    "bring",
+    "attach",
+    "required",
+    "deadline",
+    "must",
+    "need to",
+    "please"
+
+  ];
+
+  const actions =
+    unique(
+      sentences
+        .filter(sentence => {
+
+          const lower =
+            sentence.toLowerCase();
+
+          return actionWords.some(
+            word => lower.includes(word)
+          );
+
+        })
+        .slice(0,15)
+    );
+
+  const headings =
+    lines
+      .filter(line => {
+
+        return (
+          line.length <= 90 &&
+          (
+            /^[A-Z0-9][A-Z0-9\s:&/-]{4,}$/.test(line) ||
+            /^#{1,6}\s/.test(line) ||
+            /^(requirements?|documents?|deadline|instructions?|steps?|important|payment|contact)/i.test(line)
+          )
+        );
+
+      })
+      .slice(0,15);
+
+  const requirements =
+    lines
+      .filter(line => {
+
+        const lower =
+          line.toLowerCase();
+
+        return (
+          lower.includes("required") ||
+          lower.includes("must provide") ||
+          lower.includes("need to provide") ||
+          lower.includes("required documents") ||
+          lower.includes("attach")
+        );
+
+      })
+      .slice(0,15);
+
+  return {
+
+    summary:
+      createSummary(lines,sentences),
+
+    dates,
+
+    amounts,
+
+    emails,
+
+    urls,
+
+    phones,
+
+    headings,
+
+    requirements,
+
+    actions
+
+  };
+
+}
+
+function createSummary(lines,sentences){
+
+  const candidates = [
+
+    ...sentences.slice(0,3),
+
+    ...lines.filter(
+      line =>
+        /important|purpose|subject|regarding|notice|application/i
+          .test(line)
+    ).slice(0,3)
+
+  ];
+
+  return unique(candidates)
+    .slice(0,5);
+
+}
+
+function detectDates(text){
+
+  const found = [];
+
+  const patterns = [
+
+    /\b\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}\b/g,
+
+    /\b\d{4}[\/.-]\d{1,2}[\/.-]\d{1,2}\b/g,
+
+    /\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}(?:,\s*\d{4})?\b/gi,
+
+    /\b\d{1,2}\s+(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)(?:\s+\d{4})?\b/gi
+
+  ];
+
+  patterns.forEach(pattern => {
+
+    const matches =
+      text.match(pattern) || [];
+
+    found.push(...matches);
+
+  });
+
+  return unique(found).slice(0,30);
+
+}
+
+function detectAmounts(text){
+
+  const matches =
+    text.match(
+      /(?:USD|US\$|\$|EUR|€|GBP|£|PKR|Rs\.?|₹|INR)\s?\d[\d,]*(?:\.\d{1,2})?/gi
+    ) || [];
+
+  return unique(matches).slice(0,30);
+
+}
+
+function renderAnalysis(a){
+
+  const output =
+    document.getElementById("analysisOutput");
+
+  output.innerHTML = `
+
+    <div class="result">
+
+      <h3>What appears important</h3>
+
+      ${
+        a.summary.length
+        ? `<ul>${a.summary.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+        : `<p style="color:var(--muted)">No obvious summary lines detected.</p>`
+      }
 
     </div>
+
+    <div class="result">
+
+      <h3>Next actions</h3>
+
+      ${
+        a.actions.length
+        ? `<ul>${a.actions.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+        : `<p style="color:var(--muted)">No obvious action sentence detected.</p>`
+      }
+
+    </div>
+
+    <div class="result">
+
+      <h3>Dates</h3>
+
+      ${renderTags(a.dates)}
+
+    </div>
+
+    <div class="result">
+
+      <h3>Amounts</h3>
+
+      ${renderTags(a.amounts)}
+
+    </div>
+
+    <div class="result">
+
+      <h3>Contact information</h3>
+
+      ${renderTags([
+        ...a.emails,
+        ...a.phones,
+        ...a.urls
+      ])}
+
+    </div>
+
+    <div class="result">
+
+      <h3>Requirements</h3>
+
+      ${
+        a.requirements.length
+        ? `<ul>${a.requirements.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+        : `<p style="color:var(--muted)">No explicit requirements detected.</p>`
+      }
+
+    </div>
+
   `;
 
 }
 
+function renderTags(items){
+
+  if(!items.length){
+
+    return `<span style="color:var(--muted)">None detected</span>`;
+
+  }
+
+  return items
+    .map(item =>
+      `<span class="tag">${escapeHtml(item)}</span>`
+    )
+    .join("");
+
+}
+
+function clearDocument(){
+
+  document.getElementById("documentTitle").value = "";
+
+  document.getElementById("documentText").value = "";
+
+  document.getElementById("analysisOutput").innerHTML =
+    `<div class="empty">
+      Add information and select “Analyze document”.
+    </div>`;
+
+}
+
+/* ==========================================================
+   TASKS
+========================================================== */
+
+function addTask(){
+
+  const input =
+    document.getElementById("newTask");
+
+  const text =
+    input.value.trim();
+
+  if(!text){
+
+    showToast("Enter a task.");
+
+    return;
+
+  }
+
+  state.tasks.unshift({
+
+    id:cryptoRandom(),
+
+    text,
+
+    done:false,
+
+    createdAt:new Date().toISOString()
+
+  });
+
+  input.value = "";
+
+  saveCloud();
+
+  renderTasks();
+
+  updateStats();
+
+}
+
+function toggleTask(id){
+
+  const task =
+    state.tasks.find(
+      item => item.id===id
+    );
+
+  if(!task) return;
+
+  task.done =
+    !task.done;
+
+  saveCloud();
+
+  renderTasks();
+
+  updateStats();
+
+}
+
+function deleteTask(id){
+
+  state.tasks =
+    state.tasks.filter(
+      item => item.id!==id
+    );
+
+  saveCloud();
+
+  renderTasks();
+
+  updateStats();
+
+}
 
 function renderTasks(){
 
-  const el =
-    document.getElementById("tasksList");
+  const container =
+    document.getElementById("taskList");
 
-  if(!data.tasks.length){
+  if(!container) return;
 
-    el.innerHTML =
+  if(!state.tasks.length){
+
+    container.innerHTML =
       `<div class="empty">
         No tasks yet.
       </div>`;
@@ -2898,1332 +3740,258 @@ function renderTasks(){
 
   }
 
-  const sorted =
-    [...data.tasks].sort((a,b)=>
-      Number(a.done) - Number(b.done)
-    );
+  container.innerHTML =
+    state.tasks
+      .map(task => `
 
-  el.innerHTML =
-    sorted.map(taskHTML).join("");
+        <div class="task ${task.done ? "done":""}">
 
-}
+          <input
+            type="checkbox"
+            ${task.done ? "checked":""}
+            onchange="toggleTask('${task.id}')"
+          >
 
-
-function openTaskModal(existing=null){
-
-  openModal(
-    existing ? "Edit task" : "New task",
-    `
-    <form id="taskForm" class="form">
-
-      <div>
-        <div class="label">Title</div>
-        <input id="taskTitle"
-               class="input"
-               required
-               value="${escapeHTML(existing?.title || "")}">
-      </div>
-
-      <div>
-        <div class="label">Description</div>
-        <textarea id="taskDescription"
-                  class="textarea">${escapeHTML(existing?.description || "")}</textarea>
-      </div>
-
-      <div>
-        <div class="label">Priority</div>
-
-        <select id="taskPriority"
-                class="select">
-
-          <option value="high"
-            ${existing?.priority==="high"?"selected":""}>
-            High
-          </option>
-
-          <option value="medium"
-            ${existing?.priority==="medium"?"selected":""}>
-            Medium
-          </option>
-
-          <option value="low"
-            ${existing?.priority==="low"?"selected":""}>
-            Low
-          </option>
-
-        </select>
-      </div>
-
-      <div>
-        <div class="label">Due date</div>
-
-        <input id="taskDue"
-               class="input"
-               type="date"
-               value="${escapeHTML(existing?.due || "")}">
-      </div>
-
-      <button class="btn btn-primary">
-        Save task
-      </button>
-
-    </form>
-    `
-  );
-
-  document
-    .getElementById("taskForm")
-    .onsubmit = e=>{
-
-      e.preventDefault();
-
-      const item = {
-        id:existing?.id || uid(),
-        title:document.getElementById("taskTitle").value.trim(),
-        description:document.getElementById("taskDescription").value.trim(),
-        priority:document.getElementById("taskPriority").value,
-        due:document.getElementById("taskDue").value,
-        done:existing?.done || false,
-        createdAt:existing?.createdAt || Date.now()
-      };
-
-      if(existing){
-
-        data.tasks =
-          data.tasks.map(t=>
-            t.id === existing.id ? item : t
-          );
-
-      }else{
-
-        data.tasks.unshift(item);
-
-      }
-
-      persist();
-      closeModal();
-
-    };
-
-}
-
-
-function toggleTask(id){
-
-  data.tasks =
-    data.tasks.map(t=>
-      t.id === id
-        ? {...t,done:!t.done}
-        : t
-    );
-
-  persist();
-
-}
-
-
-function editTask(id){
-
-  const task =
-    data.tasks.find(x=>x.id===id);
-
-  if(task){
-    openTaskModal(task);
-  }
-
-}
-
-
-function deleteTask(id){
-
-  if(!confirm("Delete this task?")) return;
-
-  data.tasks =
-    data.tasks.filter(t=>t.id!==id);
-
-  persist();
-
-}
-
-
-/* ============================================================
-   NOTES
-============================================================= */
-
-function renderNotes(){
-
-  const el =
-    document.getElementById("notesList");
-
-  if(!data.notes.length){
-
-    el.innerHTML =
-      `<div class="empty">
-        No notes yet.
-      </div>`;
-
-    return;
-
-  }
-
-  el.innerHTML =
-    data.notes.map(note=>`
-
-      <div class="list-item">
-
-        <div class="list-item-head">
-
-          <strong>
-            ${escapeHTML(note.title)}
-          </strong>
-
-          <span class="meta">
-            ${new Date(note.createdAt).toLocaleDateString()}
+          <span style="flex:1">
+            ${escapeHtml(task.text)}
           </span>
 
-        </div>
-
-        <p style="white-space:pre-wrap">
-          ${escapeHTML(note.body)}
-        </p>
-
-        <div class="actions">
-
-          <button class="btn btn-small"
-                  onclick="editNote('${note.id}')">
-            Edit
-          </button>
-
-          <button class="btn btn-small"
-                  onclick="deleteNote('${note.id}')">
+          <button
+            class="btn small"
+            onclick="deleteTask('${task.id}')"
+          >
             Delete
           </button>
 
         </div>
 
-      </div>
-
-    `).join("");
-
-}
-
-
-function openNoteModal(existing=null){
-
-  openModal(
-    existing ? "Edit note" : "New note",
-    `
-    <form id="noteForm" class="form">
-
-      <div>
-        <div class="label">Title</div>
-
-        <input id="noteTitle"
-               class="input"
-               required
-               value="${escapeHTML(existing?.title || "")}">
-      </div>
-
-      <div>
-        <div class="label">Note</div>
-
-        <textarea id="noteBody"
-                  class="textarea"
-                  style="min-height:220px"
-                  required>${escapeHTML(existing?.body || "")}</textarea>
-      </div>
-
-      <button class="btn btn-primary">
-        Save note
-      </button>
-
-    </form>
-    `
-  );
-
-  document
-    .getElementById("noteForm")
-    .onsubmit = e=>{
-
-      e.preventDefault();
-
-      const item = {
-        id:existing?.id || uid(),
-        title:document.getElementById("noteTitle").value.trim(),
-        body:document.getElementById("noteBody").value.trim(),
-        createdAt:existing?.createdAt || Date.now()
-      };
-
-      if(existing){
-
-        data.notes =
-          data.notes.map(n=>
-            n.id===existing.id ? item : n
-          );
-
-      }else{
-
-        data.notes.unshift(item);
-
-      }
-
-      persist();
-      closeModal();
-
-    };
+      `)
+      .join("");
 
 }
 
+/* ==========================================================
+   NOTES
+========================================================== */
 
-function editNote(id){
+function addNote(){
 
-  const note =
-    data.notes.find(x=>x.id===id);
+  const title =
+    document.getElementById("noteTitle")
+      .value.trim();
 
-  if(note) openNoteModal(note);
+  const body =
+    document.getElementById("noteBody")
+      .value.trim();
+
+  if(!body){
+
+    showToast("Write something first.");
+
+    return;
+
+  }
+
+  state.notes.unshift({
+
+    id:cryptoRandom(),
+
+    title:title || "Untitled note",
+
+    body,
+
+    createdAt:new Date().toISOString()
+
+  });
+
+  document.getElementById("noteTitle").value = "";
+
+  document.getElementById("noteBody").value = "";
+
+  saveCloud();
+
+  renderNotes();
+
+  updateStats();
+
+  showToast("Note saved.");
 
 }
-
 
 function deleteNote(id){
 
-  if(!confirm("Delete this note?")) return;
+  state.notes =
+    state.notes.filter(
+      n => n.id!==id
+    );
 
-  data.notes =
-    data.notes.filter(n=>n.id!==id);
+  saveCloud();
 
-  persist();
+  renderNotes();
+
+  updateStats();
 
 }
 
+function renderNotes(){
 
-/* ============================================================
-   LINKS
-============================================================= */
+  const container =
+    document.getElementById("noteList");
 
-function renderLinks(){
+  if(!container) return;
 
-  const el =
-    document.getElementById("linksList");
+  if(!state.notes.length){
 
-  if(!data.links.length){
-
-    el.innerHTML =
-      `<div class="empty">
-        No saved links yet.
-      </div>`;
+    container.innerHTML =
+      `<div class="empty">No notes yet.</div>`;
 
     return;
 
   }
 
-  el.innerHTML =
-    data.links.map(link=>`
+  container.innerHTML =
+    state.notes
+      .map(note => `
 
-      <div class="list-item">
+        <div class="result">
 
-        <div class="list-item-head">
+          <div style="display:flex;justify-content:space-between;gap:10px">
 
-          <div>
+            <h3>${escapeHtml(note.title)}</h3>
 
-            <a href="${escapeHTML(link.url)}"
-               target="_blank"
-               rel="noopener noreferrer"
-               style="font-weight:850;color:var(--primary)">
-              ${escapeHTML(link.title || link.url)}
-            </a>
-
-            <div class="meta">
-              ${escapeHTML(link.url)}
-            </div>
+            <button
+              class="btn small"
+              onclick="deleteNote('${note.id}')"
+            >
+              Delete
+            </button>
 
           </div>
 
-          <button class="btn btn-small"
-                  onclick="deleteLink('${link.id}')">
-            Delete
-          </button>
+          <p style="white-space:pre-wrap;color:var(--muted)">
+            ${escapeHtml(note.body)}
+          </p>
 
         </div>
 
-      </div>
-
-    `).join("");
-
-}
-
-
-function openLinkModal(){
-
-  openModal(
-    "Save link",
-    `
-    <form id="linkForm" class="form">
-
-      <div>
-        <div class="label">URL</div>
-
-        <input id="linkUrl"
-               class="input"
-               type="url"
-               placeholder="https://example.com"
-               required>
-      </div>
-
-      <div>
-        <div class="label">Title</div>
-
-        <input id="linkTitle"
-               class="input"
-               placeholder="Optional title">
-      </div>
-
-      <button class="btn btn-primary">
-        Save link
-      </button>
-
-    </form>
-    `
-  );
-
-  document
-    .getElementById("linkForm")
-    .onsubmit = e=>{
-
-      e.preventDefault();
-
-      let url =
-        document.getElementById("linkUrl").value.trim();
-
-      if(!/^https?:\/\//i.test(url)){
-        url = "https://" + url;
-      }
-
-      data.links.unshift({
-        id:uid(),
-        url,
-        title:
-          document.getElementById("linkTitle").value.trim()
-          || url,
-        createdAt:Date.now()
-      });
-
-      persist();
-      closeModal();
-
-    };
+      `)
+      .join("");
 
 }
 
+/* ==========================================================
+   SAVED
+========================================================== */
 
-function deleteLink(id){
+function renderSaved(){
 
-  if(!confirm("Delete this link?")) return;
+  const container =
+    document.getElementById("savedList");
 
-  data.links =
-    data.links.filter(x=>x.id!==id);
+  if(!container) return;
 
-  persist();
+  if(!state.saved.length){
 
-}
-
-
-/* ============================================================
-   PROJECTS
-============================================================= */
-
-function renderProjects(){
-
-  const el =
-    document.getElementById("projectsList");
-
-  if(!data.projects.length){
-
-    el.innerHTML =
-      `<div class="empty" style="grid-column:1/-1">
-        No projects yet.
-      </div>`;
-
-    return;
-
-  }
-
-  el.innerHTML =
-    data.projects.map(project=>`
-
-      <article class="card">
-
-        <h3>${escapeHTML(project.name)}</h3>
-
-        <p>
-          ${escapeHTML(project.description || "No description.")}
-        </p>
-
-        <div class="meta">
-          Created ${new Date(project.createdAt).toLocaleDateString()}
-        </div>
-
-        <div class="actions">
-
-          <button class="btn btn-small"
-                  onclick="deleteProject('${project.id}')">
-            Delete
-          </button>
-
-        </div>
-
-      </article>
-
-    `).join("");
-
-}
-
-
-function openProjectModal(){
-
-  openModal(
-    "New project",
-    `
-    <form id="projectForm" class="form">
-
-      <div>
-        <div class="label">Project name</div>
-
-        <input id="projectName"
-               class="input"
-               required>
-      </div>
-
-      <div>
-        <div class="label">Description</div>
-
-        <textarea id="projectDescription"
-                  class="textarea"></textarea>
-      </div>
-
-      <button class="btn btn-primary">
-        Create project
-      </button>
-
-    </form>
-    `
-  );
-
-  document
-    .getElementById("projectForm")
-    .onsubmit=e=>{
-
-      e.preventDefault();
-
-      data.projects.unshift({
-        id:uid(),
-        name:document.getElementById("projectName").value.trim(),
-        description:document.getElementById("projectDescription").value.trim(),
-        createdAt:Date.now()
-      });
-
-      persist();
-      closeModal();
-
-    };
-
-}
-
-
-function deleteProject(id){
-
-  if(!confirm("Delete this project?")) return;
-
-  data.projects =
-    data.projects.filter(x=>x.id!==id);
-
-  persist();
-
-}
-
-
-/* ============================================================
-   CAPTURE
-============================================================= */
-
-function saveCapture(){
-
-  const text =
-    document.getElementById("captureText")
-      .value.trim();
-
-  if(!text){
-    alert("Add some text first.");
-    return;
-  }
-
-  let type =
-    document.getElementById("captureType").value;
-
-  if(type === "auto"){
-
-    if(/^https?:\/\//i.test(text)){
-      type = "link";
-    }else if(
-      /^(todo|task|buy|call|send|finish|complete|submit|apply)\b/i.test(text)
-    ){
-      type = "task";
-    }else{
-      type = "note";
-    }
-
-  }
-
-  if(type === "link"){
-
-    let url = text;
-
-    if(!/^https?:\/\//i.test(url)){
-      url = "https://" + url;
-    }
-
-    data.links.unshift({
-      id:uid(),
-      url,
-      title:url,
-      createdAt:Date.now()
-    });
-
-  }else if(type === "task"){
-
-    data.tasks.unshift({
-      id:uid(),
-      title:text,
-      description:"",
-      priority:"medium",
-      due:"",
-      done:false,
-      createdAt:Date.now()
-    });
-
-  }else{
-
-    data.notes.unshift({
-      id:uid(),
-      title:type==="research"
-        ? "Research note"
-        : "Quick note",
-      body:text,
-      createdAt:Date.now()
-    });
-
-  }
-
-  data.captures.unshift({
-    id:uid(),
-    text,
-    type,
-    createdAt:Date.now()
-  });
-
-  document.getElementById("captureText").value = "";
-
-  persist();
-
-  alert("Saved.");
-
-}
-
-
-/* ============================================================
-   SEARCH
-============================================================= */
-
-function renderSearch(){
-
-  const input =
-    document.getElementById("globalSearch");
-
-  if(!input) return;
-
-  const query =
-    input.value.trim().toLowerCase();
-
-  const el =
-    document.getElementById("searchResults");
-
-  if(!query){
-
-    el.innerHTML =
+    container.innerHTML =
       `<div class="empty">
-        Type something to search your workspace.
+        No saved projects yet.
       </div>`;
 
     return;
 
   }
 
-  const results = [];
+  container.innerHTML =
+    state.saved
+      .map(item => `
 
-  data.tasks.forEach(x=>{
-    if(
-      `${x.title} ${x.description}`
-        .toLowerCase()
-        .includes(query)
-    ){
-      results.push({
-        type:"Task",
-        title:x.title,
-        body:x.description,
-        page:"tasks"
-      });
-    }
-  });
+        <div class="result">
 
-  data.notes.forEach(x=>{
-    if(
-      `${x.title} ${x.body}`
-        .toLowerCase()
-        .includes(query)
-    ){
-      results.push({
-        type:"Note",
-        title:x.title,
-        body:x.body,
-        page:"notes"
-      });
-    }
-  });
+          <div style="display:flex;justify-content:space-between;gap:10px">
 
-  data.links.forEach(x=>{
-    if(
-      `${x.title} ${x.url}`
-        .toLowerCase()
-        .includes(query)
-    ){
-      results.push({
-        type:"Link",
-        title:x.title,
-        body:x.url,
-        page:"links"
-      });
-    }
-  });
+            <div>
 
-  data.projects.forEach(x=>{
-    if(
-      `${x.name} ${x.description}`
-        .toLowerCase()
-        .includes(query)
-    ){
-      results.push({
-        type:"Project",
-        title:x.name,
-        body:x.description,
-        page:"projects"
-      });
-    }
-  });
+              <h3>
+                ${escapeHtml(item.title)}
+              </h3>
 
-  if(!results.length){
+              <div style="color:var(--muted);font-size:12px">
+                ${formatDate(item.createdAt)}
+              </div>
 
-    el.innerHTML =
-      `<div class="empty">
-        No matching results.
-      </div>`;
+            </div>
 
-    return;
+            <button
+              class="btn small"
+              onclick="deleteSaved('${item.id}')"
+            >
+              Delete
+            </button>
 
-  }
+          </div>
 
-  el.innerHTML =
-    results.map(r=>`
-
-      <div class="list-item">
-
-        <div class="list-item-head">
-
-          <strong>
-            ${escapeHTML(r.title)}
-          </strong>
-
-          <span class="chip">
-            ${escapeHTML(r.type)}
-          </span>
+          <p style="color:var(--muted)">
+            ${escapeHtml(
+              item.analysis?.summary?.[0] ||
+              "Analyzed project"
+            )}
+          </p>
 
         </div>
 
-        <p class="meta">
-          ${escapeHTML(r.body || "")}
-        </p>
-
-        <button class="btn btn-small"
-                onclick="goPage('${r.page}')">
-          Open section
-        </button>
-
-      </div>
-
-    `).join("");
+      `)
+      .join("");
 
 }
 
-
-/* ============================================================
-   DOCUMENT ENGINE
-============================================================= */
-
-const dropZone =
-  document.getElementById("dropZone");
-
-const fileInput =
-  document.getElementById("fileInput");
-
-fileInput.addEventListener(
-  "change",
-  e=>{
-    const file = e.target.files[0];
-    if(file) analyzeFile(file);
-  }
-);
-
-dropZone.addEventListener(
-  "dragover",
-  e=>{
-    e.preventDefault();
-    dropZone.classList.add("drag");
-  }
-);
-
-dropZone.addEventListener(
-  "dragleave",
-  ()=>{
-    dropZone.classList.remove("drag");
-  }
-);
-
-dropZone.addEventListener(
-  "drop",
-  e=>{
-
-    e.preventDefault();
-
-    dropZone.classList.remove("drag");
-
-    const file =
-      e.dataTransfer.files[0];
-
-    if(file){
-      analyzeFile(file);
-    }
-
-  }
-);
-
-
-async function analyzeFile(file){
-
-  document.getElementById("fileName").textContent =
-    file.name;
-
-  document.getElementById("analysisArea")
-    .classList.remove("hidden");
-
-  document.getElementById("analysisTitle").textContent =
-    "Analyzing " + file.name;
-
-  document.getElementById("analysisMeta").textContent =
-    "Processing in your browser…";
-
-  document.getElementById("findings").innerHTML =
-    `<div class="empty">
-      Reading file…
-    </div>`;
-
-  document.getElementById("suggestedActions").innerHTML = "";
-
-  document.getElementById("extractedText").textContent =
-    "";
-
-  try{
-
-    const text =
-      await extractText(file);
-
-    currentAnalysis = {
-      fileName:file.name,
-      text
-    };
-
-    renderAnalysis(file,text);
-
-  }catch(error){
-
-    document.getElementById("analysisMeta").textContent =
-      "The file could not be processed.";
-
-    document.getElementById("extractedText").textContent =
-      error.message || String(error);
-
-  }
-
-}
-
-
-async function extractText(file){
-
-  const name =
-    file.name.toLowerCase();
-
-  if(
-    name.endsWith(".txt") ||
-    name.endsWith(".json") ||
-    name.endsWith(".csv")
-  ){
-
-    return await file.text();
-
-  }
-
-  if(
-    name.endsWith(".xlsx") ||
-    name.endsWith(".xls")
-  ){
-
-    const buffer =
-      await file.arrayBuffer();
-
-    const workbook =
-      XLSX.read(buffer,{type:"array"});
-
-    let output = "";
-
-    workbook.SheetNames.forEach(sheet=>{
-
-      output +=
-        `\n### ${sheet}\n`;
-
-      output +=
-        XLSX.utils.sheet_to_csv(
-          workbook.Sheets[sheet]
-        );
-
-      output += "\n";
-
-    });
-
-    return output;
-
-  }
-
-  if(name.endsWith(".docx")){
-
-    const buffer =
-      await file.arrayBuffer();
-
-    const result =
-      await mammoth.extractRawText({
-        arrayBuffer:buffer
-      });
-
-    return result.value;
-
-  }
-
-  if(name.endsWith(".pdf")){
-
-    return await extractPDF(file);
-
-  }
-
-  if(
-    file.type.startsWith("image/")
-  ){
-
-    return await OCRImage(file);
-
-  }
-
-  throw new Error(
-    "This file type is not supported by the browser engine."
-  );
-
-}
-
-
-async function extractPDF(file){
-
-  const pdfjs =
-    window.pdfjsLib;
-
-  if(!pdfjs){
-    throw new Error(
-      "PDF engine is still loading. Try again in a moment."
-    );
-  }
-
-  const buffer =
-    await file.arrayBuffer();
-
-  const pdf =
-    await pdfjs.getDocument({
-      data:buffer
-    }).promise;
-
-  let text = "";
-
-  for(
-    let pageNumber=1;
-    pageNumber<=pdf.numPages;
-    pageNumber++
-  ){
-
-    const page =
-      await pdf.getPage(pageNumber);
-
-    const content =
-      await page.getTextContent();
-
-    const pageText =
-      content.items
-        .map(item=>item.str)
-        .join(" ");
-
-    text +=
-      `\n--- Page ${pageNumber} ---\n` +
-      pageText;
-
-  }
-
-  return text;
-
-}
-
-
-async function OCRImage(file){
-
-  if(!window.Tesseract){
-
-    throw new Error(
-      "OCR engine is still loading. Try again in a moment."
+function deleteSaved(id){
+
+  state.saved =
+    state.saved.filter(
+      x => x.id!==id
     );
 
-  }
-
-  const result =
-    await Tesseract.recognize(
-      file,
-      "eng"
+  state.documents =
+    state.documents.filter(
+      x => x.id!==id
     );
 
-  return result.data.text;
+  saveCloud();
+
+  renderSaved();
+
+  updateStats();
 
 }
 
-
-function renderAnalysis(file,text){
-
-  document.getElementById("analysisTitle").textContent =
-    file.name;
-
-  document.getElementById("analysisMeta").textContent =
-    `${formatBytes(file.size)} • ${text.length.toLocaleString()} characters`;
-
-  document.getElementById("extractedText").textContent =
-    text || "No readable text was found.";
-
-  const findings =
-    detectFindings(text);
-
-  const findingsEl =
-    document.getElementById("findings");
-
-  if(!findings.length){
-
-    findingsEl.innerHTML =
-      `<div class="empty">
-        No obvious dates, emails, amounts or requirement phrases
-        were detected automatically.
-      </div>`;
-
-  }else{
-
-    findingsEl.innerHTML =
-      findings.map(f=>`
-
-        <div class="action">
-
-          <strong>${escapeHTML(f.label)}</strong>
-
-          <small>
-            ${escapeHTML(f.value)}
-          </small>
-
-        </div>
-
-      `).join("");
-
-  }
-
-  const actions =
-    generateActions(text);
-
-  document.getElementById("suggestedActions").innerHTML =
-    actions.map((a,i)=>`
-
-      <div class="list-item">
-
-        <strong>${escapeHTML(a.title)}</strong>
-
-        <div class="meta">
-          ${escapeHTML(a.reason)}
-        </div>
-
-        <button class="btn btn-small"
-                style="margin-top:8px"
-                onclick="createTaskFromAnalysis(${i})">
-          Add as task
-        </button>
-
-      </div>
-
-    `).join("");
-
-  currentAnalysis.actions = actions;
-
-}
-
-
-function formatBytes(bytes){
-
-  if(bytes < 1024) return bytes + " B";
-
-  if(bytes < 1024*1024)
-    return (bytes/1024).toFixed(1) + " KB";
-
-  return (bytes/(1024*1024)).toFixed(1) + " MB";
-
-}
-
-
-function detectFindings(text){
-
-  const findings = [];
-
-  const emails =
-    text.match(
-      /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi
-    ) || [];
-
-  [...new Set(emails)]
-    .slice(0,8)
-    .forEach(x=>{
-      findings.push({
-        label:"Email",
-        value:x
-      });
-    });
-
-
-  const urls =
-    text.match(
-      /https?:\/\/[^\s<>"')]+/gi
-    ) || [];
-
-  [...new Set(urls)]
-    .slice(0,8)
-    .forEach(x=>{
-      findings.push({
-        label:"URL",
-        value:x
-      });
-    });
-
-
-  const dates =
-    text.match(
-      /\b(?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:,\s*)?\d{2,4})\b/gi
-    ) || [];
-
-  [...new Set(dates)]
-    .slice(0,10)
-    .forEach(x=>{
-      findings.push({
-        label:"Possible date",
-        value:x
-      });
-    });
-
-
-  const money =
-    text.match(
-      /(?:\$|€|£|₹|Rs\.?|PKR|INR)\s?[\d,]+(?:\.\d{1,2})?/gi
-    ) || [];
-
-  [...new Set(money)]
-    .slice(0,10)
-    .forEach(x=>{
-      findings.push({
-        label:"Amount",
-        value:x
-      });
-    });
-
-
-  return findings;
-
-}
-
-
-function generateActions(text){
-
-  const lower =
-    text.toLowerCase();
-
-  const actions = [];
-
-  const rules = [
-
-    {
-      terms:["deadline","due date","last date","submit by"],
-      title:"Review the deadline",
-      reason:"The document appears to contain a deadline."
-    },
-
-    {
-      terms:["required documents","documents required","you must provide","please provide"],
-      title:"Collect required documents",
-      reason:"The document appears to request supporting information."
-    },
-
-    {
-      terms:["payment","fee","amount due","pay before"],
-      title:"Review payment requirement",
-      reason:"A payment or fee appears to be mentioned."
-    },
-
-    {
-      terms:["sign","signature","signed by"],
-      title:"Check signature requirement",
-      reason:"The document appears to require a signature."
-    },
-
-    {
-      terms:["appointment","meeting","interview"],
-      title:"Check appointment or meeting details",
-      reason:"The document may contain a scheduled event."
-    },
-
-    {
-      terms:["reply","respond","contact us","contact"],
-      title:"Review response requirement",
-      reason:"A response or contact action appears to be requested."
-    },
-
-    {
-      terms:["upload","attach","attachment"],
-      title:"Prepare requested attachments",
-      reason:"The document appears to request uploaded or attached files."
-    }
-
-  ];
-
-  rules.forEach(rule=>{
-
-    if(
-      rule.terms.some(term=>lower.includes(term))
-    ){
-
-      actions.push({
-        title:rule.title,
-        reason:rule.reason
-      });
-
-    }
-
-  });
-
-
-  if(!actions.length){
-
-    actions.push({
-      title:"Review the extracted information",
-      reason:"No explicit action phrase was detected. Verify the original document manually."
-    });
-
-  }
-
-  return actions;
-
-}
-
-
-function createTaskFromAnalysis(index){
-
-  if(!currentAnalysis?.actions?.[index]) return;
-
-  const action =
-    currentAnalysis.actions[index];
-
-  data.tasks.unshift({
-    id:uid(),
-    title:action.title,
-    description:
-      `${action.reason}\nSource: ${currentAnalysis.fileName}`,
-    priority:"medium",
-    due:"",
-    done:false,
-    createdAt:Date.now()
-  });
-
-  persist();
-
-  alert("Action added to your tasks.");
-
-}
-
-
-function saveAnalysisAsNote(){
-
-  if(!currentAnalysis) return;
-
-  data.notes.unshift({
-    id:uid(),
-    title:
-      "Analysis — " + currentAnalysis.fileName,
-    body:
-      currentAnalysis.text,
-    createdAt:Date.now()
-  });
-
-  persist();
-
-  alert("Analysis saved as a note.");
-
-}
-
-
-/* ============================================================
-   TOOLS
-============================================================= */
+/* ==========================================================
+   CALCULATORS
+========================================================== */
 
 function calculate(){
 
   const input =
-    document.getElementById("calcInput").value.trim();
-
-  const output =
-    document.getElementById("calcResult");
+    document.getElementById("calcInput")
+      .value.trim();
 
   if(!input){
-    output.textContent = "";
+
+    showToast("Enter a calculation.");
+
     return;
+
   }
 
   /*
-    Deliberately limited calculator.
-    Only numbers, operators, decimals and parentheses.
+    Basic safe calculator:
+    only numbers, decimal points and arithmetic operators.
   */
 
   if(!/^[0-9+\-*/().%\s]+$/.test(input)){
 
-    output.textContent =
-      "Only basic mathematical expressions are allowed.";
+    showToast(
+      "Only numbers and basic arithmetic operators are allowed."
+    );
 
     return;
 
@@ -4231,285 +3999,373 @@ function calculate(){
 
   try{
 
-    const sanitized =
-      input.replaceAll("%","/100");
+    const expression =
+      input.replace(
+        /(\d+(?:\.\d+)?)%/g,
+        "($1/100)"
+      );
 
     const result =
       Function(
-        '"use strict";return (' +
-        sanitized +
+        '"use strict";return ('+
+        expression+
         ')'
       )();
 
     if(!Number.isFinite(result)){
+
       throw new Error();
+
     }
 
-    output.textContent =
-      result;
+    const output =
+      document.getElementById("calcResult");
 
-  }catch{
+    output.classList.remove("hidden");
 
-    output.textContent =
-      "Invalid expression.";
+    output.innerHTML =
+      `<b>Result:</b> ${escapeHtml(String(result))}`;
+
+  }catch(error){
+
+    showToast("Invalid calculation.");
 
   }
 
 }
 
-
 function percentage(){
 
-  const a =
-    Number(document.getElementById("percentA").value);
-
-  const b =
-    Number(document.getElementById("percentB").value);
-
-  document.getElementById("percentResult").textContent =
-    Number.isFinite(a) && Number.isFinite(b)
-      ? (a*b/100)
-      : "Enter both values.";
-
-}
-
-
-function convertUnit(){
-
-  const type =
-    document.getElementById("unitType").value;
-
   const value =
-    Number(document.getElementById("unitValue").value);
+    Number(
+      document.getElementById("percentValue").value
+    );
 
-  if(!Number.isFinite(value)){
+  const percent =
+    Number(
+      document.getElementById("percentOf").value
+    );
 
-    document.getElementById("unitResult").textContent =
-      "Enter a valid number.";
+  if(!Number.isFinite(value) ||
+     !Number.isFinite(percent)){
+
+    showToast("Enter valid numbers.");
 
     return;
 
   }
 
-  const conversions = {
-
-    "km-mi":value * 0.621371,
-    "mi-km":value / 0.621371,
-    "kg-lb":value * 2.2046226218,
-    "lb-kg":value / 2.2046226218,
-    "c-f":value * 9/5 + 32,
-    "f-c":(value - 32) * 5/9,
-    "m-ft":value * 3.280839895,
-    "ft-m":value / 3.280839895
-
-  };
-
-  document.getElementById("unitResult").textContent =
-    conversions[type].toLocaleString(
-      undefined,
-      {maximumFractionDigits:6}
-    );
+  document.getElementById("percentResult").innerHTML =
+    `<div class="result">
+      ${escapeHtml(String(percent))}% of
+      ${escapeHtml(String(value))}
+      =
+      <b>${escapeHtml(String(value*percent/100))}</b>
+    </div>`;
 
 }
 
+function dateDifference(){
+
+  const a =
+    new Date(
+      document.getElementById("dateA").value
+    );
+
+  const b =
+    new Date(
+      document.getElementById("dateB").value
+    );
+
+  if(
+    Number.isNaN(a.getTime()) ||
+    Number.isNaN(b.getTime())
+  ){
+
+    showToast("Select both dates.");
+
+    return;
+
+  }
+
+  const days =
+    Math.round(
+      Math.abs(b-a) /
+      86400000
+    );
+
+  document.getElementById("dateResult").innerHTML =
+    `<div class="result">
+      Difference: <b>${days}</b> day(s)
+    </div>`;
+
+}
 
 function calculateAge(){
 
-  const input =
+  const value =
     document.getElementById("birthDate").value;
 
-  if(!input){
+  if(!value){
 
-    document.getElementById("ageResult").textContent =
-      "Select your birth date.";
+    showToast("Select your birth date.");
 
     return;
 
   }
 
   const birth =
-    new Date(input + "T00:00:00");
+    new Date(value);
 
-  const now =
+  const today =
     new Date();
 
   let years =
-    now.getFullYear() - birth.getFullYear();
+    today.getFullYear() -
+    birth.getFullYear();
 
-  const birthdayThisYear =
-    new Date(
-      now.getFullYear(),
-      birth.getMonth(),
-      birth.getDate()
-    );
+  let months =
+    today.getMonth() -
+    birth.getMonth();
 
-  if(now < birthdayThisYear){
-    years--;
+  let days =
+    today.getDate() -
+    birth.getDate();
+
+  if(days<0){
+
+    months--;
+
   }
 
-  document.getElementById("ageResult").textContent =
-    `${years} years old`;
+  if(months<0){
+
+    years--;
+
+    months += 12;
+
+  }
+
+  document.getElementById("ageResult").innerHTML =
+    `<div class="result">
+      Age:
+      <b>${years}</b> years
+      <b>${months}</b> months
+    </div>`;
 
 }
 
+function convertUnit(){
 
-document
-  .getElementById("counterText")
-  .addEventListener(
-    "input",
-    ()=>{
+  const value =
+    Number(
+      document.getElementById("unitValue").value
+    );
 
-      const text =
-        document.getElementById("counterText").value;
+  const type =
+    document.getElementById("unitType").value;
 
-      const words =
-        text.trim()
-          ? text.trim().split(/\s+/).length
-          : 0;
+  if(!Number.isFinite(value)){
 
-      document.getElementById("counterResult").textContent =
-        `${words} words • ${text.length} characters`;
+    showToast("Enter a valid number.");
 
-    }
+    return;
+
+  }
+
+  const rates = {
+
+    "km-mi":0.621371,
+    "mi-km":1.609344,
+    "kg-lb":2.2046226218,
+    "lb-kg":0.45359237,
+    "cm-in":0.3937007874,
+    "in-cm":2.54
+
+  };
+
+  const result =
+    value * rates[type];
+
+  document.getElementById("unitResult").innerHTML =
+    `<div class="result">
+      Result: <b>${result}</b>
+    </div>`;
+
+}
+
+/* ==========================================================
+   TEXT TOOLS
+========================================================== */
+
+function updateTextStats(){
+
+  const text =
+    document.getElementById("textToolInput")
+      .value;
+
+  const words =
+    text.trim()
+      ? text.trim().split(/\s+/).length
+      : 0;
+
+  const lines =
+    text
+      ? text.split(/\r?\n/).length
+      : 0;
+
+  document.getElementById("textStats")
+    .textContent =
+      `Characters: ${text.length} · Words: ${words} · Lines: ${lines}`;
+
+}
+
+function textUpper(){
+
+  transformText(
+    text => text.toUpperCase()
   );
 
+}
+
+function textLower(){
+
+  transformText(
+    text => text.toLowerCase()
+  );
+
+}
+
+function textTitle(){
+
+  transformText(
+    text =>
+      text.toLowerCase()
+        .replace(/\b\w/g,c=>c.toUpperCase())
+  );
+
+}
+
+function removeExtraSpaces(){
+
+  transformText(
+    text =>
+      text
+        .replace(/[ \t]+/g," ")
+        .replace(/\n{3,}/g,"\n\n")
+        .trim()
+  );
+
+}
+
+function transformText(fn){
+
+  const input =
+    document.getElementById("textToolInput");
+
+  input.value =
+    fn(input.value);
+
+  updateTextStats();
+
+}
 
 function formatJSON(){
 
   const input =
-    document.getElementById("jsonInput").value;
+    document.getElementById("jsonInput")
+      .value.trim();
+
+  if(!input){
+
+    showToast("Enter JSON.");
+
+    return;
+
+  }
 
   try{
 
-    const parsed =
+    const object =
       JSON.parse(input);
 
-    document.getElementById("jsonResult").textContent =
-      JSON.stringify(parsed,null,2);
+    document.getElementById("jsonOutput")
+      .textContent =
+      JSON.stringify(
+        object,
+        null,
+        2
+      );
 
-  }catch{
+  }catch(error){
 
-    document.getElementById("jsonResult").textContent =
+    document.getElementById("jsonOutput")
+      .textContent =
       "Invalid JSON.";
 
   }
 
 }
 
+/* ==========================================================
+   QUICK NOTE
+========================================================== */
 
-function changeCase(mode){
-
-  const el =
-    document.getElementById("caseText");
+function saveQuickNote(){
 
   const text =
-    el.value;
+    document.getElementById("quickText")
+      .value.trim();
 
-  if(mode==="upper"){
-    el.value = text.toUpperCase();
-  }
+  if(!text){
 
-  if(mode==="lower"){
-    el.value = text.toLowerCase();
-  }
+    showToast("Write something first.");
 
-  if(mode==="title"){
-
-    el.value =
-      text.toLowerCase()
-        .replace(/\b\w/g,
-          c=>c.toUpperCase()
-        );
+    return;
 
   }
 
-}
+  state.notes.unshift({
 
+    id:cryptoRandom(),
 
-function renderTimer(){
+    title:"Quick capture",
 
-  const minutes =
-    String(
-      Math.floor(timerSeconds/60)
-    ).padStart(2,"0");
+    body:text,
 
-  const seconds =
-    String(
-      timerSeconds%60
-    ).padStart(2,"0");
+    createdAt:new Date().toISOString()
 
-  document.getElementById("timerDisplay")
-    .textContent =
-    `${minutes}:${seconds}`;
+  });
 
-}
+  document.getElementById("quickText").value = "";
 
+  saveCloud();
 
-function startTimer(){
+  renderNotes();
 
-  if(timerInterval) return;
+  updateStats();
 
-  timerInterval =
-    setInterval(()=>{
-
-      if(timerSeconds<=0){
-
-        clearInterval(timerInterval);
-        timerInterval=null;
-
-        alert("Focus session complete.");
-
-        return;
-
-      }
-
-      timerSeconds--;
-
-      renderTimer();
-
-    },1000);
+  showToast("Saved as note.");
 
 }
 
-
-function pauseTimer(){
-
-  clearInterval(timerInterval);
-  timerInterval=null;
-
-}
-
-
-function resetTimer(){
-
-  pauseTimer();
-
-  timerSeconds =
-    25*60;
-
-  renderTimer();
-
-}
-
-
-/* ============================================================
-   BACKUP
-============================================================= */
+/* ==========================================================
+   EXPORT / IMPORT
+========================================================== */
 
 function exportData(){
 
+  const data =
+    JSON.stringify(
+      state,
+      null,
+      2
+    );
+
   const blob =
     new Blob(
-      [
-        JSON.stringify(
-          data,
-          null,
-          2
-        )
-      ],
-      {
-        type:"application/json"
-      }
+      [data],
+      {type:"application/json"}
     );
 
   const url =
@@ -4518,10 +4374,10 @@ function exportData(){
   const a =
     document.createElement("a");
 
-  a.href=url;
+  a.href = url;
 
   a.download =
-    "shaheen-workspace-backup.json";
+    "shaheen-nexus-workspace.json";
 
   a.click();
 
@@ -4529,353 +4385,292 @@ function exportData(){
 
 }
 
+function importData(event){
 
-document
-  .getElementById("importFile")
-  .addEventListener(
-    "change",
-    async e=>{
+  const file =
+    event.target.files?.[0];
 
-      const file =
-        e.target.files[0];
+  if(!file) return;
 
-      if(!file) return;
+  const reader =
+    new FileReader();
 
-      try{
+  reader.onload = () => {
 
-        const parsed =
-          JSON.parse(
-            await file.text()
-          );
+    try{
 
-        data = {
-          ...structuredClone(EMPTY_DATA),
-          ...parsed
-        };
+      const imported =
+        JSON.parse(
+          reader.result
+        );
 
-        persist();
+      state = {
+        ...state,
+        ...imported
+      };
 
-        alert("Backup imported.");
+      saveCloud();
 
-      }catch{
+      renderAll();
 
-        alert("This backup file is invalid.");
+      showToast(
+        "Workspace imported."
+      );
 
-      }
+    }catch(error){
 
-    }
-  );
-
-
-/* ============================================================
-   PERSIST
-============================================================= */
-
-let saveTimer = null;
-
-function persist(){
-
-  saveLocal();
-
-  clearTimeout(saveTimer);
-
-  saveTimer =
-    setTimeout(
-      ()=>saveCloud(),
-      500
-    );
-
-  renderAll();
-
-}
-
-
-/* ============================================================
-   THEME
-============================================================= */
-
-function applyTheme(){
-
-  document.documentElement.dataset.theme =
-    data.settings?.theme || "light";
-
-}
-
-function toggleTheme(){
-
-  data.settings.theme =
-    data.settings.theme === "dark"
-      ? "light"
-      : "dark";
-
-  applyTheme();
-  persist();
-
-}
-
-
-/* ============================================================
-   MODALS
-============================================================= */
-
-function openModal(title,body){
-
-  document.getElementById("modalTitle")
-    .textContent = title;
-
-  document.getElementById("modalBody")
-    .innerHTML = body;
-
-  document.getElementById("modal")
-    .classList.add("show");
-
-}
-
-
-function closeModal(){
-
-  document.getElementById("modal")
-    .classList.remove("show");
-
-}
-
-
-document
-  .getElementById("modal")
-  .addEventListener(
-    "click",
-    e=>{
-
-      if(e.target.id==="modal"){
-        closeModal();
-      }
-
-    }
-  );
-
-
-function openProfileMenu(){
-
-  openModal(
-    "Account",
-    `
-      <div class="list">
-
-        <button class="btn"
-                onclick="goPage('profile');closeModal()">
-          👤 Profile
-        </button>
-
-        <button class="btn"
-                onclick="toggleTheme();closeModal()">
-          ◐ Change theme
-        </button>
-
-        <button class="btn"
-                onclick="exportData();closeModal()">
-          ↓ Export workspace
-        </button>
-
-        <button class="btn btn-danger"
-                onclick="signOutUser();closeModal()">
-          Sign out
-        </button>
-
-      </div>
-    `
-  );
-
-}
-
-
-/* ============================================================
-   PUBLIC INFORMATION MODALS
-============================================================= */
-
-function openPublicModal(type){
-
-  const pages = {
-
-    about:{
-      title:"About Shaheen",
-      body:`
-        <p>
-          Shaheen is designed around one simple idea:
-          information should lead to action.
-        </p>
-
-        <p>
-          Instead of scattering documents, notes, links and tasks
-          across different places, Shaheen brings everyday organization
-          into one focused workspace.
-        </p>
-
-        <p>
-          The product is intentionally transparent. It does not claim
-          to be a lawyer, doctor, accountant, government authority,
-          identity verifier or professional advisor.
-        </p>
-      `
-    },
-
-    privacy:{
-      title:"Privacy Policy",
-      body:`
-        <h3>Information</h3>
-
-        <p>
-          Shaheen uses Firebase Authentication for account login.
-          When Firestore is enabled, workspace information can be
-          synchronized to the user's Firebase project.
-        </p>
-
-        <h3>Document processing</h3>
-
-        <p>
-          Supported document extraction and OCR in this version are
-          performed in the browser. Files are not intentionally uploaded
-          to a Shaheen application server for processing.
-        </p>
-
-        <h3>Your responsibility</h3>
-
-        <p>
-          Do not upload passwords, payment credentials, private keys or
-          other secrets simply because a file can technically be analyzed.
-        </p>
-
-        <h3>Third-party services</h3>
-
-        <p>
-          Firebase and browser-delivered processing libraries may be used
-          to provide functionality. Their own terms and privacy policies
-          also apply.
-        </p>
-      `
-    },
-
-    terms:{
-      title:"Terms of Use",
-      body:`
-        <p>
-          Shaheen is a productivity and information-organization tool.
-        </p>
-
-        <p>
-          Automated extraction may contain errors. Users must verify
-          important information against the original source.
-        </p>
-
-        <p>
-          Shaheen does not provide professional legal, medical, financial,
-          immigration, tax or other regulated advice.
-        </p>
-
-        <p>
-          Users are responsible for information they upload and actions
-          they take based on extracted information.
-        </p>
-      `
-    },
-
-    security:{
-      title:"Security",
-      body:`
-        <p>
-          Authentication is handled through Firebase Authentication.
-        </p>
-
-        <p>
-          Browser-side document processing reduces the need to transmit
-          supported files to a custom application server.
-        </p>
-
-        <p>
-          No website can honestly promise absolute security. Keep your
-          account password private, use a strong password, and avoid
-          uploading unnecessary sensitive information.
-        </p>
-      `
-    },
-
-    contact:{
-      title:"Contact Shaheen",
-      body:`
-        <p>
-          For support, feedback or policy questions, use the official
-          contact address configured by the site owner.
-        </p>
-
-        <p>
-          <strong>Contact:</strong>
-          YOUR-CONTACT-EMAIL@example.com
-        </p>
-
-        <p class="meta">
-          Replace the placeholder email above before publishing.
-        </p>
-      `
-    }
-
-  };
-
-  const page = pages[type];
-
-  if(!page) return;
-
-  openModal(
-    page.title,
-    page.body
-  );
-
-}
-
-
-/* ============================================================
-   INITIALIZATION
-============================================================= */
-
-applyTheme();
-
-renderTimer();
-
-document.getElementById("todayText").textContent =
-  localDate();
-
-
-/*
-  Firebase redirect result.
-  This supports environments where popup login is unavailable.
-*/
-
-auth.getRedirectResult()
-  .catch(error=>{
-
-    if(error){
-
-      console.warn(
-        "Google redirect sign-in:",
-        error
+      showToast(
+        "Invalid workspace JSON."
       );
 
     }
 
-  });
+  };
 
+  reader.readAsText(file);
 
-/*
-  Prevent accidental form navigation.
-*/
+}
 
-window.addEventListener(
-  "beforeunload",
-  ()=>{
-    if(currentUser){
-      saveLocal();
-    }
+/* ==========================================================
+   THEME
+========================================================== */
+
+function toggleTheme(){
+
+  state.theme =
+    state.theme==="dark"
+      ? "light"
+      : "dark";
+
+  applyTheme();
+
+  saveCloud();
+
+}
+
+function applyTheme(){
+
+  document.body.classList.toggle(
+    "light",
+    state.theme==="light"
+  );
+
+}
+
+/* ==========================================================
+   STATS / RENDER
+========================================================== */
+
+function updateStats(){
+
+  const docs =
+    document.getElementById("statDocs");
+
+  const tasks =
+    document.getElementById("statTasks");
+
+  const notes =
+    document.getElementById("statNotes");
+
+  const saved =
+    document.getElementById("statSaved");
+
+  if(docs)
+    docs.textContent =
+      state.documents.length;
+
+  if(tasks)
+    tasks.textContent =
+      state.tasks.filter(
+        x => !x.done
+      ).length;
+
+  if(notes)
+    notes.textContent =
+      state.notes.length;
+
+  if(saved)
+    saved.textContent =
+      state.saved.length;
+
+}
+
+function renderRecent(){
+
+  const container =
+    document.getElementById("recentActivity");
+
+  if(!container) return;
+
+  const items = [
+
+    ...state.documents.map(x => ({
+      type:"Document",
+      title:x.title,
+      date:x.createdAt
+    })),
+
+    ...state.notes.map(x => ({
+      type:"Note",
+      title:x.title,
+      date:x.createdAt
+    })),
+
+    ...state.tasks.map(x => ({
+      type:"Task",
+      title:x.text,
+      date:x.createdAt
+    }))
+
+  ]
+  .sort(
+    (a,b) =>
+      new Date(b.date)-new Date(a.date)
+  )
+  .slice(0,8);
+
+  if(!items.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        Nothing here yet.
+      </div>`;
+
+    return;
+
   }
-);
 
+  container.innerHTML =
+    items
+      .map(item => `
+
+        <div class="task">
+
+          <div style="width:42px">
+            ${item.type==="Document"?"📄":
+              item.type==="Note"?"📝":"✓"}
+          </div>
+
+          <div style="flex:1">
+
+            <b>${escapeHtml(item.title)}</b>
+
+            <div style="font-size:12px;color:var(--muted)">
+              ${item.type} · ${formatDate(item.date)}
+            </div>
+
+          </div>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+function renderAll(){
+
+  updateStats();
+
+  renderTasks();
+
+  renderNotes();
+
+  renderSaved();
+
+  renderRecent();
+
+}
+
+/* ==========================================================
+   UTILITIES
+========================================================== */
+
+function unique(array){
+
+  return [
+    ...new Set(
+      array
+        .map(x => String(x).trim())
+        .filter(Boolean)
+    )
+  ];
+
+}
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+function formatDate(value){
+
+  if(!value) return "";
+
+  const date =
+    new Date(value);
+
+  if(Number.isNaN(date.getTime()))
+    return "";
+
+  return date.toLocaleString(
+    undefined,
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+function cryptoRandom(){
+
+  if(
+    window.crypto &&
+    crypto.randomUUID
+  ){
+
+    return crypto.randomUUID();
+
+  }
+
+  return (
+    Date.now().toString(36)+
+    Math.random().toString(36).slice(2)
+  );
+
+}
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(
+      () => toast.classList.remove("show"),
+      3500
+    );
+
+}
 </script>
 
 </body>
