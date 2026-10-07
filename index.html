@@ -1,687 +1,1196 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<meta name="description" content="Shaheen is a simple digital workspace for tasks, notes, links, checklists, research and everyday tools.">
+<meta name="description" content="Shaheen is a practical document action workspace that helps you understand information, extract important details, create tasks and organize your work.">
 <meta name="robots" content="index,follow">
-<title>Shaheen — Your Digital Life & Work Hub</title>
+<link rel="canonical" href="https://YOUR-DOMAIN.example/">
+
+<title>Shaheen — Document Action Hub</title>
+
+<!--
+  ============================================================
+  ADSENSE
+  ============================================================
+  Keep Google AdSense restricted to PUBLIC informational content.
+  Do NOT put ads inside private workspace screens.
+
+  After your AdSense site is approved, paste Google's EXACT
+  generated AdSense code here.
+
+  Do NOT invent data-ad-slot values.
+
+  Example Auto Ads script supplied by Google:
+
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
+    crossorigin="anonymous"></script>
+
+  Google makes the final approval decision.
+  ============================================================
+-->
 
 <style>
 :root{
   --bg:#f5f7fb;
   --surface:#ffffff;
-  --surface2:#f0f4fa;
-  --text:#101828;
-  --muted:#667085;
-  --line:#e4e7ec;
-  --primary:#155eef;
-  --primary2:#004eea;
-  --cyan:#00b8d9;
-  --success:#12b76a;
-  --danger:#f04438;
-  --warning:#f79009;
-  --shadow:0 12px 40px rgba(16,24,40,.08);
+  --surface2:#eef3f9;
+  --text:#101827;
+  --muted:#64748b;
+  --border:#dce3ec;
+  --primary:#0757d9;
+  --primary2:#00a9e8;
+  --danger:#dc2626;
+  --success:#159957;
+  --shadow:0 14px 45px rgba(15,23,42,.08);
   --radius:20px;
-  --max:1180px;
 }
+
 [data-theme="dark"]{
-  --bg:#070b12;
-  --surface:#0e1622;
-  --surface2:#131e2c;
+  --bg:#07111f;
+  --surface:#0d1a2b;
+  --surface2:#122238;
   --text:#f4f7fb;
-  --muted:#98a2b3;
-  --line:#223044;
-  --shadow:0 15px 50px rgba(0,0,0,.28);
+  --muted:#9aaac0;
+  --border:#22334a;
+  --primary:#4d91ff;
+  --primary2:#00d0ff;
+  --shadow:0 20px 50px rgba(0,0,0,.28);
 }
+
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  line-height:1.5;
+  line-height:1.55;
 }
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-.hidden{display:none!important}
-.container{width:min(var(--max),calc(100% - 32px));margin:auto}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.container{
+  width:min(1180px,calc(100% - 32px));
+  margin:auto;
+}
+
 .topbar{
   position:sticky;
   top:0;
   z-index:100;
-  background:color-mix(in srgb,var(--surface) 90%,transparent);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
 }
-.nav{
-  min-height:70px;
+
+.topbar-inner{
+  min-height:68px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:20px;
+  gap:14px;
 }
+
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:10px;
   font-weight:900;
   font-size:21px;
-  letter-spacing:-.5px;
 }
-.logo{
-  width:38px;height:38px;border-radius:13px;
-  display:grid;place-items:center;
+
+.brand-mark{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
   color:white;
-  background:linear-gradient(135deg,#155eef,#00b8d9);
-  box-shadow:0 7px 22px rgba(21,94,239,.3);
-  font-weight:1000;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  box-shadow:0 8px 25px rgba(0,120,255,.25);
 }
-.navlinks{display:flex;gap:8px}
-.navlinks button{
-  border:0;background:transparent;color:var(--muted);
-  padding:10px 12px;border-radius:10px;
+
+.navlinks{
+  display:flex;
+  gap:6px;
+  align-items:center;
 }
-.navlinks button:hover{background:var(--surface2);color:var(--text)}
-.hero{padding:78px 0 45px}
-.heroGrid{
+
+.navlinks a{
+  padding:9px 12px;
+  border-radius:10px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.navlinks a:hover{
+  background:var(--surface2);
+  color:var(--text);
+}
+
+.hero{
+  padding:72px 0 54px;
+}
+
+.hero-grid{
   display:grid;
   grid-template-columns:1.15fr .85fr;
   gap:45px;
   align-items:center;
 }
-.eyebrow{
+
+.badge{
   display:inline-flex;
   padding:7px 11px;
-  border:1px solid var(--line);
   border-radius:999px;
+  background:var(--surface2);
   color:var(--primary);
-  background:var(--surface);
-  font-weight:800;
   font-size:13px;
+  font-weight:800;
+  margin-bottom:15px;
 }
+
 h1{
-  font-size:clamp(42px,7vw,78px);
-  line-height:.98;
-  letter-spacing:-4px;
-  margin:18px 0;
+  font-size:clamp(40px,6vw,72px);
+  line-height:1.02;
+  letter-spacing:-3px;
+  margin:0 0 20px;
 }
+
+h2{
+  font-size:clamp(27px,4vw,42px);
+  line-height:1.1;
+  margin:0 0 14px;
+  letter-spacing:-1.5px;
+}
+
+h3{
+  margin:0 0 8px;
+}
+
 .hero p{
-  max-width:680px;
-  color:var(--muted);
   font-size:19px;
+  color:var(--muted);
+  max-width:680px;
 }
-.heroActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+
+.gradient-text{
+  background:linear-gradient(90deg,var(--primary),var(--primary2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
 .btn{
-  border:0;border-radius:13px;
-  padding:13px 17px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  border-radius:13px;
+  padding:11px 16px;
   font-weight:800;
   transition:.18s;
 }
-.btn:hover{transform:translateY(-1px)}
-.primary{background:var(--primary);color:white}
-.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}
-.danger{background:#fee4e2;color:#b42318}
-.heroCard{
-  background:linear-gradient(150deg,#101d31,#0b1320);
-  color:white;
-  padding:22px;
+
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+}
+
+.btn-primary{
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+}
+
+.btn-danger{
+  color:#fff;
+  background:var(--danger);
+  border-color:transparent;
+}
+
+.btn-small{
+  padding:8px 11px;
+  font-size:13px;
+}
+
+.hero-card{
+  border:1px solid var(--border);
+  background:var(--surface);
   border-radius:28px;
-  box-shadow:0 25px 70px rgba(16,29,49,.28);
+  padding:22px;
+  box-shadow:var(--shadow);
 }
-.mockTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.mockSearch{
-  background:#172438;
-  border:1px solid #2a3b54;
-  padding:12px 15px;
+
+.mock-window{
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.mock-head{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  gap:6px;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--border);
+}
+
+.mock-body{
+  padding:18px;
+}
+
+.mock-row{
+  padding:13px;
+  border:1px solid var(--border);
   border-radius:13px;
-  color:#aab7c8;
+  margin-bottom:10px;
+  background:var(--surface2);
 }
-.mockGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mockBox{
-  padding:17px;border-radius:17px;
-  background:#132033;border:1px solid #24354d;
+
+section.public-section{
+  padding:70px 0;
 }
-.mockBox strong{display:block;font-size:24px}
-section{padding:65px 0}
-.sectionTitle{text-align:center;max-width:760px;margin:0 auto 35px}
-.sectionTitle h2{font-size:clamp(30px,5vw,48px);margin:0 0 10px;letter-spacing:-2px}
-.sectionTitle p{color:var(--muted)}
+
+.section-head{
+  max-width:720px;
+  margin-bottom:30px;
+}
+
+.section-head p{
+  color:var(--muted);
+}
+
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:16px;
 }
+
 .card{
   background:var(--surface);
-  border:1px solid var(--line);
+  border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:23px;
+  padding:22px;
   box-shadow:var(--shadow);
-}
-.icon{
-  width:43px;height:43px;border-radius:13px;
-  display:grid;place-items:center;
-  background:var(--surface2);
-  margin-bottom:15px;
-}
-.card h3{margin:0 0 7px}
-.card p{margin:0;color:var(--muted)}
-.publicFooter{
-  padding:40px 0;
-  border-top:1px solid var(--line);
-  color:var(--muted);
-}
-.footerLinks{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px}
-.footerLinks button{
-  border:0;background:none;color:var(--muted);padding:0;
 }
 
-/* APP */
-.app{
+.card-icon{
+  font-size:25px;
+  margin-bottom:13px;
+}
+
+.card p{
+  color:var(--muted);
+  margin-bottom:0;
+}
+
+.guide-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.guide{
+  padding:22px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--surface);
+}
+
+.guide p{
+  color:var(--muted);
+}
+
+.footer{
+  padding:40px 0;
+  border-top:1px solid var(--border);
+}
+
+.footer-grid{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.footer-links{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  color:var(--muted);
+}
+
+/* AUTH */
+
+.auth-screen{
   min-height:100vh;
   display:grid;
-  grid-template-columns:250px 1fr;
+  place-items:center;
+  padding:24px;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(0,160,255,.12),transparent 30%),
+    var(--bg);
 }
-.sidebar{
-  position:sticky;
-  top:0;
-  height:100vh;
-  border-right:1px solid var(--line);
+
+.auth-card{
+  width:min(470px,100%);
   background:var(--surface);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-}
-.sideNav{margin-top:28px;display:grid;gap:5px}
-.sideNav button{
-  border:0;background:transparent;color:var(--muted);
-  padding:12px 13px;border-radius:12px;
-  text-align:left;font-weight:700;
-}
-.sideNav button:hover,.sideNav button.active{
-  background:var(--surface2);
-  color:var(--primary);
-}
-.sideBottom{margin-top:auto}
-.appMain{min-width:0}
-.appHeader{
-  position:sticky;top:0;z-index:50;
-  background:color-mix(in srgb,var(--bg) 90%,transparent);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-}
-.appHeaderInner{
-  min-height:70px;
-  padding:0 24px;
-  display:flex;align-items:center;gap:12px;
-}
-.globalSearch{
-  flex:1;
-  max-width:620px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:0 13px;
-}
-.globalSearch input{
-  width:100%;border:0;outline:0;
-  padding:12px 5px;
-  background:transparent;color:var(--text);
-}
-.userPill{
-  display:flex;align-items:center;gap:9px;
-  background:var(--surface);
-  border:1px solid var(--line);
-  padding:7px 10px;border-radius:999px;
-}
-.avatar{
-  width:34px;height:34px;border-radius:50%;
-  object-fit:cover;background:var(--surface2);
-}
-.content{padding:28px;max-width:1250px}
-.viewTitle{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:15px;margin-bottom:23px;
-}
-.viewTitle h2{margin:0;font-size:30px;letter-spacing:-1px}
-.sub{color:var(--muted)}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;margin-bottom:20px;
-}
-.stat{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-}
-.stat small{color:var(--muted)}
-.stat strong{font-size:29px;display:block;margin-top:4px}
-.dashboardGrid{
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:18px;
-}
-.panel{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:20px;
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:30px;
   box-shadow:var(--shadow);
 }
-.panelHeader{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-bottom:15px;
+
+.auth-card h1{
+  font-size:34px;
+  letter-spacing:-1.5px;
 }
-.panelHeader h3{margin:0}
-.quickGrid{
+
+.form{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.quick{
-  border:1px solid var(--line);
-  background:var(--surface2);
-  border-radius:14px;
-  padding:16px;
-  text-align:left;
-  color:var(--text);
-  font-weight:800;
-}
-.quick:hover{border-color:var(--primary)}
-.list{display:grid;gap:9px}
-.item{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:13px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:var(--surface);
-}
-.itemMain{flex:1;min-width:0}
-.itemTitle{font-weight:800;overflow-wrap:anywhere}
-.itemMeta{font-size:12px;color:var(--muted);margin-top:3px}
-.itemActions{display:flex;gap:5px}
-.mini{
-  border:1px solid var(--line);
-  background:var(--surface2);
-  border-radius:9px;
-  padding:7px 9px;
-}
-.check{
-  width:20px;height:20px;
-  accent-color:var(--primary);
-}
-.toolbar{
-  display:flex;gap:9px;flex-wrap:wrap;
-  margin-bottom:17px;
-}
-.input,.textarea,.select{
-  width:100%;
-  border:1px solid var(--line);
-  background:var(--surface);
-  color:var(--text);
-  border-radius:12px;
-  padding:12px;
-  outline:none;
-}
-.input:focus,.textarea:focus,.select:focus{
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(21,94,239,.1);
-}
-.textarea{min-height:140px;resize:vertical}
-.formGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
   gap:12px;
 }
-.formFull{grid-column:1/-1}
-.toolGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-.toolCard{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-}
-.toolCard h3{margin-top:0}
-.result{
-  margin-top:12px;
-  padding:13px;
-  border-radius:12px;
-  background:var(--surface2);
+
+.label{
+  font-size:13px;
   font-weight:800;
-  overflow-wrap:anywhere;
-}
-.tabs{
-  display:flex;gap:6px;overflow:auto;
-  padding-bottom:8px;margin-bottom:15px;
-}
-.tab{
-  white-space:nowrap;
-  border:1px solid var(--line);
-  background:var(--surface);
   color:var(--muted);
-  border-radius:999px;
-  padding:8px 12px;
 }
-.tab.active{background:var(--primary);color:white;border-color:var(--primary)}
-.empty{
-  padding:35px 15px;text-align:center;
-  color:var(--muted);
-  border:1px dashed var(--line);
-  border-radius:15px;
-}
-.modal{
-  position:fixed;inset:0;z-index:300;
-  background:rgba(0,0,0,.5);
-  display:grid;place-items:center;
-  padding:18px;
-}
-.modalBox{
-  width:min(620px,100%);
-  max-height:90vh;overflow:auto;
+
+.input,
+.textarea,
+.select{
+  width:100%;
+  border:1px solid var(--border);
   background:var(--surface);
   color:var(--text);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:23px;
+  border-radius:12px;
+  padding:12px 13px;
+  outline:none;
 }
-.modalHead{
-  display:flex;justify-content:space-between;gap:12px;
-  align-items:center;margin-bottom:15px;
+
+.input:focus,
+.textarea:focus,
+.select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(0,90,220,.10);
 }
-.modalHead h3{margin:0}
-.toast{
-  position:fixed;right:18px;bottom:18px;z-index:500;
-  background:#101828;color:white;
-  padding:12px 15px;border-radius:12px;
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+.textarea{
+  min-height:130px;
+  resize:vertical;
 }
-.mobileNav{display:none}
-.dangerText{color:var(--danger)}
-.successText{color:var(--success)}
-.timer{
-  text-align:center;
-  font-size:65px;
-  font-weight:900;
-  letter-spacing:-3px;
-  padding:20px;
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  margin:16px 0;
+  font-size:12px;
 }
-.profileHero{
-  display:flex;align-items:center;gap:15px;
-  margin-bottom:20px;
+
+.divider:before,
+.divider:after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:var(--border);
 }
-.largeAvatar{
-  width:75px;height:75px;border-radius:50%;object-fit:cover;
-  background:var(--surface2);
-}
-.switch{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:20px;padding:14px 0;border-bottom:1px solid var(--line);
-}
-.switch input{width:20px;height:20px}
-.article{
-  max-width:850px;margin:auto;
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:30px;
-}
-.article h2{font-size:34px;letter-spacing:-1px}
-.article h3{margin-top:30px}
-.article p,.article li{color:var(--muted);line-height:1.8}
-.adSafeNote{
-  margin-top:30px;
-  padding:18px;
-  border-radius:15px;
+
+.message{
+  padding:11px 13px;
+  border-radius:12px;
   background:var(--surface2);
   color:var(--muted);
   font-size:13px;
 }
-@media(max-width:950px){
-  .heroGrid,.dashboardGrid{grid-template-columns:1fr}
-  .cards{grid-template-columns:repeat(2,1fr)}
-  .toolGrid{grid-template-columns:repeat(2,1fr)}
+
+.message.error{
+  color:var(--danger);
 }
-@media(max-width:760px){
-  .navlinks{display:none}
-  .hero{padding-top:45px}
-  .app{display:block}
-  .sidebar{display:none}
-  .content{padding:18px 14px 90px}
-  .appHeaderInner{padding:0 14px}
-  .userPill span{display:none}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .cards,.toolGrid{grid-template-columns:1fr}
-  .formGrid{grid-template-columns:1fr}
-  .quickGrid{grid-template-columns:1fr 1fr}
-  .mobileNav{
+
+/* APP */
+
+.app-shell{
+  min-height:100vh;
+}
+
+.app-topbar{
+  position:sticky;
+  top:0;
+  z-index:80;
+  background:color-mix(in srgb,var(--surface) 94%,transparent);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.app-topbar-inner{
+  min-height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:min(1320px,calc(100% - 24px));
+  margin:auto;
+}
+
+.app-layout{
+  width:min(1320px,calc(100% - 24px));
+  margin:20px auto 100px;
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:20px;
+}
+
+.sidebar{
+  position:sticky;
+  top:88px;
+  height:calc(100vh - 108px);
+  overflow:auto;
+  border:1px solid var(--border);
+  background:var(--surface);
+  border-radius:22px;
+  padding:12px;
+}
+
+.side-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  text-align:left;
+  padding:12px;
+  border-radius:12px;
+  font-weight:750;
+  margin-bottom:4px;
+}
+
+.side-btn:hover,
+.side-btn.active{
+  background:var(--surface2);
+  color:var(--primary);
+}
+
+.app-main{
+  min-width:0;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.page-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.page-title p{
+  color:var(--muted);
+  margin:5px 0 0;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px;
+}
+
+.stat-value{
+  font-size:28px;
+  font-weight:900;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:16px;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+}
+
+.list-item{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+}
+
+.list-item-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.meta{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 8px;
+  border-radius:999px;
+  background:var(--surface2);
+  color:var(--muted);
+  font-size:11px;
+  font-weight:800;
+}
+
+.priority-high{
+  color:#fff;
+  background:#dc2626;
+}
+
+.priority-medium{
+  color:#fff;
+  background:#d97706;
+}
+
+.priority-low{
+  color:#fff;
+  background:#159957;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed var(--border);
+  border-radius:16px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.quick{
+  border:1px solid var(--border);
+  background:var(--surface);
+  border-radius:17px;
+  padding:18px;
+  text-align:left;
+}
+
+.quick:hover{
+  border-color:var(--primary);
+}
+
+.quick strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.quick span{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* DOCUMENT */
+
+.upload-zone{
+  border:2px dashed var(--border);
+  border-radius:22px;
+  padding:35px 20px;
+  text-align:center;
+  background:var(--surface);
+}
+
+.upload-zone.drag{
+  border-color:var(--primary);
+  background:var(--surface2);
+}
+
+.file-name{
+  font-weight:800;
+  margin-top:12px;
+}
+
+.analysis{
+  margin-top:18px;
+  display:grid;
+  gap:15px;
+}
+
+.analysis-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.action{
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+  background:var(--surface);
+}
+
+.action strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.action small{
+  color:var(--muted);
+}
+
+.extracted{
+  max-height:420px;
+  overflow:auto;
+  white-space:pre-wrap;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:16px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12px;
+}
+
+/* TOOLS */
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.tool-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+}
+
+.tool-card h3{
+  margin-bottom:12px;
+}
+
+.tool-result{
+  margin-top:10px;
+  padding:11px;
+  background:var(--surface2);
+  border-radius:11px;
+  font-weight:800;
+  min-height:42px;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  display:none;
+  place-items:center;
+  padding:18px;
+  background:rgba(0,0,0,.55);
+}
+
+.modal.show{
+  display:grid;
+}
+
+.modal-card{
+  width:min(720px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:24px;
+  box-shadow:0 25px 80px rgba(0,0,0,.25);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.icon-btn{
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--surface);
+  color:var(--text);
+}
+
+/* MOBILE */
+
+.bottom-nav{
+  display:none;
+}
+
+@media(max-width:950px){
+  .hero-grid,
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .tool-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .app-layout{
+    display:block;
+  }
+
+  .bottom-nav{
     display:grid;
+    position:fixed;
+    left:8px;
+    right:8px;
+    bottom:8px;
+    z-index:100;
     grid-template-columns:repeat(5,1fr);
-    position:fixed;bottom:0;left:0;right:0;
-    z-index:150;
-    background:color-mix(in srgb,var(--surface) 94%,transparent);
+    background:color-mix(in srgb,var(--surface) 95%,transparent);
     backdrop-filter:blur(18px);
-    border-top:1px solid var(--line);
-    padding:7px 5px env(safe-area-inset-bottom);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:6px;
+    box-shadow:0 12px 40px rgba(0,0,0,.15);
   }
-  .mobileNav button{
-    border:0;background:transparent;color:var(--muted);
-    padding:7px 2px;font-size:11px;
+
+  .bottom-btn{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:8px 3px;
+    font-size:10px;
+    font-weight:800;
+    border-radius:12px;
   }
-  .mobileNav button.active{color:var(--primary);font-weight:900}
-  .timer{font-size:48px}
+
+  .bottom-btn.active{
+    color:var(--primary);
+    background:var(--surface2);
+  }
+}
+
+@media(max-width:650px){
+  .container{
+    width:min(100% - 22px,1180px);
+  }
+
+  .navlinks{
+    display:none;
+  }
+
+  .hero{
+    padding-top:45px;
+  }
+
+  h1{
+    letter-spacing:-2px;
+  }
+
+  .cards,
+  .guide-grid,
+  .stats,
+  .quick-grid,
+  .action-grid,
+  .tool-grid{
+    grid-template-columns:1fr;
+  }
+
+  .app-topbar-inner{
+    width:calc(100% - 16px);
+  }
+
+  .app-layout{
+    width:calc(100% - 16px);
+  }
+
+  .page-title{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================================================
+<!-- ============================================================
      PUBLIC WEBSITE
-     ========================================================= -->
+============================================================= -->
 
 <div id="publicSite">
 
 <header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="#" onclick="showPublic('home');return false;">
-      <span class="logo">S</span>
+  <div class="container topbar-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark">S</span>
       <span>Shaheen</span>
     </a>
 
-    <div class="navlinks">
-      <button onclick="showPublic('features')">Features</button>
-      <button onclick="showPublic('tools')">Tools</button>
-      <button onclick="showPublic('guides')">Guides</button>
-      <button onclick="showPublic('about')">About</button>
-    </div>
+    <nav class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#guides">Guides</a>
+      <a href="#security">Security</a>
+    </nav>
 
-    <button class="btn primary" onclick="openAuth()">Get started</button>
+    <button class="btn btn-primary btn-small" onclick="showAuth()">
+      Open Shaheen
+    </button>
   </div>
 </header>
 
-<main id="publicHome">
+<main>
 
 <section class="hero">
-  <div class="container heroGrid">
+  <div class="container hero-grid">
+
     <div>
-      <span class="eyebrow">One simple workspace for everyday digital life</span>
+      <span class="badge">DOCUMENT → UNDERSTANDING → ACTION</span>
 
-      <h1>Less searching.<br>More doing.</h1>
+      <h1>
+        Don't just read information.
+        <span class="gradient-text">Know what to do next.</span>
+      </h1>
 
       <p>
-        Shaheen brings tasks, notes, saved links, checklists, research
-        and practical everyday tools into one clean workspace.
+        Shaheen turns documents, text, links and messy information into
+        clear actions, checklists, tasks and organized work.
       </p>
 
-      <div class="heroActions">
-        <button class="btn primary" onclick="openAuth()">Start using Shaheen</button>
-        <button class="btn secondary" onclick="showPublic('features')">Explore features</button>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="showAuth()">
+          Start free
+        </button>
+
+        <a class="btn" href="#how">
+          See how it works
+        </a>
       </div>
     </div>
 
-    <div class="heroCard">
-      <div class="mockTop">
-        <strong>Today</strong>
-        <span>Shaheen</span>
-      </div>
+    <div class="hero-card">
+      <div class="mock-window">
+        <div class="mock-head">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
 
-      <div class="mockSearch">⌕ Search tasks, notes, links...</div>
+        <div class="mock-body">
+          <div class="mock-row">
+            <strong>📄 University admission letter</strong>
+            <div class="meta">Document analyzed locally</div>
+          </div>
 
-      <div class="mockGrid" style="margin-top:12px">
-        <div class="mockBox">
-          <small>Tasks</small>
-          <strong>07</strong>
-        </div>
-        <div class="mockBox">
-          <small>Notes</small>
-          <strong>18</strong>
-        </div>
-        <div class="mockBox">
-          <small>Saved links</small>
-          <strong>24</strong>
-        </div>
-        <div class="mockBox">
-          <small>Focus</small>
-          <strong>25m</strong>
+          <div class="mock-row">
+            <strong>✓ Important deadline</strong>
+            <div class="meta">Application fee • Required before submission</div>
+          </div>
+
+          <div class="mock-row">
+            <strong>☑ Action checklist</strong>
+            <div class="meta">ID • Transcript • Photo • Payment proof</div>
+          </div>
+
+          <div class="mock-row">
+            <strong>→ Next step</strong>
+            <div class="meta">Complete missing documents and review deadline.</div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
-<section id="publicFeatures">
+<section id="features" class="public-section">
   <div class="container">
-    <div class="sectionTitle">
-      <h2>Everything starts with one simple idea.</h2>
+
+    <div class="section-head">
+      <span class="badge">ONE WORKSPACE</span>
+      <h2>From information to action.</h2>
       <p>
-        Instead of opening many disconnected tools, organize your everyday
-        digital work from one place.
-      </p>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <div class="icon">✓</div>
-        <h3>Tasks</h3>
-        <p>Create, prioritize, complete, edit and organize your work.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">✎</div>
-        <h3>Notes</h3>
-        <p>Keep ideas, study notes, plans and useful information searchable.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">↗</div>
-        <h3>Saved links</h3>
-        <p>Keep useful websites and resources together instead of losing them.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">☑</div>
-        <h3>Checklists</h3>
-        <p>Build reusable routines for study, work, travel and projects.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">⌕</div>
-        <h3>Universal search</h3>
-        <p>Find your saved tasks, notes, links and projects from one search box.</p>
-      </div>
-
-      <div class="card">
-        <div class="icon">⚙</div>
-        <h3>Useful tools</h3>
-        <p>Calculators, converters, text tools, JSON tools and focus utilities.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="publicTools">
-  <div class="container">
-    <div class="sectionTitle">
-      <h2>Practical tools, without unnecessary complexity.</h2>
-      <p>Small jobs should take seconds, not several searches.</p>
-    </div>
-
-    <div class="cards">
-      <div class="card"><h3>Calculator</h3><p>Everyday calculations directly in the workspace.</p></div>
-      <div class="card"><h3>Percentage</h3><p>Percentage increase, decrease and basic percentage calculations.</p></div>
-      <div class="card"><h3>Converter</h3><p>Length, weight, temperature and common units.</p></div>
-      <div class="card"><h3>Text tools</h3><p>Words, characters, case conversion and text cleanup.</p></div>
-      <div class="card"><h3>JSON formatter</h3><p>Validate and format JSON locally in your browser.</p></div>
-      <div class="card"><h3>Focus timer</h3><p>Simple distraction-free focus sessions.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="publicGuides">
-  <div class="container">
-    <div class="sectionTitle">
-      <h2>Useful knowledge, not filler.</h2>
-      <p>
-        The public side of Shaheen is designed around original,
-        practical guides instead of pages created only to display ads.
+        Most tools stop after converting or summarizing something.
+        Shaheen focuses on the next useful step.
       </p>
     </div>
 
     <div class="cards">
-      <div class="card">
-        <h3>How to organize digital information</h3>
-        <p>Use capture, classification, search and review instead of scattered notes.</p>
-        <button class="btn secondary" style="margin-top:15px" onclick="showPublic('guide1')">Read guide</button>
-      </div>
 
-      <div class="card">
-        <h3>How to build a simple daily system</h3>
-        <p>A practical structure for deciding what deserves attention today.</p>
-        <button class="btn secondary" style="margin-top:15px" onclick="showPublic('guide2')">Read guide</button>
-      </div>
+      <article class="card">
+        <div class="card-icon">📄</div>
+        <h3>Document Action Engine</h3>
+        <p>
+          Extract text from supported files, detect dates, requirements,
+          amounts, emails and action-oriented phrases.
+        </p>
+      </article>
 
-      <div class="card">
-        <h3>How to reduce digital clutter</h3>
-        <p>Keep useful information accessible without creating hundreds of folders.</p>
-        <button class="btn secondary" style="margin-top:15px" onclick="showPublic('guide3')">Read guide</button>
-      </div>
+      <article class="card">
+        <div class="card-icon">☑️</div>
+        <h3>Automatic Checklist</h3>
+        <p>
+          Important requirements can become actionable checklist items
+          instead of remaining buried inside a document.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🔎</div>
+        <h3>Search Everything</h3>
+        <p>
+          Search tasks, notes, links, projects and extracted document
+          information from one place.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">☁️</div>
+        <h3>Firebase Account</h3>
+        <p>
+          Sign in with Google or email and synchronize your workspace
+          through Firebase when Firestore is enabled.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Privacy First Processing</h3>
+        <p>
+          Browser-side document processing is used for supported analysis,
+          so the file does not need to be uploaded to Shaheen's own server.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🧰</div>
+        <h3>Everyday Tools</h3>
+        <p>
+          Calculator, converter, JSON formatter, text tools, date tools
+          and focus timer live beside your workspace.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="how" class="public-section">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="badge">SIMPLE WORKFLOW</span>
+      <h2>Three steps.</h2>
+      <p>
+        The product is intentionally designed around a simple mental model.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-icon">1️⃣</div>
+        <h3>Give it information</h3>
+        <p>
+          Upload a supported document or paste text, a URL, or a note.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">2️⃣</div>
+        <h3>Understand it</h3>
+        <p>
+          Shaheen extracts useful information and highlights things that
+          may require attention.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">3️⃣</div>
+        <h3>Act on it</h3>
+        <p>
+          Turn important findings into tasks, notes, checklists and saved
+          projects.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="guides" class="public-section">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="badge">ORIGINAL INFORMATION</span>
+      <h2>Useful guides, not filler.</h2>
+      <p>
+        Public informational content gives the website value beyond the
+        private workspace.
+      </p>
+    </div>
+
+    <div class="guide-grid">
+
+      <article class="guide">
+        <h3>How to review an important document</h3>
+        <p>
+          Check dates, obligations, amounts, missing information,
+          required documents and next actions before submitting anything.
+        </p>
+      </article>
+
+      <article class="guide">
+        <h3>How to organize a document-heavy project</h3>
+        <p>
+          Keep the original document, important notes, action checklist,
+          deadlines and completed tasks connected.
+        </p>
+      </article>
+
+      <article class="guide">
+        <h3>How to avoid missing deadlines</h3>
+        <p>
+          Extract dates early, convert them into explicit tasks and keep
+          the source document available for verification.
+        </p>
+      </article>
+
+      <article class="guide">
+        <h3>Why document automation needs human review</h3>
+        <p>
+          Automated extraction can help with organization, but important
+          legal, financial, medical or academic decisions should still
+          be verified against the original source.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="security" class="public-section">
+  <div class="container">
+    <div class="card">
+
+      <span class="badge">SECURITY & PRIVACY</span>
+
+      <h2>Your files should remain yours.</h2>
+
+      <p>
+        Supported browser-side document processing happens locally in the
+        browser. Shaheen does not pretend that browser-side processing is
+        equivalent to enterprise encryption or professional legal/medical
+        confidentiality.
+      </p>
+
+      <p>
+        Firebase account information is used for authentication and,
+        when Firestore is enabled, workspace synchronization.
+      </p>
+
+      <p>
+        Never upload passwords, private keys, payment credentials or other
+        secrets into documents merely for analysis.
+      </p>
+
     </div>
   </div>
 </section>
 
 </main>
 
-<div id="publicArticle" class="hidden">
-  <section>
-    <div class="container">
-      <article class="article" id="articleContent"></article>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>Shaheen</strong>
+      <div class="meta">Document Action Hub</div>
     </div>
-  </section>
-</div>
 
-<footer class="publicFooter">
-  <div class="container">
-    <strong>Shaheen</strong>
-    <div>One place for useful digital work.</div>
-    <div class="footerLinks">
-      <button onclick="showPublic('about')">About</button>
-      <button onclick="showPublic('privacy')">Privacy</button>
-      <button onclick="showPublic('terms')">Terms</button>
-      <button onclick="showPublic('security')">Security</button>
-      <button onclick="showPublic('contact')">Contact</button>
+    <div class="footer-links">
+      <a href="#" onclick="openPublicModal('about');return false">About</a>
+      <a href="#" onclick="openPublicModal('privacy');return false">Privacy</a>
+      <a href="#" onclick="openPublicModal('terms');return false">Terms</a>
+      <a href="#" onclick="openPublicModal('security');return false">Security</a>
+      <a href="#" onclick="openPublicModal('contact');return false">Contact</a>
     </div>
   </div>
 </footer>
@@ -689,130 +1198,948 @@ section{padding:65px 0}
 </div>
 
 
-<!-- =========================================================
-     APPLICATION
-     ========================================================= -->
+<!-- ============================================================
+     AUTH
+============================================================= -->
 
-<div id="appSite" class="hidden">
+<div id="authScreen" class="auth-screen hidden">
 
-<div class="app">
+  <div class="auth-card">
 
-<aside class="sidebar">
-  <a class="brand" href="#" onclick="go('home');return false;">
-    <span class="logo">S</span>
-    <span>Shaheen</span>
-  </a>
+    <div class="brand" style="margin-bottom:20px">
+      <span class="brand-mark">S</span>
+      <span>Shaheen</span>
+    </div>
 
-  <nav class="sideNav">
-    <button data-view="home" onclick="go('home')">⌂ &nbsp; Today</button>
-    <button data-view="capture" onclick="go('capture')">＋ &nbsp; Quick Add</button>
-    <button data-view="tasks" onclick="go('tasks')">✓ &nbsp; My Tasks</button>
-    <button data-view="notes" onclick="go('notes')">✎ &nbsp; My Notes</button>
-    <button data-view="links" onclick="go('links')">↗ &nbsp; Saved Links</button>
-    <button data-view="checklists" onclick="go('checklists')">☑ &nbsp; Checklists</button>
-    <button data-view="research" onclick="go('research')">⌕ &nbsp; Research</button>
-    <button data-view="tools" onclick="go('tools')">⚙ &nbsp; Tools</button>
-    <button data-view="search" onclick="go('search')">⌕ &nbsp; Search</button>
-    <button data-view="profile" onclick="go('profile')">● &nbsp; Profile</button>
-  </nav>
+    <h1 id="authTitle">Welcome to Shaheen</h1>
 
-  <div class="sideBottom">
-    <button class="btn secondary" style="width:100%" onclick="toggleTheme()">☼ Theme</button>
+    <p id="authSubtitle" style="color:var(--muted)">
+      Sign in to save your workspace.
+    </p>
+
+    <div id="authMessage" class="message hidden"></div>
+
+    <form id="authForm" class="form">
+
+      <div>
+        <div class="label">Email</div>
+        <input id="authEmail"
+               class="input"
+               type="email"
+               autocomplete="email"
+               required>
+      </div>
+
+      <div>
+        <div class="label">Password</div>
+        <input id="authPassword"
+               class="input"
+               type="password"
+               autocomplete="current-password"
+               minlength="6"
+               required>
+      </div>
+
+      <button class="btn btn-primary" type="submit">
+        Continue with email
+      </button>
+
+    </form>
+
+    <div class="actions">
+      <button class="btn" id="toggleAuthMode">
+        Create account
+      </button>
+
+      <button class="btn" id="forgotBtn">
+        Forgot password
+      </button>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <button id="googleBtn"
+            class="btn btn-primary"
+            style="width:100%">
+      Continue with Google
+    </button>
+
+    <div class="actions">
+      <button class="btn" onclick="backToPublic()">
+        Back to website
+      </button>
+    </div>
+
   </div>
-</aside>
+</div>
 
-<main class="appMain">
 
-<header class="appHeader">
-  <div class="appHeaderInner">
-    <div class="globalSearch">
-      <span>⌕</span>
-      <input id="globalSearchInput"
-             placeholder="Search everything..."
-             oninput="globalSearch(this.value)">
+<!-- ============================================================
+     PRIVATE APPLICATION
+============================================================= -->
+
+<div id="appShell" class="app-shell hidden">
+
+<header class="app-topbar">
+  <div class="app-topbar-inner">
+
+    <div class="brand">
+      <span class="brand-mark">S</span>
+      <span>Shaheen</span>
     </div>
 
-    <div class="userPill">
-      <img id="headerAvatar" class="avatar" alt="">
-      <span id="headerName">Local workspace</span>
-      <button class="mini" onclick="openProfileMenu()">⋮</button>
+    <div style="display:flex;align-items:center;gap:8px">
+
+      <button class="icon-btn" onclick="toggleTheme()" title="Theme">
+        ◐
+      </button>
+
+      <button class="btn btn-small" onclick="openProfileMenu()">
+        <span id="userName">Account</span> ⋮
+      </button>
+
     </div>
+
   </div>
 </header>
 
-<div id="view" class="content"></div>
+<div class="app-layout">
+
+<aside class="sidebar">
+
+  <button class="side-btn active" data-page="home">
+    🏠 Today
+  </button>
+
+  <button class="side-btn" data-page="documents">
+    📄 Documents
+  </button>
+
+  <button class="side-btn" data-page="capture">
+    ✚ Quick Capture
+  </button>
+
+  <button class="side-btn" data-page="tasks">
+    ☑ Tasks
+  </button>
+
+  <button class="side-btn" data-page="notes">
+    📝 Notes
+  </button>
+
+  <button class="side-btn" data-page="links">
+    🔗 Saved Links
+  </button>
+
+  <button class="side-btn" data-page="projects">
+    📁 Projects
+  </button>
+
+  <button class="side-btn" data-page="tools">
+    🧰 Tools
+  </button>
+
+  <button class="side-btn" data-page="search">
+    🔎 Search
+  </button>
+
+  <button class="side-btn" data-page="profile">
+    👤 Profile
+  </button>
+
+</aside>
+
+
+<main class="app-main">
+
+<!-- HOME -->
+
+<section id="page-home" class="page active">
+
+  <div class="page-title">
+    <div>
+      <h2>Today</h2>
+      <p id="todayText"></p>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="goPage('capture')">
+      + Add something
+    </button>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div id="statTasks" class="stat-value">0</div>
+      <div class="stat-label">Open tasks</div>
+    </div>
+
+    <div class="stat">
+      <div id="statNotes" class="stat-value">0</div>
+      <div class="stat-label">Notes</div>
+    </div>
+
+    <div class="stat">
+      <div id="statLinks" class="stat-value">0</div>
+      <div class="stat-label">Saved links</div>
+    </div>
+
+    <div class="stat">
+      <div id="statProjects" class="stat-value">0</div>
+      <div class="stat-label">Projects</div>
+    </div>
+
+  </div>
+
+  <div class="dashboard-grid">
+
+    <div class="card">
+      <div class="list-item-head">
+        <div>
+          <h3>What needs attention?</h3>
+          <div class="meta">
+            Your highest-priority unfinished work.
+          </div>
+        </div>
+
+        <button class="btn btn-small"
+                onclick="goPage('tasks')">
+          All tasks
+        </button>
+      </div>
+
+      <div id="attentionList"
+           class="list"
+           style="margin-top:14px">
+      </div>
+    </div>
+
+    <div class="card">
+
+      <h3>Quick actions</h3>
+
+      <div class="quick-grid" style="margin-top:14px">
+
+        <button class="quick" onclick="goPage('documents')">
+          <strong>📄 Analyze</strong>
+          <span>Understand a document</span>
+        </button>
+
+        <button class="quick" onclick="goPage('tasks')">
+          <strong>☑ Task</strong>
+          <span>Create something to do</span>
+        </button>
+
+        <button class="quick" onclick="goPage('notes')">
+          <strong>📝 Note</strong>
+          <span>Save an idea</span>
+        </button>
+
+        <button class="quick" onclick="goPage('links')">
+          <strong>🔗 Link</strong>
+          <span>Save a useful page</span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DOCUMENTS -->
+
+<section id="page-documents" class="page">
+
+  <div class="page-title">
+    <div>
+      <h2>Document Action Engine</h2>
+      <p>
+        Upload supported files and turn information into useful actions.
+      </p>
+    </div>
+  </div>
+
+  <div id="dropZone" class="upload-zone">
+
+    <div style="font-size:42px">📄</div>
+
+    <h3>Drop a file here</h3>
+
+    <p class="meta">
+      PDF, DOCX, XLSX, CSV, TXT, JSON and common images.
+    </p>
+
+    <input id="fileInput"
+           type="file"
+           hidden
+           accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.json,.png,.jpg,.jpeg,.webp">
+
+    <button class="btn btn-primary"
+            onclick="document.getElementById('fileInput').click()">
+      Choose file
+    </button>
+
+    <div id="fileName" class="file-name"></div>
+
+  </div>
+
+  <div id="analysisArea" class="analysis hidden">
+
+    <div class="card">
+
+      <div class="analysis-header">
+
+        <div>
+          <h3 id="analysisTitle">
+            Analysis
+          </h3>
+
+          <div id="analysisMeta" class="meta"></div>
+        </div>
+
+        <button class="btn btn-small"
+                onclick="saveAnalysisAsNote()">
+          Save as note
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Important findings</h3>
+
+      <div id="findings"
+           class="action-grid"
+           style="margin-top:12px">
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Suggested actions</h3>
+
+      <div id="suggestedActions"
+           class="list"
+           style="margin-top:12px">
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Extracted content</h3>
+
+      <div id="extractedText"
+           class="extracted"
+           style="margin-top:12px">
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CAPTURE -->
+
+<section id="page-capture" class="page">
+
+  <div class="page-title">
+    <div>
+      <h2>Quick Capture</h2>
+      <p>
+        Paste something here. Shaheen will help organize it.
+      </p>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="form">
+
+      <div>
+        <div class="label">What do you want to save?</div>
+
+        <textarea id="captureText"
+                  class="textarea"
+                  placeholder="Paste text, a URL, a requirement, an idea, or a task..."></textarea>
+      </div>
+
+      <div>
+        <div class="label">Type</div>
+
+        <select id="captureType"
+                class="select">
+          <option value="auto">Auto detect</option>
+          <option value="task">Task</option>
+          <option value="note">Note</option>
+          <option value="link">Link</option>
+          <option value="research">Research note</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary"
+              onclick="saveCapture()">
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TASKS -->
+
+<section id="page-tasks" class="page">
+
+  <div class="page-title">
+
+    <div>
+      <h2>My Tasks</h2>
+      <p>Keep actions explicit and easy to finish.</p>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="openTaskModal()">
+      + New task
+    </button>
+
+  </div>
+
+  <div id="tasksList" class="list"></div>
+
+</section>
+
+
+<!-- NOTES -->
+
+<section id="page-notes" class="page">
+
+  <div class="page-title">
+
+    <div>
+      <h2>My Notes</h2>
+      <p>Ideas, extracted information and useful context.</p>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="openNoteModal()">
+      + New note
+    </button>
+
+  </div>
+
+  <div id="notesList" class="list"></div>
+
+</section>
+
+
+<!-- LINKS -->
+
+<section id="page-links" class="page">
+
+  <div class="page-title">
+
+    <div>
+      <h2>Saved Links</h2>
+      <p>Keep useful websites in one searchable place.</p>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="openLinkModal()">
+      + Save link
+    </button>
+
+  </div>
+
+  <div id="linksList" class="list"></div>
+
+</section>
+
+
+<!-- PROJECTS -->
+
+<section id="page-projects" class="page">
+
+  <div class="page-title">
+
+    <div>
+      <h2>Projects</h2>
+      <p>Group tasks, notes and links around a goal.</p>
+    </div>
+
+    <button class="btn btn-primary"
+            onclick="openProjectModal()">
+      + New project
+    </button>
+
+  </div>
+
+  <div id="projectsList" class="cards"></div>
+
+</section>
+
+
+<!-- TOOLS -->
+
+<section id="page-tools" class="page">
+
+  <div class="page-title">
+    <div>
+      <h2>Tools</h2>
+      <p>Small tools for everyday work.</p>
+    </div>
+  </div>
+
+  <div class="tool-grid">
+
+    <div class="tool-card">
+      <h3>Calculator</h3>
+
+      <input id="calcInput"
+             class="input"
+             placeholder="Example: 25*4+10">
+
+      <button class="btn btn-primary"
+              style="margin-top:8px"
+              onclick="calculate()">
+        Calculate
+      </button>
+
+      <div id="calcResult"
+           class="tool-result">
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Percentage</h3>
+
+      <input id="percentA"
+             class="input"
+             type="number"
+             placeholder="Value">
+
+      <input id="percentB"
+             class="input"
+             type="number"
+             placeholder="Percent"
+             style="margin-top:8px">
+
+      <button class="btn btn-primary"
+              style="margin-top:8px"
+              onclick="percentage()">
+        Calculate
+      </button>
+
+      <div id="percentResult"
+           class="tool-result">
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Unit Converter</h3>
+
+      <select id="unitType"
+              class="select">
+        <option value="km-mi">Kilometers → Miles</option>
+        <option value="mi-km">Miles → Kilometers</option>
+        <option value="kg-lb">Kilograms → Pounds</option>
+        <option value="lb-kg">Pounds → Kilograms</option>
+        <option value="c-f">Celsius → Fahrenheit</option>
+        <option value="f-c">Fahrenheit → Celsius</option>
+        <option value="m-ft">Meters → Feet</option>
+        <option value="ft-m">Feet → Meters</option>
+      </select>
+
+      <input id="unitValue"
+             class="input"
+             type="number"
+             placeholder="Value"
+             style="margin-top:8px">
+
+      <button class="btn btn-primary"
+              style="margin-top:8px"
+              onclick="convertUnit()">
+        Convert
+      </button>
+
+      <div id="unitResult"
+           class="tool-result">
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Age Calculator</h3>
+
+      <input id="birthDate"
+             class="input"
+             type="date">
+
+      <button class="btn btn-primary"
+              style="margin-top:8px"
+              onclick="calculateAge()">
+        Calculate age
+      </button>
+
+      <div id="ageResult"
+           class="tool-result">
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Text Counter</h3>
+
+      <textarea id="counterText"
+                class="textarea"
+                placeholder="Paste text..."></textarea>
+
+      <div id="counterResult"
+           class="tool-result">
+        0 words • 0 characters
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>JSON Formatter</h3>
+
+      <textarea id="jsonInput"
+                class="textarea"
+                placeholder='{"hello":"world"}'></textarea>
+
+      <button class="btn btn-primary"
+              style="margin-top:8px"
+              onclick="formatJSON()">
+        Format JSON
+      </button>
+
+      <div id="jsonResult"
+           class="extracted"
+           style="margin-top:8px">
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Text Case</h3>
+
+      <textarea id="caseText"
+                class="textarea"
+                placeholder="Enter text..."></textarea>
+
+      <div class="actions">
+        <button class="btn btn-small"
+                onclick="changeCase('upper')">
+          UPPER
+        </button>
+
+        <button class="btn btn-small"
+                onclick="changeCase('lower')">
+          lower
+        </button>
+
+        <button class="btn btn-small"
+                onclick="changeCase('title')">
+          Title
+        </button>
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Focus Timer</h3>
+
+      <div id="timerDisplay"
+           style="font-size:42px;font-weight:900">
+        25:00
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary"
+                onclick="startTimer()">
+          Start
+        </button>
+
+        <button class="btn"
+                onclick="pauseTimer()">
+          Pause
+        </button>
+
+        <button class="btn"
+                onclick="resetTimer()">
+          Reset
+        </button>
+      </div>
+    </div>
+
+
+    <div class="tool-card">
+      <h3>Data Backup</h3>
+
+      <p class="meta">
+        Export your local workspace as JSON or import a previous backup.
+      </p>
+
+      <div class="actions">
+
+        <button class="btn btn-primary"
+                onclick="exportData()">
+          Export
+        </button>
+
+        <button class="btn"
+                onclick="document.getElementById('importFile').click()">
+          Import
+        </button>
+
+      </div>
+
+      <input id="importFile"
+             type="file"
+             accept=".json"
+             hidden>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<section id="page-search" class="page">
+
+  <div class="page-title">
+    <div>
+      <h2>Search Everything</h2>
+      <p>Search across your Shaheen workspace.</p>
+    </div>
+  </div>
+
+  <input id="globalSearch"
+         class="input"
+         placeholder="Search tasks, notes, links, projects..."
+         oninput="renderSearch()">
+
+  <div id="searchResults"
+       class="list"
+       style="margin-top:15px">
+  </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="page-profile" class="page">
+
+  <div class="page-title">
+    <div>
+      <h2>Profile</h2>
+      <p>Your Shaheen account and workspace controls.</p>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div style="display:flex;align-items:center;gap:15px">
+
+      <img id="profilePhoto"
+           src=""
+           alt=""
+           width="64"
+           height="64"
+           style="border-radius:50%;object-fit:cover;background:var(--surface2)">
+
+      <div>
+        <h3 id="profileName">User</h3>
+        <div id="profileEmail"
+             class="meta">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button class="btn"
+              onclick="openPublicModal('about')">
+        About Us
+      </button>
+
+      <button class="btn"
+              onclick="openPublicModal('privacy')">
+        Privacy Policy
+      </button>
+
+      <button class="btn"
+              onclick="openPublicModal('terms')">
+        Terms
+      </button>
+
+      <button class="btn"
+              onclick="openPublicModal('security')">
+        Security
+      </button>
+
+      <button class="btn"
+              onclick="openPublicModal('contact')">
+        Contact Us
+      </button>
+
+      <button class="btn"
+              onclick="toggleTheme()">
+        Change theme
+      </button>
+
+      <button class="btn btn-danger"
+              onclick="signOutUser()">
+        Sign out
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:15px">
+
+    <h3>Workspace status</h3>
+
+    <div class="list" style="margin-top:12px">
+
+      <div class="list-item">
+        <strong>Local workspace</strong>
+        <div class="meta">
+          Available in this browser.
+        </div>
+      </div>
+
+      <div class="list-item">
+        <strong>Cloud sync</strong>
+        <div id="cloudStatus" class="meta">
+          Checking...
+        </div>
+      </div>
+
+      <div class="list-item">
+        <strong>Document processing</strong>
+        <div class="meta">
+          Supported analysis runs in the browser.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
 </main>
 </div>
 
-<nav class="mobileNav">
-  <button data-mobile="home" onclick="go('home')">⌂<br>Today</button>
-  <button data-mobile="capture" onclick="go('capture')">＋<br>Add</button>
-  <button data-mobile="tasks" onclick="go('tasks')">✓<br>Tasks</button>
-  <button data-mobile="tools" onclick="go('tools')">⚙<br>Tools</button>
-  <button data-mobile="profile" onclick="go('profile')">●<br>Profile</button>
+
+<!-- MOBILE NAV -->
+
+<nav class="bottom-nav">
+
+  <button class="bottom-btn active"
+          data-page="home">
+    🏠<br>Today
+  </button>
+
+  <button class="bottom-btn"
+          data-page="documents">
+    📄<br>Docs
+  </button>
+
+  <button class="bottom-btn"
+          data-page="tasks">
+    ☑<br>Tasks
+  </button>
+
+  <button class="bottom-btn"
+          data-page="tools">
+    🧰<br>Tools
+  </button>
+
+  <button class="bottom-btn"
+          data-page="profile">
+    👤<br>Profile
+  </button>
+
 </nav>
 
 </div>
 
 
-<!-- AUTH -->
-<div id="authModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead">
-      <h3>Start with Shaheen</h3>
-      <button class="mini" onclick="closeAuth()">×</button>
+<!-- ============================================================
+     MODAL
+============================================================= -->
+
+<div id="modal" class="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+
+      <h2 id="modalTitle">Window</h2>
+
+      <button class="icon-btn"
+              onclick="closeModal()">
+        ×
+      </button>
+
     </div>
 
-    <p class="sub">
-      Use Google to create or access your Shaheen account.
-      Your private workspace is separate from the public website.
-    </p>
+    <div id="modalBody"></div>
 
-    <button class="btn primary" style="width:100%;margin-top:12px"
-            onclick="googleLogin()">
-      Continue with Google
-    </button>
-
-    <div id="authMessage" class="sub" style="margin-top:12px"></div>
   </div>
+
 </div>
 
 
-<!-- PROFILE MENU -->
-<div id="profileModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead">
-      <h3>Shaheen menu</h3>
-      <button class="mini" onclick="closeProfileMenu()">×</button>
-    </div>
-
-    <div class="list">
-      <button class="quick" onclick="closeProfileMenu();go('profile')">Profile & settings</button>
-      <button class="quick" onclick="closeProfileMenu();showPublic('about')">About Shaheen</button>
-      <button class="quick" onclick="closeProfileMenu();showPublic('privacy')">Privacy Policy</button>
-      <button class="quick" onclick="closeProfileMenu();showPublic('terms')">Terms</button>
-      <button class="quick" onclick="closeProfileMenu();showPublic('security')">Security</button>
-      <button class="quick" onclick="closeProfileMenu();showPublic('contact')">Contact</button>
-      <button class="btn danger" onclick="signOut()">Sign out</button>
-    </div>
-  </div>
-</div>
-
-<div id="toast" class="toast hidden"></div>
-
-
-<!-- =========================================================
-     FIREBASE
-     ========================================================= -->
+<!-- ============================================================
+     FIREBASE + DOCUMENT LIBRARIES
+============================================================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs"
+        type="module"></script>
+
+<!-- DOCX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+
+<!-- XLSX / CSV -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+<!-- OCR -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
 
 <script>
-/*
-  SHAHEEN FIREBASE CONFIG
-*/
+/* ============================================================
+   FIREBASE
+============================================================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnpk_dv138",
   authDomain: "shaheen-nexus.firebaseapp.com",
@@ -823,88 +2150,55 @@ const firebaseConfig = {
   measurementId: "G-VV2CBVV3HQ"
 };
 
-let firebaseReady = false;
-let auth = null;
-let googleProvider = null;
+firebase.initializeApp(firebaseConfig);
 
-try{
-  firebase.initializeApp(firebaseConfig);
-  auth = firebase.auth();
-  auth.useDeviceLanguage();
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-  googleProvider = new firebase.auth.GoogleAuthProvider();
-  googleProvider.setCustomParameters({
-    prompt:"select_account"
-  });
+const googleProvider =
+  new firebase.auth.GoogleAuthProvider();
 
-  firebaseReady = true;
-}catch(error){
-  console.error("Firebase initialization error:",error);
-}
+googleProvider.setCustomParameters({
+  prompt:"select_account"
+});
 
 
-/* =========================================================
-   DATA
-   ========================================================= */
+/* ============================================================
+   STATE
+============================================================= */
 
-const DBKEY = "shaheen_local_v4";
-
-const defaultDB = {
+const EMPTY_DATA = {
   tasks:[],
   notes:[],
   links:[],
-  checklists:[],
-  research:[],
   projects:[],
-  activity:[],
+  captures:[],
   settings:{
     theme:"light"
   }
 };
 
-let db = loadDB();
-let currentView = "home";
+let data = structuredClone(EMPTY_DATA);
 let currentUser = null;
-let timerInterval = null;
+let firestoreUnsubscribe = null;
+let authMode = "login";
+
+let currentAnalysis = null;
+
 let timerSeconds = 25 * 60;
+let timerInterval = null;
 
-function loadDB(){
-  try{
-    const raw = localStorage.getItem(DBKEY);
-    if(!raw) return structuredClone(defaultDB);
 
-    const parsed = JSON.parse(raw);
-
-    return {
-      ...structuredClone(defaultDB),
-      ...parsed,
-      settings:{
-        ...defaultDB.settings,
-        ...(parsed.settings || {})
-      }
-    };
-  }catch{
-    return structuredClone(defaultDB);
-  }
-}
-
-function saveDB(){
-  localStorage.setItem(DBKEY,JSON.stringify(db));
-}
+/* ============================================================
+   BASIC HELPERS
+============================================================= */
 
 function uid(){
-  return Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,9);
+  return Date.now().toString(36) +
+         Math.random().toString(36).slice(2,9);
 }
 
-function today(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-
-function esc(value){
+function escapeHTML(value){
   return String(value ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
@@ -913,1929 +2207,2675 @@ function esc(value){
     .replaceAll("'","&#039;");
 }
 
-function formatDate(value){
-  if(!value)return "";
-  return new Date(value+"T00:00:00").toLocaleDateString(
-    undefined,
-    {year:"numeric",month:"short",day:"numeric"}
+function localDate(){
+  return new Intl.DateTimeFormat(
+    "en-US",
+    {
+      dateStyle:"full"
+    }
+  ).format(new Date());
+}
+
+function todayISO(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+
+function saveLocal(){
+  if(!currentUser) return;
+
+  localStorage.setItem(
+    "shaheen_workspace_" + currentUser.uid,
+    JSON.stringify(data)
   );
 }
 
-function notify(message){
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.classList.remove("hidden");
-
-  clearTimeout(window.__toast);
-  window.__toast = setTimeout(()=>{
-    el.classList.add("hidden");
-  },2200);
-}
-
-function logActivity(type,text){
-  db.activity.unshift({
-    id:uid(),
-    type,
-    text,
-    createdAt:new Date().toISOString()
-  });
-
-  db.activity = db.activity.slice(0,100);
-  saveDB();
-}
-
-
-/* =========================================================
-   PUBLIC PAGES
-   ========================================================= */
-
-const publicArticles = {
-
-about:`
-<h2>About Shaheen</h2>
-<p>Shaheen is designed around a simple problem: useful information becomes difficult to manage when it is scattered across notes, browser tabs, lists and small utility websites.</p>
-<p>The product brings everyday organization into one clear workspace: capture something, turn it into an actionable item when needed, save useful information, search it later, and use practical tools without unnecessary complexity.</p>
-<h3>Our principle</h3>
-<p>Useful first. Clear second. Fast always.</p>
-`,
-
-privacy:`
-<h2>Privacy Policy</h2>
-<p>Shaheen is designed to minimize unnecessary collection of personal information.</p>
-<h3>Local workspace</h3>
-<p>Tasks, notes, links and other workspace items in this single-file version are stored locally in the browser using local storage.</p>
-<h3>Authentication</h3>
-<p>Google authentication is handled through Firebase Authentication. Shaheen does not receive or store a Google password.</p>
-<h3>Control</h3>
-<p>Users can export their local workspace or clear local data from the Profile settings.</p>
-<h3>Third-party services</h3>
-<p>Google and Firebase have their own terms and privacy practices. Users should review the relevant provider policies when using authentication services.</p>
-`,
-
-terms:`
-<h2>Terms of Use</h2>
-<p>Shaheen is provided as a productivity and organization service. Users are responsible for the information they store and the actions they take using external websites or services.</p>
-<h3>Acceptable use</h3>
-<p>Do not use Shaheen to violate laws, third-party rights, service terms, or privacy rights.</p>
-<h3>External links</h3>
-<p>Saved links are user-provided destinations. Shaheen does not guarantee the availability, accuracy or safety of external websites.</p>
-`,
-
-security:`
-<h2>Security</h2>
-<p>Security is treated as a product requirement rather than a marketing claim.</p>
-<h3>Authentication</h3>
-<p>Google identity is handled by Firebase Authentication rather than by storing Google passwords in Shaheen.</p>
-<h3>Local data</h3>
-<p>This single-file workspace stores local data in the browser. Browser storage should not be treated as equivalent to encrypted server-side storage.</p>
-<h3>Future architecture</h3>
-<p>Any server-side synchronization should use authenticated user-scoped access, least-privilege permissions and appropriate Firebase security rules.</p>
-`,
-
-contact:`
-<h2>Contact Shaheen</h2>
-<p>For support, feedback, bug reports or product suggestions, use the official contact address configured by the site owner.</p>
-<p>Before publishing this page, replace the placeholder below with a real support email controlled by the site owner.</p>
-<div class="adSafeNote">Support email: <strong>YOUR-SUPPORT-EMAIL@example.com</strong></div>
-`,
-
-guide1:`
-<h2>How to organize digital information</h2>
-<p>Digital organization works best when capture and retrieval are easy.</p>
-<h3>1. Capture quickly</h3>
-<p>When information matters, save it immediately rather than relying on memory or leaving another browser tab open.</p>
-<h3>2. Give it a useful type</h3>
-<p>A task needs an action. A note needs information. A saved link needs a destination. A checklist needs repeatable steps.</p>
-<h3>3. Search instead of over-filing</h3>
-<p>A strong search system reduces the need to build complicated folder structures.</p>
-<h3>4. Review what matters</h3>
-<p>A daily view should surface unfinished work rather than forcing users to inspect everything.</p>
-`,
-
-guide2:`
-<h2>How to build a simple daily system</h2>
-<p>A useful daily system starts with a small number of priorities.</p>
-<h3>Choose today's work</h3>
-<p>Move only realistic tasks into today's focus. A long list is not automatically a productive list.</p>
-<h3>Separate reference from action</h3>
-<p>Notes and saved links are useful, but they should not look like unfinished tasks.</p>
-<h3>Finish and review</h3>
-<p>Completed work should disappear from the active list while remaining available in history.</p>
-`,
-
-guide3:`
-<h2>How to reduce digital clutter</h2>
-<p>Digital clutter grows when everything is treated as equally important.</p>
-<h3>Keep useful information</h3>
-<p>Delete or archive information that has no future value.</p>
-<h3>Use search</h3>
-<p>A searchable collection can be simpler than maintaining many folders.</p>
-<h3>Keep the home screen focused</h3>
-<p>The first screen should answer one question: what deserves attention right now?</p>
-`
-};
-
-function showPublic(page){
-  document.getElementById("appSite").classList.add("hidden");
-  document.getElementById("publicSite").classList.remove("hidden");
-
-  const home = document.getElementById("publicHome");
-  const article = document.getElementById("publicArticle");
-
-  if(page === "home"){
-    home.classList.remove("hidden");
-    article.classList.add("hidden");
-    window.scrollTo({top:0,behavior:"smooth"});
+function loadLocal(){
+  if(!currentUser){
+    data = structuredClone(EMPTY_DATA);
     return;
   }
 
-  if(page === "features"){
-    home.classList.remove("hidden");
-    article.classList.add("hidden");
-    document.getElementById("publicFeatures").scrollIntoView({behavior:"smooth"});
-    return;
+  const raw =
+    localStorage.getItem(
+      "shaheen_workspace_" + currentUser.uid
+    );
+
+  if(raw){
+    try{
+      data = {
+        ...structuredClone(EMPTY_DATA),
+        ...JSON.parse(raw)
+      };
+    }catch{
+      data = structuredClone(EMPTY_DATA);
+    }
+  }else{
+    data = structuredClone(EMPTY_DATA);
   }
-
-  if(page === "tools"){
-    home.classList.remove("hidden");
-    article.classList.add("hidden");
-    document.getElementById("publicTools").scrollIntoView({behavior:"smooth"});
-    return;
-  }
-
-  if(page === "guides"){
-    home.classList.remove("hidden");
-    article.classList.add("hidden");
-    document.getElementById("publicGuides").scrollIntoView({behavior:"smooth"});
-    return;
-  }
-
-  home.classList.add("hidden");
-  article.classList.remove("hidden");
-  document.getElementById("articleContent").innerHTML =
-    publicArticles[page] || publicArticles.about;
-
-  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+async function saveCloud(){
 
-/* =========================================================
-   AUTH
-   ========================================================= */
+  if(!currentUser) return;
 
-function openAuth(){
-  document.getElementById("authModal").classList.remove("hidden");
-}
-
-function closeAuth(){
-  document.getElementById("authModal").classList.add("hidden");
-}
-
-async function googleLogin(){
-  const message = document.getElementById("authMessage");
-
-  if(!firebaseReady){
-    message.textContent = "Firebase could not initialize. Check the Firebase configuration.";
-    return;
-  }
-
-  message.textContent = "Opening Google sign-in...";
+  saveLocal();
 
   try{
-    /*
-      Popup is used first because it gives an immediate credential.
-      If a browser blocks popups, the user gets a redirect fallback.
-    */
-    const result = await auth.signInWithPopup(googleProvider);
 
-    currentUser = result.user;
-    closeAuth();
-    openApp();
+    await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .set(
+        {
+          workspace:data,
+          updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+        },
+        {
+          merge:true
+        }
+      );
+
+    document.getElementById("cloudStatus").textContent =
+      "Cloud sync is active.";
 
   }catch(error){
 
-    console.error(error);
+    console.warn("Cloud sync unavailable:",error);
 
-    const popupBlocked =
-      error.code === "auth/popup-blocked" ||
-      error.code === "auth/popup-closed-by-user";
+    document.getElementById("cloudStatus").textContent =
+      "Local workspace is active. Enable Firestore rules to sync.";
 
-    if(popupBlocked){
-      try{
-        await auth.signInWithRedirect(googleProvider);
-        return;
-      }catch(redirectError){
-        console.error(redirectError);
-        message.textContent =
-          "Google sign-in could not start. Check Firebase Authorized Domains.";
-        return;
+  }
+}
+
+async function loadCloud(){
+
+  if(!currentUser) return;
+
+  try{
+
+    const ref =
+      db.collection("users").doc(currentUser.uid);
+
+    const snap = await ref.get();
+
+    if(snap.exists){
+
+      const cloud = snap.data().workspace;
+
+      if(cloud){
+
+        data = {
+          ...structuredClone(EMPTY_DATA),
+          ...cloud
+        };
+
+        saveLocal();
+
       }
     }
 
-    message.textContent =
-      error.message || "Google sign-in failed. Check Firebase settings.";
-  }
-}
+    document.getElementById("cloudStatus").textContent =
+      "Cloud sync is active.";
 
-async function signOut(){
-  if(auth){
-    try{ await auth.signOut(); }catch(e){console.error(e);}
+  }catch(error){
+
+    console.warn(error);
+
+    document.getElementById("cloudStatus").textContent =
+      "Local workspace active.";
+
   }
 
-  currentUser = null;
-  document.getElementById("appSite").classList.add("hidden");
-  document.getElementById("publicSite").classList.remove("hidden");
-  showPublic("home");
-  notify("Signed out");
 }
 
 
-/* =========================================================
-   APP OPEN
-   ========================================================= */
+/* ============================================================
+   AUTH UI
+============================================================= */
 
-function openApp(){
+function showAuth(){
   document.getElementById("publicSite").classList.add("hidden");
-  document.getElementById("appSite").classList.remove("hidden");
-
-  updateUserUI();
-  go("home");
+  document.getElementById("authScreen").classList.remove("hidden");
+  document.getElementById("appShell").classList.add("hidden");
 }
 
-function updateUserUI(){
-  const name = document.getElementById("headerName");
-  const avatar = document.getElementById("headerAvatar");
+function backToPublic(){
+  document.getElementById("publicSite").classList.remove("hidden");
+  document.getElementById("authScreen").classList.add("hidden");
+}
 
-  if(currentUser){
-    name.textContent = currentUser.displayName || "Google user";
+function showAuthMessage(message,error=false){
 
-    if(currentUser.photoURL){
-      avatar.src = currentUser.photoURL;
+  const el =
+    document.getElementById("authMessage");
+
+  el.textContent = message;
+
+  el.classList.remove("hidden");
+  el.classList.toggle("error",error);
+}
+
+function clearAuthMessage(){
+  document
+    .getElementById("authMessage")
+    .classList.add("hidden");
+}
+
+document
+  .getElementById("toggleAuthMode")
+  .addEventListener("click",()=>{
+
+    authMode =
+      authMode === "login"
+        ? "register"
+        : "login";
+
+    document.getElementById("authTitle").textContent =
+      authMode === "login"
+        ? "Welcome to Shaheen"
+        : "Create your Shaheen account";
+
+    document.getElementById("authSubtitle").textContent =
+      authMode === "login"
+        ? "Sign in to save your workspace."
+        : "Create an account and keep your workspace separate.";
+
+    document.getElementById("toggleAuthMode").textContent =
+      authMode === "login"
+        ? "Create account"
+        : "I already have an account";
+
+    clearAuthMessage();
+
+  });
+
+
+document
+  .getElementById("authForm")
+  .addEventListener("submit",async e=>{
+
+    e.preventDefault();
+
+    clearAuthMessage();
+
+    const email =
+      document.getElementById("authEmail").value.trim();
+
+    const password =
+      document.getElementById("authPassword").value;
+
+    try{
+
+      if(authMode === "login"){
+
+        await auth.signInWithEmailAndPassword(
+          email,
+          password
+        );
+
+      }else{
+
+        await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+
+      }
+
+    }catch(error){
+
+      showAuthMessage(
+        friendlyAuthError(error),
+        true
+      );
+
     }
-  }else{
-    name.textContent = "Local workspace";
-    avatar.removeAttribute("src");
-  }
-}
 
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function go(view){
-  currentView = view;
-
-  document.querySelectorAll("[data-view]").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.view===view);
   });
 
-  document.querySelectorAll("[data-mobile]").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.mobile===view);
+
+document
+  .getElementById("googleBtn")
+  .addEventListener("click",async()=>{
+
+    clearAuthMessage();
+
+    try{
+
+      await auth.signInWithPopup(
+        googleProvider
+      );
+
+    }catch(error){
+
+      if(
+        error.code === "auth/popup-blocked" ||
+        error.code === "auth/popup-closed-by-user"
+      ){
+
+        try{
+
+          await auth.signInWithRedirect(
+            googleProvider
+          );
+
+        }catch(e){
+
+          showAuthMessage(
+            friendlyAuthError(e),
+            true
+          );
+
+        }
+
+      }else{
+
+        showAuthMessage(
+          friendlyAuthError(error),
+          true
+        );
+
+      }
+
+    }
+
   });
 
-  renderView(view);
-  window.scrollTo({top:0,behavior:"smooth"});
-}
 
-function renderView(view){
-  const root = document.getElementById("view");
+document
+  .getElementById("forgotBtn")
+  .addEventListener("click",async()=>{
 
-  const pages = {
-    home:renderHome,
-    capture:renderCapture,
-    tasks:renderTasks,
-    notes:renderNotes,
-    links:renderLinks,
-    checklists:renderChecklists,
-    research:renderResearch,
-    tools:renderTools,
-    search:renderSearch,
-    profile:renderProfile
+    const email =
+      document.getElementById("authEmail").value.trim();
+
+    if(!email){
+      showAuthMessage(
+        "Enter your email address first.",
+        true
+      );
+      return;
+    }
+
+    try{
+
+      await auth.sendPasswordResetEmail(email);
+
+      showAuthMessage(
+        "Password reset email sent."
+      );
+
+    }catch(error){
+
+      showAuthMessage(
+        friendlyAuthError(error),
+        true
+      );
+
+    }
+
+  });
+
+
+function friendlyAuthError(error){
+
+  const code = error?.code || "";
+
+  const map = {
+
+    "auth/invalid-email":
+      "Please enter a valid email address.",
+
+    "auth/user-not-found":
+      "No account was found for this email.",
+
+    "auth/wrong-password":
+      "The password is incorrect.",
+
+    "auth/email-already-in-use":
+      "This email already has an account.",
+
+    "auth/weak-password":
+      "Use a stronger password.",
+
+    "auth/popup-blocked":
+      "The browser blocked the Google sign-in popup.",
+
+    "auth/popup-closed-by-user":
+      "Google sign-in was closed before completion.",
+
+    "auth/unauthorized-domain":
+      "This website domain is not authorized in Firebase Authentication."
+
   };
 
-  root.innerHTML = pages[view] ? pages[view]() : renderHome();
-  afterRender(view);
+  return map[code] ||
+    error?.message ||
+    "Authentication could not be completed.";
+
 }
 
 
-/* =========================================================
-   HOME
-   ========================================================= */
+/* ============================================================
+   AUTH STATE
+============================================================= */
 
-function renderHome(){
+auth.onAuthStateChanged(async user=>{
 
-  const activeTasks = db.tasks.filter(t=>!t.done);
-  const dueToday = activeTasks.filter(t=>t.due===today());
-  const completed = db.tasks.filter(t=>t.done).length;
+  currentUser = user;
+
+  if(!user){
+
+    document
+      .getElementById("appShell")
+      .classList.add("hidden");
+
+    document
+      .getElementById("authScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("publicSite")
+      .classList.remove("hidden");
+
+    return;
+
+  }
+
+  document
+    .getElementById("publicSite")
+    .classList.add("hidden");
+
+  document
+    .getElementById("authScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("appShell")
+    .classList.remove("hidden");
+
+  loadLocal();
+
+  await loadCloud();
+
+  updateProfile();
+
+  renderAll();
+
+});
+
+
+async function signOutUser(){
+
+  try{
+
+    if(firestoreUnsubscribe){
+      firestoreUnsubscribe();
+      firestoreUnsubscribe = null;
+    }
+
+    await auth.signOut();
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* ============================================================
+   PROFILE
+============================================================= */
+
+function updateProfile(){
+
+  if(!currentUser) return;
+
+  const name =
+    currentUser.displayName ||
+    currentUser.email?.split("@")[0] ||
+    "User";
+
+  document.getElementById("userName").textContent =
+    name;
+
+  document.getElementById("profileName").textContent =
+    name;
+
+  document.getElementById("profileEmail").textContent =
+    currentUser.email || "";
+
+  const photo =
+    document.getElementById("profilePhoto");
+
+  if(currentUser.photoURL){
+
+    photo.src = currentUser.photoURL;
+
+  }else{
+
+    photo.src =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg"
+        width="100" height="100">
+        <rect width="100" height="100" rx="50"
+        fill="#dbe7f5"/>
+        <text x="50" y="61"
+        text-anchor="middle"
+        font-size="40"
+        fill="#0757d9">S</text>
+        </svg>`
+      );
+
+  }
+
+}
+
+
+/* ============================================================
+   NAVIGATION
+============================================================= */
+
+function goPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(el=>el.classList.remove("active"));
+
+  const target =
+    document.getElementById("page-" + page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll("[data-page]")
+    .forEach(btn=>{
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+    });
+
+  if(page === "search"){
+    renderSearch();
+  }
+
+  if(page === "tasks"){
+    renderTasks();
+  }
+
+  if(page === "notes"){
+    renderNotes();
+  }
+
+  if(page === "links"){
+    renderLinks();
+  }
+
+  if(page === "projects"){
+    renderProjects();
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+document
+  .querySelectorAll("[data-page]")
+  .forEach(btn=>{
+    btn.addEventListener(
+      "click",
+      ()=>goPage(btn.dataset.page)
+    );
+  });
+
+
+/* ============================================================
+   RENDER DASHBOARD
+============================================================= */
+
+function renderAll(){
+
+  document.getElementById("todayText").textContent =
+    localDate();
+
+  document.getElementById("statTasks").textContent =
+    data.tasks.filter(x=>!x.done).length;
+
+  document.getElementById("statNotes").textContent =
+    data.notes.length;
+
+  document.getElementById("statLinks").textContent =
+    data.links.length;
+
+  document.getElementById("statProjects").textContent =
+    data.projects.length;
+
+  renderAttention();
+  renderTasks();
+  renderNotes();
+  renderLinks();
+  renderProjects();
+  renderSearch();
+
+}
+
+
+function renderAttention(){
+
+  const el =
+    document.getElementById("attentionList");
+
+  const tasks =
+    data.tasks
+      .filter(t=>!t.done)
+      .sort((a,b)=>{
+
+        const rank = {
+          high:0,
+          medium:1,
+          low:2
+        };
+
+        return (rank[a.priority] ?? 1) -
+               (rank[b.priority] ?? 1);
+
+      })
+      .slice(0,5);
+
+  if(!tasks.length){
+
+    el.innerHTML =
+      `<div class="empty">
+        Nothing urgent right now.
+        Add a task when something needs your attention.
+      </div>`;
+
+    return;
+
+  }
+
+  el.innerHTML =
+    tasks.map(taskHTML).join("");
+
+}
+
+
+/* ============================================================
+   TASKS
+============================================================= */
+
+function taskHTML(task){
 
   return `
-  <div class="viewTitle">
-    <div>
-      <h2>Today</h2>
-      <div class="sub">${new Date().toLocaleDateString(undefined,{
-        weekday:"long",year:"numeric",month:"long",day:"numeric"
-      })}</div>
-    </div>
-    <button class="btn primary" onclick="go('capture')">＋ Quick Add</button>
-  </div>
+    <div class="list-item">
 
-  <div class="stats">
-    <div class="stat">
-      <small>Open tasks</small>
-      <strong>${activeTasks.length}</strong>
-    </div>
-    <div class="stat">
-      <small>Due today</small>
-      <strong>${dueToday.length}</strong>
-    </div>
-    <div class="stat">
-      <small>Notes</small>
-      <strong>${db.notes.length}</strong>
-    </div>
-    <div class="stat">
-      <small>Completed</small>
-      <strong>${completed}</strong>
-    </div>
-  </div>
+      <div class="list-item-head">
 
-  <div class="dashboardGrid">
+        <div>
 
-    <section class="panel">
-      <div class="panelHeader">
-        <h3>What needs your attention?</h3>
-        <button class="mini" onclick="go('tasks')">View all</button>
-      </div>
+          <strong>${escapeHTML(task.title)}</strong>
 
-      ${
-        dueToday.length
-        ? `<div class="list">${dueToday.slice(0,7).map(taskHTML).join("")}</div>`
-        : `
-          <div class="empty">
-            <strong>No task due today.</strong><br>
-            Add something important when you need to.
+          <div class="meta">
+            ${task.due
+              ? "Due " + escapeHTML(task.due)
+              : "No due date"}
           </div>
-        `
-      }
-    </section>
 
-    <section class="panel">
-      <div class="panelHeader">
-        <h3>Quick actions</h3>
-      </div>
+        </div>
 
-      <div class="quickGrid">
-        <button class="quick" onclick="openQuickTask()">✓ Add task</button>
-        <button class="quick" onclick="openQuickNote()">✎ Add note</button>
-        <button class="quick" onclick="openQuickLink()">↗ Save link</button>
-        <button class="quick" onclick="go('tools')">⚙ Open tools</button>
-        <button class="quick" onclick="go('checklists')">☑ Checklist</button>
-        <button class="quick" onclick="startTimer()">▶ Focus</button>
-      </div>
-    </section>
+        <span class="chip ${
+          task.priority === "high"
+            ? "priority-high"
+            : task.priority === "medium"
+              ? "priority-medium"
+              : "priority-low"
+        }">
+          ${escapeHTML(task.priority)}
+        </span>
 
-    <section class="panel">
-      <div class="panelHeader">
-        <h3>Recent notes</h3>
-        <button class="mini" onclick="go('notes')">All notes</button>
       </div>
 
       ${
-        db.notes.length
-        ? `<div class="list">${db.notes.slice(0,5).map(noteHTML).join("")}</div>`
-        : `<div class="empty">Your useful ideas can live here.</div>`
+        task.description
+          ? `<p class="meta">
+               ${escapeHTML(task.description)}
+             </p>`
+          : ""
       }
-    </section>
 
-    <section class="panel">
-      <div class="panelHeader">
-        <h3>Saved links</h3>
-        <button class="mini" onclick="go('links')">All links</button>
+      <div class="actions">
+
+        <button class="btn btn-small"
+                onclick="toggleTask('${task.id}')">
+          ${task.done ? "Undo" : "Complete"}
+        </button>
+
+        <button class="btn btn-small"
+                onclick="editTask('${task.id}')">
+          Edit
+        </button>
+
+        <button class="btn btn-small"
+                onclick="deleteTask('${task.id}')">
+          Delete
+        </button>
+
       </div>
 
-      ${
-        db.links.length
-        ? `<div class="list">${db.links.slice(0,5).map(linkHTML).join("")}</div>`
-        : `<div class="empty">Save a useful website when you find one.</div>`
-      }
-    </section>
-
-  </div>
+    </div>
   `;
+
 }
 
-
-/* =========================================================
-   TASKS
-   ========================================================= */
 
 function renderTasks(){
 
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>My Tasks</h2>
-      <div class="sub">Actions that need to happen.</div>
-    </div>
-    <button class="btn primary" onclick="openQuickTask()">＋ Add task</button>
-  </div>
+  const el =
+    document.getElementById("tasksList");
 
-  <div class="toolbar">
-    <button class="tab active" onclick="filterTasks('all',this)">All</button>
-    <button class="tab" onclick="filterTasks('open',this)">Open</button>
-    <button class="tab" onclick="filterTasks('today',this)">Today</button>
-    <button class="tab" onclick="filterTasks('done',this)">Completed</button>
-  </div>
+  if(!data.tasks.length){
 
-  <div id="taskList" class="list">
-    ${
-      db.tasks.length
-      ? db.tasks.map(taskHTML).join("")
-      : `<div class="empty">No tasks yet. Add your first task.</div>`
-    }
-  </div>
-  `;
+    el.innerHTML =
+      `<div class="empty">
+        No tasks yet.
+      </div>`;
+
+    return;
+
+  }
+
+  const sorted =
+    [...data.tasks].sort((a,b)=>
+      Number(a.done) - Number(b.done)
+    );
+
+  el.innerHTML =
+    sorted.map(taskHTML).join("");
+
 }
 
-function taskHTML(t){
 
-  return `
-  <div class="item" data-task="${esc(t.id)}">
-    <input class="check"
-           type="checkbox"
-           ${t.done?"checked":""}
-           onchange="toggleTask('${t.id}')">
+function openTaskModal(existing=null){
 
-    <div class="itemMain">
-      <div class="itemTitle" style="${t.done?'text-decoration:line-through;opacity:.55':''}">
-        ${esc(t.title)}
+  openModal(
+    existing ? "Edit task" : "New task",
+    `
+    <form id="taskForm" class="form">
+
+      <div>
+        <div class="label">Title</div>
+        <input id="taskTitle"
+               class="input"
+               required
+               value="${escapeHTML(existing?.title || "")}">
       </div>
 
-      <div class="itemMeta">
-        ${t.priority ? "Priority: "+esc(t.priority)+" · " : ""}
-        ${t.due ? "Due: "+formatDate(t.due) : "No due date"}
+      <div>
+        <div class="label">Description</div>
+        <textarea id="taskDescription"
+                  class="textarea">${escapeHTML(existing?.description || "")}</textarea>
       </div>
-    </div>
 
-    <div class="itemActions">
-      <button class="mini" onclick="editTask('${t.id}')">Edit</button>
-      <button class="mini" onclick="deleteTask('${t.id}')">×</button>
-    </div>
-  </div>
-  `;
+      <div>
+        <div class="label">Priority</div>
+
+        <select id="taskPriority"
+                class="select">
+
+          <option value="high"
+            ${existing?.priority==="high"?"selected":""}>
+            High
+          </option>
+
+          <option value="medium"
+            ${existing?.priority==="medium"?"selected":""}>
+            Medium
+          </option>
+
+          <option value="low"
+            ${existing?.priority==="low"?"selected":""}>
+            Low
+          </option>
+
+        </select>
+      </div>
+
+      <div>
+        <div class="label">Due date</div>
+
+        <input id="taskDue"
+               class="input"
+               type="date"
+               value="${escapeHTML(existing?.due || "")}">
+      </div>
+
+      <button class="btn btn-primary">
+        Save task
+      </button>
+
+    </form>
+    `
+  );
+
+  document
+    .getElementById("taskForm")
+    .onsubmit = e=>{
+
+      e.preventDefault();
+
+      const item = {
+        id:existing?.id || uid(),
+        title:document.getElementById("taskTitle").value.trim(),
+        description:document.getElementById("taskDescription").value.trim(),
+        priority:document.getElementById("taskPriority").value,
+        due:document.getElementById("taskDue").value,
+        done:existing?.done || false,
+        createdAt:existing?.createdAt || Date.now()
+      };
+
+      if(existing){
+
+        data.tasks =
+          data.tasks.map(t=>
+            t.id === existing.id ? item : t
+          );
+
+      }else{
+
+        data.tasks.unshift(item);
+
+      }
+
+      persist();
+      closeModal();
+
+    };
+
 }
 
-function filterTasks(mode,button){
-
-  document.querySelectorAll(".tabs .tab").forEach(x=>x.classList.remove("active"));
-  button.classList.add("active");
-
-  let items = db.tasks;
-
-  if(mode==="open") items=items.filter(t=>!t.done);
-  if(mode==="today") items=items.filter(t=>t.due===today()&&!t.done);
-  if(mode==="done") items=items.filter(t=>t.done);
-
-  document.getElementById("taskList").innerHTML =
-    items.length
-    ? items.map(taskHTML).join("")
-    : `<div class="empty">Nothing here.</div>`;
-}
-
-function addTask(title,due="",priority="Normal"){
-
-  if(!title.trim())return;
-
-  db.tasks.unshift({
-    id:uid(),
-    title:title.trim(),
-    due,
-    priority,
-    done:false,
-    createdAt:new Date().toISOString()
-  });
-
-  saveDB();
-  logActivity("task","Created task: "+title.trim());
-  notify("Task added");
-  go("tasks");
-}
 
 function toggleTask(id){
 
-  const task=db.tasks.find(t=>t.id===id);
-  if(!task)return;
+  data.tasks =
+    data.tasks.map(t=>
+      t.id === id
+        ? {...t,done:!t.done}
+        : t
+    );
 
-  task.done=!task.done;
-  task.completedAt=task.done?new Date().toISOString():null;
+  persist();
 
-  saveDB();
-  renderView(currentView);
 }
 
-function deleteTask(id){
-
-  db.tasks=db.tasks.filter(t=>t.id!==id);
-  saveDB();
-  notify("Task deleted");
-  renderView(currentView);
-}
 
 function editTask(id){
 
-  const task=db.tasks.find(t=>t.id===id);
-  if(!task)return;
+  const task =
+    data.tasks.find(x=>x.id===id);
 
-  openModal(`
-    <div class="modalHead">
-      <h3>Edit task</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
+  if(task){
+    openTaskModal(task);
+  }
 
-    <div class="formGrid">
-      <div class="formFull">
-        <input id="editTaskTitle" class="input" value="${esc(task.title)}">
-      </div>
-
-      <input id="editTaskDue" class="input" type="date" value="${esc(task.due||"")}">
-
-      <select id="editTaskPriority" class="select">
-        ${["Low","Normal","High"].map(p=>
-          `<option ${task.priority===p?"selected":""}>${p}</option>`
-        ).join("")}
-      </select>
-    </div>
-
-    <button class="btn primary" style="margin-top:14px"
-      onclick="saveTaskEdit('${id}')">Save changes</button>
-  `);
-}
-
-function saveTaskEdit(id){
-
-  const task=db.tasks.find(t=>t.id===id);
-  if(!task)return;
-
-  task.title=document.getElementById("editTaskTitle").value.trim();
-  task.due=document.getElementById("editTaskDue").value;
-  task.priority=document.getElementById("editTaskPriority").value;
-
-  saveDB();
-  closeGenericModal();
-  renderView("tasks");
 }
 
 
-/* =========================================================
+function deleteTask(id){
+
+  if(!confirm("Delete this task?")) return;
+
+  data.tasks =
+    data.tasks.filter(t=>t.id!==id);
+
+  persist();
+
+}
+
+
+/* ============================================================
    NOTES
-   ========================================================= */
+============================================================= */
 
 function renderNotes(){
 
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>My Notes</h2>
-      <div class="sub">Ideas, information and reference material.</div>
-    </div>
-    <button class="btn primary" onclick="openQuickNote()">＋ New note</button>
-  </div>
+  const el =
+    document.getElementById("notesList");
 
-  <div class="list">
-    ${
-      db.notes.length
-      ? db.notes.map(noteHTML).join("")
-      : `<div class="empty">No notes yet.</div>`
-    }
-  </div>
-  `;
+  if(!data.notes.length){
+
+    el.innerHTML =
+      `<div class="empty">
+        No notes yet.
+      </div>`;
+
+    return;
+
+  }
+
+  el.innerHTML =
+    data.notes.map(note=>`
+
+      <div class="list-item">
+
+        <div class="list-item-head">
+
+          <strong>
+            ${escapeHTML(note.title)}
+          </strong>
+
+          <span class="meta">
+            ${new Date(note.createdAt).toLocaleDateString()}
+          </span>
+
+        </div>
+
+        <p style="white-space:pre-wrap">
+          ${escapeHTML(note.body)}
+        </p>
+
+        <div class="actions">
+
+          <button class="btn btn-small"
+                  onclick="editNote('${note.id}')">
+            Edit
+          </button>
+
+          <button class="btn btn-small"
+                  onclick="deleteNote('${note.id}')">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
 }
 
-function noteHTML(n){
 
-  return `
-  <div class="item">
-    <div class="icon">✎</div>
-    <div class="itemMain">
-      <div class="itemTitle">${esc(n.title)}</div>
-      <div class="itemMeta">${esc(n.body).slice(0,180)}</div>
-      <div class="itemMeta">${new Date(n.createdAt).toLocaleString()}</div>
-    </div>
-    <div class="itemActions">
-      <button class="mini" onclick="editNote('${n.id}')">Edit</button>
-      <button class="mini" onclick="deleteNote('${n.id}')">×</button>
-    </div>
-  </div>
-  `;
+function openNoteModal(existing=null){
+
+  openModal(
+    existing ? "Edit note" : "New note",
+    `
+    <form id="noteForm" class="form">
+
+      <div>
+        <div class="label">Title</div>
+
+        <input id="noteTitle"
+               class="input"
+               required
+               value="${escapeHTML(existing?.title || "")}">
+      </div>
+
+      <div>
+        <div class="label">Note</div>
+
+        <textarea id="noteBody"
+                  class="textarea"
+                  style="min-height:220px"
+                  required>${escapeHTML(existing?.body || "")}</textarea>
+      </div>
+
+      <button class="btn btn-primary">
+        Save note
+      </button>
+
+    </form>
+    `
+  );
+
+  document
+    .getElementById("noteForm")
+    .onsubmit = e=>{
+
+      e.preventDefault();
+
+      const item = {
+        id:existing?.id || uid(),
+        title:document.getElementById("noteTitle").value.trim(),
+        body:document.getElementById("noteBody").value.trim(),
+        createdAt:existing?.createdAt || Date.now()
+      };
+
+      if(existing){
+
+        data.notes =
+          data.notes.map(n=>
+            n.id===existing.id ? item : n
+          );
+
+      }else{
+
+        data.notes.unshift(item);
+
+      }
+
+      persist();
+      closeModal();
+
+    };
+
 }
 
-function addNote(title,body){
-
-  if(!title.trim() && !body.trim())return;
-
-  db.notes.unshift({
-    id:uid(),
-    title:title.trim() || "Untitled note",
-    body:body.trim(),
-    createdAt:new Date().toISOString(),
-    updatedAt:new Date().toISOString()
-  });
-
-  saveDB();
-  logActivity("note","Created note");
-  notify("Note saved");
-  go("notes");
-}
-
-function deleteNote(id){
-
-  db.notes=db.notes.filter(n=>n.id!==id);
-  saveDB();
-  notify("Note deleted");
-  renderView("notes");
-}
 
 function editNote(id){
 
-  const note=db.notes.find(n=>n.id===id);
-  if(!note)return;
+  const note =
+    data.notes.find(x=>x.id===id);
 
-  openModal(`
-    <div class="modalHead">
-      <h3>Edit note</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
+  if(note) openNoteModal(note);
 
-    <input id="noteTitle" class="input" value="${esc(note.title)}">
-
-    <textarea id="noteBody" class="textarea" style="margin-top:10px">${esc(note.body)}</textarea>
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="saveNoteEdit('${id}')">Save</button>
-  `);
-}
-
-function saveNoteEdit(id){
-
-  const note=db.notes.find(n=>n.id===id);
-  if(!note)return;
-
-  note.title=document.getElementById("noteTitle").value.trim();
-  note.body=document.getElementById("noteBody").value;
-  note.updatedAt=new Date().toISOString();
-
-  saveDB();
-  closeGenericModal();
-  renderView("notes");
 }
 
 
-/* =========================================================
+function deleteNote(id){
+
+  if(!confirm("Delete this note?")) return;
+
+  data.notes =
+    data.notes.filter(n=>n.id!==id);
+
+  persist();
+
+}
+
+
+/* ============================================================
    LINKS
-   ========================================================= */
+============================================================= */
 
 function renderLinks(){
 
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Saved Links</h2>
-      <div class="sub">Keep useful websites in one searchable place.</div>
-    </div>
-    <button class="btn primary" onclick="openQuickLink()">＋ Save link</button>
-  </div>
+  const el =
+    document.getElementById("linksList");
 
-  <div class="list">
-    ${
-      db.links.length
-      ? db.links.map(linkHTML).join("")
-      : `<div class="empty">No saved links yet.</div>`
-    }
-  </div>
-  `;
-}
+  if(!data.links.length){
 
-function linkHTML(l){
+    el.innerHTML =
+      `<div class="empty">
+        No saved links yet.
+      </div>`;
 
-  return `
-  <div class="item">
-    <div class="icon">↗</div>
-    <div class="itemMain">
-      <div class="itemTitle">${esc(l.title)}</div>
-      <div class="itemMeta">${esc(l.url)}</div>
-    </div>
+    return;
 
-    <div class="itemActions">
-      <a class="mini" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">Open</a>
-      <button class="mini" onclick="deleteLink('${l.id}')">×</button>
-    </div>
-  </div>
-  `;
-}
-
-function addLink(title,url){
-
-  url=url.trim();
-
-  if(!url)return;
-
-  if(!/^https?:\/\//i.test(url)){
-    url="https://"+url;
   }
 
-  let finalTitle=title.trim();
+  el.innerHTML =
+    data.links.map(link=>`
 
-  if(!finalTitle){
-    try{
-      finalTitle=new URL(url).hostname;
-    }catch{
-      finalTitle="Saved link";
-    }
-  }
+      <div class="list-item">
 
-  db.links.unshift({
-    id:uid(),
-    title:finalTitle,
-    url,
-    createdAt:new Date().toISOString()
-  });
+        <div class="list-item-head">
 
-  saveDB();
-  logActivity("link","Saved link");
-  notify("Link saved");
-  go("links");
+          <div>
+
+            <a href="${escapeHTML(link.url)}"
+               target="_blank"
+               rel="noopener noreferrer"
+               style="font-weight:850;color:var(--primary)">
+              ${escapeHTML(link.title || link.url)}
+            </a>
+
+            <div class="meta">
+              ${escapeHTML(link.url)}
+            </div>
+
+          </div>
+
+          <button class="btn btn-small"
+                  onclick="deleteLink('${link.id}')">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
 }
+
+
+function openLinkModal(){
+
+  openModal(
+    "Save link",
+    `
+    <form id="linkForm" class="form">
+
+      <div>
+        <div class="label">URL</div>
+
+        <input id="linkUrl"
+               class="input"
+               type="url"
+               placeholder="https://example.com"
+               required>
+      </div>
+
+      <div>
+        <div class="label">Title</div>
+
+        <input id="linkTitle"
+               class="input"
+               placeholder="Optional title">
+      </div>
+
+      <button class="btn btn-primary">
+        Save link
+      </button>
+
+    </form>
+    `
+  );
+
+  document
+    .getElementById("linkForm")
+    .onsubmit = e=>{
+
+      e.preventDefault();
+
+      let url =
+        document.getElementById("linkUrl").value.trim();
+
+      if(!/^https?:\/\//i.test(url)){
+        url = "https://" + url;
+      }
+
+      data.links.unshift({
+        id:uid(),
+        url,
+        title:
+          document.getElementById("linkTitle").value.trim()
+          || url,
+        createdAt:Date.now()
+      });
+
+      persist();
+      closeModal();
+
+    };
+
+}
+
 
 function deleteLink(id){
 
-  db.links=db.links.filter(l=>l.id!==id);
-  saveDB();
-  notify("Link removed");
-  renderView("links");
+  if(!confirm("Delete this link?")) return;
+
+  data.links =
+    data.links.filter(x=>x.id!==id);
+
+  persist();
+
 }
 
 
-/* =========================================================
-   CHECKLISTS
-   ========================================================= */
+/* ============================================================
+   PROJECTS
+============================================================= */
 
-function renderChecklists(){
+function renderProjects(){
 
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Checklists</h2>
-      <div class="sub">Reusable step-by-step lists.</div>
-    </div>
-    <button class="btn primary" onclick="openChecklist()">＋ New checklist</button>
-  </div>
+  const el =
+    document.getElementById("projectsList");
 
-  <div class="cards">
-    ${
-      db.checklists.length
-      ? db.checklists.map(checklistCard).join("")
-      : `<div class="empty" style="grid-column:1/-1">
-           Create your first reusable checklist.
-         </div>`
-    }
-  </div>
-  `;
-}
+  if(!data.projects.length){
 
-function checklistCard(c){
+    el.innerHTML =
+      `<div class="empty" style="grid-column:1/-1">
+        No projects yet.
+      </div>`;
 
-  const done=c.items.filter(x=>x.done).length;
+    return;
 
-  return `
-  <div class="card">
-    <h3>${esc(c.title)}</h3>
-    <p>${done}/${c.items.length} completed</p>
+  }
 
-    <div style="margin-top:15px" class="list">
-      ${
-        c.items.map((x,i)=>`
-          <label style="display:flex;gap:9px;align-items:center">
-            <input class="check" type="checkbox"
-              ${x.done?"checked":""}
-              onchange="toggleChecklistItem('${c.id}',${i})">
-            <span style="${x.done?'text-decoration:line-through;opacity:.55':''}">
-              ${esc(x.text)}
-            </span>
-          </label>
-        `).join("")
-      }
-    </div>
+  el.innerHTML =
+    data.projects.map(project=>`
 
-    <div style="display:flex;gap:8px;margin-top:15px">
-      <button class="mini" onclick="addChecklistItem('${c.id}')">＋ Item</button>
-      <button class="mini" onclick="deleteChecklist('${c.id}')">Delete</button>
-    </div>
-  </div>
-  `;
-}
+      <article class="card">
 
-function openChecklist(){
+        <h3>${escapeHTML(project.name)}</h3>
 
-  openModal(`
-    <div class="modalHead">
-      <h3>Create checklist</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
+        <p>
+          ${escapeHTML(project.description || "No description.")}
+        </p>
 
-    <input id="checkTitle" class="input" placeholder="Checklist name">
-
-    <textarea id="checkItems" class="textarea"
-      style="margin-top:10px"
-      placeholder="One item per line"></textarea>
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="createChecklist()">Create</button>
-  `);
-}
-
-function createChecklist(){
-
-  const title=document.getElementById("checkTitle").value.trim();
-  const raw=document.getElementById("checkItems").value;
-
-  if(!title)return;
-
-  const items=raw.split("\n")
-    .map(x=>x.trim())
-    .filter(Boolean)
-    .map(text=>({text,done:false}));
-
-  db.checklists.unshift({
-    id:uid(),
-    title,
-    items,
-    createdAt:new Date().toISOString()
-  });
-
-  saveDB();
-  closeGenericModal();
-  renderView("checklists");
-}
-
-function toggleChecklistItem(id,index){
-
-  const c=db.checklists.find(x=>x.id===id);
-  if(!c)return;
-
-  c.items[index].done=!c.items[index].done;
-  saveDB();
-  renderView("checklists");
-}
-
-function addChecklistItem(id){
-
-  const text=prompt("Checklist item:");
-  if(!text)return;
-
-  const c=db.checklists.find(x=>x.id===id);
-  if(!c)return;
-
-  c.items.push({text:text.trim(),done:false});
-  saveDB();
-  renderView("checklists");
-}
-
-function deleteChecklist(id){
-
-  db.checklists=db.checklists.filter(x=>x.id!==id);
-  saveDB();
-  renderView("checklists");
-}
-
-
-/* =========================================================
-   RESEARCH BOARD
-   ========================================================= */
-
-function renderResearch(){
-
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Research</h2>
-      <div class="sub">
-        Organize questions, sources and findings.
-      </div>
-    </div>
-    <button class="btn primary" onclick="addResearch()">＋ New research</button>
-  </div>
-
-  <div class="cards">
-    ${
-      db.research.length
-      ? db.research.map(r=>`
-        <div class="card">
-          <h3>${esc(r.title)}</h3>
-          <p>${esc(r.question)}</p>
-          <div class="adSafeNote">
-            Sources: ${r.sources.length}
-          </div>
-          <div style="display:flex;gap:7px;margin-top:13px">
-            <button class="mini" onclick="openResearch('${r.id}')">Open</button>
-            <button class="mini" onclick="deleteResearch('${r.id}')">Delete</button>
-          </div>
+        <div class="meta">
+          Created ${new Date(project.createdAt).toLocaleDateString()}
         </div>
-      `).join("")
-      : `<div class="empty" style="grid-column:1/-1">
-          No research boards yet.
-        </div>`
-    }
-  </div>
-  `;
-}
 
-function addResearch(){
+        <div class="actions">
 
-  openModal(`
-    <div class="modalHead">
-      <h3>New research board</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
+          <button class="btn btn-small"
+                  onclick="deleteProject('${project.id}')">
+            Delete
+          </button>
 
-    <input id="researchTitle" class="input" placeholder="Research title">
+        </div>
 
-    <textarea id="researchQuestion"
-      class="textarea"
-      style="margin-top:10px"
-      placeholder="What are you trying to find out?"></textarea>
+      </article>
 
-    <button class="btn primary" style="margin-top:12px"
-      onclick="createResearch()">Create board</button>
-  `);
-}
+    `).join("");
 
-function createResearch(){
-
-  const title=document.getElementById("researchTitle").value.trim();
-  const question=document.getElementById("researchQuestion").value.trim();
-
-  if(!title)return;
-
-  db.research.unshift({
-    id:uid(),
-    title,
-    question,
-    findings:"",
-    sources:[],
-    createdAt:new Date().toISOString()
-  });
-
-  saveDB();
-  closeGenericModal();
-  renderView("research");
-}
-
-function openResearch(id){
-
-  const r=db.research.find(x=>x.id===id);
-  if(!r)return;
-
-  openModal(`
-    <div class="modalHead">
-      <h3>${esc(r.title)}</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
-
-    <p class="sub">${esc(r.question)}</p>
-
-    <textarea id="researchFindings"
-      class="textarea"
-      placeholder="Write your findings...">${esc(r.findings)}</textarea>
-
-    <textarea id="researchSources"
-      class="textarea"
-      style="margin-top:10px"
-      placeholder="One source URL per line">${esc(r.sources.join("\n"))}</textarea>
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="saveResearch('${id}')">Save research</button>
-  `);
-}
-
-function saveResearch(id){
-
-  const r=db.research.find(x=>x.id===id);
-  if(!r)return;
-
-  r.findings=document.getElementById("researchFindings").value;
-
-  r.sources=document.getElementById("researchSources").value
-    .split("\n")
-    .map(x=>x.trim())
-    .filter(Boolean);
-
-  saveDB();
-  closeGenericModal();
-  renderView("research");
-}
-
-function deleteResearch(id){
-
-  db.research=db.research.filter(x=>x.id!==id);
-  saveDB();
-  renderView("research");
 }
 
 
-/* =========================================================
-   TOOLS
-   ========================================================= */
+function openProjectModal(){
 
-function renderTools(){
+  openModal(
+    "New project",
+    `
+    <form id="projectForm" class="form">
 
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Tools</h2>
-      <div class="sub">Small jobs, handled quickly.</div>
-    </div>
-  </div>
+      <div>
+        <div class="label">Project name</div>
 
-  <div class="toolGrid">
-
-    <div class="toolCard">
-      <h3>Calculator</h3>
-      <input id="calc" class="input" placeholder="Example: 25*4+10">
-      <button class="btn primary" style="margin-top:9px"
-        onclick="calculate()">Calculate</button>
-      <div id="calcResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Percentage</h3>
-      <input id="pctA" class="input" type="number" placeholder="Value">
-      <input id="pctB" class="input" type="number" style="margin-top:7px" placeholder="Percent">
-      <button class="btn primary" style="margin-top:9px"
-        onclick="percentage()">Calculate</button>
-      <div id="pctResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Unit converter</h3>
-
-      <input id="convValue" class="input" type="number" placeholder="Value">
-
-      <select id="convType" class="select" style="margin-top:7px">
-        <option value="km-mi">Kilometres → Miles</option>
-        <option value="mi-km">Miles → Kilometres</option>
-        <option value="kg-lb">Kilograms → Pounds</option>
-        <option value="lb-kg">Pounds → Kilograms</option>
-        <option value="c-f">Celsius → Fahrenheit</option>
-        <option value="f-c">Fahrenheit → Celsius</option>
-      </select>
-
-      <button class="btn primary" style="margin-top:9px"
-        onclick="convertUnit()">Convert</button>
-
-      <div id="convResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Age calculator</h3>
-
-      <input id="birthDate" class="input" type="date">
-
-      <button class="btn primary" style="margin-top:9px"
-        onclick="calculateAge()">Calculate age</button>
-
-      <div id="ageResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Date difference</h3>
-
-      <input id="dateA" class="input" type="date">
-      <input id="dateB" class="input" type="date" style="margin-top:7px">
-
-      <button class="btn primary" style="margin-top:9px"
-        onclick="dateDifference()">Calculate</button>
-
-      <div id="dateResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Text counter</h3>
-
-      <textarea id="textCounter" class="textarea"
-        placeholder="Paste text here..."
-        oninput="countText()"></textarea>
-
-      <div id="textResult" class="result">0 words · 0 characters</div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Case converter</h3>
-
-      <textarea id="caseText" class="textarea"
-        placeholder="Enter text"></textarea>
-
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
-        <button class="mini" onclick="caseConvert('upper')">UPPER</button>
-        <button class="mini" onclick="caseConvert('lower')">lower</button>
-        <button class="mini" onclick="caseConvert('title')">Title Case</button>
-        <button class="mini" onclick="caseConvert('sentence')">Sentence</button>
+        <input id="projectName"
+               class="input"
+               required>
       </div>
-    </div>
 
-    <div class="toolCard">
-      <h3>JSON formatter</h3>
+      <div>
+        <div class="label">Description</div>
 
-      <textarea id="jsonInput" class="textarea"
-        placeholder='{"hello":"world"}'></textarea>
-
-      <button class="btn primary" style="margin-top:8px"
-        onclick="formatJSON()">Format JSON</button>
-
-      <div id="jsonResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>Focus timer</h3>
-
-      <div class="timer" id="timerDisplay">25:00</div>
-
-      <div style="display:flex;gap:7px;justify-content:center">
-        <button class="btn primary" onclick="startTimer()">Start</button>
-        <button class="btn secondary" onclick="pauseTimer()">Pause</button>
-        <button class="mini" onclick="resetTimer()">Reset</button>
+        <textarea id="projectDescription"
+                  class="textarea"></textarea>
       </div>
-    </div>
 
-    <div class="toolCard">
-      <h3>Text cleaner</h3>
+      <button class="btn btn-primary">
+        Create project
+      </button>
 
-      <textarea id="cleanText" class="textarea"
-        placeholder="Paste messy text"></textarea>
+    </form>
+    `
+  );
 
-      <button class="btn primary" style="margin-top:8px"
-        onclick="cleanText()">Clean</button>
+  document
+    .getElementById("projectForm")
+    .onsubmit=e=>{
 
-      <div id="cleanResult" class="result hidden"></div>
-    </div>
+      e.preventDefault();
 
-    <div class="toolCard">
-      <h3>List sorter</h3>
+      data.projects.unshift({
+        id:uid(),
+        name:document.getElementById("projectName").value.trim(),
+        description:document.getElementById("projectDescription").value.trim(),
+        createdAt:Date.now()
+      });
 
-      <textarea id="sortText" class="textarea"
-        placeholder="One item per line"></textarea>
+      persist();
+      closeModal();
 
-      <button class="btn primary" style="margin-top:8px"
-        onclick="sortList()">Sort</button>
+    };
 
-      <div id="sortResult" class="result hidden"></div>
-    </div>
-
-    <div class="toolCard">
-      <h3>QR generator</h3>
-
-      <input id="qrText" class="input"
-        placeholder="Text or URL">
-
-      <button class="btn primary" style="margin-top:8px"
-        onclick="generateQR()">Generate</button>
-
-      <div id="qrResult" class="result hidden"></div>
-    </div>
-
-  </div>
-  `;
 }
 
 
-/* =========================================================
-   TOOLS LOGIC
-   ========================================================= */
+function deleteProject(id){
 
-function calculate(){
+  if(!confirm("Delete this project?")) return;
 
-  const input=document.getElementById("calc").value.trim();
-  const result=document.getElementById("calcResult");
+  data.projects =
+    data.projects.filter(x=>x.id!==id);
 
-  if(!input)return;
+  persist();
 
-  /*
-    This deliberately accepts only basic arithmetic characters.
-    It is not a general JavaScript evaluator.
-  */
-  if(!/^[0-9+\-*/().%\s]+$/.test(input)){
-    result.textContent="Only basic arithmetic is allowed.";
-    result.classList.remove("hidden");
+}
+
+
+/* ============================================================
+   CAPTURE
+============================================================= */
+
+function saveCapture(){
+
+  const text =
+    document.getElementById("captureText")
+      .value.trim();
+
+  if(!text){
+    alert("Add some text first.");
     return;
   }
 
-  try{
-    const sanitized=input.replace(/%/g,"/100");
-    const value=Function('"use strict";return ('+sanitized+')')();
+  let type =
+    document.getElementById("captureType").value;
 
-    if(!Number.isFinite(value))throw new Error();
+  if(type === "auto"){
 
-    result.textContent=String(value);
-  }catch{
-    result.textContent="Invalid calculation.";
+    if(/^https?:\/\//i.test(text)){
+      type = "link";
+    }else if(
+      /^(todo|task|buy|call|send|finish|complete|submit|apply)\b/i.test(text)
+    ){
+      type = "task";
+    }else{
+      type = "note";
+    }
+
   }
 
-  result.classList.remove("hidden");
+  if(type === "link"){
+
+    let url = text;
+
+    if(!/^https?:\/\//i.test(url)){
+      url = "https://" + url;
+    }
+
+    data.links.unshift({
+      id:uid(),
+      url,
+      title:url,
+      createdAt:Date.now()
+    });
+
+  }else if(type === "task"){
+
+    data.tasks.unshift({
+      id:uid(),
+      title:text,
+      description:"",
+      priority:"medium",
+      due:"",
+      done:false,
+      createdAt:Date.now()
+    });
+
+  }else{
+
+    data.notes.unshift({
+      id:uid(),
+      title:type==="research"
+        ? "Research note"
+        : "Quick note",
+      body:text,
+      createdAt:Date.now()
+    });
+
+  }
+
+  data.captures.unshift({
+    id:uid(),
+    text,
+    type,
+    createdAt:Date.now()
+  });
+
+  document.getElementById("captureText").value = "";
+
+  persist();
+
+  alert("Saved.");
+
 }
+
+
+/* ============================================================
+   SEARCH
+============================================================= */
+
+function renderSearch(){
+
+  const input =
+    document.getElementById("globalSearch");
+
+  if(!input) return;
+
+  const query =
+    input.value.trim().toLowerCase();
+
+  const el =
+    document.getElementById("searchResults");
+
+  if(!query){
+
+    el.innerHTML =
+      `<div class="empty">
+        Type something to search your workspace.
+      </div>`;
+
+    return;
+
+  }
+
+  const results = [];
+
+  data.tasks.forEach(x=>{
+    if(
+      `${x.title} ${x.description}`
+        .toLowerCase()
+        .includes(query)
+    ){
+      results.push({
+        type:"Task",
+        title:x.title,
+        body:x.description,
+        page:"tasks"
+      });
+    }
+  });
+
+  data.notes.forEach(x=>{
+    if(
+      `${x.title} ${x.body}`
+        .toLowerCase()
+        .includes(query)
+    ){
+      results.push({
+        type:"Note",
+        title:x.title,
+        body:x.body,
+        page:"notes"
+      });
+    }
+  });
+
+  data.links.forEach(x=>{
+    if(
+      `${x.title} ${x.url}`
+        .toLowerCase()
+        .includes(query)
+    ){
+      results.push({
+        type:"Link",
+        title:x.title,
+        body:x.url,
+        page:"links"
+      });
+    }
+  });
+
+  data.projects.forEach(x=>{
+    if(
+      `${x.name} ${x.description}`
+        .toLowerCase()
+        .includes(query)
+    ){
+      results.push({
+        type:"Project",
+        title:x.name,
+        body:x.description,
+        page:"projects"
+      });
+    }
+  });
+
+  if(!results.length){
+
+    el.innerHTML =
+      `<div class="empty">
+        No matching results.
+      </div>`;
+
+    return;
+
+  }
+
+  el.innerHTML =
+    results.map(r=>`
+
+      <div class="list-item">
+
+        <div class="list-item-head">
+
+          <strong>
+            ${escapeHTML(r.title)}
+          </strong>
+
+          <span class="chip">
+            ${escapeHTML(r.type)}
+          </span>
+
+        </div>
+
+        <p class="meta">
+          ${escapeHTML(r.body || "")}
+        </p>
+
+        <button class="btn btn-small"
+                onclick="goPage('${r.page}')">
+          Open section
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* ============================================================
+   DOCUMENT ENGINE
+============================================================= */
+
+const dropZone =
+  document.getElementById("dropZone");
+
+const fileInput =
+  document.getElementById("fileInput");
+
+fileInput.addEventListener(
+  "change",
+  e=>{
+    const file = e.target.files[0];
+    if(file) analyzeFile(file);
+  }
+);
+
+dropZone.addEventListener(
+  "dragover",
+  e=>{
+    e.preventDefault();
+    dropZone.classList.add("drag");
+  }
+);
+
+dropZone.addEventListener(
+  "dragleave",
+  ()=>{
+    dropZone.classList.remove("drag");
+  }
+);
+
+dropZone.addEventListener(
+  "drop",
+  e=>{
+
+    e.preventDefault();
+
+    dropZone.classList.remove("drag");
+
+    const file =
+      e.dataTransfer.files[0];
+
+    if(file){
+      analyzeFile(file);
+    }
+
+  }
+);
+
+
+async function analyzeFile(file){
+
+  document.getElementById("fileName").textContent =
+    file.name;
+
+  document.getElementById("analysisArea")
+    .classList.remove("hidden");
+
+  document.getElementById("analysisTitle").textContent =
+    "Analyzing " + file.name;
+
+  document.getElementById("analysisMeta").textContent =
+    "Processing in your browser…";
+
+  document.getElementById("findings").innerHTML =
+    `<div class="empty">
+      Reading file…
+    </div>`;
+
+  document.getElementById("suggestedActions").innerHTML = "";
+
+  document.getElementById("extractedText").textContent =
+    "";
+
+  try{
+
+    const text =
+      await extractText(file);
+
+    currentAnalysis = {
+      fileName:file.name,
+      text
+    };
+
+    renderAnalysis(file,text);
+
+  }catch(error){
+
+    document.getElementById("analysisMeta").textContent =
+      "The file could not be processed.";
+
+    document.getElementById("extractedText").textContent =
+      error.message || String(error);
+
+  }
+
+}
+
+
+async function extractText(file){
+
+  const name =
+    file.name.toLowerCase();
+
+  if(
+    name.endsWith(".txt") ||
+    name.endsWith(".json") ||
+    name.endsWith(".csv")
+  ){
+
+    return await file.text();
+
+  }
+
+  if(
+    name.endsWith(".xlsx") ||
+    name.endsWith(".xls")
+  ){
+
+    const buffer =
+      await file.arrayBuffer();
+
+    const workbook =
+      XLSX.read(buffer,{type:"array"});
+
+    let output = "";
+
+    workbook.SheetNames.forEach(sheet=>{
+
+      output +=
+        `\n### ${sheet}\n`;
+
+      output +=
+        XLSX.utils.sheet_to_csv(
+          workbook.Sheets[sheet]
+        );
+
+      output += "\n";
+
+    });
+
+    return output;
+
+  }
+
+  if(name.endsWith(".docx")){
+
+    const buffer =
+      await file.arrayBuffer();
+
+    const result =
+      await mammoth.extractRawText({
+        arrayBuffer:buffer
+      });
+
+    return result.value;
+
+  }
+
+  if(name.endsWith(".pdf")){
+
+    return await extractPDF(file);
+
+  }
+
+  if(
+    file.type.startsWith("image/")
+  ){
+
+    return await OCRImage(file);
+
+  }
+
+  throw new Error(
+    "This file type is not supported by the browser engine."
+  );
+
+}
+
+
+async function extractPDF(file){
+
+  const pdfjs =
+    window.pdfjsLib;
+
+  if(!pdfjs){
+    throw new Error(
+      "PDF engine is still loading. Try again in a moment."
+    );
+  }
+
+  const buffer =
+    await file.arrayBuffer();
+
+  const pdf =
+    await pdfjs.getDocument({
+      data:buffer
+    }).promise;
+
+  let text = "";
+
+  for(
+    let pageNumber=1;
+    pageNumber<=pdf.numPages;
+    pageNumber++
+  ){
+
+    const page =
+      await pdf.getPage(pageNumber);
+
+    const content =
+      await page.getTextContent();
+
+    const pageText =
+      content.items
+        .map(item=>item.str)
+        .join(" ");
+
+    text +=
+      `\n--- Page ${pageNumber} ---\n` +
+      pageText;
+
+  }
+
+  return text;
+
+}
+
+
+async function OCRImage(file){
+
+  if(!window.Tesseract){
+
+    throw new Error(
+      "OCR engine is still loading. Try again in a moment."
+    );
+
+  }
+
+  const result =
+    await Tesseract.recognize(
+      file,
+      "eng"
+    );
+
+  return result.data.text;
+
+}
+
+
+function renderAnalysis(file,text){
+
+  document.getElementById("analysisTitle").textContent =
+    file.name;
+
+  document.getElementById("analysisMeta").textContent =
+    `${formatBytes(file.size)} • ${text.length.toLocaleString()} characters`;
+
+  document.getElementById("extractedText").textContent =
+    text || "No readable text was found.";
+
+  const findings =
+    detectFindings(text);
+
+  const findingsEl =
+    document.getElementById("findings");
+
+  if(!findings.length){
+
+    findingsEl.innerHTML =
+      `<div class="empty">
+        No obvious dates, emails, amounts or requirement phrases
+        were detected automatically.
+      </div>`;
+
+  }else{
+
+    findingsEl.innerHTML =
+      findings.map(f=>`
+
+        <div class="action">
+
+          <strong>${escapeHTML(f.label)}</strong>
+
+          <small>
+            ${escapeHTML(f.value)}
+          </small>
+
+        </div>
+
+      `).join("");
+
+  }
+
+  const actions =
+    generateActions(text);
+
+  document.getElementById("suggestedActions").innerHTML =
+    actions.map((a,i)=>`
+
+      <div class="list-item">
+
+        <strong>${escapeHTML(a.title)}</strong>
+
+        <div class="meta">
+          ${escapeHTML(a.reason)}
+        </div>
+
+        <button class="btn btn-small"
+                style="margin-top:8px"
+                onclick="createTaskFromAnalysis(${i})">
+          Add as task
+        </button>
+
+      </div>
+
+    `).join("");
+
+  currentAnalysis.actions = actions;
+
+}
+
+
+function formatBytes(bytes){
+
+  if(bytes < 1024) return bytes + " B";
+
+  if(bytes < 1024*1024)
+    return (bytes/1024).toFixed(1) + " KB";
+
+  return (bytes/(1024*1024)).toFixed(1) + " MB";
+
+}
+
+
+function detectFindings(text){
+
+  const findings = [];
+
+  const emails =
+    text.match(
+      /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi
+    ) || [];
+
+  [...new Set(emails)]
+    .slice(0,8)
+    .forEach(x=>{
+      findings.push({
+        label:"Email",
+        value:x
+      });
+    });
+
+
+  const urls =
+    text.match(
+      /https?:\/\/[^\s<>"')]+/gi
+    ) || [];
+
+  [...new Set(urls)]
+    .slice(0,8)
+    .forEach(x=>{
+      findings.push({
+        label:"URL",
+        value:x
+      });
+    });
+
+
+  const dates =
+    text.match(
+      /\b(?:\d{1,2}[\/.-]\d{1,2}[\/.-]\d{2,4}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:,\s*)?\d{2,4})\b/gi
+    ) || [];
+
+  [...new Set(dates)]
+    .slice(0,10)
+    .forEach(x=>{
+      findings.push({
+        label:"Possible date",
+        value:x
+      });
+    });
+
+
+  const money =
+    text.match(
+      /(?:\$|€|£|₹|Rs\.?|PKR|INR)\s?[\d,]+(?:\.\d{1,2})?/gi
+    ) || [];
+
+  [...new Set(money)]
+    .slice(0,10)
+    .forEach(x=>{
+      findings.push({
+        label:"Amount",
+        value:x
+      });
+    });
+
+
+  return findings;
+
+}
+
+
+function generateActions(text){
+
+  const lower =
+    text.toLowerCase();
+
+  const actions = [];
+
+  const rules = [
+
+    {
+      terms:["deadline","due date","last date","submit by"],
+      title:"Review the deadline",
+      reason:"The document appears to contain a deadline."
+    },
+
+    {
+      terms:["required documents","documents required","you must provide","please provide"],
+      title:"Collect required documents",
+      reason:"The document appears to request supporting information."
+    },
+
+    {
+      terms:["payment","fee","amount due","pay before"],
+      title:"Review payment requirement",
+      reason:"A payment or fee appears to be mentioned."
+    },
+
+    {
+      terms:["sign","signature","signed by"],
+      title:"Check signature requirement",
+      reason:"The document appears to require a signature."
+    },
+
+    {
+      terms:["appointment","meeting","interview"],
+      title:"Check appointment or meeting details",
+      reason:"The document may contain a scheduled event."
+    },
+
+    {
+      terms:["reply","respond","contact us","contact"],
+      title:"Review response requirement",
+      reason:"A response or contact action appears to be requested."
+    },
+
+    {
+      terms:["upload","attach","attachment"],
+      title:"Prepare requested attachments",
+      reason:"The document appears to request uploaded or attached files."
+    }
+
+  ];
+
+  rules.forEach(rule=>{
+
+    if(
+      rule.terms.some(term=>lower.includes(term))
+    ){
+
+      actions.push({
+        title:rule.title,
+        reason:rule.reason
+      });
+
+    }
+
+  });
+
+
+  if(!actions.length){
+
+    actions.push({
+      title:"Review the extracted information",
+      reason:"No explicit action phrase was detected. Verify the original document manually."
+    });
+
+  }
+
+  return actions;
+
+}
+
+
+function createTaskFromAnalysis(index){
+
+  if(!currentAnalysis?.actions?.[index]) return;
+
+  const action =
+    currentAnalysis.actions[index];
+
+  data.tasks.unshift({
+    id:uid(),
+    title:action.title,
+    description:
+      `${action.reason}\nSource: ${currentAnalysis.fileName}`,
+    priority:"medium",
+    due:"",
+    done:false,
+    createdAt:Date.now()
+  });
+
+  persist();
+
+  alert("Action added to your tasks.");
+
+}
+
+
+function saveAnalysisAsNote(){
+
+  if(!currentAnalysis) return;
+
+  data.notes.unshift({
+    id:uid(),
+    title:
+      "Analysis — " + currentAnalysis.fileName,
+    body:
+      currentAnalysis.text,
+    createdAt:Date.now()
+  });
+
+  persist();
+
+  alert("Analysis saved as a note.");
+
+}
+
+
+/* ============================================================
+   TOOLS
+============================================================= */
+
+function calculate(){
+
+  const input =
+    document.getElementById("calcInput").value.trim();
+
+  const output =
+    document.getElementById("calcResult");
+
+  if(!input){
+    output.textContent = "";
+    return;
+  }
+
+  /*
+    Deliberately limited calculator.
+    Only numbers, operators, decimals and parentheses.
+  */
+
+  if(!/^[0-9+\-*/().%\s]+$/.test(input)){
+
+    output.textContent =
+      "Only basic mathematical expressions are allowed.";
+
+    return;
+
+  }
+
+  try{
+
+    const sanitized =
+      input.replaceAll("%","/100");
+
+    const result =
+      Function(
+        '"use strict";return (' +
+        sanitized +
+        ')'
+      )();
+
+    if(!Number.isFinite(result)){
+      throw new Error();
+    }
+
+    output.textContent =
+      result;
+
+  }catch{
+
+    output.textContent =
+      "Invalid expression.";
+
+  }
+
+}
+
 
 function percentage(){
 
-  const a=Number(document.getElementById("pctA").value);
-  const b=Number(document.getElementById("pctB").value);
-  const result=document.getElementById("pctResult");
+  const a =
+    Number(document.getElementById("percentA").value);
 
-  if(!Number.isFinite(a)||!Number.isFinite(b))return;
+  const b =
+    Number(document.getElementById("percentB").value);
 
-  result.textContent=(a*b/100).toLocaleString();
-  result.classList.remove("hidden");
+  document.getElementById("percentResult").textContent =
+    Number.isFinite(a) && Number.isFinite(b)
+      ? (a*b/100)
+      : "Enter both values.";
+
 }
+
 
 function convertUnit(){
 
-  const v=Number(document.getElementById("convValue").value);
-  const type=document.getElementById("convType").value;
-  const result=document.getElementById("convResult");
+  const type =
+    document.getElementById("unitType").value;
 
-  if(!Number.isFinite(v))return;
+  const value =
+    Number(document.getElementById("unitValue").value);
 
-  let x=0;
+  if(!Number.isFinite(value)){
 
-  switch(type){
-    case "km-mi":x=v*0.621371;break;
-    case "mi-km":x=v/0.621371;break;
-    case "kg-lb":x=v*2.2046226218;break;
-    case "lb-kg":x=v/2.2046226218;break;
-    case "c-f":x=(v*9/5)+32;break;
-    case "f-c":x=(v-32)*5/9;break;
+    document.getElementById("unitResult").textContent =
+      "Enter a valid number.";
+
+    return;
+
   }
 
-  result.textContent=x.toLocaleString(undefined,{maximumFractionDigits:6});
-  result.classList.remove("hidden");
+  const conversions = {
+
+    "km-mi":value * 0.621371,
+    "mi-km":value / 0.621371,
+    "kg-lb":value * 2.2046226218,
+    "lb-kg":value / 2.2046226218,
+    "c-f":value * 9/5 + 32,
+    "f-c":(value - 32) * 5/9,
+    "m-ft":value * 3.280839895,
+    "ft-m":value / 3.280839895
+
+  };
+
+  document.getElementById("unitResult").textContent =
+    conversions[type].toLocaleString(
+      undefined,
+      {maximumFractionDigits:6}
+    );
+
 }
+
 
 function calculateAge(){
 
-  const value=document.getElementById("birthDate").value;
-  const result=document.getElementById("ageResult");
+  const input =
+    document.getElementById("birthDate").value;
 
-  if(!value)return;
+  if(!input){
 
-  const birth=new Date(value+"T00:00:00");
-  const now=new Date();
+    document.getElementById("ageResult").textContent =
+      "Select your birth date.";
 
-  let years=now.getFullYear()-birth.getFullYear();
-  let months=now.getMonth()-birth.getMonth();
+    return;
 
-  if(now.getDate()<birth.getDate())months--;
+  }
 
-  if(months<0){
+  const birth =
+    new Date(input + "T00:00:00");
+
+  const now =
+    new Date();
+
+  let years =
+    now.getFullYear() - birth.getFullYear();
+
+  const birthdayThisYear =
+    new Date(
+      now.getFullYear(),
+      birth.getMonth(),
+      birth.getDate()
+    );
+
+  if(now < birthdayThisYear){
     years--;
-    months+=12;
   }
 
-  result.textContent=`${years} years, ${months} months`;
-  result.classList.remove("hidden");
+  document.getElementById("ageResult").textContent =
+    `${years} years old`;
+
 }
 
-function dateDifference(){
 
-  const a=document.getElementById("dateA").value;
-  const b=document.getElementById("dateB").value;
-  const result=document.getElementById("dateResult");
+document
+  .getElementById("counterText")
+  .addEventListener(
+    "input",
+    ()=>{
 
-  if(!a||!b)return;
+      const text =
+        document.getElementById("counterText").value;
 
-  const A=new Date(a+"T00:00:00");
-  const B=new Date(b+"T00:00:00");
+      const words =
+        text.trim()
+          ? text.trim().split(/\s+/).length
+          : 0;
 
-  const days=Math.round(Math.abs(B-A)/86400000);
+      document.getElementById("counterResult").textContent =
+        `${words} words • ${text.length} characters`;
 
-  result.textContent=`${days} day${days===1?"":"s"}`;
-  result.classList.remove("hidden");
-}
+    }
+  );
 
-function countText(){
-
-  const text=document.getElementById("textCounter").value;
-  const words=text.trim()?text.trim().split(/\s+/).length:0;
-
-  document.getElementById("textResult").textContent =
-    `${words} words · ${text.length} characters`;
-}
-
-function caseConvert(mode){
-
-  const el=document.getElementById("caseText");
-  let text=el.value;
-
-  if(mode==="upper")text=text.toUpperCase();
-  if(mode==="lower")text=text.toLowerCase();
-
-  if(mode==="title"){
-    text=text.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
-  }
-
-  if(mode==="sentence"){
-    text=text.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g,
-      m=>m.toUpperCase());
-  }
-
-  el.value=text;
-}
 
 function formatJSON(){
 
-  const input=document.getElementById("jsonInput").value;
-  const result=document.getElementById("jsonResult");
+  const input =
+    document.getElementById("jsonInput").value;
 
   try{
-    const parsed=JSON.parse(input);
-    result.textContent=JSON.stringify(parsed,null,2);
-  }catch(e){
-    result.textContent="Invalid JSON.";
+
+    const parsed =
+      JSON.parse(input);
+
+    document.getElementById("jsonResult").textContent =
+      JSON.stringify(parsed,null,2);
+
+  }catch{
+
+    document.getElementById("jsonResult").textContent =
+      "Invalid JSON.";
+
   }
 
-  result.classList.remove("hidden");
-}
-
-function cleanText(){
-
-  const input=document.getElementById("cleanText").value;
-
-  const output=input
-    .replace(/\r/g,"")
-    .replace(/[ \t]+/g," ")
-    .replace(/\n{3,}/g,"\n\n")
-    .trim();
-
-  const result=document.getElementById("cleanResult");
-
-  result.textContent=output || "Nothing to clean.";
-  result.classList.remove("hidden");
-}
-
-function sortList(){
-
-  const input=document.getElementById("sortText").value;
-
-  const output=input
-    .split("\n")
-    .map(x=>x.trim())
-    .filter(Boolean)
-    .sort((a,b)=>a.localeCompare(b));
-
-  const result=document.getElementById("sortResult");
-
-  result.textContent=output.join("\n") || "No items.";
-  result.classList.remove("hidden");
-}
-
-function generateQR(){
-
-  const text=document.getElementById("qrText").value.trim();
-  const result=document.getElementById("qrResult");
-
-  if(!text)return;
-
-  /*
-    Uses the public QR image endpoint only as a rendering utility.
-    No account or user data is sent by Shaheen itself except the
-    text the user deliberately puts into the QR generator.
-  */
-  const url="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="
-    +encodeURIComponent(text);
-
-  result.innerHTML=`
-    <img src="${url}"
-         alt="Generated QR code"
-         style="width:220px;height:220px;max-width:100%">
-  `;
-
-  result.classList.remove("hidden");
 }
 
 
-/* =========================================================
-   TIMER
-   ========================================================= */
+function changeCase(mode){
 
-function updateTimer(){
+  const el =
+    document.getElementById("caseText");
 
-  const m=Math.floor(timerSeconds/60);
-  const s=timerSeconds%60;
+  const text =
+    el.value;
 
-  const el=document.getElementById("timerDisplay");
-
-  if(el){
-    el.textContent=
-      String(m).padStart(2,"0")+":"+
-      String(s).padStart(2,"0");
+  if(mode==="upper"){
+    el.value = text.toUpperCase();
   }
+
+  if(mode==="lower"){
+    el.value = text.toLowerCase();
+  }
+
+  if(mode==="title"){
+
+    el.value =
+      text.toLowerCase()
+        .replace(/\b\w/g,
+          c=>c.toUpperCase()
+        );
+
+  }
+
 }
+
+
+function renderTimer(){
+
+  const minutes =
+    String(
+      Math.floor(timerSeconds/60)
+    ).padStart(2,"0");
+
+  const seconds =
+    String(
+      timerSeconds%60
+    ).padStart(2,"0");
+
+  document.getElementById("timerDisplay")
+    .textContent =
+    `${minutes}:${seconds}`;
+
+}
+
 
 function startTimer(){
 
-  if(timerInterval)return;
+  if(timerInterval) return;
 
-  if(currentView!=="tools"){
-    go("tools");
-  }
+  timerInterval =
+    setInterval(()=>{
 
-  timerInterval=setInterval(()=>{
-    timerSeconds--;
+      if(timerSeconds<=0){
 
-    if(timerSeconds<=0){
-      timerSeconds=0;
-      clearInterval(timerInterval);
-      timerInterval=null;
-      notify("Focus session finished");
-      logActivity("focus","Completed a focus session");
-    }
+        clearInterval(timerInterval);
+        timerInterval=null;
 
-    updateTimer();
-  },1000);
+        alert("Focus session complete.");
 
-  notify("Focus started");
+        return;
+
+      }
+
+      timerSeconds--;
+
+      renderTimer();
+
+    },1000);
+
 }
+
 
 function pauseTimer(){
 
   clearInterval(timerInterval);
   timerInterval=null;
-  notify("Timer paused");
+
 }
+
 
 function resetTimer(){
 
-  clearInterval(timerInterval);
-  timerInterval=null;
-  timerSeconds=25*60;
-  updateTimer();
+  pauseTimer();
+
+  timerSeconds =
+    25*60;
+
+  renderTimer();
+
 }
 
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-function renderSearch(){
-
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Search everything</h2>
-      <div class="sub">Find your saved workspace content.</div>
-    </div>
-  </div>
-
-  <div class="panel">
-    <input id="searchPageInput"
-      class="input"
-      autofocus
-      placeholder="Search tasks, notes, links, checklists and research..."
-      oninput="runSearch(this.value)">
-
-    <div id="searchResults" style="margin-top:15px">
-      <div class="empty">Start typing to search.</div>
-    </div>
-  </div>
-  `;
-}
-
-function globalSearch(query){
-
-  if(query.trim()){
-    go("search");
-
-    setTimeout(()=>{
-      const input=document.getElementById("searchPageInput");
-      if(input){
-        input.value=query;
-        runSearch(query);
-      }
-    },0);
-  }
-}
-
-function runSearch(query){
-
-  const q=query.trim().toLowerCase();
-  const result=document.getElementById("searchResults");
-
-  if(!q){
-    result.innerHTML=`<div class="empty">Start typing to search.</div>`;
-    return;
-  }
-
-  const results=[];
-
-  db.tasks.forEach(x=>{
-    if((x.title+" "+x.priority).toLowerCase().includes(q))
-      results.push({type:"Task",title:x.title,meta:x.due||"No due date"});
-  });
-
-  db.notes.forEach(x=>{
-    if((x.title+" "+x.body).toLowerCase().includes(q))
-      results.push({type:"Note",title:x.title,meta:x.body.slice(0,150)});
-  });
-
-  db.links.forEach(x=>{
-    if((x.title+" "+x.url).toLowerCase().includes(q))
-      results.push({type:"Link",title:x.title,meta:x.url});
-  });
-
-  db.research.forEach(x=>{
-    if((x.title+" "+x.question+" "+x.findings).toLowerCase().includes(q))
-      results.push({type:"Research",title:x.title,meta:x.question});
-  });
-
-  if(!results.length){
-    result.innerHTML=`<div class="empty">No matching content.</div>`;
-    return;
-  }
-
-  result.innerHTML=`
-    <div class="list">
-      ${results.map(x=>`
-        <div class="item">
-          <div class="icon">${x.type==="Task"?"✓":x.type==="Note"?"✎":x.type==="Link"?"↗":"⌕"}</div>
-          <div class="itemMain">
-            <div class="itemTitle">${esc(x.title)}</div>
-            <div class="itemMeta">${x.type} · ${esc(x.meta)}</div>
-          </div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
-
-function renderProfile(){
-
-  const user=currentUser;
-
-  return `
-  <div class="viewTitle">
-    <div>
-      <h2>Profile</h2>
-      <div class="sub">Account, preferences and your data.</div>
-    </div>
-  </div>
-
-  <div class="panel">
-
-    <div class="profileHero">
-      <img
-        class="largeAvatar"
-        src="${user?.photoURL || ""}"
-        alt=""
-        id="profileAvatar">
-
-      <div>
-        <h3 style="margin:0">
-          ${esc(user?.displayName || "Local workspace")}
-        </h3>
-        <div class="sub">
-          ${esc(user?.email || "Local browser workspace")}
-        </div>
-      </div>
-    </div>
-
-    <div class="switch">
-      <div>
-        <strong>Theme</strong>
-        <div class="sub">Switch between light and dark mode.</div>
-      </div>
-      <button class="btn secondary" onclick="toggleTheme()">Change</button>
-    </div>
-
-    <div class="switch">
-      <div>
-        <strong>Export workspace</strong>
-        <div class="sub">Download your tasks, notes, links and other local data.</div>
-      </div>
-      <button class="btn secondary" onclick="exportData()">Export</button>
-    </div>
-
-    <div class="switch">
-      <div>
-        <strong>Import workspace</strong>
-        <div class="sub">Restore a previously exported Shaheen JSON file.</div>
-      </div>
-      <button class="btn secondary" onclick="document.getElementById('importFile').click()">Import</button>
-    </div>
-
-    <input id="importFile"
-      type="file"
-      accept="application/json"
-      class="hidden"
-      onchange="importData(event)">
-
-    <div class="switch">
-      <div>
-        <strong>Local data</strong>
-        <div class="sub">This single-file version keeps workspace data in this browser.</div>
-      </div>
-      <button class="btn danger" onclick="clearData()">Clear</button>
-    </div>
-
-    <div style="margin-top:22px">
-      <button class="btn secondary" onclick="showPublic('privacy')">Privacy Policy</button>
-      <button class="btn secondary" onclick="showPublic('security')">Security</button>
-      <button class="btn secondary" onclick="showPublic('terms')">Terms</button>
-    </div>
-
-  </div>
-  `;
-}
-
-
-/* =========================================================
-   EXPORT / IMPORT
-   ========================================================= */
+/* ============================================================
+   BACKUP
+============================================================= */
 
 function exportData(){
 
-  const blob=new Blob(
-    [JSON.stringify(db,null,2)],
-    {type:"application/json"}
-  );
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      ],
+      {
+        type:"application/json"
+      }
+    );
 
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
 
   a.href=url;
-  a.download="shaheen-workspace.json";
+
+  a.download =
+    "shaheen-workspace-backup.json";
+
   a.click();
 
   URL.revokeObjectURL(url);
-  notify("Workspace exported");
+
 }
 
-function importData(event){
 
-  const file=event.target.files[0];
-  if(!file)return;
+document
+  .getElementById("importFile")
+  .addEventListener(
+    "change",
+    async e=>{
 
-  const reader=new FileReader();
+      const file =
+        e.target.files[0];
 
-  reader.onload=()=>{
-    try{
-      const parsed=JSON.parse(reader.result);
+      if(!file) return;
 
-      if(!parsed || typeof parsed!=="object")
-        throw new Error();
+      try{
 
-      db={
-        ...structuredClone(defaultDB),
-        ...parsed,
-        settings:{
-          ...defaultDB.settings,
-          ...(parsed.settings||{})
-        }
-      };
+        const parsed =
+          JSON.parse(
+            await file.text()
+          );
 
-      saveDB();
-      notify("Workspace imported");
-      renderView(currentView);
+        data = {
+          ...structuredClone(EMPTY_DATA),
+          ...parsed
+        };
 
-    }catch{
-      notify("Invalid workspace file");
+        persist();
+
+        alert("Backup imported.");
+
+      }catch{
+
+        alert("This backup file is invalid.");
+
+      }
+
     }
-  };
-
-  reader.readAsText(file);
-}
-
-function clearData(){
-
-  const ok=confirm(
-    "Clear all local Shaheen workspace data from this browser?"
   );
 
-  if(!ok)return;
 
-  db=structuredClone(defaultDB);
-  saveDB();
-  notify("Local data cleared");
-  renderView(currentView);
+/* ============================================================
+   PERSIST
+============================================================= */
+
+let saveTimer = null;
+
+function persist(){
+
+  saveLocal();
+
+  clearTimeout(saveTimer);
+
+  saveTimer =
+    setTimeout(
+      ()=>saveCloud(),
+      500
+    );
+
+  renderAll();
+
 }
 
 
-/* =========================================================
-   QUICK ACTION MODALS
-   ========================================================= */
-
-function openQuickTask(){
-
-  openModal(`
-    <div class="modalHead">
-      <h3>Add task</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
-
-    <input id="quickTaskTitle"
-      class="input"
-      placeholder="What needs to be done?">
-
-    <div class="formGrid" style="margin-top:10px">
-      <input id="quickTaskDue" class="input" type="date">
-
-      <select id="quickTaskPriority" class="select">
-        <option>Normal</option>
-        <option>High</option>
-        <option>Low</option>
-      </select>
-    </div>
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="
-        addTask(
-          document.getElementById('quickTaskTitle').value,
-          document.getElementById('quickTaskDue').value,
-          document.getElementById('quickTaskPriority').value
-        );
-        closeGenericModal();
-      ">
-      Add task
-    </button>
-  `);
-}
-
-function openQuickNote(){
-
-  openModal(`
-    <div class="modalHead">
-      <h3>New note</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
-
-    <input id="quickNoteTitle"
-      class="input"
-      placeholder="Note title">
-
-    <textarea id="quickNoteBody"
-      class="textarea"
-      style="margin-top:10px"
-      placeholder="Write your note..."></textarea>
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="
-        addNote(
-          document.getElementById('quickNoteTitle').value,
-          document.getElementById('quickNoteBody').value
-        );
-        closeGenericModal();
-      ">
-      Save note
-    </button>
-  `);
-}
-
-function openQuickLink(){
-
-  openModal(`
-    <div class="modalHead">
-      <h3>Save link</h3>
-      <button class="mini" onclick="closeGenericModal()">×</button>
-    </div>
-
-    <input id="quickLinkTitle"
-      class="input"
-      placeholder="Name">
-
-    <input id="quickLinkURL"
-      class="input"
-      style="margin-top:10px"
-      placeholder="https://example.com">
-
-    <button class="btn primary" style="margin-top:12px"
-      onclick="
-        addLink(
-          document.getElementById('quickLinkTitle').value,
-          document.getElementById('quickLinkURL').value
-        );
-        closeGenericModal();
-      ">
-      Save link
-    </button>
-  `);
-}
-
-
-/* =========================================================
-   GENERIC MODAL
-   ========================================================= */
-
-function openModal(html){
-
-  let modal=document.getElementById("genericModal");
-
-  if(!modal){
-    modal=document.createElement("div");
-    modal.id="genericModal";
-    modal.className="modal";
-    document.body.appendChild(modal);
-  }
-
-  modal.innerHTML=`<div class="modalBox">${html}</div>`;
-  modal.classList.remove("hidden");
-}
-
-function closeGenericModal(){
-
-  const modal=document.getElementById("genericModal");
-
-  if(modal)modal.classList.add("hidden");
-}
-
-
-/* =========================================================
-   PROFILE MENU
-   ========================================================= */
-
-function openProfileMenu(){
-  document.getElementById("profileModal").classList.remove("hidden");
-}
-
-function closeProfileMenu(){
-  document.getElementById("profileModal").classList.add("hidden");
-}
-
-
-/* =========================================================
+/* ============================================================
    THEME
-   ========================================================= */
+============================================================= */
 
 function applyTheme(){
 
-  document.documentElement.dataset.theme=db.settings.theme;
+  document.documentElement.dataset.theme =
+    data.settings?.theme || "light";
 
-  const meta=document.querySelector('meta[name="theme-color"]');
-
-  if(meta){
-    meta.content=
-      db.settings.theme==="dark" ? "#070b12" : "#f5f7fb";
-  }
 }
 
 function toggleTheme(){
 
-  db.settings.theme=
-    db.settings.theme==="dark" ? "light" : "dark";
+  data.settings.theme =
+    data.settings.theme === "dark"
+      ? "light"
+      : "dark";
 
-  saveDB();
   applyTheme();
-  renderView(currentView);
+  persist();
+
 }
 
 
-/* =========================================================
+/* ============================================================
+   MODALS
+============================================================= */
+
+function openModal(title,body){
+
+  document.getElementById("modalTitle")
+    .textContent = title;
+
+  document.getElementById("modalBody")
+    .innerHTML = body;
+
+  document.getElementById("modal")
+    .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById("modal")
+    .classList.remove("show");
+
+}
+
+
+document
+  .getElementById("modal")
+  .addEventListener(
+    "click",
+    e=>{
+
+      if(e.target.id==="modal"){
+        closeModal();
+      }
+
+    }
+  );
+
+
+function openProfileMenu(){
+
+  openModal(
+    "Account",
+    `
+      <div class="list">
+
+        <button class="btn"
+                onclick="goPage('profile');closeModal()">
+          👤 Profile
+        </button>
+
+        <button class="btn"
+                onclick="toggleTheme();closeModal()">
+          ◐ Change theme
+        </button>
+
+        <button class="btn"
+                onclick="exportData();closeModal()">
+          ↓ Export workspace
+        </button>
+
+        <button class="btn btn-danger"
+                onclick="signOutUser();closeModal()">
+          Sign out
+        </button>
+
+      </div>
+    `
+  );
+
+}
+
+
+/* ============================================================
+   PUBLIC INFORMATION MODALS
+============================================================= */
+
+function openPublicModal(type){
+
+  const pages = {
+
+    about:{
+      title:"About Shaheen",
+      body:`
+        <p>
+          Shaheen is designed around one simple idea:
+          information should lead to action.
+        </p>
+
+        <p>
+          Instead of scattering documents, notes, links and tasks
+          across different places, Shaheen brings everyday organization
+          into one focused workspace.
+        </p>
+
+        <p>
+          The product is intentionally transparent. It does not claim
+          to be a lawyer, doctor, accountant, government authority,
+          identity verifier or professional advisor.
+        </p>
+      `
+    },
+
+    privacy:{
+      title:"Privacy Policy",
+      body:`
+        <h3>Information</h3>
+
+        <p>
+          Shaheen uses Firebase Authentication for account login.
+          When Firestore is enabled, workspace information can be
+          synchronized to the user's Firebase project.
+        </p>
+
+        <h3>Document processing</h3>
+
+        <p>
+          Supported document extraction and OCR in this version are
+          performed in the browser. Files are not intentionally uploaded
+          to a Shaheen application server for processing.
+        </p>
+
+        <h3>Your responsibility</h3>
+
+        <p>
+          Do not upload passwords, payment credentials, private keys or
+          other secrets simply because a file can technically be analyzed.
+        </p>
+
+        <h3>Third-party services</h3>
+
+        <p>
+          Firebase and browser-delivered processing libraries may be used
+          to provide functionality. Their own terms and privacy policies
+          also apply.
+        </p>
+      `
+    },
+
+    terms:{
+      title:"Terms of Use",
+      body:`
+        <p>
+          Shaheen is a productivity and information-organization tool.
+        </p>
+
+        <p>
+          Automated extraction may contain errors. Users must verify
+          important information against the original source.
+        </p>
+
+        <p>
+          Shaheen does not provide professional legal, medical, financial,
+          immigration, tax or other regulated advice.
+        </p>
+
+        <p>
+          Users are responsible for information they upload and actions
+          they take based on extracted information.
+        </p>
+      `
+    },
+
+    security:{
+      title:"Security",
+      body:`
+        <p>
+          Authentication is handled through Firebase Authentication.
+        </p>
+
+        <p>
+          Browser-side document processing reduces the need to transmit
+          supported files to a custom application server.
+        </p>
+
+        <p>
+          No website can honestly promise absolute security. Keep your
+          account password private, use a strong password, and avoid
+          uploading unnecessary sensitive information.
+        </p>
+      `
+    },
+
+    contact:{
+      title:"Contact Shaheen",
+      body:`
+        <p>
+          For support, feedback or policy questions, use the official
+          contact address configured by the site owner.
+        </p>
+
+        <p>
+          <strong>Contact:</strong>
+          YOUR-CONTACT-EMAIL@example.com
+        </p>
+
+        <p class="meta">
+          Replace the placeholder email above before publishing.
+        </p>
+      `
+    }
+
+  };
+
+  const page = pages[type];
+
+  if(!page) return;
+
+  openModal(
+    page.title,
+    page.body
+  );
+
+}
+
+
+/* ============================================================
    INITIALIZATION
-   ========================================================= */
+============================================================= */
 
 applyTheme();
 
-if(firebaseReady && auth){
+renderTimer();
 
-  auth.onAuthStateChanged(user=>{
+document.getElementById("todayText").textContent =
+  localDate();
 
-    currentUser=user;
 
-    if(user){
-      openApp();
+/*
+  Firebase redirect result.
+  This supports environments where popup login is unavailable.
+*/
+
+auth.getRedirectResult()
+  .catch(error=>{
+
+    if(error){
+
+      console.warn(
+        "Google redirect sign-in:",
+        error
+      );
+
     }
+
   });
 
-  /*
-    Handles a redirect sign-in result if redirect mode was used.
-  */
-  auth.getRedirectResult()
-    .then(result=>{
-      if(result && result.user){
-        currentUser=result.user;
-        openApp();
-      }
-    })
-    .catch(error=>{
-      console.error("Redirect sign-in:",error);
-    });
-}
 
-function afterRender(view){
+/*
+  Prevent accidental form navigation.
+*/
 
-  if(view==="tools"){
-    updateTimer();
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+    if(currentUser){
+      saveLocal();
+    }
   }
-}
+);
+
 </script>
 
 </body>
