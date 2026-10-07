@@ -4,69 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<meta name="description" content="SHAHEEN NEXUS turns documents and everyday information into clear actions, deadlines, requirements, checklists and useful tools.">
+<meta name="description" content="SHAHEEN NEXUS turns documents and everyday information into clear facts, deadlines, requirements, actions and checklists.">
 <meta name="robots" content="index,follow">
 
 <title>SHAHEEN NEXUS — Turn Information Into Action</title>
 
-<!--
-  ============================================================
-  SHAHEEN NEXUS
-  Single-file web application
-  ============================================================
-
-  IMPORTANT:
-  The Firebase API key must be the CURRENT Web App API key
-  from Firebase Console > Project settings > Your apps.
-
-  The rest of this configuration is based on the Firebase
-  configuration previously supplied for shaheen-nexus.
--->
+<!-- =========================================================
+     SHAHEEN NEXUS
+     Single-file production-minded web application
+     ========================================================= -->
 
 <style>
 :root{
   --bg:#07111f;
-  --bg2:#0b1728;
-  --card:#101f33;
-  --card2:#14263e;
-  --text:#f5f8ff;
-  --muted:#9eb0c8;
-  --line:#213651;
+  --bg-soft:#0b1728;
+  --card:#101e32;
+  --card2:#15263d;
+  --text:#f7faff;
+  --muted:#99abc1;
+  --line:#213650;
   --primary:#1677ff;
-  --primary2:#00cfff;
-  --success:#25c281;
-  --warning:#f4b740;
-  --danger:#ff5f6d;
-  --shadow:0 18px 50px rgba(0,0,0,.25);
+  --cyan:#00d0ff;
+  --green:#25c58b;
+  --yellow:#f4bd4d;
+  --red:#ff6070;
   --radius:20px;
+  --shadow:0 18px 55px rgba(0,0,0,.24);
 }
 
 body.light{
   --bg:#f5f8fc;
-  --bg2:#ffffff;
+  --bg-soft:#ffffff;
   --card:#ffffff;
-  --card2:#f0f5fb;
-  --text:#0b1728;
-  --muted:#607089;
-  --line:#dce5f0;
-  --shadow:0 15px 45px rgba(24,50,80,.10);
+  --card2:#edf3fa;
+  --text:#0a1729;
+  --muted:#65758a;
+  --line:#dce6f0;
+  --shadow:0 18px 45px rgba(30,60,90,.10);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 10% 0%,rgba(0,207,255,.10),transparent 30%),
-    radial-gradient(circle at 90% 10%,rgba(22,119,255,.14),transparent 32%),
-    var(--bg);
+  min-height:100vh;
   color:var(--text);
+  background:
+    radial-gradient(circle at 5% 0%,rgba(0,208,255,.10),transparent 28%),
+    radial-gradient(circle at 95% 0%,rgba(22,119,255,.13),transparent 30%),
+    var(--bg);
   font-family:
     Inter,
     ui-sans-serif,
@@ -75,7 +63,6 @@ body{
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  min-height:100vh;
 }
 
 button,
@@ -85,8 +72,17 @@ select{
   font:inherit;
 }
 
-button{
-  cursor:pointer;
+button{cursor:pointer}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+input,
+textarea,
+select{
+  outline:none;
 }
 
 a{
@@ -94,26 +90,24 @@ a{
   text-decoration:none;
 }
 
-.hidden{
-  display:none!important;
-}
+.hidden{display:none!important}
 
 .container{
-  width:min(1180px,calc(100% - 32px));
+  width:min(1180px,calc(100% - 30px));
   margin:auto;
 }
 
 .topbar{
   position:sticky;
   top:0;
-  z-index:50;
-  backdrop-filter:blur(18px);
-  background:rgba(7,17,31,.78);
+  z-index:100;
   border-bottom:1px solid var(--line);
+  background:rgba(7,17,31,.82);
+  backdrop-filter:blur(18px);
 }
 
-.light .topbar{
-  background:rgba(255,255,255,.82);
+body.light .topbar{
+  background:rgba(255,255,255,.86);
 }
 
 .nav{
@@ -128,20 +122,22 @@ a{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:900;
-  letter-spacing:.5px;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  font-weight:950;
+  letter-spacing:.7px;
 }
 
 .logo{
   width:42px;
   height:42px;
-  border-radius:13px;
   display:grid;
   place-items:center;
-  color:white;
-  background:
-    linear-gradient(135deg,var(--primary),var(--primary2));
-  box-shadow:0 10px 30px rgba(0,207,255,.20);
+  border-radius:13px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--cyan));
+  box-shadow:0 10px 32px rgba(0,208,255,.22);
 }
 
 .logo svg{
@@ -151,7 +147,7 @@ a{
 
 .navlinks{
   display:flex;
-  gap:8px;
+  gap:5px;
   align-items:center;
 }
 
@@ -170,11 +166,11 @@ a{
 
 .btn{
   border:1px solid var(--line);
+  border-radius:13px;
+  padding:11px 15px;
   background:var(--card);
   color:var(--text);
-  border-radius:13px;
-  padding:11px 16px;
-  transition:.2s;
+  transition:.18s ease;
 }
 
 .btn:hover{
@@ -182,16 +178,16 @@ a{
 }
 
 .btn.primary{
+  color:#fff;
   border:0;
-  color:white;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  box-shadow:0 12px 30px rgba(22,119,255,.22);
+  background:linear-gradient(135deg,var(--primary),var(--cyan));
+  box-shadow:0 12px 28px rgba(22,119,255,.20);
 }
 
 .btn.danger{
-  color:white;
-  background:var(--danger);
+  color:#fff;
   border:0;
+  background:var(--red);
 }
 
 .btn.small{
@@ -200,13 +196,13 @@ a{
 }
 
 .hero{
-  padding:75px 0 50px;
+  padding:76px 0 50px;
 }
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:35px;
+  grid-template-columns:1.12fr .88fr;
+  gap:36px;
   align-items:center;
 }
 
@@ -214,70 +210,78 @@ a{
   display:inline-flex;
   align-items:center;
   gap:7px;
-  padding:7px 11px;
   border:1px solid var(--line);
   border-radius:999px;
-  color:var(--primary2);
-  background:rgba(0,207,255,.07);
+  padding:7px 11px;
+  color:var(--cyan);
+  background:rgba(0,208,255,.06);
   font-size:13px;
-  font-weight:700;
+  font-weight:750;
 }
 
 .hero h1{
-  font-size:clamp(40px,6vw,76px);
-  line-height:.98;
-  margin:20px 0;
+  font-size:clamp(40px,6vw,74px);
+  line-height:.99;
   letter-spacing:-3px;
+  margin:20px 0;
 }
 
 .gradient{
-  background:linear-gradient(90deg,var(--primary2),#fff,var(--primary));
+  background:linear-gradient(
+    90deg,
+    var(--cyan),
+    #fff,
+    var(--primary)
+  );
   -webkit-background-clip:text;
   color:transparent;
 }
 
 .hero p{
-  font-size:18px;
-  line-height:1.7;
-  color:var(--muted);
   max-width:720px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.75;
 }
 
 .hero-actions{
   display:flex;
-  gap:12px;
   flex-wrap:wrap;
+  gap:10px;
   margin-top:25px;
 }
 
 .hero-card{
+  padding:23px;
   border:1px solid var(--line);
-  border-radius:28px;
-  padding:25px;
+  border-radius:27px;
   background:
-    linear-gradient(145deg,rgba(22,119,255,.13),rgba(0,207,255,.04)),
+    linear-gradient(145deg,
+      rgba(22,119,255,.12),
+      rgba(0,208,255,.035)),
     var(--card);
   box-shadow:var(--shadow);
 }
 
-.mock-flow{
+.flow{
   display:grid;
-  gap:12px;
+  gap:11px;
 }
 
 .flow-item{
   display:flex;
-  gap:13px;
+  gap:12px;
   align-items:center;
-  border:1px solid var(--line);
   padding:14px;
   border-radius:15px;
-  background:rgba(255,255,255,.02);
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.018);
 }
 
 .flow-icon{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
+  flex:0 0 auto;
   display:grid;
   place-items:center;
   border-radius:12px;
@@ -290,12 +294,12 @@ a{
 
 .section-title{
   max-width:760px;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .section-title h2{
-  font-size:clamp(28px,4vw,44px);
-  margin:0 0 12px;
+  margin:0 0 10px;
+  font-size:clamp(29px,4vw,45px);
 }
 
 .section-title p{
@@ -306,14 +310,14 @@ a{
 .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:17px;
+  gap:16px;
 }
 
 .card{
-  background:var(--card);
+  padding:21px;
   border:1px solid var(--line);
   border-radius:var(--radius);
-  padding:22px;
+  background:var(--card);
   box-shadow:var(--shadow);
 }
 
@@ -326,16 +330,16 @@ a{
   line-height:1.65;
 }
 
-.iconbox{
+.icon{
   width:45px;
   height:45px;
-  border-radius:14px;
   display:grid;
   place-items:center;
-  background:rgba(22,119,255,.12);
-  color:var(--primary2);
+  border-radius:14px;
+  color:var(--cyan);
+  background:rgba(22,119,255,.11);
   font-size:21px;
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
 .public-page{
@@ -343,16 +347,17 @@ a{
 }
 
 .public-content{
-  padding:50px 0 90px;
+  padding:50px 0 85px;
 }
 
 .prose{
-  max-width:850px;
+  max-width:860px;
   margin:auto;
 }
 
 .prose h1{
-  font-size:42px;
+  font-size:43px;
+  margin-top:0;
 }
 
 .prose h2{
@@ -365,36 +370,164 @@ a{
   line-height:1.8;
 }
 
+.prose strong{
+  color:var(--text);
+}
+
 footer{
   border-top:1px solid var(--line);
-  padding:35px 0;
+  padding:32px 0;
   color:var(--muted);
 }
 
-.footer-grid{
+.footer-row{
   display:flex;
-  justify-content:space-between;
   gap:20px;
+  justify-content:space-between;
   flex-wrap:wrap;
 }
 
 .footer-links{
   display:flex;
-  gap:15px;
+  gap:13px;
   flex-wrap:wrap;
 }
 
 .footer-links button{
-  background:none;
   border:0;
+  background:none;
   color:var(--muted);
 }
 
-/* APP */
+/* =========================================================
+   AUTH
+========================================================= */
 
-.app-shell{
-  min-height:100vh;
+.modal-wrap{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.66);
 }
+
+.modal-wrap.show{
+  display:flex;
+}
+
+.modal{
+  width:min(470px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:23px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.modal-head h2{
+  margin:0;
+}
+
+.close{
+  border:0;
+  background:none;
+  color:var(--muted);
+  font-size:26px;
+}
+
+.tabs{
+  display:flex;
+  gap:5px;
+  padding:4px;
+  margin:16px 0;
+  border-radius:13px;
+  background:var(--bg-soft);
+}
+
+.tab{
+  flex:1;
+  border:0;
+  padding:10px;
+  border-radius:9px;
+  background:transparent;
+  color:var(--muted);
+}
+
+.tab.active{
+  background:var(--card2);
+  color:var(--text);
+}
+
+.auth-form{
+  display:grid;
+  gap:10px;
+}
+
+.field{
+  width:100%;
+  padding:12px 13px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  color:var(--text);
+  background:var(--bg-soft);
+}
+
+.field:focus{
+  border-color:var(--primary);
+}
+
+.divider{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:15px 0;
+}
+
+.divider:before,
+.divider:after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+
+.status{
+  margin-top:12px;
+  padding:11px 12px;
+  border-radius:12px;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.status.error{
+  color:#ffd7db;
+  background:rgba(255,96,112,.10);
+  border:1px solid rgba(255,96,112,.25);
+}
+
+.status.success{
+  color:#caffeb;
+  background:rgba(37,197,139,.09);
+  border:1px solid rgba(37,197,139,.23);
+}
+
+/* =========================================================
+   APP
+========================================================= */
 
 .app-layout{
   display:grid;
@@ -403,90 +536,91 @@ footer{
 }
 
 .sidebar{
-  border-right:1px solid var(--line);
-  padding:18px 13px;
-  background:rgba(7,17,31,.30);
   position:sticky;
   top:70px;
   height:calc(100vh - 70px);
   overflow:auto;
+  padding:14px;
+  border-right:1px solid var(--line);
+  background:rgba(7,17,31,.32);
 }
 
-.light .sidebar{
-  background:rgba(255,255,255,.55);
-}
-
-.side-section{
-  margin-bottom:20px;
+body.light .sidebar{
+  background:rgba(255,255,255,.52);
 }
 
 .side-label{
+  padding:9px 11px;
   color:var(--muted);
-  font-size:11px;
   text-transform:uppercase;
-  letter-spacing:1.3px;
-  padding:8px 11px;
+  font-size:11px;
+  letter-spacing:1.2px;
+}
+
+.side-group{
+  margin-bottom:18px;
 }
 
 .side-btn{
   width:100%;
   display:flex;
+  gap:10px;
   align-items:center;
-  gap:11px;
+  padding:11px;
+  margin:2px 0;
   border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:12px;
   border-radius:12px;
   text-align:left;
-  margin:2px 0;
+  color:var(--muted);
+  background:transparent;
 }
 
 .side-btn:hover,
 .side-btn.active{
-  background:var(--card);
   color:var(--text);
+  background:var(--card);
 }
 
 .main{
-  padding:25px;
   min-width:0;
+  padding:24px;
+  padding-bottom:50px;
 }
 
 .page-head{
   display:flex;
   justify-content:space-between;
+  gap:18px;
   align-items:flex-start;
-  gap:20px;
-  margin-bottom:25px;
+  margin-bottom:23px;
 }
 
 .page-head h1{
-  margin:0 0 7px;
+  margin:0 0 6px;
   font-size:32px;
 }
 
 .page-head p{
-  color:var(--muted);
   margin:0;
+  color:var(--muted);
 }
 
 .dashboard-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
+  gap:13px;
   margin-bottom:18px;
 }
 
 .stat{
-  background:var(--card);
+  padding:16px;
   border:1px solid var(--line);
   border-radius:17px;
-  padding:17px;
+  background:var(--card);
 }
 
 .stat-value{
-  font-size:27px;
+  font-size:28px;
   font-weight:900;
 }
 
@@ -498,14 +632,16 @@ footer{
 .workspace{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:18px;
+  gap:17px;
 }
 
 .panel{
-  background:var(--card);
+  min-width:0;
+  padding:19px;
   border:1px solid var(--line);
   border-radius:20px;
-  padding:20px;
+  background:var(--card);
+  box-shadow:var(--shadow);
 }
 
 .panel.full{
@@ -516,53 +652,50 @@ footer{
   margin-top:0;
 }
 
-.input,
-.textarea,
-.select{
-  width:100%;
-  border:1px solid var(--line);
-  background:var(--bg2);
-  color:var(--text);
-  border-radius:13px;
-  padding:12px 13px;
-  outline:none;
-}
-
 .textarea{
-  min-height:220px;
+  width:100%;
+  min-height:245px;
+  padding:13px;
   resize:vertical;
-  line-height:1.6;
+  border:1px solid var(--line);
+  border-radius:14px;
+  color:var(--text);
+  background:var(--bg-soft);
+  line-height:1.65;
 }
 
-.input:focus,
-.textarea:focus,
-.select:focus{
+.textarea:focus{
   border-color:var(--primary);
 }
 
 .form-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:10px;
 }
 
 .actions{
   display:flex;
   gap:9px;
   flex-wrap:wrap;
-  margin-top:12px;
+  margin-top:11px;
 }
 
 .result{
-  background:var(--bg2);
+  margin-top:12px;
+  padding:14px;
   border:1px solid var(--line);
   border-radius:15px;
-  padding:15px;
-  margin-top:13px;
+  background:var(--bg-soft);
 }
 
 .result h3{
   margin:0 0 10px;
+}
+
+.result p{
+  color:var(--muted);
+  line-height:1.65;
 }
 
 .result ul{
@@ -570,78 +703,140 @@ footer{
 }
 
 .result li{
-  margin:8px 0;
+  margin:7px 0;
   color:var(--muted);
+  line-height:1.55;
+}
+
+.tags{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
 }
 
 .tag{
   display:inline-flex;
-  padding:5px 9px;
-  border-radius:999px;
-  font-size:12px;
+  border:1px solid var(--line);
   background:var(--card2);
   color:var(--muted);
-  margin:3px;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;
 }
 
-.task{
+.task-row{
   display:flex;
   align-items:flex-start;
-  gap:10px;
+  gap:9px;
   padding:12px 0;
   border-bottom:1px solid var(--line);
 }
 
-.task:last-child{
+.task-row:last-child{
   border-bottom:0;
 }
 
-.task input{
-  margin-top:4px;
-}
-
-.task.done span{
+.task-row.done .task-text{
   text-decoration:line-through;
   color:var(--muted);
 }
 
-.empty{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
-  border:1px dashed var(--line);
-  border-radius:15px;
+.task-text{
+  flex:1;
+  line-height:1.5;
 }
 
-.profile{
+.mini{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.empty{
+  padding:30px 18px;
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:15px;
+  color:var(--muted);
+}
+
+.file-drop{
+  padding:18px;
+  border:1px dashed var(--line);
+  border-radius:17px;
+  text-align:center;
+  background:var(--bg-soft);
+}
+
+.file-drop strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.file-name{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.profile-card{
   display:flex;
-  gap:15px;
   align-items:center;
+  gap:14px;
 }
 
 .avatar{
-  width:58px;
-  height:58px;
+  width:61px;
+  height:61px;
   border-radius:50%;
   object-fit:cover;
   background:var(--card2);
 }
 
-.mobile-bottom{
+.profile-menu{
+  position:absolute;
+  right:0;
+  top:53px;
+  width:225px;
+  padding:8px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+}
+
+.profile-menu button{
+  width:100%;
+  padding:10px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  text-align:left;
+  color:var(--text);
+}
+
+.profile-menu button:hover{
+  background:var(--card2);
+}
+
+.header-user{
+  position:relative;
+}
+
+.mobile-nav{
   display:none;
 }
 
 .toast{
   position:fixed;
-  right:18px;
-  bottom:18px;
-  z-index:200;
-  max-width:360px;
-  background:#101c2d;
-  color:white;
-  border:1px solid #28405e;
-  border-radius:14px;
+  right:17px;
+  bottom:17px;
+  z-index:700;
+  max-width:365px;
   padding:13px 15px;
+  border:1px solid #2a4665;
+  border-radius:14px;
+  background:#0f1c2d;
+  color:#fff;
   box-shadow:var(--shadow);
   transform:translateY(130px);
   opacity:0;
@@ -654,139 +849,32 @@ footer{
   opacity:1;
 }
 
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.65);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal-backdrop.show{
-  display:flex;
-}
-
-.modal{
-  width:min(450px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:24px;
-  box-shadow:var(--shadow);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.close{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  font-size:23px;
-}
-
-.auth-tabs{
-  display:flex;
-  gap:5px;
-  padding:4px;
-  background:var(--bg2);
-  border-radius:13px;
-  margin:15px 0;
-}
-
-.auth-tab{
-  flex:1;
-  border:0;
-  padding:10px;
-  border-radius:9px;
-  background:transparent;
-  color:var(--muted);
-}
-
-.auth-tab.active{
-  background:var(--card2);
-  color:var(--text);
-}
-
-.auth-form{
-  display:grid;
-  gap:10px;
-}
-
-.divider{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:var(--muted);
-  margin:15px 0;
-  font-size:12px;
-}
-
-.divider:before,
-.divider:after{
-  content:"";
-  height:1px;
-  background:var(--line);
-  flex:1;
-}
-
-.status{
-  padding:10px 12px;
-  border-radius:12px;
-  font-size:13px;
-  margin-top:10px;
-}
-
-.status.error{
-  color:#ffd4d7;
-  background:rgba(255,95,109,.12);
-  border:1px solid rgba(255,95,109,.25);
-}
-
-.status.success{
-  color:#c9ffe9;
-  background:rgba(37,194,129,.10);
-  border:1px solid rgba(37,194,129,.22);
-}
-
-.ad-safe-note{
+.info-strip{
+  padding:13px 14px;
   border:1px dashed var(--line);
-  padding:15px;
   border-radius:15px;
   color:var(--muted);
   font-size:13px;
+  line-height:1.6;
 }
 
-/*
-  AdSense:
-  DO NOT put ads in the private workspace.
-  DO NOT reward users for ad views/clicks.
-  DO NOT invent an ad-slot ID.
+.supported{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+}
 
-  After Google approves/configures the site, paste the exact
-  AdSense code generated for the PUBLIC content area here.
+pre{
+  white-space:pre-wrap;
+  word-break:break-word;
+}
 
-  Publisher ID previously supplied:
-  ca-pub-2057536839831582
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-  Example normal AdSense loader:
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2057536839831582"
-    crossorigin="anonymous"></script>
+@media(max-width:950px){
 
-  This is intentionally NOT activated automatically in this
-  private application shell.
-*/
-
-@media(max-width:900px){
   .hero-grid{
     grid-template-columns:1fr;
   }
@@ -803,48 +891,54 @@ footer{
     display:none;
   }
 
-  .main{
-    padding:17px 15px 95px;
-  }
-
-  .mobile-bottom{
-    display:flex;
+  .mobile-nav{
     position:fixed;
-    z-index:60;
-    bottom:0;
+    z-index:300;
     left:0;
     right:0;
-    background:rgba(7,17,31,.94);
-    backdrop-filter:blur(18px);
+    bottom:0;
+    display:flex;
     border-top:1px solid var(--line);
-    padding:7px 5px calc(7px + env(safe-area-inset-bottom));
+    background:rgba(7,17,31,.95);
+    backdrop-filter:blur(18px);
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom));
   }
 
-  .light .mobile-bottom{
-    background:rgba(255,255,255,.95);
+  body.light .mobile-nav{
+    background:rgba(255,255,255,.96);
   }
 
-  .mobile-bottom button{
+  .mobile-nav button{
     flex:1;
     border:0;
     background:none;
     color:var(--muted);
+    padding:5px 2px;
     font-size:10px;
-    padding:6px 2px;
   }
 
-  .mobile-bottom button.active{
-    color:var(--primary2);
+  .mobile-nav button.active{
+    color:var(--cyan);
   }
+
+  .main{
+    padding:18px 15px 90px;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
 }
 
-@media(max-width:650px){
+@media(max-width:680px){
+
   .navlinks{
     display:none;
   }
 
   .hero{
-    padding-top:45px;
+    padding-top:48px;
   }
 
   .hero h1{
@@ -863,10 +957,6 @@ footer{
     grid-column:auto;
   }
 
-  .dashboard-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
   .form-grid{
     grid-template-columns:1fr;
   }
@@ -878,13 +968,27 @@ footer{
   .container{
     width:min(100% - 24px,1180px);
   }
+
+  .profile-menu{
+    right:0;
+  }
+
 }
 </style>
 
-<!-- Firebase compat SDK: deliberately explicit for a single-file deployment -->
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<!-- =========================================================
+     Firebase 12.19.0 browser modules
+========================================================= -->
+
+<script type="importmap">
+{
+  "imports":{
+    "firebase/app":"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js",
+    "firebase/auth":"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js",
+    "firebase/firestore":"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+  }
+}
+</script>
 
 </head>
 
@@ -897,25 +1001,41 @@ footer{
 <div id="publicSite">
 
 <header class="topbar">
+
   <div class="container nav">
 
-    <button class="brand" onclick="showPublic('home')" style="border:0;background:none;color:inherit">
+    <button class="brand" onclick="publicPage('home')">
+
       <span class="logo">
+
         <svg viewBox="0 0 24 24" fill="none">
-          <path d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
-                fill="currentColor"/>
+
+          <path
+            d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
+            fill="currentColor"/>
+
         </svg>
+
       </span>
+
       SHAHEEN
+
     </button>
 
     <nav class="navlinks">
-      <button onclick="showPublic('home')">Home</button>
-      <button onclick="showPublic('how')">How it works</button>
-      <button onclick="showPublic('guides')">Guides</button>
-      <button onclick="showPublic('about')">About</button>
-      <button onclick="showPublic('privacy')">Privacy</button>
-      <button onclick="showPublic('contact')">Contact</button>
+
+      <button onclick="publicPage('home')">Home</button>
+
+      <button onclick="publicPage('how')">How it works</button>
+
+      <button onclick="publicPage('guides')">Guides</button>
+
+      <button onclick="publicPage('about')">About</button>
+
+      <button onclick="publicPage('privacy')">Privacy</button>
+
+      <button onclick="publicPage('contact')">Contact</button>
+
     </nav>
 
     <button class="btn primary" onclick="openAuth('login')">
@@ -923,6 +1043,7 @@ footer{
     </button>
 
   </div>
+
 </header>
 
 <!-- HOME -->
@@ -940,71 +1061,91 @@ footer{
         </span>
 
         <h1>
-          Stop reading information.
-          <span class="gradient">Start acting on it.</span>
+          Give information.
+          <span class="gradient">Get clarity.</span>
         </h1>
 
         <p>
-          SHAHEEN turns documents, letters, notes and everyday information
-          into clear facts, dates, requirements, actions and checklists.
-          Process supported documents directly in your browser and keep
-          your workspace organized.
+          SHAHEEN NEXUS helps people turn documents, notices,
+          instructions, applications and everyday information
+          into clear facts, dates, requirements, actions and
+          checklists.
         </p>
 
         <div class="hero-actions">
-          <button class="btn primary" onclick="openAuth('signup')">
+
+          <button
+            class="btn primary"
+            onclick="openAuth('signup')"
+          >
             Start Free
           </button>
 
-          <button class="btn" onclick="showPublic('how')">
+          <button
+            class="btn"
+            onclick="publicPage('how')"
+          >
             See how it works
           </button>
+
         </div>
 
       </div>
 
       <div class="hero-card">
 
-        <div class="mock-flow">
+        <div class="flow">
 
           <div class="flow-item">
+
             <div class="flow-icon">📄</div>
+
             <div>
-              <b>1. Give information</b>
-              <div style="color:var(--muted);font-size:13px">
-                Paste text or upload supported documents
+              <strong>1. Add information</strong>
+              <div class="mini">
+                Paste text or upload supported files
               </div>
             </div>
+
           </div>
 
           <div class="flow-item">
+
             <div class="flow-icon">🔎</div>
+
             <div>
-              <b>2. Find what matters</b>
-              <div style="color:var(--muted);font-size:13px">
-                Dates, amounts, contacts and requirements
+              <strong>2. Find what matters</strong>
+              <div class="mini">
+                Dates, money, contacts and requirements
               </div>
             </div>
+
           </div>
 
           <div class="flow-item">
+
             <div class="flow-icon">✓</div>
+
             <div>
-              <b>3. Build actions</b>
-              <div style="color:var(--muted);font-size:13px">
-                Checklist and next steps
+              <strong>3. Build actions</strong>
+              <div class="mini">
+                Turn requirements into editable tasks
               </div>
             </div>
+
           </div>
 
           <div class="flow-item">
+
             <div class="flow-icon">☁</div>
+
             <div>
-              <b>4. Keep organized</b>
-              <div style="color:var(--muted);font-size:13px">
-                Save projects and notes
+              <strong>4. Keep organized</strong>
+              <div class="mini">
+                Save notes, documents and projects
               </div>
             </div>
+
           </div>
 
         </div>
@@ -1018,68 +1159,94 @@ footer{
   <div class="container section">
 
     <div class="section-title">
-      <h2>Built around real problems</h2>
+
+      <h2>Why this product is different</h2>
+
       <p>
-        The product is not positioned as another generic chatbot.
-        The core idea is to convert information into useful work.
+        The core product is not another generic chatbot or another
+        basic file converter. It is an action-oriented workspace.
       </p>
+
     </div>
 
     <div class="cards">
 
       <article class="card">
-        <div class="iconbox">📑</div>
+
+        <div class="icon">📑</div>
+
         <h3>Document → Action</h3>
+
         <p>
-          Extract important information from letters, applications,
-          instructions, notices and other text.
+          Extract important information and turn action-oriented
+          instructions into a practical checklist.
         </p>
+
       </article>
 
       <article class="card">
-        <div class="iconbox">⏰</div>
-        <h3>Dates & deadlines</h3>
+
+        <div class="icon">⏰</div>
+
+        <h3>Important dates</h3>
+
         <p>
-          Identify date-like information and organize it so users
-          can understand what may require attention.
+          Find date-like information and keep it visible instead
+          of losing deadlines inside long text.
         </p>
+
       </article>
 
       <article class="card">
-        <div class="iconbox">✓</div>
-        <h3>Checklists</h3>
+
+        <div class="icon">✓</div>
+
+        <h3>Requirements</h3>
+
         <p>
-          Turn requirements and action-oriented sentences into a
-          practical checklist.
+          Detect common requirement language such as required,
+          attach, submit, provide and verify.
         </p>
+
       </article>
 
       <article class="card">
-        <div class="iconbox">🧹</div>
-        <h3>Data utilities</h3>
+
+        <div class="icon">🧹</div>
+
+        <h3>Everyday data tools</h3>
+
         <p>
-          Clean text, inspect structured information and use everyday
-          calculators and formatting tools.
+          Clean text, format JSON, calculate percentages, compare
+          dates and convert common units.
         </p>
+
       </article>
 
       <article class="card">
-        <div class="iconbox">🔐</div>
+
+        <div class="icon">🔐</div>
+
         <h3>Privacy-conscious</h3>
+
         <p>
-          Browser-side processing is used for document analysis where
-          practical. The site does not pretend that local processing
-          is the same thing as end-to-end encryption.
+          Supported document parsing and basic analysis happen in
+          the browser where practical.
         </p>
+
       </article>
 
       <article class="card">
-        <div class="iconbox">☁</div>
-        <h3>Personal workspace</h3>
+
+        <div class="icon">☁</div>
+
+        <h3>Cloud workspace</h3>
+
         <p>
-          Signed-in users can save their workspace to Firebase
-          Firestore when the Firebase project is correctly configured.
+          Signed-in users can sync their own workspace with their
+          Firebase account.
         </p>
+
       </article>
 
     </div>
@@ -1089,49 +1256,70 @@ footer{
   <div class="container section">
 
     <div class="section-title">
-      <h2>Useful guides</h2>
+
+      <h2>Useful knowledge, not just a tool</h2>
+
       <p>
-        Public educational content gives users information before
-        asking them to use the product.
+        Public educational content helps users understand problems
+        and supports an AdSense-ready content structure.
       </p>
+
     </div>
 
     <div class="cards">
 
       <article class="card">
-        <h3>How to turn a document into a checklist</h3>
+
+        <h3>How to turn a long document into a checklist</h3>
+
         <p>
-          Read the document once, identify requirements, dates,
-          responsible parties and evidence, then convert each
-          actionable requirement into a checkable step.
+          Learn how to separate requirements, dates, people,
+          conditions and requested actions.
         </p>
-        <button class="btn small" onclick="showPublic('guides')">
+
+        <button
+          class="btn small"
+          onclick="publicPage('guides')"
+        >
           Read guide
         </button>
+
       </article>
 
       <article class="card">
-        <h3>How to organize important deadlines</h3>
+
+        <h3>How to organize deadlines</h3>
+
         <p>
-          Separate dates into deadlines, appointments, validity
-          periods and informational dates instead of treating every
-          date as the same kind of event.
+          Not every date is a deadline. Learn how to distinguish
+          submission dates, expiry dates, appointments and events.
         </p>
-        <button class="btn small" onclick="showPublic('guides')">
+
+        <button
+          class="btn small"
+          onclick="publicPage('guides')"
+        >
           Read guide
         </button>
+
       </article>
 
       <article class="card">
-        <h3>Why document privacy matters</h3>
+
+        <h3>Privacy when working with documents</h3>
+
         <p>
-          Documents can contain names, addresses, account numbers
-          and other sensitive information. Understand what should
-          be processed locally and what should never be shared.
+          Understand what information may be sensitive and why
+          unnecessary sharing should be avoided.
         </p>
-        <button class="btn small" onclick="showPublic('privacy')">
+
+        <button
+          class="btn small"
+          onclick="publicPage('privacy')"
+        >
           Read policy
         </button>
+
       </article>
 
     </div>
@@ -1151,49 +1339,53 @@ footer{
       <h1>How SHAHEEN works</h1>
 
       <p>
-        SHAHEEN is designed around one simple workflow:
-        <strong>information → understanding → action.</strong>
+        SHAHEEN is built around a simple idea:
+        <strong>information should lead to action.</strong>
       </p>
 
-      <h2>Step 1 — Add information</h2>
+      <h2>1. Add information</h2>
 
       <p>
-        Paste text into the analyzer or upload a supported text-based
-        document. The application can analyze the extracted text
-        directly in your browser.
+        You can paste text or upload supported files such as
+        PDF, DOCX, CSV, XLSX, TXT and common image formats.
       </p>
 
-      <h2>Step 2 — Identify important information</h2>
+      <h2>2. Extract useful information</h2>
 
       <p>
-        The analyzer looks for common dates, amounts, email addresses,
-        URLs, phone-like values, headings and action-oriented phrases.
+        The application looks for common dates, amounts, email
+        addresses, URLs, phone-like values, headings, requirements
+        and action-oriented sentences.
       </p>
 
-      <h2>Step 3 — Create an action list</h2>
+      <h2>3. Review the result</h2>
 
       <p>
-        Requirements and action-oriented sentences can be converted
-        into a checklist. This is deterministic browser-side analysis,
-        not a claim that an AI system has understood every legal or
-        financial implication.
+        Extracted information is presented in separate sections
+        so users do not have to search a long document manually.
       </p>
 
-      <h2>Step 4 — Save your work</h2>
+      <h2>4. Turn actions into tasks</h2>
 
       <p>
-        Signed-in users can save their workspace. Local storage also
-        keeps a local copy so a temporary cloud connection problem
-        does not destroy the interface or the local project.
+        Action-oriented sentences can be added to the user's task
+        workspace for editing and completion.
       </p>
 
-      <h2>Important</h2>
+      <h2>5. Save and export</h2>
 
       <p>
-        SHAHEEN is a productivity and information-organization tool.
-        It is not a lawyer, doctor, financial adviser, immigration
-        authority or government agency. Always verify important
-        decisions with the relevant official source.
+        Signed-in users can save their workspace to their own
+        Firebase document. A JSON export is also available.
+      </p>
+
+      <h2>Important limitation</h2>
+
+      <p>
+        SHAHEEN's core analyzer is deterministic browser-side
+        parsing. It does not claim perfect AI understanding,
+        legal advice, financial advice, medical advice or
+        guaranteed fraud detection.
       </p>
 
     </div>
@@ -1215,43 +1407,44 @@ footer{
       <h2>Document → Action method</h2>
 
       <p>
-        When reading an important document, first identify its purpose.
-        Then find the people or organizations involved, important dates,
-        required documents, amounts, conditions and requested actions.
+        Start by asking what the document is about. Then identify
+        who is involved, what is required, what dates matter,
+        what money is mentioned, what evidence is needed and
+        what action is requested.
       </p>
+
+      <h2>Build better checklists</h2>
 
       <p>
-        A useful checklist should describe an action clearly enough
-        that someone can tell whether it is complete.
+        Each checklist item should describe one action. Avoid
+        vague items such as "finish application" when the process
+        actually contains several separate steps.
       </p>
 
-      <h2>Deadline organization</h2>
+      <h2>Understand dates correctly</h2>
 
       <p>
-        Not every date is a deadline. A date can represent an event,
-        an expiry date, a submission deadline, a payment date or
-        simply historical information. Treating these differently
-        reduces mistakes.
+        A date may represent a deadline, appointment, issue date,
+        expiry date or historical event. Automatic extraction
+        finds date-like values but users should verify their meaning.
       </p>
 
-      <h2>Cleaning messy information</h2>
+      <h2>Handle personal information carefully</h2>
 
       <p>
-        When working with copied information, remove unnecessary
-        whitespace, standardize capitalization and separate records
-        consistently. Always verify cleaned data before using it
-        for important business or official purposes.
+        Documents can contain names, addresses, account numbers,
+        contact information and other personal information.
+        Only process data you have permission to use.
       </p>
 
-      <h2>Privacy checklist</h2>
+      <h2>Verify important decisions</h2>
 
-      <ul>
-        <li>Do not upload information you do not have permission to process.</li>
-        <li>Remove unnecessary personal information before sharing.</li>
-        <li>Use browser-side processing where appropriate.</li>
-        <li>Never publish private documents publicly.</li>
-        <li>Verify the destination before submitting sensitive information.</li>
-      </ul>
+      <p>
+        Automated extraction can save time, but important legal,
+        financial, medical, academic or government decisions
+        should always be checked against the relevant authoritative
+        source.
+      </p>
 
     </div>
 
@@ -1267,32 +1460,32 @@ footer{
 
     <div class="prose">
 
-      <h1>About SHAHEEN</h1>
+      <h1>About SHAHEEN NEXUS</h1>
 
       <p>
-        SHAHEEN is a utility-first web application concept focused on
-        one problem: people receive information everywhere, but the
-        difficult part is understanding what to do next.
+        SHAHEEN NEXUS is a utility-first web application designed
+        around a common problem: information is easy to receive,
+        but understanding the next action is often difficult.
       </p>
 
       <p>
-        The product combines document analysis, organization,
-        checklists, notes and practical utilities in one workspace.
+        The platform combines document analysis, checklists,
+        notes, saved projects and everyday productivity tools.
       </p>
 
       <h2>Our principle</h2>
 
       <p>
-        Useful software should reduce work, not create more work.
+        Software should reduce unnecessary work, not create more
+        settings and complexity.
       </p>
 
-      <h2>No fake claims</h2>
+      <h2>No fake intelligence</h2>
 
       <p>
-        SHAHEEN does not claim that deterministic browser parsing is
-        perfect AI understanding, legal advice or guaranteed fraud
-        detection. Results should be checked when the underlying
-        information is important.
+        Where the product performs deterministic parsing, it says
+        so. SHAHEEN does not present simple pattern matching as
+        a magical or perfectly accurate AI system.
       </p>
 
     </div>
@@ -1312,49 +1505,49 @@ footer{
       <h1>Privacy Policy</h1>
 
       <p>
-        SHAHEEN is designed to minimize unnecessary collection of
-        information.
+        SHAHEEN is designed to minimize unnecessary collection
+        and transfer of user information.
       </p>
 
-      <h2>Document processing</h2>
+      <h2>Browser processing</h2>
 
       <p>
-        Supported document analysis is designed to happen in the
-        browser. This reduces the need to upload document contents
-        to a server for basic extraction.
+        Supported document extraction and analysis are designed
+        to happen in the browser. This means document contents
+        used for local analysis do not have to be sent to a
+        SHAHEEN application server.
       </p>
 
-      <h2>Account information</h2>
+      <h2>Firebase Authentication</h2>
 
       <p>
-        If you create an account through Firebase Authentication,
-        Firebase processes authentication information according to
-        Google's Firebase terms and privacy practices.
+        Authentication is handled by Firebase Authentication.
+        SHAHEEN does not store users' passwords inside its own
+        JavaScript application.
       </p>
 
       <h2>Cloud workspace</h2>
 
       <p>
-        If Firestore synchronization is enabled, saved workspace
-        information can be stored in your Firebase project. Access
-        should be restricted using Firebase Security Rules.
+        When cloud synchronization is enabled, saved workspace
+        data can be stored in the Firebase project associated
+        with the application.
       </p>
 
-      <h2>Third-party services</h2>
+      <h2>Local storage</h2>
 
       <p>
-        The application may use Firebase services and browser libraries
-        necessary for specific functions. Users should review the
-        applicable third-party privacy policies before using those
-        services.
+        The browser may store local workspace data so that a
+        temporary network or Firestore problem does not erase
+        the user's local work.
       </p>
 
-      <h2>Important</h2>
+      <h2>User responsibility</h2>
 
       <p>
-        Do not upload extremely sensitive information unless you
-        understand how the relevant service processes it and you have
-        permission to use the information.
+        Do not upload or process information without authorization.
+        For highly sensitive documents, review the relevant service
+        configuration and privacy requirements before use.
       </p>
 
     </div>
@@ -1374,31 +1567,31 @@ footer{
       <h1>Terms of Use</h1>
 
       <p>
-        SHAHEEN is provided as a productivity and information
-        organization service.
+        SHAHEEN is a productivity and information organization tool.
       </p>
 
       <h2>No professional advice</h2>
 
       <p>
-        Information generated by the application does not replace
-        professional legal, medical, financial, tax or governmental
-        advice.
+        Information extracted or organized by the application
+        should not be treated as legal, medical, financial, tax,
+        immigration or government advice.
       </p>
 
-      <h2>User responsibility</h2>
+      <h2>Accuracy</h2>
 
       <p>
-        Users are responsible for checking extracted information and
-        confirming important decisions with authoritative sources.
+        Users remain responsible for checking important dates,
+        amounts, names, requirements and decisions against the
+        original source.
       </p>
 
-      <h2>Acceptable use</h2>
+      <h2>Responsible use</h2>
 
       <p>
-        Do not use the service to violate laws, abuse other people,
-        upload information without authorization or interfere with
-        the operation of the service.
+        Users should not upload information without permission,
+        attempt to damage the service, or use the product in
+        violation of applicable law.
       </p>
 
     </div>
@@ -1417,33 +1610,35 @@ footer{
 
       <h1>Security</h1>
 
+      <h2>Authentication</h2>
+
       <p>
-        Security starts with minimizing unnecessary data transfer.
-        SHAHEEN therefore uses browser-side processing for supported
-        local document analysis.
+        Firebase Authentication manages passwords and supported
+        sign-in providers.
       </p>
 
-      <h2>Firebase authentication</h2>
+      <h2>User isolation</h2>
 
       <p>
-        Authentication is handled through Firebase Authentication
-        rather than storing passwords inside SHAHEEN.
+        Firestore access should be restricted by authenticated
+        user ID. A production database should never use a rule
+        that grants every signed-in user access to every user's
+        data.
       </p>
 
-      <h2>Firestore</h2>
+      <h2>Browser-side document processing</h2>
 
       <p>
-        Private user data should be protected by rules matching the
-        authenticated user's UID. Never use an unrestricted
-        production Firestore ruleset.
+        Basic document parsing is performed locally where practical.
+        This reduces unnecessary transfer of document contents.
       </p>
 
-      <h2>Important limitation</h2>
+      <h2>Security limitation</h2>
 
       <p>
-        A client-side web application cannot honestly promise
-        perfect security or end-to-end encryption without implementing
-        and independently auditing a complete cryptographic architecture.
+        No client-only web application can honestly promise perfect
+        security or perfect encryption without a complete audited
+        cryptographic architecture.
       </p>
 
     </div>
@@ -1460,22 +1655,28 @@ footer{
 
     <div class="prose">
 
-      <h1>Contact SHAHEEN</h1>
+      <h1>Contact</h1>
 
       <p>
-        For general questions, product feedback or security reports,
-        use the contact address configured by the site owner.
+        For public launch, configure the official support address
+        for this website in the site owner's deployment settings.
       </p>
 
       <div class="card">
-        <h3>Contact</h3>
+
+        <h3>Product feedback</h3>
+
         <p>
-          Replace this address with your real support email before
-          publishing the production site.
+          SHAHEEN is designed to improve through real user
+          feedback, bug reports and feature requests.
         </p>
-        <a class="btn primary" href="mailto:support@example.com">
-          Email support
-        </a>
+
+        <p>
+          The application itself does not pretend that a static
+          HTML file can securely deliver email without a properly
+          configured mail or backend service.
+        </p>
+
       </div>
 
     </div>
@@ -1486,21 +1687,36 @@ footer{
 
 <footer>
 
-  <div class="container footer-grid">
+  <div class="container footer-row">
 
     <div>
-      <b>SHAHEEN</b>
-      <div style="margin-top:6px">
+      <strong>SHAHEEN NEXUS</strong>
+
+      <div style="margin-top:5px">
         Information → Action
       </div>
     </div>
 
     <div class="footer-links">
-      <button onclick="showPublic('about')">About</button>
-      <button onclick="showPublic('privacy')">Privacy</button>
-      <button onclick="showPublic('terms')">Terms</button>
-      <button onclick="showPublic('security')">Security</button>
-      <button onclick="showPublic('contact')">Contact</button>
+
+      <button onclick="publicPage('about')">About</button>
+
+      <button onclick="publicPage('privacy')">
+        Privacy
+      </button>
+
+      <button onclick="publicPage('terms')">
+        Terms
+      </button>
+
+      <button onclick="publicPage('security')">
+        Security
+      </button>
+
+      <button onclick="publicPage('contact')">
+        Contact
+      </button>
+
     </div>
 
   </div>
@@ -1510,34 +1726,87 @@ footer{
 </div>
 
 <!-- =========================================================
-     PRIVATE APP
+     PRIVATE APPLICATION
 ========================================================= -->
 
-<div id="appSite" class="app-shell hidden">
+<div id="appSite" class="hidden">
 
 <header class="topbar">
 
   <div class="container nav">
 
     <div class="brand">
+
       <span class="logo">
+
         <svg viewBox="0 0 24 24" fill="none">
-          <path d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
-                fill="currentColor"/>
+
+          <path
+            d="M4 15c3-8 8-11 16-11-1 3-2 6-5 8 2 0 4 1 5 2-4 1-7 0-10-2-1 2-3 3-6 3Z"
+            fill="currentColor"/>
+
         </svg>
+
       </span>
+
       SHAHEEN NEXUS
+
     </div>
 
-    <div style="display:flex;align-items:center;gap:8px">
+    <div style="display:flex;gap:8px;align-items:center">
 
-      <button class="btn small" onclick="toggleTheme()">
-        ◐ Theme
+      <button
+        class="btn small"
+        onclick="toggleTheme()"
+      >
+        ◐
       </button>
 
-      <button class="btn small" onclick="openProfile()">
-        Profile
-      </button>
+      <div class="header-user">
+
+        <button
+          class="btn small"
+          onclick="toggleProfileMenu()"
+        >
+          ⋮
+        </button>
+
+        <div
+          id="profileMenu"
+          class="profile-menu hidden"
+        >
+
+          <button onclick="openPage('profile')">
+            👤 Profile
+          </button>
+
+          <button onclick="publicPage('about')">
+            ℹ About Us
+          </button>
+
+          <button onclick="publicPage('privacy')">
+            🔐 Privacy Policy
+          </button>
+
+          <button onclick="publicPage('terms')">
+            📄 Terms
+          </button>
+
+          <button onclick="publicPage('security')">
+            🛡 Security
+          </button>
+
+          <button onclick="publicPage('contact')">
+            ✉ Contact Us
+          </button>
+
+          <button onclick="logout()">
+            ⇥ Sign out
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -1547,748 +1816,1079 @@ footer{
 
 <div class="app-layout">
 
-  <aside class="sidebar">
+<aside class="sidebar">
 
-    <div class="side-section">
+  <div class="side-group">
 
-      <div class="side-label">Workspace</div>
+    <div class="side-label">Workspace</div>
 
-      <button class="side-btn active" data-page="dashboard" onclick="openPage('dashboard',this)">
-        🏠 <span>Today</span>
-      </button>
+    <button
+      class="side-btn active"
+      data-page="dashboard"
+      onclick="openPage('dashboard')"
+    >
+      🏠 Today
+    </button>
 
-      <button class="side-btn" data-page="documents" onclick="openPage('documents',this)">
-        📄 <span>Documents</span>
-      </button>
+    <button
+      class="side-btn"
+      data-page="documents"
+      onclick="openPage('documents')"
+    >
+      📄 Documents
+    </button>
 
-      <button class="side-btn" data-page="tasks" onclick="openPage('tasks',this)">
-        ✓ <span>Tasks</span>
-      </button>
+    <button
+      class="side-btn"
+      data-page="tasks"
+      onclick="openPage('tasks')"
+    >
+      ✓ Tasks
+    </button>
 
-      <button class="side-btn" data-page="notes" onclick="openPage('notes',this)">
-        📝 <span>Notes</span>
-      </button>
+    <button
+      class="side-btn"
+      data-page="notes"
+      onclick="openPage('notes')"
+    >
+      📝 Notes
+    </button>
 
-      <button class="side-btn" data-page="saved" onclick="openPage('saved',this)">
-        ★ <span>Saved</span>
-      </button>
+    <button
+      class="side-btn"
+      data-page="saved"
+      onclick="openPage('saved')"
+    >
+      ★ Saved
+    </button>
+
+  </div>
+
+  <div class="side-group">
+
+    <div class="side-label">Tools</div>
+
+    <button
+      class="side-btn"
+      data-page="tools"
+      onclick="openPage('tools')"
+    >
+      🧰 All tools
+    </button>
+
+    <button
+      class="side-btn"
+      data-page="calculator"
+      onclick="openPage('calculator')"
+    >
+      🧮 Calculator
+    </button>
+
+    <button
+      class="side-btn"
+      data-page="text"
+      onclick="openPage('text')"
+    >
+      Aa Text tools
+    </button>
+
+  </div>
+
+  <div class="side-group">
+
+    <div class="side-label">Account</div>
+
+    <button
+      class="side-btn"
+      data-page="profile"
+      onclick="openPage('profile')"
+    >
+      👤 Profile
+    </button>
+
+    <button
+      class="side-btn"
+      onclick="toggleTheme()"
+    >
+      ◐ Theme
+    </button>
+
+    <button
+      class="side-btn"
+      onclick="logout()"
+    >
+      ⇥ Sign out
+    </button>
+
+  </div>
+
+</aside>
+
+<main class="main">
+
+<!-- DASHBOARD -->
+
+<section id="page-dashboard" class="app-page">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1 id="welcomeTitle">
+        Today
+      </h1>
+
+      <p>
+        Turn information into your next useful action.
+      </p>
 
     </div>
 
-    <div class="side-section">
+    <button
+      class="btn primary"
+      onclick="openPage('documents')"
+    >
+      + New analysis
+    </button>
 
-      <div class="side-label">Tools</div>
+  </div>
 
-      <button class="side-btn" data-page="tools" onclick="openPage('tools',this)">
-        🧰 <span>All tools</span>
-      </button>
+  <div class="dashboard-grid">
 
-      <button class="side-btn" data-page="calculator" onclick="openPage('calculator',this)">
-        🧮 <span>Calculator</span>
-      </button>
-
-      <button class="side-btn" data-page="texttools" onclick="openPage('texttools',this)">
-        Aa <span>Text tools</span>
-      </button>
-
+    <div class="stat">
+      <div
+        id="statDocuments"
+        class="stat-value"
+      >
+        0
+      </div>
+      <div class="stat-label">
+        Documents
+      </div>
     </div>
 
-    <div class="side-section">
-
-      <div class="side-label">Account</div>
-
-      <button class="side-btn" onclick="openProfile()">
-        👤 <span>Profile</span>
-      </button>
-
-      <button class="side-btn" onclick="toggleTheme()">
-        ◐ <span>Theme</span>
-      </button>
-
-      <button class="side-btn" onclick="logout()">
-        ⇥ <span>Sign out</span>
-      </button>
-
+    <div class="stat">
+      <div
+        id="statTasks"
+        class="stat-value"
+      >
+        0
+      </div>
+      <div class="stat-label">
+        Open tasks
+      </div>
     </div>
 
-  </aside>
+    <div class="stat">
+      <div
+        id="statNotes"
+        class="stat-value"
+      >
+        0
+      </div>
+      <div class="stat-label">
+        Notes
+      </div>
+    </div>
 
-  <main class="main">
+    <div class="stat">
+      <div
+        id="statSaved"
+        class="stat-value"
+      >
+        0
+      </div>
+      <div class="stat-label">
+        Saved
+      </div>
+    </div>
 
-    <!-- DASHBOARD -->
+  </div>
 
-    <section id="page-dashboard" class="app-page">
+  <div class="workspace">
 
-      <div class="page-head">
+    <div class="panel">
 
-        <div>
-          <h1 id="helloTitle">Today</h1>
-          <p>Turn information into your next useful action.</p>
-        </div>
+      <h2>Quick capture</h2>
 
-        <button class="btn primary" onclick="openPage('documents')">
-          + Analyze information
+      <textarea
+        id="quickCapture"
+        class="textarea"
+        style="min-height:175px"
+        placeholder="Paste a letter, notice, email text, university instructions, application requirements or any important information..."
+      ></textarea>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="analyzeQuick()"
+        >
+          Analyze
+        </button>
+
+        <button
+          class="btn"
+          onclick="saveQuickNote()"
+        >
+          Save as note
         </button>
 
       </div>
 
-      <div class="dashboard-grid">
+    </div>
 
-        <div class="stat">
-          <div class="stat-value" id="statDocs">0</div>
-          <div class="stat-label">Documents</div>
+    <div class="panel">
+
+      <h2>Recent activity</h2>
+
+      <div id="recentActivity"></div>
+
+    </div>
+
+    <div class="panel full">
+
+      <div class="info-strip">
+
+        <strong>Private workspace:</strong>
+        SHAHEEN does not place AdSense advertising inside the
+        personal workspace. The focus here is your documents,
+        tasks, notes and saved work.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DOCUMENTS -->
+
+<section id="page-documents" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Document Action Engine</h1>
+
+      <p>
+        Upload or paste information and extract what matters.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <h2>Add a document</h2>
+
+      <input
+        id="documentTitle"
+        class="field"
+        placeholder="Document title"
+      >
+
+      <br><br>
+
+      <div class="file-drop">
+
+        <strong>
+          Upload a supported file
+        </strong>
+
+        <div class="mini">
+          PDF · DOCX · XLSX · XLS · CSV · TXT · MD · PNG · JPG · WEBP
         </div>
 
-        <div class="stat">
-          <div class="stat-value" id="statTasks">0</div>
-          <div class="stat-label">Open tasks</div>
-        </div>
+        <br>
 
-        <div class="stat">
-          <div class="stat-value" id="statNotes">0</div>
-          <div class="stat-label">Notes</div>
-        </div>
+        <input
+          id="documentFile"
+          type="file"
+          accept=".pdf,.docx,.xlsx,.xls,.csv,.txt,.md,.png,.jpg,.jpeg,.webp"
+          onchange="handleDocumentFile(event)"
+        >
 
-        <div class="stat">
-          <div class="stat-value" id="statSaved">0</div>
-          <div class="stat-label">Saved projects</div>
+        <div
+          id="fileName"
+          class="file-name"
+        >
+          No file selected
         </div>
 
       </div>
 
-      <div class="workspace">
-
-        <div class="panel">
-
-          <h2>Quick capture</h2>
-
-          <textarea
-            id="quickText"
-            class="textarea"
-            style="min-height:150px"
-            placeholder="Paste a letter, instructions, notice, email text or any information here..."
-          ></textarea>
-
-          <div class="actions">
-            <button class="btn primary" onclick="analyzeQuick()">
-              Analyze
-            </button>
-
-            <button class="btn" onclick="saveQuickNote()">
-              Save as note
-            </button>
-          </div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Recent activity</h2>
-
-          <div id="recentActivity">
-            <div class="empty">
-              Your recent documents, tasks and notes will appear here.
-            </div>
-          </div>
-
-        </div>
-
-        <div class="panel full">
-
-          <div class="ad-safe-note">
-            <b>Workspace privacy:</b>
-            This private workspace intentionally does not contain
-            Google AdSense advertising. Ads should not be used to
-            interfere with private communication or core account
-            functionality.
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- DOCUMENTS -->
-
-    <section id="page-documents" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Document Action Engine</h1>
-          <p>
-            Paste information and turn it into facts, dates,
-            requirements and actions.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="workspace">
-
-        <div class="panel">
-
-          <h2>Input</h2>
-
-          <input
-            id="documentTitle"
-            class="input"
-            placeholder="Document title (optional)"
-          >
-
-          <br><br>
-
-          <textarea
-            id="documentText"
-            class="textarea"
-            placeholder="Paste the document text here..."
-          ></textarea>
-
-          <div class="actions">
-
-            <button class="btn primary" onclick="analyzeDocument()">
-              Analyze document
-            </button>
-
-            <button class="btn" onclick="clearDocument()">
-              Clear
-            </button>
-
-          </div>
-
-          <div style="margin-top:15px;color:var(--muted);font-size:13px">
-            Browser-side analysis is used here. No claim is made that
-            automatic extraction is perfect.
-          </div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Analysis</h2>
-
-          <div id="analysisOutput">
-
-            <div class="empty">
-              Add information and select “Analyze document”.
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- TASKS -->
-
-    <section id="page-tasks" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Tasks</h1>
-          <p>Keep actionable items visible.</p>
-        </div>
-
-      </div>
-
-      <div class="panel">
-
-        <div class="actions">
-
-          <input
-            id="newTask"
-            class="input"
-            style="max-width:600px"
-            placeholder="Add a task..."
-          >
-
-          <button class="btn primary" onclick="addTask()">
-            Add task
-          </button>
-
-        </div>
-
-        <div id="taskList" style="margin-top:18px"></div>
-
-      </div>
-
-    </section>
-
-    <!-- NOTES -->
-
-    <section id="page-notes" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Notes</h1>
-          <p>Keep useful information in one place.</p>
-        </div>
-
-      </div>
-
-      <div class="workspace">
-
-        <div class="panel">
-
-          <h2>New note</h2>
-
-          <input
-            id="noteTitle"
-            class="input"
-            placeholder="Note title"
-          >
-
-          <br><br>
-
-          <textarea
-            id="noteBody"
-            class="textarea"
-            style="min-height:180px"
-            placeholder="Write your note..."
-          ></textarea>
-
-          <div class="actions">
-
-            <button class="btn primary" onclick="addNote()">
-              Save note
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Saved notes</h2>
-
-          <div id="noteList"></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- SAVED -->
-
-    <section id="page-saved" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Saved projects</h1>
-          <p>Your analyzed documents and reusable information.</p>
-        </div>
-
-        <div class="actions">
-          <button class="btn" onclick="exportData()">
-            Export
-          </button>
-
-          <label class="btn">
-            Import
-            <input
-              id="importFile"
-              type="file"
-              accept=".json"
-              hidden
-              onchange="importData(event)"
-            >
-          </label>
-        </div>
-
-      </div>
-
-      <div class="panel">
-
-        <div id="savedList"></div>
-
-      </div>
-
-    </section>
-
-    <!-- TOOLS -->
-
-    <section id="page-tools" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Tools</h1>
-          <p>Small utilities for everyday work.</p>
-        </div>
-
-      </div>
-
-      <div class="cards">
-
-        <button class="card" style="text-align:left" onclick="openPage('calculator')">
-          <div class="iconbox">🧮</div>
-          <h3>Calculator</h3>
-          <p>Basic calculations and percentages.</p>
-        </button>
-
-        <button class="card" style="text-align:left" onclick="openPage('texttools')">
-          <div class="iconbox">Aa</div>
-          <h3>Text tools</h3>
-          <p>Count, format and transform text.</p>
-        </button>
-
-        <div class="card">
-          <div class="iconbox">📅</div>
-          <h3>Date tools</h3>
-          <p>
-            Use the date difference and age calculator below.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="iconbox">🔢</div>
-          <h3>Converters</h3>
-          <p>
-            Convert common length and weight units.
-          </p>
-        </div>
-
+      <div class="supported">
+        Files are processed in the browser for supported extraction.
       </div>
 
       <br>
 
-      <div class="workspace">
+      <textarea
+        id="documentText"
+        class="textarea"
+        placeholder="Or paste the document text here..."
+      ></textarea>
 
-        <div class="panel">
+      <label style="
+        display:flex;
+        gap:8px;
+        align-items:center;
+        margin-top:10px;
+        color:var(--muted);
+        font-size:13px;
+      ">
 
-          <h2>Date difference</h2>
+        <input
+          id="createTasksAutomatically"
+          type="checkbox"
+          checked
+        >
 
-          <div class="form-grid">
+        Create tasks from detected action sentences
 
-            <input
-              id="dateA"
-              type="date"
-              class="input"
-            >
+      </label>
 
-            <input
-              id="dateB"
-              type="date"
-              class="input"
-            >
+      <div class="actions">
 
-          </div>
+        <button
+          class="btn primary"
+          onclick="analyzeDocument()"
+        >
+          Analyze document
+        </button>
 
-          <div class="actions">
-            <button class="btn primary" onclick="dateDifference()">
-              Calculate
-            </button>
-          </div>
+        <button
+          class="btn"
+          onclick="clearDocument()"
+        >
+          Clear
+        </button>
 
-          <div id="dateResult"></div>
+      </div>
 
+    </div>
+
+    <div class="panel">
+
+      <h2>Results</h2>
+
+      <div id="analysisOutput">
+
+        <div class="empty">
+          Add a document or paste text to begin.
         </div>
 
-        <div class="panel">
+      </div>
 
-          <h2>Age calculator</h2>
+    </div>
 
-          <input
-            id="birthDate"
-            type="date"
-            class="input"
+  </div>
+
+</section>
+
+<!-- TASKS -->
+
+<section id="page-tasks" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Tasks</h1>
+
+      <p>
+        Your actionable work in one place.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="panel">
+
+    <div class="form-grid">
+
+      <input
+        id="newTask"
+        class="field"
+        placeholder="What needs to be done?"
+      >
+
+      <input
+        id="taskDue"
+        class="field"
+        type="date"
+      >
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn primary"
+        onclick="addTask()"
+      >
+        Add task
+      </button>
+
+    </div>
+
+    <div id="taskList" style="margin-top:15px"></div>
+
+  </div>
+
+</section>
+
+<!-- NOTES -->
+
+<section id="page-notes" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Notes</h1>
+
+      <p>
+        Save anything you want to remember.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <h2>New note</h2>
+
+      <input
+        id="noteTitle"
+        class="field"
+        placeholder="Title"
+      >
+
+      <br><br>
+
+      <textarea
+        id="noteBody"
+        class="textarea"
+        style="min-height:220px"
+        placeholder="Write your note..."
+      ></textarea>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="addNote()"
+        >
+          Save note
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Saved notes</h2>
+
+      <div id="noteList"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SAVED -->
+
+<section id="page-saved" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Saved projects</h1>
+
+      <p>
+        Your analyzed documents and reusable projects.
+      </p>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn"
+        onclick="exportWorkspace()"
+      >
+        Export JSON
+      </button>
+
+      <label class="btn">
+
+        Import JSON
+
+        <input
+          type="file"
+          accept=".json"
+          hidden
+          onchange="importWorkspace(event)"
+        >
+
+      </label>
+
+    </div>
+
+  </div>
+
+  <div class="panel">
+
+    <div id="savedList"></div>
+
+  </div>
+
+</section>
+
+<!-- TOOLS -->
+
+<section id="page-tools" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Tools</h1>
+
+      <p>
+        Practical browser-side utilities.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="cards">
+
+    <button
+      class="card"
+      style="text-align:left"
+      onclick="openPage('calculator')"
+    >
+
+      <div class="icon">🧮</div>
+
+      <h3>Calculator</h3>
+
+      <p>
+        Arithmetic and percentage calculations.
+      </p>
+
+    </button>
+
+    <button
+      class="card"
+      style="text-align:left"
+      onclick="openPage('text')"
+    >
+
+      <div class="icon">Aa</div>
+
+      <h3>Text tools</h3>
+
+      <p>
+        Word count, case conversion and JSON formatting.
+      </p>
+
+    </button>
+
+    <div class="card">
+
+      <div class="icon">📅</div>
+
+      <h3>Date tools</h3>
+
+      <p>
+        Date difference and age calculation.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <div class="icon">🔢</div>
+
+      <h3>Unit converter</h3>
+
+      <p>
+        Convert common length and weight units.
+      </p>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <h2>Date difference</h2>
+
+      <div class="form-grid">
+
+        <input
+          id="dateA"
+          class="field"
+          type="date"
+        >
+
+        <input
+          id="dateB"
+          class="field"
+          type="date"
+        >
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="dateDifference()"
+        >
+          Calculate
+        </button>
+
+      </div>
+
+      <div id="dateDifferenceResult"></div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Age calculator</h2>
+
+      <input
+        id="birthDate"
+        class="field"
+        type="date"
+      >
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="calculateAge()"
+        >
+          Calculate age
+        </button>
+
+      </div>
+
+      <div id="ageResult"></div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Unit converter</h2>
+
+      <div class="form-grid">
+
+        <input
+          id="unitValue"
+          class="field"
+          type="number"
+          placeholder="Value"
+        >
+
+        <select
+          id="unitType"
+          class="field"
+        >
+
+          <option value="km-mi">
+            Kilometers → Miles
+          </option>
+
+          <option value="mi-km">
+            Miles → Kilometers
+          </option>
+
+          <option value="kg-lb">
+            Kilograms → Pounds
+          </option>
+
+          <option value="lb-kg">
+            Pounds → Kilograms
+          </option>
+
+          <option value="cm-in">
+            Centimeters → Inches
+          </option>
+
+          <option value="in-cm">
+            Inches → Centimeters
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="convertUnits()"
+        >
+          Convert
+        </button>
+
+      </div>
+
+      <div id="unitResult"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CALCULATOR -->
+
+<section id="page-calculator" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Calculator</h1>
+
+      <p>
+        Basic arithmetic in your browser.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <h2>Expression</h2>
+
+      <input
+        id="calcInput"
+        class="field"
+        placeholder="Example: 125 * 4 + 10"
+      >
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="calculateExpression()"
+        >
+          Calculate
+        </button>
+
+      </div>
+
+      <div id="calcResult"></div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>Percentage</h2>
+
+      <div class="form-grid">
+
+        <input
+          id="percentBase"
+          class="field"
+          type="number"
+          placeholder="Value"
+        >
+
+        <input
+          id="percentNumber"
+          class="field"
+          type="number"
+          placeholder="Percent"
+        >
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="percentageCalc()"
+        >
+          Calculate
+        </button>
+
+      </div>
+
+      <div id="percentResult"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- TEXT -->
+
+<section id="page-text" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Text tools</h1>
+
+      <p>
+        Count, transform and format text locally.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <textarea
+        id="textInput"
+        class="textarea"
+        style="min-height:320px"
+        placeholder="Enter your text..."
+        oninput="updateTextStats()"
+      ></textarea>
+
+      <div
+        id="textStats"
+        class="result"
+      >
+        Characters: 0 · Words: 0 · Lines: 0
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn"
+          onclick="upperText()"
+        >
+          UPPERCASE
+        </button>
+
+        <button
+          class="btn"
+          onclick="lowerText()"
+        >
+          lowercase
+        </button>
+
+        <button
+          class="btn"
+          onclick="titleText()"
+        >
+          Title Case
+        </button>
+
+        <button
+          class="btn"
+          onclick="cleanText()"
+        >
+          Clean spaces
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <h2>JSON Formatter</h2>
+
+      <textarea
+        id="jsonInput"
+        class="textarea"
+        style="min-height:180px"
+        placeholder='{"name":"SHAHEEN"}'
+      ></textarea>
+
+      <div class="actions">
+
+        <button
+          class="btn primary"
+          onclick="formatJSON()"
+        >
+          Format JSON
+        </button>
+
+      </div>
+
+      <pre
+        id="jsonOutput"
+        class="result"
+      ></pre>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section id="page-profile" class="app-page hidden">
+
+  <div class="page-head">
+
+    <div>
+
+      <h1>Profile</h1>
+
+      <p>
+        Account and workspace settings.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="workspace">
+
+    <div class="panel">
+
+      <div class="profile-card">
+
+        <img
+          id="profileAvatar"
+          class="avatar"
+          alt="Profile"
+        >
+
+        <div>
+
+          <h2
+            id="profileName"
+            style="margin:0"
           >
+            User
+          </h2>
 
-          <div class="actions">
-            <button class="btn primary" onclick="calculateAge()">
-              Calculate age
-            </button>
-          </div>
-
-          <div id="ageResult"></div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Unit converter</h2>
-
-          <div class="form-grid">
-
-            <input
-              id="unitValue"
-              type="number"
-              class="input"
-              placeholder="Value"
-            >
-
-            <select id="unitType" class="select">
-              <option value="km-mi">Kilometers → Miles</option>
-              <option value="mi-km">Miles → Kilometers</option>
-              <option value="kg-lb">Kilograms → Pounds</option>
-              <option value="lb-kg">Pounds → Kilograms</option>
-              <option value="cm-in">Centimeters → Inches</option>
-              <option value="in-cm">Inches → Centimeters</option>
-            </select>
-
-          </div>
-
-          <div class="actions">
-            <button class="btn primary" onclick="convertUnit()">
-              Convert
-            </button>
-          </div>
-
-          <div id="unitResult"></div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- CALCULATOR -->
-
-    <section id="page-calculator" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Calculator</h1>
-          <p>Simple browser-side calculations.</p>
-        </div>
-
-      </div>
-
-      <div class="workspace">
-
-        <div class="panel">
-
-          <input
-            id="calcInput"
-            class="input"
-            placeholder="Example: 125 * 4 + 10"
+          <div
+            id="profileEmail"
+            class="mini"
           >
-
-          <div class="actions">
-            <button class="btn primary" onclick="calculate()">
-              Calculate
-            </button>
+            —
           </div>
-
-          <div id="calcResult" class="result hidden"></div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Percentage</h2>
-
-          <div class="form-grid">
-
-            <input
-              id="percentValue"
-              type="number"
-              class="input"
-              placeholder="Value"
-            >
-
-            <input
-              id="percentOf"
-              type="number"
-              class="input"
-              placeholder="%"
-            >
-
-          </div>
-
-          <div class="actions">
-            <button class="btn primary" onclick="percentage()">
-              Calculate
-            </button>
-          </div>
-
-          <div id="percentResult"></div>
 
         </div>
 
       </div>
 
-    </section>
+      <div class="actions">
 
-    <!-- TEXT TOOLS -->
+        <button
+          class="btn"
+          onclick="toggleTheme()"
+        >
+          Toggle theme
+        </button>
 
-    <section id="page-texttools" class="app-page hidden">
-
-      <div class="page-head">
-
-        <div>
-          <h1>Text tools</h1>
-          <p>Count, format and transform text locally.</p>
-        </div>
-
-      </div>
-
-      <div class="workspace">
-
-        <div class="panel">
-
-          <textarea
-            id="textToolInput"
-            class="textarea"
-            style="min-height:300px"
-            placeholder="Enter text..."
-            oninput="updateTextStats()"
-          ></textarea>
-
-          <div id="textStats" class="result">
-            Characters: 0 · Words: 0 · Lines: 0
-          </div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Transform</h2>
-
-          <div class="actions">
-
-            <button class="btn" onclick="textUpper()">
-              UPPERCASE
-            </button>
-
-            <button class="btn" onclick="textLower()">
-              lowercase
-            </button>
-
-            <button class="btn" onclick="textTitle()">
-              Title Case
-            </button>
-
-            <button class="btn" onclick="removeExtraSpaces()">
-              Clean spaces
-            </button>
-
-          </div>
-
-          <h2 style="margin-top:30px">JSON formatter</h2>
-
-          <textarea
-            id="jsonInput"
-            class="textarea"
-            style="min-height:160px"
-            placeholder='{"name":"SHAHEEN"}'
-          ></textarea>
-
-          <div class="actions">
-            <button class="btn primary" onclick="formatJSON()">
-              Format JSON
-            </button>
-          </div>
-
-          <pre
-            id="jsonOutput"
-            class="result"
-            style="white-space:pre-wrap;overflow:auto"
-          ></pre>
-
-        </div>
+        <button
+          class="btn danger"
+          onclick="logout()"
+        >
+          Sign out
+        </button>
 
       </div>
 
-    </section>
+    </div>
 
-    <!-- PROFILE -->
+    <div class="panel">
 
-    <section id="page-profile" class="app-page hidden">
+      <h2>Cloud sync</h2>
 
-      <div class="page-head">
+      <p style="color:var(--muted);line-height:1.7">
 
-        <div>
-          <h1>Profile</h1>
-          <p>Account and workspace controls.</p>
-        </div>
+        Your workspace is associated with your signed-in
+        Firebase account. Local browser storage remains available
+        as a fallback.
 
+      </p>
+
+      <div
+        id="cloudStatus"
+        class="info-strip"
+      >
+        Waiting for connection...
       </div>
 
-      <div class="workspace">
+    </div>
 
-        <div class="panel">
+  </div>
 
-          <div class="profile">
+</section>
 
-            <img
-              id="profileAvatar"
-              class="avatar"
-              alt="Profile"
-            >
-
-            <div>
-              <h2 id="profileName" style="margin:0">
-                User
-              </h2>
-
-              <div id="profileEmail" style="color:var(--muted)">
-                —
-              </div>
-            </div>
-
-          </div>
-
-          <div class="actions">
-            <button class="btn" onclick="toggleTheme()">
-              Toggle theme
-            </button>
-
-            <button class="btn danger" onclick="logout()">
-              Sign out
-            </button>
-          </div>
-
-        </div>
-
-        <div class="panel">
-
-          <h2>Account information</h2>
-
-          <p style="color:var(--muted);line-height:1.7">
-            Your authentication is handled by Firebase Authentication.
-            SHAHEEN does not store your password in this page.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+</main>
 
 </div>
 
-<!-- MOBILE NAV -->
+<nav class="mobile-nav">
 
-<nav class="mobile-bottom">
-
-  <button data-page="dashboard" onclick="mobilePage('dashboard')">
+  <button
+    data-page="dashboard"
+    onclick="openPage('dashboard')"
+  >
     🏠<br>Today
   </button>
 
-  <button data-page="documents" onclick="mobilePage('documents')">
+  <button
+    data-page="documents"
+    onclick="openPage('documents')"
+  >
     📄<br>Docs
   </button>
 
-  <button data-page="tasks" onclick="mobilePage('tasks')">
+  <button
+    data-page="tasks"
+    onclick="openPage('tasks')"
+  >
     ✓<br>Tasks
   </button>
 
-  <button data-page="notes" onclick="mobilePage('notes')">
+  <button
+    data-page="notes"
+    onclick="openPage('notes')"
+  >
     📝<br>Notes
   </button>
 
-  <button data-page="profile" onclick="mobilePage('profile')">
+  <button
+    data-page="profile"
+    onclick="openPage('profile')"
+  >
     👤<br>Profile
   </button>
 
@@ -2300,23 +2900,33 @@ footer{
      AUTH MODAL
 ========================================================= -->
 
-<div id="authModal" class="modal-backdrop">
+<div
+  id="authModal"
+  class="modal-wrap"
+>
 
   <div class="modal">
 
     <div class="modal-head">
 
-      <h2 id="authTitle">Welcome</h2>
+      <h2 id="authTitle">
+        Welcome back
+      </h2>
 
-      <button class="close" onclick="closeAuth()">×</button>
+      <button
+        class="close"
+        onclick="closeAuth()"
+      >
+        ×
+      </button>
 
     </div>
 
-    <div class="auth-tabs">
+    <div class="tabs">
 
       <button
         id="loginTab"
-        class="auth-tab active"
+        class="tab active"
         onclick="setAuthMode('login')"
       >
         Login
@@ -2324,7 +2934,7 @@ footer{
 
       <button
         id="signupTab"
-        class="auth-tab"
+        class="tab"
         onclick="setAuthMode('signup')"
       >
         Create account
@@ -2332,12 +2942,16 @@ footer{
 
     </div>
 
-    <form id="authForm" class="auth-form" onsubmit="submitAuth(event)">
+    <form
+      id="authForm"
+      class="auth-form"
+      onsubmit="submitAuth(event)"
+    >
 
       <input
         id="authEmail"
+        class="field"
         type="email"
-        class="input"
         required
         autocomplete="email"
         placeholder="Email address"
@@ -2345,22 +2959,25 @@ footer{
 
       <input
         id="authPassword"
+        class="field"
         type="password"
-        class="input"
-        required
         minlength="6"
+        required
         autocomplete="current-password"
         placeholder="Password"
       >
 
-      <button class="btn primary" id="authSubmit">
-        Continue
+      <button
+        id="authSubmit"
+        class="btn primary"
+      >
+        Sign in
       </button>
 
     </form>
 
     <button
-      id="forgotBtn"
+      id="forgotButton"
       class="btn"
       style="width:100%;margin-top:10px"
       onclick="forgotPassword()"
@@ -2368,7 +2985,9 @@ footer{
       Forgot password?
     </button>
 
-    <div class="divider">OR</div>
+    <div class="divider">
+      OR
+    </div>
 
     <button
       class="btn"
@@ -2380,159 +2999,258 @@ footer{
 
     <div id="authStatus"></div>
 
-    <div
-      style="margin-top:14px;color:var(--muted);font-size:12px;line-height:1.6"
-    >
-      By continuing, you agree to use SHAHEEN responsibly and not
-      upload information without permission.
-    </div>
-
   </div>
 
 </div>
 
 <div id="toast" class="toast"></div>
 
-<script>
-/* ==========================================================
-   FIREBASE CONFIG
-========================================================== */
+<!-- =========================================================
+     EXTERNAL LOCAL-PROCESSING LIBRARIES
+========================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.9.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<script type="module">
+
+import { initializeApp } from "firebase/app";
+
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  onAuthStateChanged,
+  updateProfile
+} from "firebase/auth";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  onSnapshot,
+  serverTimestamp
+} from "firebase/firestore";
+
+/* =========================================================
+   EXACT FIREBASE CONFIG SUPPLIED BY USER
+========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmWnukFsfH9FWhO4rEE_hzscnp_kd_v138",
-  authDomain: "shaheen-nexus.firebaseapp.com",
-  projectId: "shaheen-nexus",
-  storageBucket: "shaheen-nexus.firebasestorage.app",
-  messagingSenderId: "1075489418521",
-  appId: "1:1075489418521:web:1b166eb484971a387d6988",
-  measurementId: "G-VV2CBVV3HQ"
+
+  apiKey:
+    "AIzaSyAmWnukFsfH9FWhO4rEE_hsnpK_dv138",
+
+  authDomain:
+    "shaheen-nexus.firebaseapp.com",
+
+  projectId:
+    "shaheen-nexus",
+
+  storageBucket:
+    "shaheen-nexus.firebasestorage.app",
+
+  messagingSenderId:
+    "1075489418521",
+
+  appId:
+    "1:1075489418521:web:1b166eb484971a387d6988",
+
+  measurementId:
+    "G-VV2CBVV3HQ"
+
 };
 
-let firebaseReady = false;
+/* =========================================================
+   FIREBASE STATE
+========================================================= */
+
+let firebaseApp = null;
 let auth = null;
 let db = null;
+
 let currentUser = null;
-let unsubscribeCloud = null;
+let cloudUnsubscribe = null;
 
-const LOCAL_KEY = "shaheen_nexus_workspace_v1";
+let firebaseReady = false;
 
-/* ==========================================================
-   APP STATE
-========================================================== */
+/* =========================================================
+   WORKSPACE STATE
+========================================================= */
 
 let state = {
+
   documents: [],
   tasks: [],
   notes: [],
   saved: [],
+
   theme: "dark"
+
 };
 
-let authMode = "login";
+const GUEST_KEY =
+  "shaheen_nexus_guest_v4";
 
-/* ==========================================================
-   STARTUP
-========================================================== */
+/* =========================================================
+   START
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  boot
+);
 
-  loadLocal();
+async function boot(){
+
+  loadGuestState();
 
   applyTheme();
 
-  initFirebase();
+  publicPage("home");
 
-  showPublic("home");
+  await initFirebase();
 
-});
+}
 
-function initFirebase(){
+/* =========================================================
+   FIREBASE INITIALIZATION
+========================================================= */
+
+async function initFirebase(){
 
   try{
 
-    firebase.initializeApp(firebaseConfig);
+    firebaseApp =
+      initializeApp(firebaseConfig);
 
-    auth = firebase.auth();
-    db = firebase.firestore();
+    auth =
+      getAuth(firebaseApp);
+
+    db =
+      getFirestore(firebaseApp);
 
     firebaseReady = true;
 
-    auth.useDeviceLanguage();
+    try{
 
-    auth.onAuthStateChanged(user => {
+      await setPersistence(
+        auth,
+        browserLocalPersistence
+      );
 
-      currentUser = user || null;
+    }catch(persistenceError){
 
-      if(user){
+      console.warn(
+        "Auth persistence fallback:",
+        persistenceError
+      );
 
-        enterApp(user);
+    }
 
-        loadCloud(user);
+    onAuthStateChanged(
+      auth,
+      async user => {
 
-      }else{
+        currentUser = user || null;
 
-        leaveApp();
+        if(user){
+
+          loadUserLocal(user.uid);
+
+          enterApp(user);
+
+          await ensureUserProfile(user);
+
+          subscribeCloud(user);
+
+        }else{
+
+          leaveApp();
+
+        }
+
+      }
+    );
+
+    try{
+
+      await getRedirectResult(auth);
+
+    }catch(error){
+
+      if(
+        error &&
+        error.code !==
+        "auth/popup-closed-by-user"
+      ){
+
+        showToast(
+          firebaseErrorMessage(error)
+        );
 
       }
 
-    });
+    }
 
   }catch(error){
 
+    console.error(
+      "Firebase initialization error:",
+      error
+    );
+
     firebaseReady = false;
 
-    console.error("Firebase initialization failed:",error);
-
     showToast(
-      "Firebase initialization failed. Check the Firebase Web App configuration."
+      "Firebase could not initialize. Check the current Firebase Web App configuration."
     );
 
   }
 
 }
 
-/* ==========================================================
-   PUBLIC NAVIGATION
-========================================================== */
-
-function showPublic(page){
-
-  document.querySelectorAll(".public-page")
-    .forEach(el => el.classList.add("hidden"));
-
-  const target =
-    document.getElementById("public-"+page);
-
-  if(target){
-    target.classList.remove("hidden");
-  }
-
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-/* ==========================================================
+/* =========================================================
    AUTH
-========================================================== */
+========================================================= */
 
-function openAuth(mode="login"){
+let authMode = "login";
+
+window.openAuth = function(mode){
 
   setAuthMode(mode);
 
-  document.getElementById("authModal")
+  document
+    .getElementById("authModal")
     .classList.add("show");
 
-}
+};
 
-function closeAuth(){
+window.closeAuth = function(){
 
-  document.getElementById("authModal")
+  document
+    .getElementById("authModal")
     .classList.remove("show");
 
-  clearAuthStatus();
+  setAuthStatus("");
 
-}
+};
 
-function setAuthMode(mode){
+window.setAuthMode = function(mode){
 
   authMode = mode;
 
@@ -2544,42 +3262,48 @@ function setAuthMode(mode){
 
   loginTab.classList.toggle(
     "active",
-    mode==="login"
+    mode === "login"
   );
 
   signupTab.classList.toggle(
     "active",
-    mode==="signup"
+    mode === "signup"
   );
 
-  document.getElementById("authTitle").textContent =
-    mode==="login"
+  document.getElementById(
+    "authTitle"
+  ).textContent =
+    mode === "login"
       ? "Welcome back"
-      : "Create your SHAHEEN account";
+      : "Create your account";
 
-  document.getElementById("authSubmit").textContent =
-    mode==="login"
+  document.getElementById(
+    "authSubmit"
+  ).textContent =
+    mode === "login"
       ? "Sign in"
       : "Create account";
 
-  document.getElementById("forgotBtn")
+  document
+    .getElementById("forgotButton")
     .classList.toggle(
       "hidden",
-      mode!=="login"
+      mode !== "login"
     );
 
-  clearAuthStatus();
+  setAuthStatus("");
 
-}
+};
 
-async function submitAuth(event){
+window.submitAuth = async function(event){
 
   event.preventDefault();
 
   if(!firebaseReady){
 
-    showAuthError(
-      "Firebase is not initialized. Your Firebase Web App API key/configuration must be valid."
+    setAuthStatus(
+      "Firebase is not initialized. Check the Firebase Web App configuration.",
+      true
     );
 
     return;
@@ -2587,50 +3311,66 @@ async function submitAuth(event){
   }
 
   const email =
-    document.getElementById("authEmail").value.trim();
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("authPassword").value;
+    document
+      .getElementById("authPassword")
+      .value;
 
   if(!email || !password){
 
-    showAuthError("Enter your email and password.");
+    setAuthStatus(
+      "Enter email and password.",
+      true
+    );
 
     return;
 
   }
 
   const button =
-    document.getElementById("authSubmit");
+    document.getElementById(
+      "authSubmit"
+    );
 
   button.disabled = true;
 
-  button.textContent = "Working...";
+  button.textContent = "Please wait...";
 
   try{
 
-    if(authMode==="login"){
+    if(authMode === "login"){
 
-      await auth.signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
+        auth,
         email,
         password
       );
 
-      showToast("Signed in successfully.");
+      showToast(
+        "Signed in successfully."
+      );
 
     }else{
 
-      const credential =
-        await auth.createUserWithEmailAndPassword(
+      const result =
+        await createUserWithEmailAndPassword(
+          auth,
           email,
           password
         );
 
-      await createUserProfile(
-        credential.user
+      await ensureUserProfile(
+        result.user
       );
 
-      showToast("Account created successfully.");
+      showToast(
+        "Your account was created."
+      );
 
     }
 
@@ -2638,29 +3378,36 @@ async function submitAuth(event){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Email auth:",
+      error
+    );
 
-    showAuthError(firebaseAuthMessage(error));
+    setAuthStatus(
+      firebaseErrorMessage(error),
+      true
+    );
 
   }finally{
 
     button.disabled = false;
 
     button.textContent =
-      authMode==="login"
+      authMode === "login"
         ? "Sign in"
         : "Create account";
 
   }
 
-}
+};
 
-async function forgotPassword(){
+window.forgotPassword = async function(){
 
   if(!firebaseReady){
 
-    showAuthError(
-      "Firebase is not initialized. Check the current Firebase Web App API key."
+    setAuthStatus(
+      "Firebase is not initialized. Check the Web App configuration.",
+      true
     );
 
     return;
@@ -2668,12 +3415,16 @@ async function forgotPassword(){
   }
 
   const email =
-    document.getElementById("authEmail").value.trim();
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
 
   if(!email){
 
-    showAuthError(
-      "Enter your email first, then select Forgot password."
+    setAuthStatus(
+      "Enter your email first.",
+      true
     );
 
     return;
@@ -2682,76 +3433,82 @@ async function forgotPassword(){
 
   try{
 
-    await auth.sendPasswordResetEmail(email);
+    await sendPasswordResetEmail(
+      auth,
+      email
+    );
 
-    showAuthSuccess(
-      "Password reset email sent. Check your inbox."
+    setAuthStatus(
+      "Password reset email sent. Check your inbox.",
+      false
     );
 
   }catch(error){
 
-    showAuthError(
-      firebaseAuthMessage(error)
+    setAuthStatus(
+      firebaseErrorMessage(error),
+      true
     );
 
   }
 
-}
+};
 
-async function googleLogin(){
+window.googleLogin = async function(){
 
   if(!firebaseReady){
 
-    showAuthError(
-      "Firebase is not initialized. Check the Firebase Web App configuration."
+    setAuthStatus(
+      "Firebase is not initialized. Check the Firebase Web App configuration.",
+      true
     );
 
     return;
 
   }
 
+  const provider =
+    new GoogleAuthProvider();
+
+  provider.setCustomParameters({
+    prompt:"select_account"
+  });
+
   try{
 
-    const provider =
-      new firebase.auth.GoogleAuthProvider();
-
-    provider.setCustomParameters({
-      prompt:"select_account"
-    });
-
-    /*
-      Popup is used first because it is convenient for desktop.
-      If the browser/platform blocks it, redirect is attempted.
-    */
-
-    await auth.signInWithPopup(provider);
+    await signInWithPopup(
+      auth,
+      provider
+    );
 
     closeAuth();
 
   }catch(error){
 
-    console.error("Google sign-in:",error);
+    console.error(
+      "Google sign-in:",
+      error
+    );
 
     if(
-      error.code==="auth/popup-blocked" ||
-      error.code==="auth/popup-closed-by-user"
+      error.code ===
+      "auth/popup-blocked"
     ){
 
       try{
 
-        const provider =
-          new firebase.auth.GoogleAuthProvider();
-
-        provider.setCustomParameters({
-          prompt:"select_account"
-        });
-
-        await auth.signInWithRedirect(provider);
+        await signInWithRedirect(
+          auth,
+          provider
+        );
 
       }catch(redirectError){
 
-        showAuthError(
-          firebaseAuthMessage(redirectError)
+        setAuthStatus(
+          firebaseErrorMessage(
+            redirectError
+          ),
+          true
         );
 
       }
@@ -2760,31 +3517,77 @@ async function googleLogin(){
 
     }
 
-    showAuthError(
-      firebaseAuthMessage(error)
+    if(
+      error.code ===
+      "auth/popup-closed-by-user"
+    ){
+
+      setAuthStatus(
+        "Google sign-in window was closed.",
+        true
+      );
+
+      return;
+
+    }
+
+    setAuthStatus(
+      firebaseErrorMessage(error),
+      true
     );
 
   }
 
+};
+
+function setAuthStatus(
+  message,
+  error = false
+){
+
+  const el =
+    document.getElementById(
+      "authStatus"
+    );
+
+  if(!message){
+
+    el.className = "";
+
+    el.textContent = "";
+
+    return;
+
+  }
+
+  el.className =
+    error
+      ? "status error"
+      : "status success";
+
+  el.textContent =
+    message;
+
 }
 
-function firebaseAuthMessage(error){
+function firebaseErrorMessage(error){
 
-  const code = error?.code || "";
+  const code =
+    error?.code || "";
 
-  const messages = {
+  const map = {
 
     "auth/api-key-not-valid":
-      "Firebase API key invalid hai. Firebase Console → Project settings → Your apps → Web app se CURRENT firebaseConfig copy karo. Agar API key restrictions enabled hain to Identity Toolkit / Firebase Authentication access bhi check karo.",
+      "Firebase API key is invalid. Firebase Console → Project settings → Your apps → Web app se CURRENT firebaseConfig copy karo.",
 
     "auth/invalid-api-key":
-      "Firebase API key invalid hai. Current Web App config se exact apiKey copy karo.",
+      "Firebase API key invalid hai. Current Web App configuration se exact apiKey copy karo.",
 
     "auth/operation-not-allowed":
-      "Firebase Console → Authentication → Sign-in method mein is sign-in provider ko enable karo.",
+      "Firebase Authentication mein required sign-in provider enabled nahi hai. Authentication → Sign-in method check karo.",
 
     "auth/email-already-in-use":
-      "Is email par account already exist karta hai. Login try karo.",
+      "Is email se account already exist karta hai. Login use karo.",
 
     "auth/invalid-email":
       "Email address valid nahi hai.",
@@ -2805,259 +3608,220 @@ function firebaseAuthMessage(error){
       "Network request fail hui. Internet connection check karo.",
 
     "auth/too-many-requests":
-      "Temporary security limit apply hui hai. Kuch der baad dobara try karo.",
+      "Temporary Firebase security limit lag gayi hai. Thori der baad try karo.",
 
     "auth/unauthorized-domain":
-      "Current website domain Firebase Authentication ke Authorized Domains mein add nahi hai.",
+      "Current website domain Firebase Authentication → Authorized domains mein add nahi hai.",
 
-    "auth/popup-blocked":
-      "Browser ne Google popup block kiya. Redirect sign-in attempt ki jayegi."
+    "auth/account-exists-with-different-credential":
+      "Is email ke saath doosra sign-in provider already connected hai.",
+
+    "auth/invalid-origin":
+      "Current website origin Google/Firebase configuration se authorized nahi hai."
 
   };
 
-  return messages[code] ||
+  return (
+    map[code] ||
     error?.message ||
-    "Authentication failed. Firebase Console settings check karo.";
+    "Authentication failed."
+  );
 
 }
 
-function showAuthError(message){
+/* =========================================================
+   USER PROFILE
+========================================================= */
 
-  const el =
-    document.getElementById("authStatus");
+async function ensureUserProfile(user){
 
-  el.className = "status error";
-
-  el.textContent = message;
-
-}
-
-function showAuthSuccess(message){
-
-  const el =
-    document.getElementById("authStatus");
-
-  el.className = "status success";
-
-  el.textContent = message;
-
-}
-
-function clearAuthStatus(){
-
-  const el =
-    document.getElementById("authStatus");
-
-  el.className = "";
-
-  el.textContent = "";
-
-}
-
-/* ==========================================================
-   APP ENTRY
-========================================================== */
-
-function enterApp(user){
-
-  document.getElementById("publicSite")
-    .classList.add("hidden");
-
-  document.getElementById("appSite")
-    .classList.remove("hidden");
-
-  updateProfile(user);
-
-  updateStats();
-
-  renderAll();
-
-  openPage("dashboard");
-
-}
-
-function leaveApp(){
-
-  currentUser = null;
-
-  if(unsubscribeCloud){
-
-    unsubscribeCloud();
-
-    unsubscribeCloud = null;
-
-  }
-
-  document.getElementById("appSite")
-    .classList.add("hidden");
-
-  document.getElementById("publicSite")
-    .classList.remove("hidden");
-
-}
-
-async function logout(){
+  if(!db || !user) return;
 
   try{
 
-    if(auth){
-      await auth.signOut();
-    }
-
-    showToast("Signed out.");
+    await setDoc(
+      doc(
+        db,
+        "users",
+        user.uid
+      ),
+      {
+        uid:user.uid,
+        email:user.email || "",
+        displayName:user.displayName || "",
+        photoURL:user.photoURL || "",
+        updatedAt:serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
 
   }catch(error){
 
-    showToast(
-      "Sign out failed."
+    console.warn(
+      "Profile save:",
+      error
     );
 
   }
 
 }
 
-/* ==========================================================
-   PROFILE
-========================================================== */
+/* =========================================================
+   PRIVATE APP ENTRY
+========================================================= */
 
-function updateProfile(user){
+function enterApp(user){
 
-  if(!user) return;
+  document
+    .getElementById("publicSite")
+    .classList.add("hidden");
 
-  const name =
-    user.displayName ||
-    (user.email ? user.email.split("@")[0] : "User");
+  document
+    .getElementById("appSite")
+    .classList.remove("hidden");
 
-  document.getElementById("profileName").textContent =
-    name;
+  updateProfileUI(user);
 
-  document.getElementById("profileEmail").textContent =
-    user.email || "—";
+  openPage("dashboard");
 
-  const avatar =
-    document.getElementById("profileAvatar");
+  renderEverything();
 
-  if(user.photoURL){
+}
 
-    avatar.src = user.photoURL;
+function leaveApp(){
 
-  }else{
+  if(cloudUnsubscribe){
 
-    avatar.src =
-      "data:image/svg+xml;charset=UTF-8,"+
-      encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="100" height="100">
-          <rect width="100" height="100" rx="50"
-                fill="#1677ff"/>
-          <text x="50" y="60"
-                text-anchor="middle"
-                font-size="42"
-                fill="white"
-                font-family="Arial">
-            ${(name[0]||"U").toUpperCase()}
-          </text>
-        </svg>
-      `);
+    cloudUnsubscribe();
+
+    cloudUnsubscribe = null;
 
   }
 
-  document.getElementById("helloTitle").textContent =
-    "Hello, "+name;
+  document
+    .getElementById("appSite")
+    .classList.add("hidden");
+
+  document
+    .getElementById("publicSite")
+    .classList.remove("hidden");
 
 }
 
-function openProfile(){
+window.logout = async function(){
 
-  openPage("profile");
+  if(!auth) return;
 
-}
+  try{
 
-/* ==========================================================
-   PAGE NAV
-========================================================== */
+    await signOut(auth);
 
-function openPage(page,clickedButton=null){
+    showToast(
+      "Signed out."
+    );
 
-  document.querySelectorAll(".app-page")
-    .forEach(el => el.classList.add("hidden"));
+  }catch(error){
 
-  const target =
-    document.getElementById("page-"+page);
-
-  if(target){
-
-    target.classList.remove("hidden");
-
-  }else{
-
-    return;
+    showToast(
+      "Could not sign out."
+    );
 
   }
 
-  document.querySelectorAll(".side-btn[data-page]")
-    .forEach(btn => {
+};
 
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page===page
-      );
+/* =========================================================
+   LOCAL STATE
+========================================================= */
 
-    });
+function defaultState(){
 
-  document.querySelectorAll(".mobile-bottom button")
-    .forEach(btn => {
+  return {
 
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page===page
-      );
+    documents:[],
+    tasks:[],
+    notes:[],
+    saved:[],
+    theme:"dark"
 
-    });
-
-  renderAll();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  };
 
 }
 
-function mobilePage(page){
-
-  openPage(page);
-
-}
-
-/* ==========================================================
-   LOCAL STORAGE
-========================================================== */
-
-function loadLocal(){
+function loadGuestState(){
 
   try{
 
     const raw =
-      localStorage.getItem(LOCAL_KEY);
+      localStorage.getItem(
+        GUEST_KEY
+      );
 
     if(raw){
 
-      const saved =
-        JSON.parse(raw);
-
       state = {
-        ...state,
-        ...saved
+        ...defaultState(),
+        ...JSON.parse(raw)
       };
+
+    }else{
+
+      state =
+        defaultState();
 
     }
 
   }catch(error){
 
-    console.error(error);
+    state =
+      defaultState();
 
   }
+
+}
+
+function loadUserLocal(uid){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        userStorageKey(uid)
+      );
+
+    if(raw){
+
+      state = {
+        ...defaultState(),
+        ...JSON.parse(raw)
+      };
+
+    }else{
+
+      state =
+        defaultState();
+
+    }
+
+    applyTheme();
+
+  }catch(error){
+
+    state =
+      defaultState();
+
+  }
+
+}
+
+function userStorageKey(uid){
+
+  return (
+    "shaheen_nexus_user_" +
+    uid
+  );
 
 }
 
@@ -3065,15 +3829,22 @@ function saveLocal(){
 
   try{
 
+    const key =
+      currentUser
+        ? userStorageKey(
+            currentUser.uid
+          )
+        : GUEST_KEY;
+
     localStorage.setItem(
-      LOCAL_KEY,
+      key,
       JSON.stringify(state)
     );
 
   }catch(error){
 
-    console.error(
-      "Local storage failed:",
+    console.warn(
+      "Local storage:",
       error
     );
 
@@ -3081,53 +3852,22 @@ function saveLocal(){
 
 }
 
-/* ==========================================================
-   FIRESTORE
-========================================================== */
+/* =========================================================
+   CLOUD SYNC
+========================================================= */
 
-async function createUserProfile(user){
+function workspaceDoc(){
 
-  if(!db || !user) return;
-
-  try{
-
-    await db
-      .collection("users")
-      .doc(user.uid)
-      .set({
-        uid:user.uid,
-        email:user.email || "",
-        displayName:user.displayName || "",
-        photoURL:user.photoURL || "",
-        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-      },{
-        merge:true
-      });
-
-  }catch(error){
-
-    console.error(
-      "User profile save failed:",
-      error
-    );
-
-  }
-
-}
-
-function cloudRef(){
-
-  if(!db || !currentUser){
-
+  if(!db || !currentUser)
     return null;
 
-  }
-
-  return db
-    .collection("users")
-    .doc(currentUser.uid)
-    .collection("workspace")
-    .doc("main");
+  return doc(
+    db,
+    "users",
+    currentUser.uid,
+    "workspace",
+    "main"
+  );
 
 }
 
@@ -3136,7 +3876,7 @@ async function saveCloud(){
   saveLocal();
 
   const ref =
-    cloudRef();
+    workspaceDoc();
 
   if(!ref){
 
@@ -3144,139 +3884,716 @@ async function saveCloud(){
 
   }
 
+  /*
+    Prevent oversized cloud documents.
+    Large original source documents remain available locally.
+  */
+
+  const cloudDocuments =
+    state.documents.map(
+      document => ({
+        ...document,
+        text:
+          String(
+            document.text || ""
+          ).slice(0,30000)
+      })
+    );
+
   try{
 
-    await ref.set({
-      state:state,
-      updatedAt:
-        firebase.firestore.FieldValue.serverTimestamp()
-    });
+    await setDoc(
+      ref,
+      {
+        state:{
+          ...state,
+          documents:cloudDocuments
+        },
+        updatedAt:serverTimestamp()
+      },
+      {
+        merge:true
+      }
+    );
+
+    setCloudStatus(
+      "Cloud sync is connected."
+    );
 
   }catch(error){
 
-    console.error(
-      "Cloud save failed:",
+    console.warn(
+      "Firestore save:",
       error
     );
 
-    /*
-      Do not destroy local work when Firestore is unavailable.
-      Local state remains the fallback.
-    */
+    setCloudStatus(
+      "Cloud sync unavailable. Your local workspace is still saved."
+    );
 
   }
 
 }
 
-function loadCloud(user){
-
-  if(!db || !user){
-
-    return;
-
-  }
+function subscribeCloud(user){
 
   const ref =
-    db
-      .collection("users")
-      .doc(user.uid)
-      .collection("workspace")
-      .doc("main");
+    workspaceDoc();
 
-  if(unsubscribeCloud){
+  if(!ref) return;
 
-    unsubscribeCloud();
+  if(cloudUnsubscribe){
+
+    cloudUnsubscribe();
 
   }
 
-  unsubscribeCloud =
-    ref.onSnapshot(
+  setCloudStatus(
+    "Connecting to cloud workspace..."
+  );
 
-      snap => {
+  cloudUnsubscribe =
+    onSnapshot(
+      ref,
+      snapshot => {
 
-        if(!snap.exists){
+        if(snapshot.exists()){
+
+          const data =
+            snapshot.data();
+
+          if(data.state){
+
+            state = {
+              ...defaultState(),
+              ...data.state
+            };
+
+            saveLocal();
+
+            applyTheme();
+
+            renderEverything();
+
+          }
+
+          setCloudStatus(
+            "Cloud sync is connected."
+          );
+
+        }else{
 
           saveCloud();
-
-          return;
-
-        }
-
-        const remote =
-          snap.data();
-
-        if(remote.state){
-
-          state = {
-            ...state,
-            ...remote.state
-          };
-
-          saveLocal();
-
-          renderAll();
 
         }
 
       },
-
       error => {
 
-        console.error(
+        console.warn(
           "Firestore listener:",
           error
         );
 
-      }
+        setCloudStatus(
+          "Cloud sync unavailable. Local workspace remains active."
+        );
 
+      }
     );
 
 }
 
-/* ==========================================================
-   DOCUMENT ANALYZER
-========================================================== */
+function setCloudStatus(message){
 
-function analyzeQuick(){
+  const el =
+    document.getElementById(
+      "cloudStatus"
+    );
 
-  const text =
-    document.getElementById("quickText")
-      .value.trim();
+  if(el){
 
-  if(!text){
+    el.textContent =
+      message;
 
-    showToast("Paste some information first.");
+  }
+
+}
+
+/* =========================================================
+   PUBLIC NAV
+========================================================= */
+
+window.publicPage =
+function(page){
+
+  document
+    .querySelectorAll(".public-page")
+    .forEach(
+      el =>
+        el.classList.add("hidden")
+    );
+
+  const pageElement =
+    document.getElementById(
+      "public-" + page
+    );
+
+  if(pageElement){
+
+    pageElement.classList.remove(
+      "hidden"
+    );
+
+  }
+
+  if(
+    document
+      .getElementById("appSite")
+      .classList.contains("hidden")
+  ){
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }
+
+};
+
+/* =========================================================
+   APP NAVIGATION
+========================================================= */
+
+window.openPage =
+function(page){
+
+  document
+    .querySelectorAll(".app-page")
+    .forEach(
+      el =>
+        el.classList.add("hidden")
+    );
+
+  const target =
+    document.getElementById(
+      "page-" + page
+    );
+
+  if(!target) return;
+
+  target.classList.remove(
+    "hidden"
+  );
+
+  document
+    .querySelectorAll(
+      ".side-btn[data-page]"
+    )
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
+
+  document
+    .querySelectorAll(
+      ".mobile-nav button"
+    )
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
+
+  closeProfileMenu();
+
+  renderEverything();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function updateProfileUI(user){
+
+  if(!user) return;
+
+  const name =
+    user.displayName ||
+    (
+      user.email
+        ? user.email.split("@")[0]
+        : "User"
+    );
+
+  document.getElementById(
+    "welcomeTitle"
+  ).textContent =
+    "Hello, " + name;
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    name;
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    user.email || "";
+
+  const avatar =
+    document.getElementById(
+      "profileAvatar"
+    );
+
+  if(user.photoURL){
+
+    avatar.src =
+      user.photoURL;
+
+  }else{
+
+    avatar.src =
+      makeAvatar(name);
+
+  }
+
+}
+
+function makeAvatar(name){
+
+  const letter =
+    (name || "U")
+      .charAt(0)
+      .toUpperCase();
+
+  return (
+    "data:image/svg+xml;charset=utf-8," +
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <rect width="120" height="120" rx="60" fill="#1677ff"/>
+        <text x="60" y="76" text-anchor="middle" font-size="52" fill="white" font-family="Arial">${letter}</text>
+      </svg>`
+    )
+  );
+
+}
+
+window.toggleProfileMenu =
+function(){
+
+  document
+    .getElementById("profileMenu")
+    .classList.toggle("hidden");
+
+};
+
+function closeProfileMenu(){
+
+  document
+    .getElementById("profileMenu")
+    .classList.add("hidden");
+
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+
+window.toggleTheme =
+function(){
+
+  state.theme =
+    state.theme === "dark"
+      ? "light"
+      : "dark";
+
+  applyTheme();
+
+  saveCloud();
+
+};
+
+function applyTheme(){
+
+  document.body.classList.toggle(
+    "light",
+    state.theme === "light"
+  );
+
+}
+
+/* =========================================================
+   FILE HANDLING
+========================================================= */
+
+window.handleDocumentFile =
+async function(event){
+
+  const file =
+    event.target.files?.[0];
+
+  if(!file) return;
+
+  if(file.size > 25 * 1024 * 1024){
+
+    showToast(
+      "For browser reliability, keep files under 25 MB."
+    );
+
+    event.target.value = "";
 
     return;
 
   }
 
-  document.getElementById("documentText").value =
-    text;
+  document.getElementById(
+    "fileName"
+  ).textContent =
+    file.name;
 
-  document.getElementById("documentTitle").value =
+  const titleInput =
+    document.getElementById(
+      "documentTitle"
+    );
+
+  if(!titleInput.value.trim()){
+
+    titleInput.value =
+      file.name.replace(
+        /\.[^.]+$/,
+        ""
+      );
+
+  }
+
+  try{
+
+    const extracted =
+      await extractFileText(file);
+
+    document.getElementById(
+      "documentText"
+    ).value =
+      extracted;
+
+    if(!extracted.trim()){
+
+      showToast(
+        "No readable text was extracted from this file."
+      );
+
+    }else{
+
+      showToast(
+        "File text extracted successfully."
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "File extraction:",
+      error
+    );
+
+    showToast(
+      "This file could not be extracted in the browser."
+    );
+
+  }
+
+};
+
+async function extractFileText(file){
+
+  const name =
+    file.name.toLowerCase();
+
+  const type =
+    file.type.toLowerCase();
+
+  if(
+    type === "text/plain" ||
+    type === "text/markdown" ||
+    /\.(txt|md|csv)$/.test(name)
+  ){
+
+    return await file.text();
+
+  }
+
+  if(
+    type ===
+    "application/pdf" ||
+    /\.pdf$/.test(name)
+  ){
+
+    return await extractPDF(file);
+
+  }
+
+  if(
+    type ===
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    /\.docx$/.test(name)
+  ){
+
+    return await extractDOCX(file);
+
+  }
+
+  if(
+    type.includes("spreadsheet") ||
+    type.includes("excel") ||
+    /\.(xlsx|xls)$/.test(name)
+  ){
+
+    return await extractSpreadsheet(file);
+
+  }
+
+  if(
+    type.startsWith("image/")
+  ){
+
+    return await extractImageOCR(file);
+
+  }
+
+  throw new Error(
+    "Unsupported file type"
+  );
+
+}
+
+async function extractPDF(file){
+
+  const pdfjs =
+    await import(
+      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs"
+    );
+
+  pdfjs.GlobalWorkerOptions.workerSrc =
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
+
+  const buffer =
+    await file.arrayBuffer();
+
+  const pdf =
+    await pdfjs.getDocument({
+      data:buffer
+    }).promise;
+
+  const pages = [];
+
+  for(
+    let i=1;
+    i<=pdf.numPages;
+    i++
+  ){
+
+    const page =
+      await pdf.getPage(i);
+
+    const content =
+      await page.getTextContent();
+
+    const text =
+      content.items
+        .map(
+          item => item.str || ""
+        )
+        .join(" ");
+
+    pages.push(
+      `Page ${i}\n${text}`
+    );
+
+  }
+
+  return pages.join(
+    "\n\n"
+  );
+
+}
+
+async function extractDOCX(file){
+
+  if(
+    typeof window.mammoth ===
+    "undefined"
+  ){
+
+    throw new Error(
+      "DOCX library unavailable"
+    );
+
+  }
+
+  const buffer =
+    await file.arrayBuffer();
+
+  const result =
+    await window.mammoth.extractRawText({
+      arrayBuffer:buffer
+    });
+
+  return result.value || "";
+
+}
+
+async function extractSpreadsheet(file){
+
+  if(
+    typeof XLSX ===
+    "undefined"
+  ){
+
+    throw new Error(
+      "Spreadsheet library unavailable"
+    );
+
+  }
+
+  const buffer =
+    await file.arrayBuffer();
+
+  const workbook =
+    XLSX.read(
+      buffer,
+      {
+        type:"array"
+      }
+    );
+
+  const output = [];
+
+  workbook.SheetNames.forEach(
+    sheetName => {
+
+      const sheet =
+        workbook.Sheets[
+          sheetName
+        ];
+
+      const csv =
+        XLSX.utils.sheet_to_csv(
+          sheet
+        );
+
+      output.push(
+        `SHEET: ${sheetName}\n${csv}`
+      );
+
+    }
+  );
+
+  return output.join(
+    "\n\n"
+  );
+
+}
+
+async function extractImageOCR(file){
+
+  if(
+    typeof Tesseract ===
+    "undefined"
+  ){
+
+    throw new Error(
+      "OCR library unavailable"
+    );
+
+  }
+
+  showToast(
+    "OCR is running in your browser. Large images may take time."
+  );
+
+  const result =
+    await Tesseract.recognize(
+      file,
+      "eng"
+    );
+
+  return result?.data?.text || "";
+
+}
+
+/* =========================================================
+   DOCUMENT ANALYSIS
+========================================================= */
+
+window.analyzeQuick =
+function(){
+
+  const text =
+    document.getElementById(
+      "quickCapture"
+    ).value.trim();
+
+  if(!text){
+
+    showToast(
+      "Paste some information first."
+    );
+
+    return;
+
+  }
+
+  document.getElementById(
+    "documentTitle"
+  ).value =
     "Quick capture";
+
+  document.getElementById(
+    "documentText"
+  ).value =
+    text;
 
   openPage("documents");
 
   analyzeDocument();
 
-}
+};
 
-function analyzeDocument(){
+window.analyzeDocument =
+function(){
 
   const title =
-    document.getElementById("documentTitle")
-      .value.trim() ||
+    document.getElementById(
+      "documentTitle"
+    ).value.trim() ||
     "Untitled document";
 
   const text =
-    document.getElementById("documentText")
-      .value.trim();
+    document.getElementById(
+      "documentText"
+    ).value.trim();
 
   if(!text){
 
-    showToast("Add document text first.");
+    showToast(
+      "Add document text first."
+    );
 
     return;
 
@@ -3285,9 +4602,9 @@ function analyzeDocument(){
   const analysis =
     buildAnalysis(text);
 
-  const item = {
+  const documentRecord = {
 
-    id:cryptoRandom(),
+    id:uid(),
 
     title,
 
@@ -3295,93 +4612,121 @@ function analyzeDocument(){
 
     analysis,
 
-    createdAt:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
 
   };
 
-  state.documents.unshift(item);
+  state.documents.unshift(
+    documentRecord
+  );
 
-  state.saved.unshift(item);
+  state.saved.unshift(
+    documentRecord
+  );
 
-  /*
-    Automatically convert detected action items
-    into user-editable tasks.
-  */
+  const makeTasks =
+    document.getElementById(
+      "createTasksAutomatically"
+    ).checked;
 
-  analysis.actions
-    .slice(0,10)
-    .forEach(action => {
+  if(makeTasks){
 
-      state.tasks.push({
+    analysis.actions
+      .slice(0,12)
+      .forEach(action => {
 
-        id:cryptoRandom(),
+        state.tasks.push({
 
-        text:action,
+          id:uid(),
 
-        done:false,
+          text:action,
 
-        createdAt:new Date().toISOString(),
+          done:false,
 
-        source:item.id
+          due:"",
+
+          source:
+            documentRecord.id,
+
+          createdAt:
+            new Date().toISOString()
+
+        });
 
       });
 
-    });
+  }
 
   saveCloud();
 
-  renderAnalysis(analysis);
+  renderAnalysis(
+    analysis
+  );
 
-  updateStats();
+  renderEverything();
 
-  renderAll();
+  showToast(
+    "Document analyzed."
+  );
 
-  showToast("Document analyzed.");
-
-}
+};
 
 function buildAnalysis(text){
 
-  const lines =
+  const clean =
     text
-      .split(/\r?\n/)
-      .map(x => x.trim())
+      .replace(/\r/g,"")
+      .trim();
+
+  const lines =
+    clean
+      .split(/\n/)
+      .map(
+        line => line.trim()
+      )
       .filter(Boolean);
 
   const sentences =
-    text
-      .split(/(?<=[.!?])\s+/)
-      .map(x => x.trim())
-      .filter(x => x.length>15);
+    clean
+      .split(
+        /(?<=[.!?])\s+|\n+/
+      )
+      .map(
+        s => s.trim()
+      )
+      .filter(
+        s => s.length >= 12
+      );
 
   const dates =
-    detectDates(text);
+    detectDates(clean);
 
   const amounts =
-    detectAmounts(text);
+    detectAmounts(clean);
 
   const emails =
     unique(
-      text.match(
+      clean.match(
         /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi
       ) || []
     );
 
   const urls =
     unique(
-      text.match(
+      clean.match(
         /https?:\/\/[^\s<>"']+/gi
       ) || []
     );
 
   const phones =
     unique(
-      text.match(
+      clean.match(
         /(?:\+?\d[\d\s().-]{7,}\d)/g
       ) || []
     );
 
-  const actionWords = [
+  const actionTerms = [
 
     "submit",
     "complete",
@@ -3403,7 +4748,8 @@ function buildAnalysis(text){
     "deadline",
     "must",
     "need to",
-    "please"
+    "please",
+    "fill"
 
   ];
 
@@ -3412,11 +4758,34 @@ function buildAnalysis(text){
       sentences
         .filter(sentence => {
 
-          const lower =
+          const low =
             sentence.toLowerCase();
 
-          return actionWords.some(
-            word => lower.includes(word)
+          return actionTerms.some(
+            term =>
+              low.includes(term)
+          );
+
+        })
+        .slice(0,15)
+    );
+
+  const requirements =
+    unique(
+      lines
+        .filter(line => {
+
+          const low =
+            line.toLowerCase();
+
+          return (
+            low.includes("required") ||
+            low.includes("must provide") ||
+            low.includes("need to provide") ||
+            low.includes("required documents") ||
+            low.includes("attach") ||
+            low.includes("you must") ||
+            low.includes("please provide")
           );
 
         })
@@ -3424,65 +4793,46 @@ function buildAnalysis(text){
     );
 
   const headings =
-    lines
-      .filter(line => {
-
-        return (
-          line.length <= 90 &&
+    unique(
+      lines
+        .filter(line =>
+          line.length <= 100 &&
           (
-            /^[A-Z0-9][A-Z0-9\s:&/-]{4,}$/.test(line) ||
             /^#{1,6}\s/.test(line) ||
-            /^(requirements?|documents?|deadline|instructions?|steps?|important|payment|contact)/i.test(line)
+            /^[A-Z0-9][A-Z0-9\s:&/-]{5,}$/.test(line) ||
+            /^(important|requirements?|instructions?|deadline|payment|contact|steps?|documents?)/i
+              .test(line)
           )
-        );
+        )
+        .slice(0,15)
+    );
 
-      })
-      .slice(0,15);
-
-  const requirements =
-    lines
-      .filter(line => {
-
-        const lower =
-          line.toLowerCase();
-
-        return (
-          lower.includes("required") ||
-          lower.includes("must provide") ||
-          lower.includes("need to provide") ||
-          lower.includes("required documents") ||
-          lower.includes("attach")
-        );
-
-      })
-      .slice(0,15);
+  const summary =
+    makeSummary(
+      lines,
+      sentences
+    );
 
   return {
 
-    summary:
-      createSummary(lines,sentences),
-
+    summary,
     dates,
-
     amounts,
-
     emails,
-
     urls,
-
     phones,
-
     headings,
-
     requirements,
-
     actions
 
   };
 
 }
 
-function createSummary(lines,sentences){
+function makeSummary(
+  lines,
+  sentences
+){
 
   const candidates = [
 
@@ -3490,20 +4840,19 @@ function createSummary(lines,sentences){
 
     ...lines.filter(
       line =>
-        /important|purpose|subject|regarding|notice|application/i
+        /purpose|subject|regarding|notice|application|important/i
           .test(line)
-    ).slice(0,3)
+    )
 
   ];
 
-  return unique(candidates)
-    .slice(0,5);
+  return unique(
+    candidates
+  ).slice(0,5);
 
 }
 
 function detectDates(text){
-
-  const found = [];
 
   const patterns = [
 
@@ -3517,16 +4866,23 @@ function detectDates(text){
 
   ];
 
-  patterns.forEach(pattern => {
+  const all = [];
 
-    const matches =
-      text.match(pattern) || [];
+  patterns.forEach(
+    pattern => {
 
-    found.push(...matches);
+      const matches =
+        text.match(pattern) || [];
 
-  });
+      all.push(...matches);
 
-  return unique(found).slice(0,30);
+    }
+  );
+
+  return unique(all).slice(
+    0,
+    30
+  );
 
 }
 
@@ -3537,14 +4893,19 @@ function detectAmounts(text){
       /(?:USD|US\$|\$|EUR|€|GBP|£|PKR|Rs\.?|₹|INR)\s?\d[\d,]*(?:\.\d{1,2})?/gi
     ) || [];
 
-  return unique(matches).slice(0,30);
+  return unique(matches).slice(
+    0,
+    30
+  );
 
 }
 
 function renderAnalysis(a){
 
   const output =
-    document.getElementById("analysisOutput");
+    document.getElementById(
+      "analysisOutput"
+    );
 
   output.innerHTML = `
 
@@ -3554,8 +4915,8 @@ function renderAnalysis(a){
 
       ${
         a.summary.length
-        ? `<ul>${a.summary.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
-        : `<p style="color:var(--muted)">No obvious summary lines detected.</p>`
+        ? `<ul>${a.summary.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`
+        : `<p>No obvious summary lines were detected.</p>`
       }
 
     </div>
@@ -3566,37 +4927,9 @@ function renderAnalysis(a){
 
       ${
         a.actions.length
-        ? `<ul>${a.actions.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
-        : `<p style="color:var(--muted)">No obvious action sentence detected.</p>`
+        ? `<ul>${a.actions.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`
+        : `<p>No obvious action sentence was detected.</p>`
       }
-
-    </div>
-
-    <div class="result">
-
-      <h3>Dates</h3>
-
-      ${renderTags(a.dates)}
-
-    </div>
-
-    <div class="result">
-
-      <h3>Amounts</h3>
-
-      ${renderTags(a.amounts)}
-
-    </div>
-
-    <div class="result">
-
-      <h3>Contact information</h3>
-
-      ${renderTags([
-        ...a.emails,
-        ...a.phones,
-        ...a.urls
-      ])}
 
     </div>
 
@@ -3606,9 +4939,55 @@ function renderAnalysis(a){
 
       ${
         a.requirements.length
-        ? `<ul>${a.requirements.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`
-        : `<p style="color:var(--muted)">No explicit requirements detected.</p>`
+        ? `<ul>${a.requirements.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`
+        : `<p>No explicit requirement was detected.</p>`
       }
+
+    </div>
+
+    <div class="result">
+
+      <h3>Dates</h3>
+
+      ${tags(a.dates)}
+
+    </div>
+
+    <div class="result">
+
+      <h3>Amounts</h3>
+
+      ${tags(a.amounts)}
+
+    </div>
+
+    <div class="result">
+
+      <h3>Contact information</h3>
+
+      ${
+        tags([
+          ...a.emails,
+          ...a.phones,
+          ...a.urls
+        ])
+      }
+
+    </div>
+
+    <div class="result">
+
+      <h3>Detected headings</h3>
+
+      ${tags(a.headings)}
+
+    </div>
+
+    <div class="info-strip" style="margin-top:12px">
+
+      Automatic extraction is designed to save time,
+      but important information should always be checked
+      against the original document.
 
     </div>
 
@@ -3616,50 +4995,76 @@ function renderAnalysis(a){
 
 }
 
-function renderTags(items){
+function tags(items){
 
   if(!items.length){
 
-    return `<span style="color:var(--muted)">None detected</span>`;
+    return `<span class="mini">None detected</span>`;
 
   }
 
-  return items
-    .map(item =>
-      `<span class="tag">${escapeHtml(item)}</span>`
-    )
-    .join("");
+  return `
+    <div class="tags">
+      ${items.map(
+        item =>
+          `<span class="tag">${esc(item)}</span>`
+      ).join("")}
+    </div>
+  `;
 
 }
 
-function clearDocument(){
+window.clearDocument =
+function(){
 
-  document.getElementById("documentTitle").value = "";
+  document.getElementById(
+    "documentTitle"
+  ).value = "";
 
-  document.getElementById("documentText").value = "";
+  document.getElementById(
+    "documentText"
+  ).value = "";
 
-  document.getElementById("analysisOutput").innerHTML =
+  document.getElementById(
+    "documentFile"
+  ).value = "";
+
+  document.getElementById(
+    "fileName"
+  ).textContent =
+    "No file selected";
+
+  document.getElementById(
+    "analysisOutput"
+  ).innerHTML =
     `<div class="empty">
-      Add information and select “Analyze document”.
+      Add a document or paste text to begin.
     </div>`;
 
-}
+};
 
-/* ==========================================================
+/* =========================================================
    TASKS
-========================================================== */
+========================================================= */
 
-function addTask(){
-
-  const input =
-    document.getElementById("newTask");
+window.addTask =
+function(){
 
   const text =
-    input.value.trim();
+    document.getElementById(
+      "newTask"
+    ).value.trim();
+
+  const due =
+    document.getElementById(
+      "taskDue"
+    ).value;
 
   if(!text){
 
-    showToast("Enter a task.");
+    showToast(
+      "Enter a task."
+    );
 
     return;
 
@@ -3667,31 +5072,43 @@ function addTask(){
 
   state.tasks.unshift({
 
-    id:cryptoRandom(),
+    id:uid(),
 
     text,
 
+    due,
+
     done:false,
 
-    createdAt:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
 
   });
 
-  input.value = "";
+  document.getElementById(
+    "newTask"
+  ).value = "";
+
+  document.getElementById(
+    "taskDue"
+  ).value = "";
 
   saveCloud();
 
-  renderTasks();
+  renderEverything();
 
-  updateStats();
+  showToast(
+    "Task added."
+  );
 
-}
+};
 
-function toggleTask(id){
+window.toggleTask =
+function(id){
 
   const task =
     state.tasks.find(
-      item => item.id===id
+      x => x.id === id
     );
 
   if(!task) return;
@@ -3701,37 +5118,36 @@ function toggleTask(id){
 
   saveCloud();
 
-  renderTasks();
+  renderEverything();
 
-  updateStats();
+};
 
-}
-
-function deleteTask(id){
+window.deleteTask =
+function(id){
 
   state.tasks =
     state.tasks.filter(
-      item => item.id!==id
+      x => x.id !== id
     );
 
   saveCloud();
 
-  renderTasks();
+  renderEverything();
 
-  updateStats();
-
-}
+};
 
 function renderTasks(){
 
-  const container =
-    document.getElementById("taskList");
+  const el =
+    document.getElementById(
+      "taskList"
+    );
 
-  if(!container) return;
+  if(!el) return;
 
   if(!state.tasks.length){
 
-    container.innerHTML =
+    el.innerHTML =
       `<div class="empty">
         No tasks yet.
       </div>`;
@@ -3740,53 +5156,67 @@ function renderTasks(){
 
   }
 
-  container.innerHTML =
-    state.tasks
-      .map(task => `
+  el.innerHTML =
+    state.tasks.map(
+      task => `
 
-        <div class="task ${task.done ? "done":""}">
+      <div class="task-row ${task.done ? "done" : ""}">
 
-          <input
-            type="checkbox"
-            ${task.done ? "checked":""}
-            onchange="toggleTask('${task.id}')"
-          >
+        <input
+          type="checkbox"
+          ${task.done ? "checked" : ""}
+          onchange="toggleTask('${task.id}')"
+        >
 
-          <span style="flex:1">
-            ${escapeHtml(task.text)}
-          </span>
+        <div class="task-text">
 
-          <button
-            class="btn small"
-            onclick="deleteTask('${task.id}')"
-          >
-            Delete
-          </button>
+          ${esc(task.text)}
+
+          ${
+            task.due
+            ? `<div class="mini">
+                Due: ${esc(task.due)}
+              </div>`
+            : ""
+          }
 
         </div>
 
-      `)
-      .join("");
+        <button
+          class="btn small"
+          onclick="deleteTask('${task.id}')"
+        >
+          Delete
+        </button>
+
+      </div>
+    `
+    ).join("");
 
 }
 
-/* ==========================================================
+/* =========================================================
    NOTES
-========================================================== */
+========================================================= */
 
-function addNote(){
+window.addNote =
+function(){
 
   const title =
-    document.getElementById("noteTitle")
-      .value.trim();
+    document.getElementById(
+      "noteTitle"
+    ).value.trim();
 
   const body =
-    document.getElementById("noteBody")
-      .value.trim();
+    document.getElementById(
+      "noteBody"
+    ).value.trim();
 
   if(!body){
 
-    showToast("Write something first.");
+    showToast(
+      "Write something first."
+    );
 
     return;
 
@@ -3794,105 +5224,132 @@ function addNote(){
 
   state.notes.unshift({
 
-    id:cryptoRandom(),
+    id:uid(),
 
-    title:title || "Untitled note",
+    title:
+      title || "Untitled note",
 
     body,
 
-    createdAt:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
 
   });
 
-  document.getElementById("noteTitle").value = "";
+  document.getElementById(
+    "noteTitle"
+  ).value = "";
 
-  document.getElementById("noteBody").value = "";
+  document.getElementById(
+    "noteBody"
+  ).value = "";
 
   saveCloud();
 
-  renderNotes();
+  renderEverything();
 
-  updateStats();
+  showToast(
+    "Note saved."
+  );
 
-  showToast("Note saved.");
+};
 
-}
-
-function deleteNote(id){
+window.deleteNote =
+function(id){
 
   state.notes =
     state.notes.filter(
-      n => n.id!==id
+      x => x.id !== id
     );
 
   saveCloud();
 
-  renderNotes();
+  renderEverything();
 
-  updateStats();
-
-}
+};
 
 function renderNotes(){
 
-  const container =
-    document.getElementById("noteList");
+  const el =
+    document.getElementById(
+      "noteList"
+    );
 
-  if(!container) return;
+  if(!el) return;
 
   if(!state.notes.length){
 
-    container.innerHTML =
-      `<div class="empty">No notes yet.</div>`;
+    el.innerHTML =
+      `<div class="empty">
+        No notes yet.
+      </div>`;
 
     return;
 
   }
 
-  container.innerHTML =
-    state.notes
-      .map(note => `
+  el.innerHTML =
+    state.notes.map(
+      note => `
 
-        <div class="result">
+      <div class="result">
 
-          <div style="display:flex;justify-content:space-between;gap:10px">
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+        ">
 
-            <h3>${escapeHtml(note.title)}</h3>
+          <div>
 
-            <button
-              class="btn small"
-              onclick="deleteNote('${note.id}')"
-            >
-              Delete
-            </button>
+            <h3>
+              ${esc(note.title)}
+            </h3>
+
+            <div class="mini">
+              ${formatDate(
+                note.createdAt
+              )}
+            </div>
 
           </div>
 
-          <p style="white-space:pre-wrap;color:var(--muted)">
-            ${escapeHtml(note.body)}
-          </p>
+          <button
+            class="btn small"
+            onclick="deleteNote('${note.id}')"
+          >
+            Delete
+          </button>
 
         </div>
 
-      `)
-      .join("");
+        <p style="white-space:pre-wrap">
+          ${esc(note.body)}
+        </p>
+
+      </div>
+
+    `
+    ).join("");
 
 }
 
-/* ==========================================================
+/* =========================================================
    SAVED
-========================================================== */
+========================================================= */
 
 function renderSaved(){
 
-  const container =
-    document.getElementById("savedList");
+  const el =
+    document.getElementById(
+      "savedList"
+    );
 
-  if(!container) return;
+  if(!el) return;
 
   if(!state.saved.length){
 
-    container.innerHTML =
+    el.innerHTML =
       `<div class="empty">
         No saved projects yet.
       </div>`;
@@ -3901,93 +5358,209 @@ function renderSaved(){
 
   }
 
-  container.innerHTML =
-    state.saved
-      .map(item => `
+  el.innerHTML =
+    state.saved.map(
+      item => `
 
-        <div class="result">
+      <div class="result">
 
-          <div style="display:flex;justify-content:space-between;gap:10px">
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+        ">
 
-            <div>
+          <div>
 
-              <h3>
-                ${escapeHtml(item.title)}
-              </h3>
+            <h3>
+              ${esc(item.title)}
+            </h3>
 
-              <div style="color:var(--muted);font-size:12px">
-                ${formatDate(item.createdAt)}
-              </div>
-
+            <div class="mini">
+              ${formatDate(
+                item.createdAt
+              )}
             </div>
-
-            <button
-              class="btn small"
-              onclick="deleteSaved('${item.id}')"
-            >
-              Delete
-            </button>
 
           </div>
 
-          <p style="color:var(--muted)">
-            ${escapeHtml(
-              item.analysis?.summary?.[0] ||
-              "Analyzed project"
-            )}
-          </p>
+          <button
+            class="btn small"
+            onclick="deleteSaved('${item.id}')"
+          >
+            Delete
+          </button>
 
         </div>
 
-      `)
-      .join("");
+        <p>
+          ${
+            esc(
+              item.analysis?.summary?.[0] ||
+              "Analyzed document"
+            )
+          }
+        </p>
+
+      </div>
+
+    `
+    ).join("");
 
 }
 
-function deleteSaved(id){
+window.deleteSaved =
+function(id){
 
   state.saved =
     state.saved.filter(
-      x => x.id!==id
+      x => x.id !== id
     );
 
   state.documents =
     state.documents.filter(
-      x => x.id!==id
+      x => x.id !== id
     );
 
   saveCloud();
 
-  renderSaved();
+  renderEverything();
 
-  updateStats();
+};
 
-}
+/* =========================================================
+   EXPORT / IMPORT
+========================================================= */
 
-/* ==========================================================
-   CALCULATORS
-========================================================== */
+window.exportWorkspace =
+function(){
 
-function calculate(){
+  const data =
+    JSON.stringify(
+      state,
+      null,
+      2
+    );
+
+  const blob =
+    new Blob(
+      [data],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+  a.href = url;
+
+  a.download =
+    "shaheen-nexus-workspace.json";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+  showToast(
+    "Workspace exported."
+  );
+
+};
+
+window.importWorkspace =
+function(event){
+
+  const file =
+    event.target.files?.[0];
+
+  if(!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload =
+    () => {
+
+      try{
+
+        const incoming =
+          JSON.parse(
+            reader.result
+          );
+
+        state = {
+          ...defaultState(),
+          ...incoming
+        };
+
+        applyTheme();
+
+        saveCloud();
+
+        renderEverything();
+
+        showToast(
+          "Workspace imported."
+        );
+
+      }catch(error){
+
+        showToast(
+          "Invalid workspace JSON."
+        );
+
+      }
+
+    };
+
+  reader.readAsText(
+    file
+  );
+
+  event.target.value = "";
+
+};
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+window.calculateExpression =
+function(){
 
   const input =
-    document.getElementById("calcInput")
-      .value.trim();
+    document.getElementById(
+      "calcInput"
+    ).value.trim();
 
   if(!input){
 
-    showToast("Enter a calculation.");
+    showToast(
+      "Enter a calculation."
+    );
 
     return;
 
   }
 
-  /*
-    Basic safe calculator:
-    only numbers, decimal points and arithmetic operators.
-  */
-
-  if(!/^[0-9+\-*/().%\s]+$/.test(input)){
+  if(
+    !/^[0-9+\-*/().%\s]+$/.test(
+      input
+    )
+  ){
 
     showToast(
       "Only numbers and basic arithmetic operators are allowed."
@@ -4018,71 +5591,98 @@ function calculate(){
 
     }
 
-    const output =
-      document.getElementById("calcResult");
-
-    output.classList.remove("hidden");
-
-    output.innerHTML =
-      `<b>Result:</b> ${escapeHtml(String(result))}`;
+    document.getElementById(
+      "calcResult"
+    ).innerHTML =
+      `<div class="result">
+        Result:
+        <strong>${esc(
+          String(result)
+        )}</strong>
+      </div>`;
 
   }catch(error){
 
-    showToast("Invalid calculation.");
+    showToast(
+      "Invalid calculation."
+    );
 
   }
 
-}
+};
 
-function percentage(){
+window.percentageCalc =
+function(){
 
-  const value =
+  const base =
     Number(
-      document.getElementById("percentValue").value
+      document.getElementById(
+        "percentBase"
+      ).value
     );
 
   const percent =
     Number(
-      document.getElementById("percentOf").value
+      document.getElementById(
+        "percentNumber"
+      ).value
     );
 
-  if(!Number.isFinite(value) ||
-     !Number.isFinite(percent)){
+  if(
+    !Number.isFinite(base) ||
+    !Number.isFinite(percent)
+  ){
 
-    showToast("Enter valid numbers.");
+    showToast(
+      "Enter valid numbers."
+    );
 
     return;
 
   }
 
-  document.getElementById("percentResult").innerHTML =
+  const result =
+    base * percent / 100;
+
+  document.getElementById(
+    "percentResult"
+  ).innerHTML =
     `<div class="result">
-      ${escapeHtml(String(percent))}% of
-      ${escapeHtml(String(value))}
-      =
-      <b>${escapeHtml(String(value*percent/100))}</b>
+      ${esc(String(percent))}% of
+      ${esc(String(base))} =
+      <strong>${esc(
+        String(result)
+      )}</strong>
     </div>`;
 
-}
+};
 
-function dateDifference(){
+/* =========================================================
+   DATE TOOLS
+========================================================= */
+
+window.dateDifference =
+function(){
 
   const a =
-    new Date(
-      document.getElementById("dateA").value
+    parseLocalDate(
+      document.getElementById(
+        "dateA"
+      ).value
     );
 
   const b =
-    new Date(
-      document.getElementById("dateB").value
+    parseLocalDate(
+      document.getElementById(
+        "dateB"
+      ).value
     );
 
-  if(
-    Number.isNaN(a.getTime()) ||
-    Number.isNaN(b.getTime())
-  ){
+  if(!a || !b){
 
-    showToast("Select both dates.");
+    showToast(
+      "Select both dates."
+    );
 
     return;
 
@@ -4090,32 +5690,42 @@ function dateDifference(){
 
   const days =
     Math.round(
-      Math.abs(b-a) /
-      86400000
+      Math.abs(
+        b.getTime() -
+        a.getTime()
+      ) / 86400000
     );
 
-  document.getElementById("dateResult").innerHTML =
+  document.getElementById(
+    "dateDifferenceResult"
+  ).innerHTML =
     `<div class="result">
-      Difference: <b>${days}</b> day(s)
+      Difference:
+      <strong>${days}</strong>
+      day(s)
     </div>`;
 
-}
+};
 
-function calculateAge(){
+window.calculateAge =
+function(){
 
-  const value =
-    document.getElementById("birthDate").value;
+  const birth =
+    parseLocalDate(
+      document.getElementById(
+        "birthDate"
+      ).value
+    );
 
-  if(!value){
+  if(!birth){
 
-    showToast("Select your birth date.");
+    showToast(
+      "Select your birth date."
+    );
 
     return;
 
   }
-
-  const birth =
-    new Date(value);
 
   const today =
     new Date();
@@ -4132,13 +5742,13 @@ function calculateAge(){
     today.getDate() -
     birth.getDate();
 
-  if(days<0){
+  if(days < 0){
 
     months--;
 
   }
 
-  if(months<0){
+  if(months < 0){
 
     years--;
 
@@ -4146,63 +5756,111 @@ function calculateAge(){
 
   }
 
-  document.getElementById("ageResult").innerHTML =
+  document.getElementById(
+    "ageResult"
+  ).innerHTML =
     `<div class="result">
       Age:
-      <b>${years}</b> years
-      <b>${months}</b> months
+      <strong>${years}</strong> years
+      <strong>${months}</strong> months
     </div>`;
+
+};
+
+function parseLocalDate(value){
+
+  if(!value)
+    return null;
+
+  const [year,month,day] =
+    value.split("-")
+      .map(Number);
+
+  if(
+    !year ||
+    !month ||
+    !day
+  ) return null;
+
+  return new Date(
+    year,
+    month-1,
+    day
+  );
 
 }
 
-function convertUnit(){
+/* =========================================================
+   UNIT CONVERTER
+========================================================= */
+
+window.convertUnits =
+function(){
 
   const value =
     Number(
-      document.getElementById("unitValue").value
+      document.getElementById(
+        "unitValue"
+      ).value
     );
 
   const type =
-    document.getElementById("unitType").value;
+    document.getElementById(
+      "unitType"
+    ).value;
 
   if(!Number.isFinite(value)){
 
-    showToast("Enter a valid number.");
+    showToast(
+      "Enter a valid number."
+    );
 
     return;
 
   }
 
-  const rates = {
+  const rate = {
 
     "km-mi":0.621371,
+
     "mi-km":1.609344,
+
     "kg-lb":2.2046226218,
+
     "lb-kg":0.45359237,
+
     "cm-in":0.3937007874,
+
     "in-cm":2.54
 
-  };
+  }[type];
 
   const result =
-    value * rates[type];
+    value * rate;
 
-  document.getElementById("unitResult").innerHTML =
+  document.getElementById(
+    "unitResult"
+  ).innerHTML =
     `<div class="result">
-      Result: <b>${result}</b>
+      Result:
+      <strong>${esc(
+        String(result)
+      )}</strong>
     </div>`;
 
-}
+};
 
-/* ==========================================================
+/* =========================================================
    TEXT TOOLS
-========================================================== */
+========================================================= */
 
-function updateTextStats(){
+window.updateTextStats =
+function(){
 
   const text =
-    document.getElementById("textToolInput")
-      .value;
+    document.getElementById(
+      "textInput"
+    ).value;
 
   const words =
     text.trim()
@@ -4211,57 +5869,76 @@ function updateTextStats(){
 
   const lines =
     text
-      ? text.split(/\r?\n/).length
+      ? text.split(/\n/).length
       : 0;
 
-  document.getElementById("textStats")
-    .textContent =
-      `Characters: ${text.length} · Words: ${words} · Lines: ${lines}`;
+  document.getElementById(
+    "textStats"
+  ).textContent =
+    `Characters: ${text.length} · Words: ${words} · Lines: ${lines}`;
 
-}
+};
 
-function textUpper(){
+window.upperText =
+function(){
 
   transformText(
-    text => text.toUpperCase()
+    value =>
+      value.toUpperCase()
   );
 
-}
+};
 
-function textLower(){
+window.lowerText =
+function(){
 
   transformText(
-    text => text.toLowerCase()
+    value =>
+      value.toLowerCase()
   );
 
-}
+};
 
-function textTitle(){
+window.titleText =
+function(){
 
   transformText(
-    text =>
-      text.toLowerCase()
-        .replace(/\b\w/g,c=>c.toUpperCase())
+    value =>
+      value
+        .toLowerCase()
+        .replace(
+          /\b\w/g,
+          c => c.toUpperCase()
+        )
   );
 
-}
+};
 
-function removeExtraSpaces(){
+window.cleanText =
+function(){
 
   transformText(
-    text =>
-      text
-        .replace(/[ \t]+/g," ")
-        .replace(/\n{3,}/g,"\n\n")
+    value =>
+      value
+        .replace(
+          /[ \t]+/g,
+          " "
+        )
+        .replace(
+          /\n{3,}/g,
+          "\n\n"
+        )
         .trim()
   );
 
-}
+};
 
 function transformText(fn){
 
   const input =
-    document.getElementById("textToolInput");
+    document.getElementById(
+      "textInput"
+    );
 
   input.value =
     fn(input.value);
@@ -4270,15 +5947,19 @@ function transformText(fn){
 
 }
 
-function formatJSON(){
+window.formatJSON =
+function(){
 
   const input =
-    document.getElementById("jsonInput")
-      .value.trim();
+    document.getElementById(
+      "jsonInput"
+    ).value.trim();
 
   if(!input){
 
-    showToast("Enter JSON.");
+    showToast(
+      "Enter JSON."
+    );
 
     return;
 
@@ -4286,40 +5967,46 @@ function formatJSON(){
 
   try{
 
-    const object =
+    const value =
       JSON.parse(input);
 
-    document.getElementById("jsonOutput")
-      .textContent =
+    document.getElementById(
+      "jsonOutput"
+    ).textContent =
       JSON.stringify(
-        object,
+        value,
         null,
         2
       );
 
   }catch(error){
 
-    document.getElementById("jsonOutput")
-      .textContent =
+    document.getElementById(
+      "jsonOutput"
+    ).textContent =
       "Invalid JSON.";
 
   }
 
-}
+};
 
-/* ==========================================================
+/* =========================================================
    QUICK NOTE
-========================================================== */
+========================================================= */
 
-function saveQuickNote(){
+window.saveQuickNote =
+function(){
 
   const text =
-    document.getElementById("quickText")
-      .value.trim();
+    document.getElementById(
+      "quickCapture"
+    ).value.trim();
 
   if(!text){
 
-    showToast("Write something first.");
+    showToast(
+      "Write something first."
+    );
 
     return;
 
@@ -4327,250 +6014,37 @@ function saveQuickNote(){
 
   state.notes.unshift({
 
-    id:cryptoRandom(),
+    id:uid(),
 
-    title:"Quick capture",
+    title:
+      "Quick capture",
 
     body:text,
 
-    createdAt:new Date().toISOString()
+    createdAt:
+      new Date().toISOString()
 
   });
 
-  document.getElementById("quickText").value = "";
+  document.getElementById(
+    "quickCapture"
+  ).value = "";
 
   saveCloud();
 
-  renderNotes();
+  renderEverything();
 
-  updateStats();
-
-  showToast("Saved as note.");
-
-}
-
-/* ==========================================================
-   EXPORT / IMPORT
-========================================================== */
-
-function exportData(){
-
-  const data =
-    JSON.stringify(
-      state,
-      null,
-      2
-    );
-
-  const blob =
-    new Blob(
-      [data],
-      {type:"application/json"}
-    );
-
-  const url =
-    URL.createObjectURL(blob);
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-    "shaheen-nexus-workspace.json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-
-}
-
-function importData(event){
-
-  const file =
-    event.target.files?.[0];
-
-  if(!file) return;
-
-  const reader =
-    new FileReader();
-
-  reader.onload = () => {
-
-    try{
-
-      const imported =
-        JSON.parse(
-          reader.result
-        );
-
-      state = {
-        ...state,
-        ...imported
-      };
-
-      saveCloud();
-
-      renderAll();
-
-      showToast(
-        "Workspace imported."
-      );
-
-    }catch(error){
-
-      showToast(
-        "Invalid workspace JSON."
-      );
-
-    }
-
-  };
-
-  reader.readAsText(file);
-
-}
-
-/* ==========================================================
-   THEME
-========================================================== */
-
-function toggleTheme(){
-
-  state.theme =
-    state.theme==="dark"
-      ? "light"
-      : "dark";
-
-  applyTheme();
-
-  saveCloud();
-
-}
-
-function applyTheme(){
-
-  document.body.classList.toggle(
-    "light",
-    state.theme==="light"
+  showToast(
+    "Saved as note."
   );
 
-}
+};
 
-/* ==========================================================
-   STATS / RENDER
-========================================================== */
+/* =========================================================
+   RENDERING
+========================================================= */
 
-function updateStats(){
-
-  const docs =
-    document.getElementById("statDocs");
-
-  const tasks =
-    document.getElementById("statTasks");
-
-  const notes =
-    document.getElementById("statNotes");
-
-  const saved =
-    document.getElementById("statSaved");
-
-  if(docs)
-    docs.textContent =
-      state.documents.length;
-
-  if(tasks)
-    tasks.textContent =
-      state.tasks.filter(
-        x => !x.done
-      ).length;
-
-  if(notes)
-    notes.textContent =
-      state.notes.length;
-
-  if(saved)
-    saved.textContent =
-      state.saved.length;
-
-}
-
-function renderRecent(){
-
-  const container =
-    document.getElementById("recentActivity");
-
-  if(!container) return;
-
-  const items = [
-
-    ...state.documents.map(x => ({
-      type:"Document",
-      title:x.title,
-      date:x.createdAt
-    })),
-
-    ...state.notes.map(x => ({
-      type:"Note",
-      title:x.title,
-      date:x.createdAt
-    })),
-
-    ...state.tasks.map(x => ({
-      type:"Task",
-      title:x.text,
-      date:x.createdAt
-    }))
-
-  ]
-  .sort(
-    (a,b) =>
-      new Date(b.date)-new Date(a.date)
-  )
-  .slice(0,8);
-
-  if(!items.length){
-
-    container.innerHTML =
-      `<div class="empty">
-        Nothing here yet.
-      </div>`;
-
-    return;
-
-  }
-
-  container.innerHTML =
-    items
-      .map(item => `
-
-        <div class="task">
-
-          <div style="width:42px">
-            ${item.type==="Document"?"📄":
-              item.type==="Note"?"📝":"✓"}
-          </div>
-
-          <div style="flex:1">
-
-            <b>${escapeHtml(item.title)}</b>
-
-            <div style="font-size:12px;color:var(--muted)">
-              ${item.type} · ${formatDate(item.date)}
-            </div>
-
-          </div>
-
-        </div>
-
-      `)
-      .join("");
-
-}
-
-function renderAll(){
-
-  updateStats();
+function renderEverything(){
 
   renderTasks();
 
@@ -4580,59 +6054,200 @@ function renderAll(){
 
   renderRecent();
 
+  updateStats();
+
 }
 
-/* ==========================================================
+function updateStats(){
+
+  const docs =
+    document.getElementById(
+      "statDocuments"
+    );
+
+  const tasks =
+    document.getElementById(
+      "statTasks"
+    );
+
+  const notes =
+    document.getElementById(
+      "statNotes"
+    );
+
+  const saved =
+    document.getElementById(
+      "statSaved"
+    );
+
+  if(docs){
+
+    docs.textContent =
+      state.documents.length;
+
+  }
+
+  if(tasks){
+
+    tasks.textContent =
+      state.tasks.filter(
+        task =>
+          !task.done
+      ).length;
+
+  }
+
+  if(notes){
+
+    notes.textContent =
+      state.notes.length;
+
+  }
+
+  if(saved){
+
+    saved.textContent =
+      state.saved.length;
+
+  }
+
+}
+
+function renderRecent(){
+
+  const el =
+    document.getElementById(
+      "recentActivity"
+    );
+
+  if(!el) return;
+
+  const items = [
+
+    ...state.documents.map(
+      x => ({
+        type:"Document",
+        icon:"📄",
+        title:x.title,
+        date:x.createdAt
+      })
+    ),
+
+    ...state.notes.map(
+      x => ({
+        type:"Note",
+        icon:"📝",
+        title:x.title,
+        date:x.createdAt
+      })
+    ),
+
+    ...state.tasks.map(
+      x => ({
+        type:"Task",
+        icon:"✓",
+        title:x.text,
+        date:x.createdAt
+      })
+    )
+
+  ]
+  .sort(
+    (a,b) =>
+      new Date(b.date) -
+      new Date(a.date)
+  )
+  .slice(0,8);
+
+  if(!items.length){
+
+    el.innerHTML =
+      `<div class="empty">
+        Your activity will appear here.
+      </div>`;
+
+    return;
+
+  }
+
+  el.innerHTML =
+    items.map(
+      item => `
+
+      <div class="task-row">
+
+        <div style="font-size:20px">
+          ${item.icon}
+        </div>
+
+        <div style="flex:1">
+
+          <strong>
+            ${esc(item.title)}
+          </strong>
+
+          <div class="mini">
+            ${esc(item.type)}
+            ·
+            ${formatDate(item.date)}
+          </div>
+
+        </div>
+
+      </div>
+
+    `
+    ).join("");
+
+}
+
+/* =========================================================
    UTILITIES
-========================================================== */
+========================================================= */
 
 function unique(array){
 
   return [
     ...new Set(
       array
-        .map(x => String(x).trim())
+        .map(
+          value =>
+            String(value)
+              .trim()
+        )
         .filter(Boolean)
     )
   ];
 
 }
 
-function escapeHtml(value){
+function esc(value){
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
-function formatDate(value){
-
-  if(!value) return "";
-
-  const date =
-    new Date(value);
-
-  if(Number.isNaN(date.getTime()))
-    return "";
-
-  return date.toLocaleString(
-    undefined,
-    {
-      year:"numeric",
-      month:"short",
-      day:"numeric",
-      hour:"numeric",
-      minute:"2-digit"
-    }
-  );
-
-}
-
-function cryptoRandom(){
+function uid(){
 
   if(
     window.crypto &&
@@ -4644,21 +6259,54 @@ function cryptoRandom(){
   }
 
   return (
-    Date.now().toString(36)+
-    Math.random().toString(36).slice(2)
+    Date.now().toString(36) +
+    Math.random()
+      .toString(36)
+      .slice(2)
+  );
+
+}
+
+function formatDate(value){
+
+  if(!value) return "";
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return "";
+
+  }
+
+  return date.toLocaleString(
+    undefined,
+    {
+      dateStyle:"medium",
+      timeStyle:"short"
+    }
   );
 
 }
 
 function showToast(message){
 
-  const toast =
-    document.getElementById("toast");
+  const el =
+    document.getElementById(
+      "toast"
+    );
 
-  toast.textContent =
+  el.textContent =
     message;
 
-  toast.classList.add("show");
+  el.classList.add(
+    "show"
+  );
 
   clearTimeout(
     window.__toastTimer
@@ -4666,11 +6314,73 @@ function showToast(message){
 
   window.__toastTimer =
     setTimeout(
-      () => toast.classList.remove("show"),
-      3500
+      () =>
+        el.classList.remove(
+          "show"
+        ),
+      3800
     );
 
 }
+
+/* =========================================================
+   OUTSIDE CLICK
+========================================================= */
+
+document.addEventListener(
+  "click",
+  event => {
+
+    const menu =
+      document.getElementById(
+        "profileMenu"
+      );
+
+    const user =
+      document.querySelector(
+        ".header-user"
+      );
+
+    if(
+      menu &&
+      user &&
+      !user.contains(event.target)
+    ){
+
+      menu.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }
+);
+
+/* =========================================================
+   ESC CLOSE
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(event.key === "Escape"){
+
+      closeProfileMenu();
+
+      document
+        .getElementById(
+          "authModal"
+        )
+        .classList.remove(
+          "show"
+        );
+
+    }
+
+  }
+);
+
 </script>
 
 </body>
